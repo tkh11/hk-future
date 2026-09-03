@@ -1,9 +1,13 @@
 import Hero from "@/sections/home/Hero";
+import Preloader from "@/components/layout/Preloader";
 
 export default function HomePage() {
   return (
-    <main>
-      <Hero />
-    </main>
+    <>
+      <Preloader />
+      <main>
+        <Hero />
+      </main>
+    </>
   );
 }

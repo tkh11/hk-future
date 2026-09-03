@@ -409,6 +409,92 @@
   }
 }
 
+.site-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  pointer-events: auto;
+}
+
+html.preloader-done .site-preloader {
+  display: none;
+}
+
+.site-preloader__veil {
+  position: absolute;
+  inset: 0;
+  background: #f4f4f4;
+}
+
+.site-preloader__mark {
+  position: relative;
+  z-index: 1;
+  width: min(300px, 78vw);
+  will-change: transform;
+}
+
+.site-preloader__full-clip {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  width: 74.32%;
+}
+
+.site-preloader__full {
+  width: 134.55%;
+  max-width: none;
+  height: auto;
+  flex-shrink: 0;
+  filter: brightness(0) invert(0);
+}
+
+.site-preloader__small {
+  position: absolute;
+  top: 1.85%;
+  left: 74.32%;
+  width: 22.75%;
+  height: 94.72%;
+  object-fit: contain;
+  filter: brightness(0) invert(0);
+}
+
+html.is-preloading,
+html.is-preloading body {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+html:not(.preloader-done):has(.site-preloader) .site-header--desktop,
+html:not(.preloader-done):has(.site-preloader) .site-header--chip {
+  opacity: 0;
+  pointer-events: none;
+}
+
+html:not(.preloader-done):has(.site-preloader) .site-header__desktop-nav,
+html:not(.preloader-done):has(.site-preloader) .site-header__logo {
+  opacity: 0;
+}
+
+@media (min-width: 768px) {
+  .site-preloader__mark {
+    width: min(420px, 70vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-preloader__mark,
+  .site-preloader__full,
+  .site-preloader__small,
+  .site-preloader__veil {
+    transition: none;
+  }
+}
+
 @media (min-width: 1024px) {
   .site-header--desktop {
     padding-right: 48px;

@@ -6,4 +6,20 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
-<!-- END:nextjs-agent-rules -->
+## HEISSKRAFT Design System
+
+Before any visual UI work, read `DESIGN_SYSTEM.md`.
+
+It defines the visual rules of the project.
+
+Official HEISSKRAFT brand rules take priority over external references.
+
+Augen (https://augen.pro/) is a visual inspiration only and must not be copied directly.
+
+Do not invent:
+- brand colors
+- fonts
+- logo modifications
+- new visual styles
+
+When a specific user instruction or supplied Figma layout conflicts with the generic design system, follow the specific user instruction.

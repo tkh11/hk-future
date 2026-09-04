@@ -1,4 +1,5 @@
 import Hero from "@/sections/home/Hero";
+import ProjectForm from "@/sections/home/ProjectForm";
 import Preloader from "@/components/layout/Preloader";
 
 export default function HomePage() {
@@ -7,6 +8,7 @@ export default function HomePage() {
       <Preloader />
       <main>
         <Hero />
+        <ProjectForm />
       </main>
     </>
   );

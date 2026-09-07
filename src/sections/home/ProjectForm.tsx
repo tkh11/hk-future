@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  useEffect,
+  useRef,
   useState,
   type ChangeEvent,
   type FormEvent,
@@ -9,50 +11,80 @@ import {
 } from "react";
 import Link from "next/link";
 
-function Field({
+function Row({
   id,
   label,
   required,
-  className,
+  wide,
+  area,
   ...props
 }: {
   id: string;
   label: string;
   required?: boolean;
-  className?: string;
-} & InputHTMLAttributes<HTMLInputElement>) {
+  wide?: boolean;
+  area?: boolean;
+} & InputHTMLAttributes<HTMLInputElement> &
+  TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  const className = [
+    "project-form__row",
+    wide ? "project-form__row--wide" : "",
+    area ? "project-form__row--area" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <label className={`project-form__field${className ? ` ${className}` : ""}`} htmlFor={id}>
+    <label className={className} htmlFor={id}>
       <span className="project-form__label">
         {label}
         {required ? <span aria-hidden="true"> *</span> : null}
       </span>
-      <input id={id} className="project-form__control" required={required} {...props} />
-    </label>
-  );
-}
-
-function Area({
-  id,
-  label,
-  className,
-  ...props
-}: {
-  id: string;
-  label: string;
-  className?: string;
-} & TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return (
-    <label className={`project-form__field${className ? ` ${className}` : ""}`} htmlFor={id}>
-      <span className="project-form__label">{label}</span>
-      <textarea id={id} className="project-form__control project-form__control--area" {...props} />
+      {area ? (
+        <textarea id={id} className="project-form__control" {...props} />
+      ) : (
+        <input id={id} className="project-form__control" required={required} {...props} />
+      )}
     </label>
   );
 }
 
 export default function ProjectForm() {
+  const sheetRef = useRef<HTMLFormElement>(null);
   const [fileName, setFileName] = useState("");
   const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    const sheet = sheetRef.current;
+
+    if (!sheet) {
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      sheet.classList.add("is-in");
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) {
+          return;
+        }
+
+        sheet.classList.add("is-in");
+        observer.disconnect();
+      },
+      {
+        threshold: 0.22,
+        rootMargin: "0px 0px -8% 0px",
+      },
+    );
+
+    observer.observe(sheet);
+
+    return () => observer.disconnect();
+  }, []);
 
   function onFileChange(event: ChangeEvent<HTMLInputElement>) {
     setFileName(event.target.files?.[0]?.name ?? "");
@@ -74,16 +106,16 @@ export default function ProjectForm() {
           </h2>
         </div>
 
-        <form className="project-form__form" onSubmit={onSubmit}>
-          <div className="project-form__grid">
-            <Field
+        <form ref={sheetRef} className="project-form__sheet" onSubmit={onSubmit}>
+          <div className="project-form__fields">
+            <Row
               id="project-name"
               name="name"
               label="Как вас зовут?"
               required
               autoComplete="name"
             />
-            <Field
+            <Row
               id="project-phone"
               name="phone"
               type="tel"
@@ -91,7 +123,7 @@ export default function ProjectForm() {
               required
               autoComplete="tel"
             />
-            <Field
+            <Row
               id="project-email"
               name="email"
               type="email"
@@ -99,34 +131,35 @@ export default function ProjectForm() {
               required
               autoComplete="email"
             />
-            <Field
+            <Row
               id="project-city"
               name="city"
               label="Из какого вы города?"
               required
               autoComplete="address-level2"
             />
-            <Area
+            <Row
               id="project-details"
               name="details"
               label="Детали обращения"
-              className="project-form__field--wide"
+              wide
+              area
               rows={5}
             />
+            <label className="project-form__row project-form__row--wide project-form__row--file">
+              <input
+                className="project-form__file-input"
+                type="file"
+                name="file"
+                accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.webp,.zip"
+                onChange={onFileChange}
+              />
+              <span className="project-form__label">Прикрепить файл</span>
+              <span className="project-form__file-value">
+                {fileName || "Выбрать"}
+              </span>
+            </label>
           </div>
-
-          <label className="project-form__file">
-            <input
-              className="project-form__file-input"
-              type="file"
-              name="file"
-              accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.webp,.zip"
-              onChange={onFileChange}
-            />
-            <span className="project-form__file-label">
-              {fileName || "Прикрепить файл"}
-            </span>
-          </label>
 
           <label className="project-form__consent">
             <input
@@ -143,6 +176,7 @@ export default function ProjectForm() {
 
           <button className="project-form__submit" type="submit" disabled={sent}>
             {sent ? "Заявка отправлена" : "Отправить заявку"}
+            {sent ? null : <span aria-hidden="true">→</span>}
           </button>
         </form>
       </div>

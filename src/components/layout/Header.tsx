@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { useHeaderTheme } from "@/components/layout/HeaderTheme";
 
 const leftLinks = [
-  { href: "/catalog", label: "Каталог" },
+  { href: "/catalog", label: "Продукция" },
   { href: "/designers", label: "Проектировщикам" },
 ];
 
@@ -83,11 +83,12 @@ export default function Header() {
             aria-hidden={!menuOpen}
             inert={!menuOpen}
           >
-            {mobileLinks.map((item) => (
+            {mobileLinks.map((item, index) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className="site-header__mobile-link"
+                style={{ "--nav-index": index } as CSSProperties}
                 onClick={() => setMenuOpen(false)}
               >
                 {item.label}

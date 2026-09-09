@@ -5,37 +5,39 @@ import {
   useRef,
   useState,
   type ChangeEvent,
+  type CSSProperties,
   type FormEvent,
   type InputHTMLAttributes,
   type TextareaHTMLAttributes,
 } from "react";
 import Link from "next/link";
+import ProjectGallery from "@/sections/home/ProjectGallery";
+
+function revealStyle(index: number) {
+  return { "--reveal-index": index } as CSSProperties;
+}
 
 function Row({
   id,
   label,
+  index,
   required,
-  wide,
   area,
   ...props
 }: {
   id: string;
   label: string;
+  index: number;
   required?: boolean;
-  wide?: boolean;
   area?: boolean;
 } & InputHTMLAttributes<HTMLInputElement> &
   TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  const className = [
-    "project-form__row",
-    wide ? "project-form__row--wide" : "",
-    area ? "project-form__row--area" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const className = area
+    ? "project-form__row project-form__row--area"
+    : "project-form__row";
 
   return (
-    <label className={className} htmlFor={id}>
+    <label className={className} style={revealStyle(index)} htmlFor={id}>
       <span className="project-form__label">
         {label}
         {required ? <span aria-hidden="true"> *</span> : null}
@@ -50,19 +52,19 @@ function Row({
 }
 
 export default function ProjectForm() {
-  const sheetRef = useRef<HTMLFormElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const [fileName, setFileName] = useState("");
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    const sheet = sheetRef.current;
+    const section = sectionRef.current;
 
-    if (!sheet) {
+    if (!section) {
       return;
     }
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      sheet.classList.add("is-in");
+      section.classList.add("is-in");
       return;
     }
 
@@ -72,16 +74,16 @@ export default function ProjectForm() {
           return;
         }
 
-        sheet.classList.add("is-in");
+        section.classList.add("is-in");
         observer.disconnect();
       },
       {
-        threshold: 0.22,
-        rootMargin: "0px 0px -8% 0px",
+        threshold: 0,
+        rootMargin: "0px 0px -18% 0px",
       },
     );
 
-    observer.observe(sheet);
+    observer.observe(section);
 
     return () => observer.disconnect();
   }, []);
@@ -96,89 +98,115 @@ export default function ProjectForm() {
   }
 
   return (
-    <section data-header-theme="light" className="project-form">
+    <section ref={sectionRef} data-header-theme="light" className="project-form">
       <div className="project-form__inner">
-        <div className="project-form__intro">
-          <h2 className="project-form__title">
-            Есть проект?
-            <br />
-            Расскажите нам о нём.
-          </h2>
-        </div>
-
-        <form ref={sheetRef} className="project-form__sheet" onSubmit={onSubmit}>
-          <div className="project-form__fields">
-            <Row
-              id="project-name"
-              name="name"
-              label="Как вас зовут?"
-              required
-              autoComplete="name"
-            />
-            <Row
-              id="project-phone"
-              name="phone"
-              type="tel"
-              label="Телефон"
-              required
-              autoComplete="tel"
-            />
-            <Row
-              id="project-email"
-              name="email"
-              type="email"
-              label="Email"
-              required
-              autoComplete="email"
-            />
-            <Row
-              id="project-city"
-              name="city"
-              label="Из какого вы города?"
-              required
-              autoComplete="address-level2"
-            />
-            <Row
-              id="project-details"
-              name="details"
-              label="Детали обращения"
-              wide
-              area
-              rows={5}
-            />
-            <label className="project-form__row project-form__row--wide project-form__row--file">
-              <input
-                className="project-form__file-input"
-                type="file"
-                name="file"
-                accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.webp,.zip"
-                onChange={onFileChange}
-              />
-              <span className="project-form__label">Прикрепить файл</span>
-              <span className="project-form__file-value">
-                {fileName || "Выбрать"}
-              </span>
-            </label>
+        <div className="project-form__main">
+          <div className="project-form__intro">
+            <h2 className="project-form__title">
+              Есть проект?
+              <br />
+              Расскажите нам о нём.
+            </h2>
+            <p className="project-form__note">
+              Ответим в течение рабочего дня и подберём решение под ваш объект.
+            </p>
           </div>
 
-          <label className="project-form__consent">
-            <input
-              className="project-form__checkbox"
-              type="checkbox"
-              name="privacy"
-              required
-            />
-            <span>
-              Я соглашаюсь с{" "}
-              <Link href="/privacy">политикой конфиденциальности</Link>
-            </span>
-          </label>
+          <form className="project-form__sheet" onSubmit={onSubmit}>
+            <div className="project-form__fields">
+              <Row
+                id="project-name"
+                name="name"
+                index={0}
+                label="Как вас зовут?"
+                placeholder="Имя и фамилия"
+                required
+                autoComplete="name"
+              />
+              <Row
+                id="project-phone"
+                name="phone"
+                index={1}
+                type="tel"
+                label="Телефон"
+                placeholder="+7 900 000-00-00"
+                required
+                autoComplete="tel"
+              />
+              <Row
+                id="project-email"
+                name="email"
+                index={2}
+                type="email"
+                label="Email"
+                placeholder="name@company.ru"
+                required
+                autoComplete="email"
+              />
+              <Row
+                id="project-city"
+                name="city"
+                index={3}
+                label="Из какого вы города?"
+                placeholder="Москва"
+                required
+                autoComplete="address-level2"
+              />
+              <Row
+                id="project-details"
+                name="details"
+                index={4}
+                label="Детали обращения"
+                placeholder="Тип объекта, инженерные системы, сроки"
+                area
+                rows={5}
+              />
+              <label
+                className="project-form__row project-form__row--file"
+                style={revealStyle(5)}
+              >
+                <input
+                  className="project-form__file-input"
+                  type="file"
+                  name="file"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.webp,.zip"
+                  onChange={onFileChange}
+                />
+                <span className="project-form__label">Прикрепить файл</span>
+                <span className="project-form__file-pick">
+                  <span className="project-form__file-value">
+                    {fileName || "PDF, DOC, XLS, JPG, ZIP"}
+                  </span>
+                  <span className="project-form__file-action" aria-hidden="true">
+                    Выбрать
+                  </span>
+                </span>
+              </label>
+            </div>
 
-          <button className="project-form__submit" type="submit" disabled={sent}>
-            {sent ? "Заявка отправлена" : "Отправить заявку"}
-            {sent ? null : <span aria-hidden="true">→</span>}
-          </button>
-        </form>
+            <div className="project-form__actions" style={revealStyle(6)}>
+              <label className="project-form__consent">
+                <input
+                  className="project-form__checkbox"
+                  type="checkbox"
+                  name="privacy"
+                  required
+                />
+                <span>
+                  Я соглашаюсь с{" "}
+                  <Link href="/privacy">политикой конфиденциальности</Link>
+                </span>
+              </label>
+
+              <button className="project-form__submit" type="submit" disabled={sent}>
+                {sent ? "Заявка отправлена" : "Отправить заявку"}
+                {sent ? null : <span aria-hidden="true">→</span>}
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <ProjectGallery />
       </div>
     </section>
   );

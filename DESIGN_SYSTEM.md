@@ -59,9 +59,16 @@ Black
 #000000
 
 HEISSKRAFT Red
-#E30613
+#C8102E
 
 Red is the primary brand accent.
+
+The only approved derivative is the darker pressed/hover shade
+#A40D26
+
+In code both live as design tokens:
+--hk-red
+--hk-red-strong
 
 Do not invent additional brand colors.
 

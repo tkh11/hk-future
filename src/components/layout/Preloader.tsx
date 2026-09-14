@@ -261,11 +261,15 @@ export default function Preloader() {
         tLand - 0.08,
       );
 
-      timeline.to(
-        small,
-        { filter: "brightness(0) invert(1)", duration: 0.36 },
-        tLand,
-      );
+      const onHome = window.location.pathname === "/";
+
+      if (!onHome) {
+        timeline.to(
+          small,
+          { filter: "brightness(0) invert(1)", duration: 0.36 },
+          tLand,
+        );
+      }
 
       if (glass) {
         timeline.fromTo(

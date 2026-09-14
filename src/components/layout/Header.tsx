@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useHeaderTheme } from "@/components/layout/HeaderTheme";
 
 const leftLinks = [
@@ -16,8 +17,42 @@ const rightLinks = [
 
 const mobileLinks = [...leftLinks, ...rightLinks];
 
+function useHomeIdleHeader() {
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+  const [idle, setIdle] = useState(onHome);
+
+  useEffect(() => {
+    if (!onHome) {
+      setIdle(false);
+      return;
+    }
+
+    const hero = document.querySelector(".hero");
+
+    if (!(hero instanceof HTMLElement)) {
+      setIdle(true);
+      return;
+    }
+
+    const sync = () => {
+      setIdle(hero.classList.contains("is-idle"));
+    };
+
+    sync();
+
+    const observer = new MutationObserver(sync);
+    observer.observe(hero, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, [onHome]);
+
+  return onHome && idle;
+}
+
 export default function Header() {
   const { theme } = useHeaderTheme();
+  const homeIdle = useHomeIdleHeader();
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -61,7 +96,7 @@ export default function Header() {
         />
       ) : null}
 
-      <header className="site-header-root">
+      <header className={`site-header-root${homeIdle ? " is-home-idle" : ""}`}>
         <div data-theme={theme} className="site-header site-header--chip site-header--logo">
           <Link href="/" aria-label="HEISSKRAFT" className="site-header__brand">
             <img

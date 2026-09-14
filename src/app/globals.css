@@ -1107,17 +1107,26 @@ html.preloader-done .hero.is-idle .hero__hint {
 }
 
 .pipeline {
+  --pipeline-bg: radial-gradient(
+    120% 90% at 66% 24%,
+    #ffffff 0%,
+    #f2f3f4 48%,
+    #e6e8ea 100%
+  );
   position: relative;
   height: 100dvh;
   min-height: 600px;
   overflow: hidden;
   color: #000000;
-  background: radial-gradient(120% 90% at 66% 24%, #ffffff 0%, #f2f3f4 48%, #e6e8ea 100%);
+  background: var(--pipeline-bg);
 }
 
+/* The stage owns its own stacking context so the 3D labels portalled into it
+   can never paint over the interface. */
 .pipeline__stage {
   position: absolute;
   inset: 0;
+  z-index: 0;
   touch-action: none;
 }
 
@@ -1125,40 +1134,79 @@ html.preloader-done .hero.is-idle .hero__hint {
   display: block;
 }
 
-.pipeline__loader {
+/* Hover label anchored to a block or a pipeline element inside the canvas. */
+.pipeline__marker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 13px;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(14px);
+  transform: translateY(-26px);
+}
+
+.pipeline__marker-title {
+  font-size: 13px;
+  letter-spacing: -0.01em;
+}
+
+.pipeline__marker-hint {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.pipeline__marker-hint.is-open {
+  color: var(--hk-red);
+}
+
+.pipeline__veil {
   position: absolute;
   inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pipeline-bg);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.42s var(--hk-ease),
+    visibility 0.42s var(--hk-ease);
+}
+
+.pipeline__veil.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.pipeline__veil-loader {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 14px;
-  background: #f2f3f4;
-  transition:
-    opacity 0.8s var(--hk-ease),
-    visibility 0.8s var(--hk-ease);
 }
 
-.pipeline__loader.is-done {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.pipeline__loader-label {
+.pipeline__veil-label {
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.45);
 }
 
-.pipeline__loader-track {
+.pipeline__veil-track {
   width: 180px;
   height: 2px;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.1);
 }
 
-.pipeline__loader-bar {
+.pipeline__veil-bar {
   display: block;
   width: 100%;
   height: 100%;
@@ -1171,6 +1219,7 @@ html.preloader-done .hero.is-idle .hero__hint {
 .pipeline__overlay {
   position: absolute;
   inset: 0;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -1235,6 +1284,27 @@ html.preloader-done .hero.is-idle .hero__hint {
   border-color: var(--hk-red);
 }
 
+/* Engineering colours identify a system, so a system filter is marked with its
+   own colour instead of the brand red. */
+.pipeline__tool--system {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pipeline__tool--system.is-on {
+  color: #000000;
+  border-color: var(--system-color);
+  box-shadow: inset 0 0 0 1px var(--system-color);
+}
+
+.pipeline__swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--system-color, currentColor);
+}
+
 .pipeline__tool:focus-visible,
 .pipeline__item:focus-visible,
 .pipeline__detail-link:focus-visible {
@@ -1277,6 +1347,16 @@ html.preloader-done .hero.is-idle .hero__hint {
   display: none;
 }
 
+/* Only three blocks, so they wrap instead of scrolling and keep their titles. */
+.pipeline__list--blocks {
+  flex-wrap: wrap;
+  overflow: visible;
+}
+
+.pipeline__list--blocks .pipeline__item-title {
+  display: block;
+}
+
 .pipeline__item {
   display: flex;
   align-items: center;
@@ -1303,6 +1383,20 @@ html.preloader-done .hero.is-idle .hero__hint {
   font-size: 13px;
 }
 
+.pipeline__item-flag {
+  margin-left: auto;
+  padding-left: 4px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.36);
+}
+
+/* Mirrors the pointer state for rows highlighted from the model. */
+.pipeline__item.is-hover {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
 .pipeline__item.is-active {
   color: var(--hk-red);
   border-color: rgba(200, 16, 46, 0.35);
@@ -1310,6 +1404,11 @@ html.preloader-done .hero.is-idle .hero__hint {
 
 .pipeline__item.is-active .pipeline__item-index {
   color: var(--hk-red);
+}
+
+.pipeline__item:disabled {
+  cursor: default;
+  opacity: 0.38;
 }
 
 @keyframes pipeline-detail-in {
@@ -1327,8 +1426,104 @@ html.preloader-done .hero.is-idle .hero__hint {
 .pipeline__detail {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 8px;
   animation: pipeline-detail-in 0.5s var(--hk-ease);
+}
+
+/*
+ * The product card pairs the photo with the description instead of stacking it,
+ * so the catalog link stays inside the panel without scrolling.
+ */
+.pipeline__detail--product {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  grid-template-areas:
+    "head head"
+    "photo text"
+    "link link";
+  align-items: start;
+  column-gap: 14px;
+  row-gap: 10px;
+}
+
+.pipeline__detail-head {
+  grid-area: head;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.pipeline__detail--product .pipeline__photo {
+  grid-area: photo;
+  margin-bottom: 0;
+}
+
+.pipeline__detail--product .pipeline__detail-text {
+  grid-area: text;
+}
+
+.pipeline__detail--product .pipeline__detail-link {
+  grid-area: link;
+  margin-top: 0;
+}
+
+.pipeline__photo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 148px;
+  margin-bottom: 2px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.035);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 12px;
+}
+
+.pipeline__photo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pipeline__photo-mark {
+  width: 56px;
+  height: auto;
+  opacity: 0.12;
+}
+
+.pipeline__photo-text {
+  position: absolute;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.36);
+}
+
+.pipeline__detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+}
+
+.pipeline__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.62);
+}
+
+.pipeline__detail-id {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: rgba(0, 0, 0, 0.32);
 }
 
 .pipeline__detail-title {
@@ -1336,13 +1531,6 @@ html.preloader-done .hero.is-idle .hero__hint {
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -0.02em;
-}
-
-.pipeline__detail-product {
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.42);
 }
 
 .pipeline__detail-text {
@@ -1369,6 +1557,27 @@ html.preloader-done .hero.is-idle .hero__hint {
 
 .pipeline__detail-link span {
   transition: transform 0.5s var(--hk-ease);
+}
+
+/* Copy that only holds for one kind of pointer. */
+.pipeline__touch {
+  display: none;
+}
+
+@media (hover: none) {
+  .pipeline__pointer {
+    display: none;
+  }
+
+  .pipeline__touch {
+    display: inline;
+  }
+}
+
+.pipeline__slot {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .pipeline__detail-empty {
@@ -1452,8 +1661,8 @@ html.preloader-done .hero.is-idle .hero__hint {
   .pipeline__panel {
     grid-area: panel;
     align-self: end;
-    gap: 18px;
-    max-height: none;
+    gap: 16px;
+    max-height: min(74dvh, 660px);
     padding: 22px;
   }
 
@@ -1463,9 +1672,22 @@ html.preloader-done .hero.is-idle .hero__hint {
     overflow: visible;
   }
 
+  .pipeline__photo {
+    max-width: none;
+  }
+
   .pipeline__item {
     width: 100%;
-    padding: 9px 12px;
+    padding: 7px 12px;
+    border-color: transparent;
+  }
+
+  .pipeline__slot {
+    min-height: 136px;
+  }
+
+  .pipeline__item.is-hover {
+    background: rgba(0, 0, 0, 0.045);
     border-color: transparent;
   }
 
@@ -1474,7 +1696,7 @@ html.preloader-done .hero.is-idle .hero__hint {
   }
 
   .pipeline__detail-title {
-    font-size: 22px;
+    font-size: 20px;
   }
 }
 
@@ -1483,8 +1705,8 @@ html.preloader-done .hero.is-idle .hero__hint {
     animation: none;
   }
 
-  .pipeline__loader,
-  .pipeline__loader-bar,
+  .pipeline__veil,
+  .pipeline__veil-bar,
   .pipeline__tool,
   .pipeline__item,
   .pipeline__item-index,
@@ -1834,3 +2056,4 @@ html:not(.preloader-done):has(.site-preloader) .site-header__logo {
     width: 320px;
   }
 }
+

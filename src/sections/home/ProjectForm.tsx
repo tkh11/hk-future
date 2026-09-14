@@ -98,7 +98,12 @@ export default function ProjectForm() {
   }
 
   return (
-    <section ref={sectionRef} data-header-theme="light" className="project-form">
+    <section
+      ref={sectionRef}
+      id="project-form"
+      data-header-theme="light"
+      className="project-form"
+    >
       <div className="project-form__inner">
         <div className="project-form__main">
           <div className="project-form__intro">

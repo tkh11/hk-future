@@ -327,9 +327,9 @@
 
 .hero {
   position: relative;
-  height: 300vh;
-  background: #000;
-  color: #fff;
+  height: 600vh;
+  background: #ffffff;
+  color: #000000;
 }
 
 .hero__sticky {
@@ -348,11 +348,218 @@
   pointer-events: none;
 }
 
+/* A phone is far taller than the 16:9 render, so a full cover would keep only
+   the middle quarter of the frame and drop the product out of shot. Instead the
+   element is sized to the source ratio and overscanned horizontally; the mask
+   then dissolves the frame edges, which sit inside the viewport. */
+@media (max-width: 767px) and (max-aspect-ratio: 1 / 1) {
+  .hero__media {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    width: 195%;
+    max-width: none;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    transform: translate(-50%, -56%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 10%,
+      #000 90%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 10%,
+      #000 90%,
+      transparent 100%
+    );
+  }
+}
+
+.hero__stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  padding: 88px 16px 28px;
+  pointer-events: none;
+}
+
+.hero__beat {
+  grid-area: 1 / 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.85s var(--hk-ease),
+    visibility 0.85s var(--hk-ease);
+}
+
+.hero__beat.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.hero__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+  padding: 18px 18px 20px;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 14px;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(22px);
+  transform: translate3d(0, 20px, 0);
+  transition: transform 1s var(--hk-ease);
+}
+
+.hero__beat.is-active .hero__panel {
+  transform: none;
+}
+
+.hero__title {
+  font-size: clamp(21px, 5.2vw, 27px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.hero__title--caps {
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 1.16;
+}
+
+.hero__text {
+  max-width: 36ch;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(0, 0, 0, 0.56);
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 40px;
+  padding: 10px 16px;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 11px;
+  transition:
+    color 0.4s var(--hk-ease),
+    background-color 0.4s var(--hk-ease),
+    border-color 0.4s var(--hk-ease);
+}
+
+.hero__cta span {
+  transition: transform 0.5s var(--hk-ease);
+}
+
+.hero__cta--accent {
+  color: #ffffff;
+  background: var(--hk-red);
+  border-color: var(--hk-red);
+}
+
+.hero__cta:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero__cta:hover {
+    border-color: rgba(0, 0, 0, 0.45);
+  }
+
+  .hero__cta--accent:hover {
+    background: var(--hk-red-strong);
+    border-color: var(--hk-red-strong);
+  }
+
+  .hero__cta:hover span {
+    transform: translateX(4px);
+  }
+}
+
+@media (min-width: 768px) {
+  .hero__stage {
+    padding: 104px 40px 56px;
+  }
+
+  .hero__beat {
+    align-items: center;
+  }
+
+  .hero__beat--left {
+    justify-content: flex-start;
+  }
+
+  .hero__beat--right {
+    justify-content: flex-end;
+  }
+
+  .hero__panel {
+    width: auto;
+    max-width: 380px;
+    gap: 16px;
+    padding: 22px 24px 24px;
+  }
+
+  .hero__beat--left .hero__panel {
+    transform: translate3d(-26px, 0, 0);
+  }
+
+  .hero__beat--right .hero__panel {
+    transform: translate3d(26px, 0, 0);
+  }
+
+  .hero__title {
+    font-size: clamp(25px, 2.2vw, 33px);
+  }
+
+  .hero__text {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__stage {
+    padding: 112px 48px 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__beat,
+  .hero__panel,
+  .hero__cta,
+  .hero__cta span {
+    transition: none;
+  }
+
+  .hero__panel {
+    transform: none;
+  }
+}
+
 .project-form {
   overflow-x: clip;
   background: #ffffff;
   color: #000000;
   padding: 96px 24px 104px;
+  scroll-margin-top: 88px;
 }
 
 .project-form__inner {
@@ -1161,6 +1368,102 @@
   .pipeline__item-index,
   .pipeline__detail-link,
   .pipeline__detail-link span {
+    transition: none;
+  }
+}
+
+.page-stub {
+  display: flex;
+  align-items: center;
+  min-height: 72svh;
+  padding: 160px 24px 120px;
+  background: #ffffff;
+  color: #000000;
+}
+
+.page-stub__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.page-stub__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.42);
+}
+
+.page-stub__title {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.page-stub__note {
+  max-width: 44ch;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.56);
+}
+
+.page-stub__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+  min-height: 44px;
+  padding: 12px 20px;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  transition:
+    border-color 0.4s var(--hk-ease),
+    color 0.4s var(--hk-ease);
+}
+
+.page-stub__cta span {
+  transition: transform 0.5s var(--hk-ease);
+}
+
+.page-stub__cta:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .page-stub__cta:hover {
+    border-color: rgba(0, 0, 0, 0.45);
+  }
+
+  .page-stub__cta:hover span {
+    transform: translateX(4px);
+  }
+}
+
+@media (min-width: 768px) {
+  .page-stub {
+    padding: 200px 40px 140px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-stub {
+    padding-right: 48px;
+    padding-left: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-stub__cta,
+  .page-stub__cta span {
     transition: none;
   }
 }

@@ -59,12 +59,12 @@ Black
 #000000
 
 HEISSKRAFT Red
-#C8102E
+#D8222B
 
 Red is the primary brand accent.
 
 The only approved derivative is the darker pressed/hover shade
-#A40D26
+#B81C24
 
 In code both live as design tokens:
 --hk-red
@@ -192,6 +192,8 @@ It is especially appropriate for:
 This makes the symbol the preferred mark for the new website Header.
 
 Do not overuse the symbol decoratively.
+
+The homepage does not show a preloader. `Preloader.tsx` stays in the repo unused.
 
 ---
 
@@ -342,14 +344,18 @@ Desktop structure:
 
 LEFT
 Каталог
-Проектировщикам
+Подбор оборудования
+База знаний
 
 CENTER
 HEISSKRAFT symbol / logo
 
 RIGHT
-Программы подбора
+Поиск (icon button, aria-label «Поиск»)
 Контакты
+
+All five items currently link to /catalog.
+«Проектировщикам» is not in the header. The /designers page stays in the site.
 
 The logo must remain geometrically centered in the viewport.
 
@@ -358,27 +364,42 @@ Header:
 - fixed
 - floating
 - compact
-- glass
 - high z-index
-- visually lightweight
+- background HEISSKRAFT red (#D8222B)
+- white logo and navigation
 
-The Header supports two modes:
+A transparent home-idle state still exists in code for a `.hero.is-idle` element
+(black logo, no bar background). The current homepage does not use that state.
 
-dark background:
-white logo and navigation
+The mobile menu lists the same five items: Каталог, Подбор оборудования,
+База знаний, Поиск, Контакты.
 
-light background:
-black logo and navigation
+# 12. Homepage
 
-Theme changes must be smooth.
+The homepage is a static Apple-like sequence on white.
+No preloader, no scroll-driven hero video, no glass beats, no scroll-reveal.
 
----
+Sections, in order, each `data-header-theme="light"`:
 
-# 12. Motion language
+1. HomeHero — 100svh, video plays once and holds the last frame («25»).
+   Reduced motion shows the last-frame poster. Copy and text links sit in the
+   remaining white area. The video stays fully visible (`object-fit: contain`).
+2. AboutIntro — caption, heading, paragraph, three static facts
+   (25+ лет на рынке, 10 лет гарантии, РФ собственное производство).
+   No other figures. No animation.
+3. PipesBanner — full-width rounded tile, PE-RT photograph, text in the white area.
+4. CategorySplit — two equal tiles. Pumps use MediaPlaceholder until an asset exists.
+   Арматура plays its video once when the tile enters the viewport and holds the last frame.
+5. Footer — light, see below. It is rendered by the root layout.
 
-Motion is an important part of the website.
+Homepage links, header items, and footer product links go to /catalog for now.
 
-Animations should feel:
+Text links use HEISSKRAFT red and a › mark. Hover is the darker red plus an underline.
+No pill buttons, gradients, glows, or card clutter on these blocks.
+
+# 13. Motion language
+
+Motion elsewhere on the site should feel:
 
 - slow
 - smooth
@@ -396,38 +417,9 @@ Avoid:
 - random floating UI
 - aggressive zooms
 
-Preferred motion:
+Homepage blocks are static. Do not add scroll-reveal or a scroll-scrubbed video there.
 
-solid product
-→ camera push
-→ detail
-→ camera pull-back
-→ technical wireframe
-→ next content state
-
-Animations should feel connected.
-
-The homepage should feel like one continuous experience,
-not separate animated sections.
-
----
-
-# 13. Scroll-driven video
-
-Homepage product storytelling should primarily use
-pre-rendered product video controlled by scroll.
-
-Principles:
-
-- product visible immediately
-- no empty intro screen
-- scroll controls video progress
-- backward scroll reverses animation
-- movement must feel smooth
-- HTML text remains independent from video
-- UI must not be rendered permanently inside video
-
-The first screen should immediately show a large HEISSKRAFT product.
+Lenis smooth scroll may stay site-wide. Respect `prefers-reduced-motion`.
 
 ---
 
@@ -534,6 +526,12 @@ Do not use generic:
 - generic pipes
 
 unless specifically requested.
+
+A tile that does not have media yet uses `MediaPlaceholder`:
+neutral gray background (`#e8e8ed`), the monochrome HK symbol centered,
+about 40% of the tile width, 12–15% opacity, `aria-hidden`.
+Tile text stays readable above the mark.
+Do not invent a product image for that state.
 
 ---
 
@@ -649,3 +647,25 @@ When uncertain:
 choose the simpler,
 more restrained,
 more technically precise solution.
+
+---
+
+# 23. Footer
+
+The footer is light, in the manner of apple.com.
+
+- background `#f5f5f7`
+- headings `#1d1d1f`
+- links 12–13px, `#6e6e73`, darker on hover
+- thin top border `rgba(0, 0, 0, .12)`
+
+Columns:
+
+- Продукция — Трубопроводные системы, Насосное оборудование, Арматура (all /catalog)
+- Покупателям — Каталог, Подбор оборудования, База знаний (all /catalog for now)
+- Компания — Информация о компании, Документация, Сервисный центр, Реквизиты организации
+  (keep an existing href when the page already has one, otherwise /catalog)
+- Контакты — phone, email, postal address
+
+On mobile the columns stack. The bottom row carries the copyright, privacy links,
+the materials notice, and a small low-opacity wordmark.

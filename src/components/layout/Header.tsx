@@ -6,32 +6,54 @@ import { usePathname } from "next/navigation";
 import { useHeaderTheme } from "@/components/layout/HeaderTheme";
 
 const leftLinks = [
-  { href: "/catalog", label: "Продукция" },
-  { href: "/designers", label: "Проектировщикам" },
+  { href: "/catalog", label: "Каталог" },
+  { href: "/catalog", label: "Подбор оборудования" },
+  { href: "/catalog", label: "База знаний" },
 ];
 
-const rightLinks = [
-  { href: "/tools", label: "Программы подбора" },
-  { href: "/contacts", label: "Контакты" },
+const rightLinks = [{ href: "/catalog", label: "Контакты" }];
+
+const mobileLinks = [
+  ...leftLinks,
+  { href: "/catalog", label: "Поиск" },
+  ...rightLinks,
 ];
 
-const mobileLinks = [...leftLinks, ...rightLinks];
+function SearchIcon() {
+  return (
+    <svg
+      className="site-header__search-icon"
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      fill="none"
+    >
+      <circle cx="11" cy="11" r="6.25" stroke="currentColor" strokeWidth="1.75" />
+      <path d="M16.2 16.2L20.5 20.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 function useHomeIdleHeader() {
   const pathname = usePathname();
   const onHome = pathname === "/";
-  const [idle, setIdle] = useState(onHome);
+  const [idlePath, setIdlePath] = useState(pathname);
+  const [idle, setIdle] = useState(false);
+
+  if (idlePath !== pathname) {
+    setIdlePath(pathname);
+    setIdle(false);
+  }
 
   useEffect(() => {
     if (!onHome) {
-      setIdle(false);
       return;
     }
 
     const hero = document.querySelector(".hero");
 
     if (!(hero instanceof HTMLElement)) {
-      setIdle(true);
       return;
     }
 
@@ -39,12 +61,14 @@ function useHomeIdleHeader() {
       setIdle(hero.classList.contains("is-idle"));
     };
 
-    sync();
-
     const observer = new MutationObserver(sync);
     observer.observe(hero, { attributes: true, attributeFilter: ["class"] });
+    const frame = requestAnimationFrame(sync);
 
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, [onHome]);
 
   return onHome && idle;
@@ -120,7 +144,7 @@ export default function Header() {
           >
             {mobileLinks.map((item, index) => (
               <Link
-                key={item.href}
+                key={item.label}
                 href={item.href}
                 className="site-header__mobile-link"
                 style={{ "--nav-index": index } as CSSProperties}
@@ -152,7 +176,7 @@ export default function Header() {
           <div className="site-header__bar">
             <nav className="site-header__desktop-nav" aria-label="Левая навигация">
               {leftLinks.map((item) => (
-                <Link key={item.href} href={item.href} className="site-header__link">
+                <Link key={item.label} href={item.href} className="site-header__link">
                   {item.label}
                 </Link>
               ))}
@@ -169,8 +193,11 @@ export default function Header() {
             </Link>
 
             <nav className="site-header__desktop-nav site-header__desktop-nav--right" aria-label="Правая навигация">
+              <Link href="/catalog" className="site-header__search" aria-label="Поиск">
+                <SearchIcon />
+              </Link>
               {rightLinks.map((item) => (
-                <Link key={item.href} href={item.href} className="site-header__link">
+                <Link key={item.label} href={item.href} className="site-header__link">
                   {item.label}
                 </Link>
               ))}

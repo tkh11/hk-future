@@ -1,15 +1,22 @@
-import Hero from "@/sections/home/Hero";
-import ProjectForm from "@/sections/home/ProjectForm";
-import Preloader from "@/components/layout/Preloader";
+import type { Metadata } from "next";
+import AboutIntro from "@/sections/home/AboutIntro";
+import CategorySplit from "@/sections/home/CategorySplit";
+import HomeHero from "@/sections/home/HomeHero";
+import PipesBanner from "@/sections/home/PipesBanner";
+
+export const metadata: Metadata = {
+  title: "HEISSKRAFT — трубы, насосное оборудование и арматура",
+  description:
+    "HEISSKRAFT — российский производитель полимерных труб, фитингов, насосного оборудования и арматуры.",
+};
 
 export default function HomePage() {
   return (
-    <>
-      <Preloader />
-      <main>
-        <Hero />
-        <ProjectForm />
-      </main>
-    </>
+    <main>
+      <HomeHero />
+      <AboutIntro />
+      <PipesBanner />
+      <CategorySplit />
+    </main>
   );
 }

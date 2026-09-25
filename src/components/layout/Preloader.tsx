@@ -100,6 +100,8 @@ export default function Preloader() {
 
     if (seen || document.documentElement.classList.contains("preloader-done")) {
       markSeen();
+      // Already played this session: hide on mount without waiting for a frame.
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- hide before the intro can paint again
       setVisible(false);
       return;
     }

@@ -55,7 +55,7 @@ const BEATS: Beat[] = [
     at: 16,
     side: "left",
     title: "Решения HEISSKRAFT для ваших проектов",
-    cta: { label: "Оставить заявку", href: "#project-form", accent: true },
+    cta: { label: "Оставить заявку", href: "/catalog", accent: true },
   },
 ];
 

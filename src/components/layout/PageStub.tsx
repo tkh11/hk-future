@@ -13,7 +13,7 @@ export default function PageStub({
         <p className="page-stub__eyebrow">Раздел в разработке</p>
         <h1 className="page-stub__title">{title}</h1>
         <p className="page-stub__note">{note}</p>
-        <Link href="/#project-form" className="page-stub__cta">
+        <Link href="/catalog" className="page-stub__cta">
           Оставить заявку
           <span aria-hidden="true">→</span>
         </Link>

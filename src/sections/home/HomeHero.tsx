@@ -21,16 +21,16 @@ export default function HomeHero() {
       </div>
 
       <div className="home-hero__copy">
-        <h1 className="home-hero__title">Инженерные системы HEISSKRAFT</h1>
+        <h1 className="home-hero__title">Более 25 лет на рынке</h1>
         <p className="home-hero__subtitle">
-          Трубы, фитинги, насосное оборудование и арматура от российского производителя
+          Широкий ассортимент продукции, произведенной на собственном производстве в РФ.
         </p>
         <div className="home-hero__links">
           <Link href="/catalog" className="home-hero__link">
-            Каталог ›
+            Каталог
           </Link>
-          <Link href="/catalog" className="home-hero__link">
-            Подбор оборудования ›
+          <Link href="/catalog" className="home-hero__link home-hero__link--secondary">
+            Подбор оборудования
           </Link>
         </div>
       </div>

@@ -1,9 +1,14 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useHeaderTheme } from "@/components/layout/HeaderTheme";
+import { useRouter } from "next/navigation";
+
+const HeaderLogo = dynamic(() => import("@/components/layout/HeaderLogo"), {
+  ssr: false,
+  loading: () => <span className="site-header__logo" aria-hidden="true" />,
+});
 
 const leftLinks = [
   { href: "/catalog", label: "Каталог" },
@@ -13,18 +18,14 @@ const leftLinks = [
 
 const rightLinks = [{ href: "/catalog", label: "Контакты" }];
 
-const mobileLinks = [
-  ...leftLinks,
-  { href: "/catalog", label: "Поиск" },
-  ...rightLinks,
-];
+const mobileLinks = [...leftLinks, ...rightLinks];
 
 function SearchIcon() {
   return (
     <svg
       className="site-header__search-icon"
-      width="18"
-      height="18"
+      width="15"
+      height="15"
       viewBox="0 0 24 24"
       aria-hidden="true"
       fill="none"
@@ -35,49 +36,94 @@ function SearchIcon() {
   );
 }
 
-function useHomeIdleHeader() {
-  const pathname = usePathname();
-  const onHome = pathname === "/";
-  const [idlePath, setIdlePath] = useState(pathname);
-  const [idle, setIdle] = useState(false);
-
-  if (idlePath !== pathname) {
-    setIdlePath(pathname);
-    setIdle(false);
-  }
+function HeaderSearch({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
-    if (!onHome) {
+    if (!open) {
       return;
     }
 
-    const hero = document.querySelector(".hero");
+    inputRef.current?.focus();
 
-    if (!(hero instanceof HTMLElement)) {
-      return;
+    function onPointerDown(event: PointerEvent) {
+      if (!formRef.current?.contains(event.target as Node)) {
+        onOpenChange(false);
+      }
     }
 
-    const sync = () => {
-      setIdle(hero.classList.contains("is-idle"));
-    };
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onOpenChange(false);
+      }
+    }
 
-    const observer = new MutationObserver(sync);
-    observer.observe(hero, { attributes: true, attributeFilter: ["class"] });
-    const frame = requestAnimationFrame(sync);
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
 
     return () => {
-      cancelAnimationFrame(frame);
-      observer.disconnect();
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
     };
-  }, [onHome]);
+  }, [open, onOpenChange]);
 
-  return onHome && idle;
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const value = query.trim();
+    router.push(value ? `/catalog?q=${encodeURIComponent(value)}` : "/catalog");
+    onOpenChange(false);
+  }
+
+  return (
+    <form
+      ref={formRef}
+      className={`site-header__search${open ? " is-open" : ""}`}
+      role="search"
+      onSubmit={onSubmit}
+    >
+      <button
+        type="button"
+        className="site-header__search-toggle"
+        aria-label={open ? "Закрыть поиск" : "Поиск"}
+        aria-expanded={open}
+        onClick={() => onOpenChange(!open)}
+      >
+        <SearchIcon />
+      </button>
+      <input
+        ref={inputRef}
+        className="site-header__search-input"
+        type="search"
+        name="q"
+        value={query}
+        placeholder="Поиск"
+        aria-label="Поиск"
+        aria-hidden={!open}
+        tabIndex={open ? 0 : -1}
+        onChange={(event) => setQuery(event.target.value)}
+      />
+    </form>
+  );
 }
 
 export default function Header() {
-  const { theme } = useHeaderTheme();
-  const homeIdle = useHomeIdleHeader();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const onSearchOpenChange = useCallback((open: boolean) => {
+    setSearchOpen(open);
+    if (open) {
+      setMenuOpen(false);
+    }
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -97,7 +143,7 @@ export default function Header() {
   }, [menuOpen]);
 
   useEffect(() => {
-    const media = window.matchMedia("(min-width: 768px)");
+    const media = window.matchMedia("(min-width: 834px)");
 
     function onChange(event: MediaQueryListEvent) {
       if (event.matches) {
@@ -120,90 +166,68 @@ export default function Header() {
         />
       ) : null}
 
-      <header className={`site-header-root${homeIdle ? " is-home-idle" : ""}`}>
-        <div data-theme={theme} className="site-header site-header--chip site-header--logo">
+      <header className="site-header">
+        <div className="site-header__bar">
           <Link href="/" aria-label="HEISSKRAFT" className="site-header__brand">
-            <img
-              src="/brand/small-black-logo.svg"
-              alt=""
-              width={71}
-              height={29}
-              className="site-header__logo"
-            />
+            <HeaderLogo />
           </Link>
-        </div>
 
-        <div className="site-header--menu">
-          <nav
-            id="mobile-menu"
-            data-theme={theme}
-            className={`site-header site-header--panel${menuOpen ? " is-open" : ""}`}
-            aria-label="Мобильная навигация"
-            aria-hidden={!menuOpen}
-            inert={!menuOpen}
-          >
-            {mobileLinks.map((item, index) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="site-header__mobile-link"
-                style={{ "--nav-index": index } as CSSProperties}
-                onClick={() => setMenuOpen(false)}
-              >
+          <nav className="site-header__nav" aria-label="Навигация">
+            {leftLinks.map((item) => (
+              <Link key={item.label} href={item.href} className="site-header__link">
                 {item.label}
               </Link>
             ))}
-          </nav>
-
-          <button
-            type="button"
-            data-theme={theme}
-            className="site-header site-header--chip site-header--burger"
-            aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            <span className="site-header__burger-icon" aria-hidden="true">
-              <span className={menuOpen ? "is-open" : ""} />
-              <span className={menuOpen ? "is-open" : ""} />
-              <span className={menuOpen ? "is-open" : ""} />
-            </span>
-          </button>
-        </div>
-
-        <div data-theme={theme} className="site-header site-header--desktop">
-          <div className="site-header__bar">
-            <nav className="site-header__desktop-nav" aria-label="Левая навигация">
-              {leftLinks.map((item) => (
-                <Link key={item.label} href={item.href} className="site-header__link">
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-
-            <Link href="/" aria-label="HEISSKRAFT" className="site-header__brand">
-              <img
-                src="/brand/small-black-logo.svg"
-                alt=""
-                width={71}
-                height={29}
-                className="site-header__logo"
-              />
-            </Link>
-
-            <nav className="site-header__desktop-nav site-header__desktop-nav--right" aria-label="Правая навигация">
-              <Link href="/catalog" className="site-header__search" aria-label="Поиск">
-                <SearchIcon />
-              </Link>
+            <div className="site-header__aside">
               {rightLinks.map((item) => (
                 <Link key={item.label} href={item.href} className="site-header__link">
                   {item.label}
                 </Link>
               ))}
-            </nav>
+            </div>
+          </nav>
+
+          <div className="site-header__tools">
+            <HeaderSearch open={searchOpen} onOpenChange={onSearchOpenChange} />
+            <button
+              type="button"
+              className="site-header__burger"
+              aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              onClick={() => {
+                setMenuOpen((open) => !open);
+                setSearchOpen(false);
+              }}
+            >
+              <span className="site-header__burger-icon" aria-hidden="true">
+                <span className={menuOpen ? "is-open" : ""} />
+                <span className={menuOpen ? "is-open" : ""} />
+                <span className={menuOpen ? "is-open" : ""} />
+              </span>
+            </button>
           </div>
         </div>
+
+        <nav
+          id="mobile-menu"
+          className={`site-header__panel${menuOpen ? " is-open" : ""}`}
+          aria-label="Мобильная навигация"
+          aria-hidden={!menuOpen}
+          inert={!menuOpen}
+        >
+          {mobileLinks.map((item, index) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="site-header__mobile-link"
+              style={{ "--nav-index": index } as CSSProperties}
+              onClick={() => setMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
       </header>
     </>
   );

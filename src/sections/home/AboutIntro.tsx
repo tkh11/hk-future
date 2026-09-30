@@ -1,4 +1,4 @@
-import Image from "next/image";
+import MediaPlaceholder from "@/components/ui/MediaPlaceholder";
 
 const facts = [
   { value: "25+", label: "лет на рынке" },
@@ -27,13 +27,7 @@ export default function AboutIntro() {
           </dl>
         </div>
         <div className="about-intro__media">
-          <Image
-            src="/images/home/about-tools.jpg"
-            alt="Калибры HEISSKRAFT для контроля размеров"
-            width={682}
-            height={1024}
-            sizes="(min-width: 768px) 42vw, 100vw"
-          />
+          <MediaPlaceholder />
         </div>
       </div>
     </section>

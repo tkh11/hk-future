@@ -10,15 +10,22 @@ const HeaderLogo = dynamic(() => import("@/components/layout/HeaderLogo"), {
   loading: () => <span className="site-header__logo" aria-hidden="true" />,
 });
 
-const leftLinks = [
+type NavLink = {
+  href: string;
+  label: string;
+  accent?: boolean;
+};
+
+const navLinks: NavLink[] = [
   { href: "/catalog", label: "Каталог" },
-  { href: "/catalog", label: "Подбор оборудования" },
   { href: "/catalog", label: "База знаний" },
+  { href: "/designers", label: "Проектировщикам" },
+  { href: "/catalog", label: "Подбор оборудования", accent: true },
 ];
 
-const rightLinks = [{ href: "/catalog", label: "Контакты" }];
+const rightLinks: NavLink[] = [{ href: "/catalog", label: "Контакты" }];
 
-const mobileLinks = [...leftLinks, ...rightLinks];
+const mobileLinks = [...navLinks, ...rightLinks];
 
 function SearchIcon() {
   return (
@@ -33,6 +40,33 @@ function SearchIcon() {
       <circle cx="11" cy="11" r="6.25" stroke="currentColor" strokeWidth="1.75" />
       <path d="M16.2 16.2L20.5 20.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
     </svg>
+  );
+}
+
+function MenuSearch({ onNavigate }: { onNavigate: () => void }) {
+  const router = useRouter();
+  const [query, setQuery] = useState("");
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const value = query.trim();
+    router.push(value ? `/catalog?q=${encodeURIComponent(value)}` : "/catalog");
+    onNavigate();
+  }
+
+  return (
+    <form className="site-header__menu-search" role="search" onSubmit={onSubmit}>
+      <SearchIcon />
+      <input
+        className="site-header__menu-search-input"
+        type="search"
+        name="q"
+        value={query}
+        placeholder="Поиск"
+        aria-label="Поиск"
+        onChange={(event) => setQuery(event.target.value)}
+      />
+    </form>
   );
 }
 
@@ -90,15 +124,6 @@ function HeaderSearch({
       role="search"
       onSubmit={onSubmit}
     >
-      <button
-        type="button"
-        className="site-header__search-toggle"
-        aria-label={open ? "Закрыть поиск" : "Поиск"}
-        aria-expanded={open}
-        onClick={() => onOpenChange(!open)}
-      >
-        <SearchIcon />
-      </button>
       <input
         ref={inputRef}
         className="site-header__search-input"
@@ -111,6 +136,15 @@ function HeaderSearch({
         tabIndex={open ? 0 : -1}
         onChange={(event) => setQuery(event.target.value)}
       />
+      <button
+        type="button"
+        className="site-header__search-toggle"
+        aria-label={open ? "Закрыть поиск" : "Поиск"}
+        aria-expanded={open}
+        onClick={() => onOpenChange(!open)}
+      >
+        <SearchIcon />
+      </button>
     </form>
   );
 }
@@ -173,8 +207,12 @@ export default function Header() {
           </Link>
 
           <nav className="site-header__nav" aria-label="Навигация">
-            {leftLinks.map((item) => (
-              <Link key={item.label} href={item.href} className="site-header__link">
+            {navLinks.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={item.accent ? "site-header__link site-header__link--accent" : "site-header__link"}
+              >
                 {item.label}
               </Link>
             ))}
@@ -216,11 +254,16 @@ export default function Header() {
           aria-hidden={!menuOpen}
           inert={!menuOpen}
         >
+          <MenuSearch onNavigate={() => setMenuOpen(false)} />
           {mobileLinks.map((item, index) => (
             <Link
               key={item.label}
               href={item.href}
-              className="site-header__mobile-link"
+              className={
+                item.accent
+                  ? "site-header__mobile-link site-header__mobile-link--accent"
+                  : "site-header__mobile-link"
+              }
               style={{ "--nav-index": index } as CSSProperties}
               onClick={() => setMenuOpen(false)}
             >

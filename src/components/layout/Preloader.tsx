@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { publicPath } from "@/lib/public-path";
 
 const STORAGE_KEY = "hk-preloader-seen";
 const HOLD = 0.24;
@@ -330,7 +331,7 @@ export default function Preloader() {
           <img
             ref={fullRef}
             className="site-preloader__full"
-            src="/brand/full-logo.svg"
+            src={publicPath("/brand/full-logo.svg")}
             alt=""
             width={311}
             height={31}
@@ -339,7 +340,7 @@ export default function Preloader() {
         <img
           ref={smallRef}
           className="site-preloader__small"
-          src="/brand/small-black-logo.svg"
+          src={publicPath("/brand/small-black-logo.svg")}
           alt=""
           width={71}
           height={29}

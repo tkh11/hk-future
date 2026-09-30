@@ -1,8 +1,10 @@
+import { publicPath } from "@/lib/public-path";
+
 export default function MediaPlaceholder() {
   return (
     <div className="media-placeholder" aria-hidden="true">
       <img
-        src="/brand/small-black-logo.svg"
+        src={publicPath("/brand/small-black-logo.svg")}
         alt=""
         width={71}
         height={29}

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type RefObject } from "react";
 import Link from "next/link";
+import { publicPath } from "@/lib/public-path";
 
 // Keeps the beats in sync before the browser reports the real metadata.
 const VIDEO_DURATION = 19.2;
@@ -310,8 +311,8 @@ export default function Hero() {
           <video
             ref={videoRef}
             className="hero__media"
-            src="/videos/hero-fittings.mp4"
-            poster="/videos/hero-fittings-poster.jpg"
+            src={publicPath("/videos/hero-fittings.mp4")}
+            poster={publicPath("/videos/hero-fittings-poster.jpg")}
             muted
             playsInline
             preload="auto"
@@ -321,8 +322,8 @@ export default function Hero() {
           <video
             ref={idleRef}
             className="hero__media hero__idle"
-            src="/videos/hero-idle.mp4"
-            poster="/videos/hero-fittings-poster.jpg"
+            src={publicPath("/videos/hero-idle.mp4")}
+            poster={publicPath("/videos/hero-fittings-poster.jpg")}
             muted
             playsInline
             loop

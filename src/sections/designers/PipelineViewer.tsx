@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { publicPath } from "@/lib/public-path";
 import {
   BUILDING_BLOCKS,
   findBuildingBlock,
@@ -329,14 +330,14 @@ export default function PipelineViewer() {
                 <p className="pipeline__photo">
                   {selected.product.photo ? (
                     <img
-                      src={selected.product.photo}
+                      src={publicPath(selected.product.photo)}
                       alt={selected.product.title}
                       className="pipeline__photo-image"
                     />
                   ) : (
                     <>
                       <img
-                        src="/brand/small-black-logo.svg"
+                        src={publicPath("/brand/small-black-logo.svg")}
                         alt=""
                         width={71}
                         height={29}

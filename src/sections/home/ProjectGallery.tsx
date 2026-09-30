@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { publicPath } from "@/lib/public-path";
 
-const CLIPS = ["/videos/hero-production.mp4", "/videos/hero-warranty.mp4"];
+const CLIPS = [publicPath("/videos/hero-production.mp4"), publicPath("/videos/hero-warranty.mp4")];
 
 const RADIUS = 24;
 const STROKE = 2;

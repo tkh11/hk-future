@@ -1,3 +1,5 @@
+import { publicPath } from "@/lib/public-path";
+
 export type BuildingBlockId = "typical-floor" | "utility-node" | "parking";
 
 export type BuildingBlock = {
@@ -27,7 +29,7 @@ export const BUILDING_BLOCKS: BuildingBlock[] = [
     index: "01",
     title: "Типовой этаж",
     note: "Разводка ХВС и ГВС в квартире: стояки, поэтажные подводки, подключение приборов.",
-    model: "/models/communications.glb",
+    model: publicPath("/models/communications.glb"),
   },
   {
     id: "utility-node",

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { publicPath } from "@/lib/public-path";
 
 const columns = [
   {
@@ -88,7 +89,7 @@ export default function Footer() {
           <p className="site-footer__note">Использование материалов сайта без согласования запрещено.</p>
           <Link href="/" className="site-footer__brand" aria-label="HEISSKRAFT">
             <img
-              src="/brand/full-logo.svg"
+              src={publicPath("/brand/full-logo.svg")}
               alt=""
               width={541}
               height={54}

@@ -24,8 +24,9 @@ import {
   type CameraGoalRef,
 } from "@/sections/designers/scene-camera";
 import { bakeGeometry, mergeBaked } from "@/sections/designers/scene-geometry";
+import { publicPath } from "@/lib/public-path";
 
-export const FLOOR_URL = "/models/communications.glb";
+export const FLOOR_URL = publicPath("/models/communications.glb");
 export const FLOOR_RANGE: [number, number] = [0.05, 400];
 
 const FLOOR_DIRECTION = new Vector3(0.58, 0.4, 0.71).normalize();

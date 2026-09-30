@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import { publicPath } from "@/lib/public-path";
 
 type HoldFrameVideoProps = {
   mp4: string;
@@ -82,18 +83,18 @@ export default function HoldFrameVideo({
       <video
         ref={videoRef}
         className={videoClassName}
-        poster={poster}
+        poster={publicPath(poster)}
         autoPlay={play === "immediate"}
         muted
         playsInline
         preload={play === "immediate" ? "auto" : "metadata"}
         aria-hidden="true"
       >
-        <source src={webm} type="video/webm" />
-        <source src={mp4} type="video/mp4" />
+        <source src={publicPath(webm)} type="video/webm" />
+        <source src={publicPath(mp4)} type="video/mp4" />
       </video>
       <Image
-        src={still}
+        src={publicPath(still)}
         alt={alt}
         width={width}
         height={height}

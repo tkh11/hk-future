@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Alignment, Fit, Layout, Rive, RuntimeLoader } from "@rive-app/canvas";
+import { publicPath } from "@/lib/public-path";
 
-RuntimeLoader.setWasmUrl("/rive.wasm");
+RuntimeLoader.setWasmUrl(publicPath("/rive.wasm"));
 Rive.suppressDeprecationWarnings = ["animations-param", "scrub"];
 
 const ART_W = 1200;
@@ -131,7 +132,7 @@ export default function HeaderLogo() {
     canvas.height = Math.round(ART_H * initialScale * pixelRatio);
 
     const rive = new Rive({
-      src: "/brand/header-logo.riv",
+      src: publicPath("/brand/header-logo.riv"),
       canvas,
       artboard: "Artboard",
       autoplay: false,
@@ -202,7 +203,7 @@ export default function HeaderLogo() {
   if (failed) {
     return (
       <span className="site-header__logo site-header__logo--still">
-        <img src="/brand/full-logo.svg" alt="" />
+        <img src={publicPath("/brand/full-logo.svg")} alt="" />
       </span>
     );
   }

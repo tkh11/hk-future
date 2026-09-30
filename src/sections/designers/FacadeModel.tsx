@@ -23,8 +23,9 @@ import {
   type CameraGoalRef,
 } from "@/sections/designers/scene-camera";
 import { bakeGeometry, boundsOf, mergeBaked } from "@/sections/designers/scene-geometry";
+import { publicPath } from "@/lib/public-path";
 
-export const FACADE_URL = "/models/facade.glb";
+export const FACADE_URL = publicPath("/models/facade.glb");
 export const FACADE_RANGE: [number, number] = [1, 900];
 
 /** Three-quarter view held close to an architectural elevation. */

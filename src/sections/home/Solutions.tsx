@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const solutions = [
-  { title: "Системы охлаждения ЦОД", icon: "data-center" },
+  { title: "Системы охлаждения ЦОД", icon: "data-center", href: "/solutions/data-centers" },
   { title: "Системы пожаротушения", icon: "fire-sprinkler" },
   { title: "Новое строительство и капитальный ремонт", icon: "buildings" },
   { title: "Судостроение", icon: "marine" },
@@ -16,7 +16,7 @@ export default function Solutions() {
       <ul className="solutions__grid">
         {solutions.map((item) => (
           <li key={item.title}>
-            <Link href="/catalog" className="solutions__card">
+            <Link href={item.href ?? "/catalog"} className="solutions__card">
               <Image
                 className="solutions__icon"
                 src={`/icons/solutions/${item.icon}.svg`}

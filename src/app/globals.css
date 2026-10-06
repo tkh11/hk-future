@@ -3211,7 +3211,17 @@ html .park-banner[data-intro-complete="true"] .park-banner__actions {
 .park-banner__scene:not(.is-image-ready) .park-banner__letter { animation-play-state: paused; }
 .block-load-error { padding: 64px 24px; text-align: center; }
 .block-load-error p { margin-bottom: 16px; }
+.block-skeleton--dc-intro, .block-skeleton--dc-loop, .block-skeleton--dc-methods, .block-skeleton--dc-products { padding: 96px 24px; }
+.block-skeleton--dc-intro .block-skeleton__shapes { grid-template-columns: 1fr 1fr; }
+.block-skeleton--dc-intro .block-skeleton__item { min-height: 290px; }
+.block-skeleton--dc-loop .block-skeleton__item, .block-skeleton--dc-methods .block-skeleton__item { min-height: 530px; }
+.block-skeleton--dc-products .block-skeleton__item { min-height: 520px; margin-bottom: 40px; }
+.block-skeleton--dc-intro .block-skeleton__media,
+.block-skeleton--dc-loop .block-skeleton__media,
+.block-skeleton--dc-methods .block-skeleton__media,
+.block-skeleton--dc-products .block-skeleton__media { width: 55%; height: 65%; min-height: 150px; }
 @media (max-width: 767px) {
+  .block-skeleton--dc-intro .block-skeleton__shapes { grid-template-columns: 1fr; }
   .block-skeleton--solutions .block-skeleton__shapes, .block-skeleton--footer .block-skeleton__shapes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .block-skeleton--solutions { padding-bottom: 28px; }
   .block-skeleton--solutions .block-skeleton__item { min-height: 148px; padding: 16px 14px 14px; }

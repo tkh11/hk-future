@@ -95,9 +95,9 @@ Do not make large parts of the interface red without a clear reason.
 
 Website UI font:
 
-Arial, Helvetica, sans-serif
+"SF UI Text", sans-serif
 
-Use Arial consistently for:
+Use the locally bundled SF UI Text files consistently for:
 - navigation
 - headings
 - body text
@@ -106,18 +106,19 @@ Use Arial consistently for:
 - technical information
 - buttons
 
+Reuse the existing 400, 500, 600 and 700 weights in `globals.css`.
 Do not introduce additional web fonts without explicit approval.
 
 Suggested hierarchy:
 
 Display:
-48–88px desktop
+32–56px desktop; scale down for mobile
 
 Section heading:
-32–56px
+22–40px
 
 Body:
-16–20px
+15–18px
 
 Navigation:
 13–15px
@@ -133,17 +134,15 @@ large object + restrained typography
 instead of:
 huge marketing headline + many buttons
 
-Technical labels may use:
-- uppercase
-- numeric indexes
-- slightly increased letter spacing
+Small labels are for functional information only: diagram equipment names,
+interactive controls, factual table labels, sources and form fields.
 
-Example:
-
-01
-СИСТЕМЫ ОТОПЛЕНИЯ
-
-Do not overuse this technique.
+Do not add decorative eyebrow text, category overlines, section indexes or
+small slogans above headings. Avoid labels such as «Системы охлаждения ЦОД»,
+«Инфраструктура цифрового мира» or «01 / Циркуляция» when they merely repeat
+or decorate the content. Put the meaningful subject directly in the heading
+or body text instead. Do not use uppercase or letter spacing to turn these
+decorative captions into a visual pattern.
 
 ---
 
@@ -171,6 +170,10 @@ Never:
 
 Maintain generous clear space around the logo.
 
+Reuse `HeaderLogo` for the approved Rive reveal and its static SVG fallback.
+The reveal may uncover the supplied logo; it must not distort its final geometry.
+Reduced motion shows the settled logo without the entrance animation.
+
 The official brandbook defines the recommended clear space as 2X,
 where X corresponds to the height of the logo characters.
 
@@ -189,7 +192,8 @@ It is especially appropriate for:
 - floating interface controls
 - small UI areas
 
-This makes the symbol the preferred mark for the new website Header.
+Use the existing responsive header logo component; do not replace it with a
+new mark or independently recreate its animation.
 
 Do not overuse the symbol decoratively.
 
@@ -212,7 +216,7 @@ Use it as inspiration for:
 - subtle navigation
 - large visual objects
 - calm transitions
-- micro typography
+- compact, functional typography
 - minimal interface
 
 Do NOT copy:
@@ -277,6 +281,13 @@ Never distort product geometry for visual effect.
 
 Do not generate fictitious product details.
 
+Prefer product cutouts with a transparent background. An official pure-white
+source may stay unedited on a white section when no image rectangle is visible;
+this preserves exact product geometry. Pumps and other equipment
+must sit directly on the section surface, without a filled image rectangle
+or an enclosing background panel. Preserve the real product, its proportions
+and any intrinsic material detail when removing the source background.
+
 ---
 
 # 9. Industrial character
@@ -288,7 +299,7 @@ Industrial character must come from:
 - technical hierarchy
 - material realism
 - thin rules
-- restrained numbering
+- functional numbering where sequence matters
 - structured layouts
 - accurate product information
 
@@ -307,11 +318,10 @@ Every technical graphic must have a real function.
 
 # 10. Glassmorphism
 
-Glass is a secondary UI material.
+Glass is a secondary UI material. The current header has a solid white surface.
 
 Use glass primarily for:
 
-- Header
 - floating navigation
 - 3D controls
 - tooltips
@@ -340,66 +350,59 @@ Content sections should normally remain clean and flat.
 
 # 11. Header
 
-Desktop structure:
+Reuse the shared `Header` on every page. Its current desktop structure is:
 
-LEFT
-Каталог
-Подбор оборудования
-База знаний
+- left: animated HEISSKRAFT logo, linking to the homepage
+- navigation: Каталог, База знаний, Проектировщикам, Подбор оборудования
+- action: Оставить заявку, opening the existing lead dialog
+- right: Контакты and accessible expandable search
 
-CENTER
-HEISSKRAFT symbol / logo
+«Проектировщикам» links to `/designers`; the other catalog-based navigation
+items currently link to `/catalog`. Search submits to `/catalog?q=…`.
 
-RIGHT
-Поиск (icon button, aria-label «Поиск»)
-Контакты
+The header is fixed, compact and white, with dark navigation, a restrained
+shadow and a 12px corner radius. Its maximum width is 1100px, with responsive
+outer gutters. Reuse these established dimensions rather than restyling it
+for an individual page.
 
-All five items currently link to /catalog.
-«Проектировщикам» is not in the header. The /designers page stays in the site.
+Below 834px, show the mobile menu and search with the same navigation and
+lead action. Keep focus, Escape-to-close and scroll locking behavior intact.
 
-The logo must remain geometrically centered in the viewport.
-
-Header:
-
-- fixed
-- floating
-- compact
-- high z-index
-- background HEISSKRAFT red (#D8222B)
-- white logo and navigation
-
-A transparent home-idle state still exists in code for a `.hero.is-idle` element
-(black logo, no bar background). The current homepage does not use that state.
-
-The mobile menu lists the same five items: Каталог, Подбор оборудования,
-База знаний, Поиск, Контакты.
+On the homepage, the header appears during the park banner's scroll
+transition. On pages without that banner, it is available immediately.
 
 # 12. Homepage
 
-The homepage is a static Apple-like sequence on white.
-No preloader, no scroll-driven hero video, no glass beats, no scroll-reveal.
+The homepage combines a photographic opening with restrained white sections.
+Its current sequence is:
 
-Sections, in order, each `data-header-theme="light"`:
+1. ParkBanner — the supplied park photograph loads immediately. The heading
+   appears first, followed by the description's typewriter reveal. Compact
+   Каталог and Проекты buttons with small vector icons sit under the heading.
+   A subtle animated arrow suggests scrolling. Scrolling completes the text
+   reveal before fading the copy, reduces the photograph into an inset scene,
+   and introduces the header. Do not leave partially typed text on scroll.
+2. HomeHero — the HEISSKRAFT «25» video plays once and holds its last frame.
+   Reduced motion shows the still. The media stays fully visible
+   (`object-fit: contain`), followed by short copy and catalog buttons.
+3. Solutions — six application links in a three-column desktop / two-column
+   mobile grid. Reuse the supplied engineering SVGs at 88px desktop / 72px
+   mobile, light gray cards, 4px corners and concise 14–15px labels.
+4. Footer — light and shared by the root layout, see below.
 
-1. HomeHero — 100svh, video plays once and holds the last frame («25»).
-   Reduced motion shows the last-frame poster. Copy and text links sit in the
-   remaining white area. The video stays fully visible (`object-fit: contain`).
-2. AboutIntro — caption, heading, paragraph, three static facts
-   (25+ лет на рынке, 10 лет гарантии, РФ собственное производство).
-   No other figures. No animation.
-3. PipesBanner — full-width rounded tile, PE-RT photograph, text in the white area.
-4. CategorySplit — two equal tiles. Pumps use MediaPlaceholder until an asset exists.
-   Арматура plays its video once when the tile enters the viewport and holds the last frame.
-5. Footer — light, see below. It is rendered by the root layout.
+HomeHero, Solutions and Footer use `DeferredBlock`: they begin loading on
+viewport entry, show a matching skeleton while pending, then reveal once.
+The opening banner must remain available without waiting for lower sections.
 
-Homepage links, header items, and footer product links go to /catalog for now.
-
-Text links use HEISSKRAFT red and a › mark. Hover is the darker red plus an underline.
-No pill buttons, gradients, glows, or card clutter on these blocks.
+Product catalog CTAs go to `/catalog` for now. Specific equipment-selection
+CTAs use their dedicated routes: «Подбор насосов» links to `/selection/pumps`
+and «Подбор трубопровода» to `/selection/pipelines`. Application links may
+navigate to their dedicated page once it exists. Preserve existing project,
+designer and selection destinations rather than redirecting them to the catalog.
 
 # 13. Motion language
 
-Motion elsewhere on the site should feel:
+Motion throughout the site should feel:
 
 - slow
 - smooth
@@ -417,7 +420,21 @@ Avoid:
 - random floating UI
 - aggressive zooms
 
-Homepage blocks are static. Do not add scroll-reveal or a scroll-scrubbed video there.
+Sections reveal once on viewport entry with a short fade and small vertical
+movement. The established `block-enter` treatment is 650ms with a 20px offset
+and `--hk-ease`. Reuse it rather than introducing unrelated entrance effects.
+
+Defer below-the-fold block code and media until the block enters the viewport.
+Keep a representative layout footprint while loading, with pale neutral
+skeleton shapes and a gentle sweeping highlight. The highlight is a loading
+state, not decorative glow. Do not add artificial loading delays or a global
+preloader. Show a retry action if a block fails to load.
+
+Hidden or loading content must not remain keyboard-focusable. Keep headings
+and descriptions readable by assistive technology; decorative motion is
+`aria-hidden`. Content must remain accessible with reduced motion, and
+skeleton sweeps, typewriter effects and scroll transforms must be disabled
+or resolve immediately for that preference.
 
 Lenis smooth scroll may stay site-wide. Respect `prefers-reduced-motion`.
 
@@ -498,9 +515,28 @@ Prefer:
 - clear text
 - subtle hover
 - thin borders
-- arrows when useful
+
+Do not append decorative arrows or arrow icons to CTA buttons, including
+catalog and equipment-selection links. Functional directional controls such
+as carousel navigation are allowed when the arrow is the control's meaning.
 
 Use HEISSKRAFT red only when the action deserves strong emphasis.
+
+Reuse the established homepage button treatment for application pages:
+8px corners, compact padding, red primary surface with white text, and a
+transparent or white secondary surface with a thin red outline. Use the
+existing red tokens for hover and a visible keyboard focus ring. Small
+vector icons may clarify a destination; they must not replace the label.
+
+In product solution sections, place the equipment-selection action beside
+the catalog action: «Подбор насосов» for pumps and «Подбор трубопровода» for
+pipe systems. Catalog actions link to `/catalog`; the selection actions link
+to `/selection/pumps` and `/selection/pipelines`, respectively. These two
+selection pages currently contain only their matching headings, as explicitly
+requested, and will receive their tools later. Do not redirect these actions
+to the catalog or invent selection functionality. Additional empty selection
+pages are allowed when the user explicitly authorizes them. Keep the actions
+adjacent on desktop and allow them to wrap or stack cleanly on mobile.
 
 ---
 
@@ -532,6 +568,9 @@ neutral gray background (`#e8e8ed`), the monochrome HK symbol centered,
 about 40% of the tile width, 12–15% opacity, `aria-hidden`.
 Tile text stays readable above the mark.
 Do not invent a product image for that state.
+
+`MediaPlaceholder` indicates an unavailable asset. A shimmer skeleton instead
+indicates an actual pending block or media load; do not confuse the two states.
 
 ---
 
@@ -669,3 +708,58 @@ Columns:
 
 On mobile the columns stack. The bottom row carries the copyright, privacy links,
 the materials notice, and a small low-opacity wordmark.
+
+---
+
+# 24. Application pages and engineering storytelling
+
+Follow this narrative for pages such as «Системы охлаждения ЦОД»:
+
+1. A clear opening banner with a meaningful heading and a concise benefit.
+   Put it in a separate rectangle with all four corners rounded and a small,
+   visible gap below the fixed header. The banner must not touch or visually
+   merge into the header; account for the header height at every breakpoint.
+   Do not add a redundant «На главную» or «Вернуться на главную» button:
+   the shared header logo already provides that navigation.
+2. Brief context: what the facility does and why its engineering needs matter.
+3. Interactive explanatory illustrations paired with short text. Each control
+   should clarify a stage, component or flow, with usable touch and keyboard
+   interactions and a readable default state.
+4. Relevant HEISSKRAFT solutions, using verified product names, real imagery
+   when available, and only documented applications or specifications.
+5. Clear catalog and equipment-selection CTAs placed together, as specified
+   in the button rules. Catalog CTAs for pumps and ClimatFaser link to
+   `/catalog`; their selection CTAs use `/selection/pumps` and
+   `/selection/pipelines`. Preserve the distinction between browsing products
+   and opening a selection page, even while those pages await implementation.
+
+Use the existing font, white / neutral surfaces, restrained spacing and red
+accents. Favor a legible engineering diagram over decorative dashboards or
+fictional readouts. Illustrative flow lines may explain a concept, but label
+conceptual schematics as such; do not imply they are a measured installation
+plan or a validated equipment selection.
+
+Do not frame the hero with decorative footer captions such as
+«HEISSKRAFT / Инженерные системы» or «От тепла — к решению», divider rules,
+or a second small caption repeating the heading. This does not prohibit
+functional diagram labels or concise factual source notes.
+
+Construct each engineering illustration in a consistent coordinate system.
+Use a coherent ground plane, perspective and back-to-front drawing order so
+equipment stands on its intended surface and correctly occludes objects
+behind it. Supply and return branches must reach the corresponding equipment
+ports. Match the number of connections to the illustrated targets (for
+example, all six server racks in the ЦОД hero); do not leave disconnected
+branches floating between racks. Keep pump symbols, flow markers and labels
+clear of adjacent lines, with enough space to read each element separately.
+
+Show product selection parameters and short feature lists in a compact
+table with a softly rounded outer shape. Use clear labels and values with
+comfortable cell spacing. Do not decorate these rows with plus signs,
+horizontal rules or accordion-like markers when the rows are not controls.
+
+Keep the narrative factual and calm. Verify current industry trends and
+product claims against primary sources, and make the sources available where
+useful. Do not invent capacities, temperatures, pressure ratings, savings,
+certifications, project participation or guarantees. Distinguish general
+cooling principles from the documented capabilities of a HEISSKRAFT product.

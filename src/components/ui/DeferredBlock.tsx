@@ -6,13 +6,17 @@ const blocks = {
   hero: lazy(() => import("@/sections/home/HomeHero")),
   solutions: lazy(() => import("@/sections/home/Solutions")),
   footer: lazy(() => import("@/components/layout/Footer")),
+  "dc-intro": lazy(() => import("@/sections/data-centers/DataCenterIntro")),
+  "dc-loop": lazy(() => import("@/sections/data-centers/CoolingExplorer").then(module => ({ default: module.CoolingLoop }))),
+  "dc-methods": lazy(() => import("@/sections/data-centers/CoolingExplorer").then(module => ({ default: module.CoolingMethods }))),
+  "dc-products": lazy(() => import("@/sections/data-centers/DataCenterProducts")),
 };
 type Kind = keyof typeof blocks;
 
 export function BlockSkeleton({ kind }: { kind: Kind }) {
   return <div className={`block-skeleton block-skeleton--${kind}`} role="status" aria-label="Загрузка блока">
     <div className="block-skeleton__shapes" aria-hidden="true">
-      {Array.from({ length: kind === "solutions" ? 6 : kind === "footer" ? 4 : 1 }, (_, index) => (
+      {Array.from({ length: kind === "solutions" ? 6 : kind === "footer" ? 4 : kind === "dc-intro" || kind === "dc-products" ? 2 : 1 }, (_, index) => (
         <div className="block-skeleton__item" key={index}>
           <span className="block-skeleton__media" />
           <span className="block-skeleton__line" />

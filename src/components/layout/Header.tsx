@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties, type Form
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import LeadDialog from "@/components/layout/LeadDialog";
 
 const HeaderLogo = dynamic(() => import("@/components/layout/HeaderLogo"), {
   ssr: false,
@@ -13,19 +14,16 @@ const HeaderLogo = dynamic(() => import("@/components/layout/HeaderLogo"), {
 type NavLink = {
   href: string;
   label: string;
-  accent?: boolean;
 };
 
 const navLinks: NavLink[] = [
   { href: "/catalog", label: "Каталог" },
   { href: "/catalog", label: "База знаний" },
   { href: "/designers", label: "Проектировщикам" },
-  { href: "/catalog", label: "Подбор оборудования", accent: true },
+  { href: "/catalog", label: "Подбор оборудования" },
 ];
 
 const rightLinks: NavLink[] = [{ href: "/catalog", label: "Контакты" }];
-
-const mobileLinks = [...navLinks, ...rightLinks];
 
 function SearchIcon() {
   return (
@@ -152,6 +150,8 @@ function HeaderSearch({
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [leadOpen, setLeadOpen] = useState(false);
+  const closeLead = useCallback(() => setLeadOpen(false), []);
   const onSearchOpenChange = useCallback((open: boolean) => {
     setSearchOpen(open);
     if (open) {
@@ -160,10 +160,10 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.body.style.overflow = menuOpen || leadOpen ? "hidden" : "";
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && !leadOpen) {
         setMenuOpen(false);
       }
     }
@@ -174,7 +174,7 @@ export default function Header() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [menuOpen]);
+  }, [menuOpen, leadOpen]);
 
   useEffect(() => {
     const media = window.matchMedia("(min-width: 834px)");
@@ -188,6 +188,12 @@ export default function Header() {
     media.addEventListener("change", onChange);
     return () => media.removeEventListener("change", onChange);
   }, []);
+
+  function openLead() {
+    setMenuOpen(false);
+    setSearchOpen(false);
+    setLeadOpen(true);
+  }
 
   return (
     <>
@@ -208,14 +214,13 @@ export default function Header() {
 
           <nav className="site-header__nav" aria-label="Навигация">
             {navLinks.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={item.accent ? "site-header__link site-header__link--accent" : "site-header__link"}
-              >
+              <Link key={item.label} href={item.href} className="site-header__link">
                 {item.label}
               </Link>
             ))}
+            <button type="button" className="site-header__request" onClick={openLead}>
+              Оставить заявку
+            </button>
             <div className="site-header__aside">
               {rightLinks.map((item) => (
                 <Link key={item.label} href={item.href} className="site-header__link">
@@ -255,16 +260,26 @@ export default function Header() {
           inert={!menuOpen}
         >
           <MenuSearch onNavigate={() => setMenuOpen(false)} />
-          {mobileLinks.map((item, index) => (
+          {navLinks.map((item, index) => (
             <Link
               key={item.label}
               href={item.href}
-              className={
-                item.accent
-                  ? "site-header__mobile-link site-header__mobile-link--accent"
-                  : "site-header__mobile-link"
-              }
+              className="site-header__mobile-link"
               style={{ "--nav-index": index } as CSSProperties}
+              onClick={() => setMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <button type="button" className="site-header__mobile-request" onClick={openLead}>
+            Оставить заявку
+          </button>
+          {rightLinks.map((item, index) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="site-header__mobile-link"
+              style={{ "--nav-index": navLinks.length + index } as CSSProperties}
               onClick={() => setMenuOpen(false)}
             >
               {item.label}
@@ -272,6 +287,7 @@ export default function Header() {
           ))}
         </nav>
       </header>
+      {leadOpen ? <LeadDialog onClose={closeLead} /> : null}
     </>
   );
 }

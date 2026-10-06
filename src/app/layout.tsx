@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import DeferredBlock from "@/components/ui/DeferredBlock";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import { HeaderThemeProvider } from "@/components/layout/HeaderTheme";
 import "lenis/dist/lenis.css";
@@ -19,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SmoothScroll />
           <Header />
           {children}
-          <Footer />
+          <DeferredBlock kind="footer" />
         </HeaderThemeProvider>
       </body>
     </html>

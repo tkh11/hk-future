@@ -131,6 +131,8 @@ export default function HeaderLogo() {
     canvas.width = Math.round(ART_W * initialScale * pixelRatio);
     canvas.height = Math.round(ART_H * initialScale * pixelRatio);
 
+    let revealObserver: MutationObserver | null = null;
+
     const rive = new Rive({
       src: publicPath("/brand/header-logo.riv"),
       canvas,
@@ -152,29 +154,55 @@ export default function HeaderLogo() {
           return;
         }
 
-        let started = 0;
-        const watch = () => {
-          if (settled) {
-            return;
-          }
+        const play = () => {
+          let started = 0;
+          const watch = () => {
+            if (settled) {
+              return;
+            }
 
-          if (!started) {
-            started = performance.now();
-          }
+            if (!started) {
+              started = performance.now();
+            }
 
-          const time = Math.min(end, (performance.now() - started) / 1000);
-          place(time * FPS);
-          rive.scrub("Reveal", time);
+            const time = Math.min(end, (performance.now() - started) / 1000);
+            place(time * FPS);
+            rive.scrub("Reveal", time);
 
-          if (time < end) {
-            requestAnimationFrame(watch);
-            return;
-          }
+            if (time < end) {
+              requestAnimationFrame(watch);
+              return;
+            }
 
-          settled = true;
+            settled = true;
+          };
+
+          requestAnimationFrame(watch);
         };
 
-        requestAnimationFrame(watch);
+        const waitsForHeader = document.querySelector(".park-banner") !== null;
+
+        if (!waitsForHeader || document.documentElement.classList.contains("header-revealed")) {
+          play();
+          return;
+        }
+
+        rive.scrub("Reveal", 0);
+        place(0);
+
+        revealObserver = new MutationObserver(() => {
+          if (!document.documentElement.classList.contains("header-revealed")) {
+            return;
+          }
+
+          revealObserver?.disconnect();
+          revealObserver = null;
+          play();
+        });
+        revealObserver.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
       },
       onLoadError: () => {
         setFailed(true);
@@ -195,6 +223,7 @@ export default function HeaderLogo() {
     observer.observe(slot);
 
     return () => {
+      revealObserver?.disconnect();
       observer.disconnect();
       rive.cleanup();
     };

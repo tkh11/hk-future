@@ -13,7 +13,7 @@ export default function HomeHero() {
           width={1280}
           height={704}
           alt="Логотип HEISSKRAFT и число 25"
-          sizes="100vw"
+          sizes="(min-width: 1280px) 1200px, 100vw"
           play="immediate"
           videoClassName="home-hero__video"
           stillClassName="home-hero__still"
@@ -21,7 +21,7 @@ export default function HomeHero() {
       </div>
 
       <div className="home-hero__copy">
-        <h1 className="home-hero__title">Более 25 лет на рынке</h1>
+        <h2 className="home-hero__title">Более 25 лет на рынке</h2>
         <p className="home-hero__subtitle">
           Широкий ассортимент продукции, произведенной на собственном производстве в РФ.
         </p>

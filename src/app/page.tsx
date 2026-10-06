@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import AboutIntro from "@/sections/home/AboutIntro";
-import CategorySplit from "@/sections/home/CategorySplit";
-import HomeHero from "@/sections/home/HomeHero";
-import PipesBanner from "@/sections/home/PipesBanner";
+import DeferredBlock from "@/components/ui/DeferredBlock";
+import ParkBanner from "@/sections/home/ParkBanner";
 
 export const metadata: Metadata = {
   title: "HEISSKRAFT — трубы, насосное оборудование и арматура",
@@ -13,10 +11,9 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main>
-      <HomeHero />
-      <AboutIntro />
-      <PipesBanner />
-      <CategorySplit />
+      <ParkBanner />
+      <DeferredBlock kind="hero" />
+      <DeferredBlock kind="solutions" />
     </main>
   );
 }

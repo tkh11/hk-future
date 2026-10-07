@@ -4,13 +4,13 @@ import { publicPath } from "@/lib/public-path";
 import SolutionsArchitecture from "./SolutionsArchitecture";
 import styles from "./Solutions.module.css";
 
-const solutions = [
+const solutions: { title: string; icon: string; href?: string; ext?: string }[] = [
   { title: "Системы охлаждения ЦОД", icon: "data-center", href: "/solutions/data-centers" },
-  { title: "Системы пожаротушения", icon: "fire-sprinkler" },
-  { title: "Новое строительство и капитальный ремонт", icon: "buildings" },
+  { title: "Системы пожаротушения", icon: "fire-sprinkler-3" },
+  { title: "Новое строительство и капитальный ремонт", icon: "buildings-4" },
   { title: "Судостроение", icon: "marine" },
-  { title: "Пневматические системы", icon: "pneumatics" },
-  { title: "Системы отопления и кондиционирования", icon: "heating" },
+  { title: "Пневматические системы", icon: "pneumatics-3" },
+  { title: "Системы отопления и кондиционирования", icon: "heating-3" },
 ];
 
 export default function Solutions() {
@@ -22,7 +22,6 @@ export default function Solutions() {
           <h2 id="solutions-heading" className={styles.heading}>Инженерные<br />решения</h2>
           <p className={styles.description}>Комплексные системы для надёжной работы объектов любого масштаба.</p>
           <div className={styles.actions}>
-            <Link href="/catalog" className="home-hero__link">Каталог</Link>
             <Link href="/catalog" className="home-hero__link home-hero__link--secondary">Подбор оборудования</Link>
           </div>
         </div>
@@ -35,10 +34,10 @@ export default function Solutions() {
               <div className={styles.media}>
                 <Image
                   className={styles.image}
-                  src={publicPath(`/images/solutions/${item.icon}.png`)}
+                  src={publicPath(`/images/solutions/${item.icon}.${item.ext ?? "png"}`)}
                   width={1024}
                   height={1024}
-                  sizes="(max-width: 599px) calc(100vw - 40px), (max-width: 899px) calc((100vw - 64px) / 2), (max-width: 1140px) calc((100vw - 88px) / 3), 352px"
+                  sizes="(max-width: 599px) calc(100vw - 40px), (max-width: 899px) calc((100vw - 64px) / 2), (max-width: 1328px) calc((100vw - 96px) / 3), 411px"
                   alt=""
                   aria-hidden="true"
                 />

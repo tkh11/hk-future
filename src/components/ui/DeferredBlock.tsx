@@ -20,9 +20,9 @@ export function BlockSkeleton({ kind }: { kind: Kind }) {
         <span className="block-skeleton__company-heading" />
         <span className="block-skeleton__company-description" />
         <span className="block-skeleton__company-text" />
-        <span className="block-skeleton__company-actions"><span /><span /></span>
       </div>
       <span className="block-skeleton__media" />
+      <span className="block-skeleton__company-actions"><span /><span /></span>
     </div>
   </div>;
   return <div className={`block-skeleton block-skeleton--${kind}`} role="status" aria-label="Загрузка блока">

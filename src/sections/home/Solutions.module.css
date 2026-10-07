@@ -1,7 +1,7 @@
 .section {
-  width: min(1140px, 100%);
+  width: min(calc(var(--site-content-width) + 48px), 100%);
   margin: 0 auto;
-  padding: 32px 20px 64px;
+  padding: 32px 24px 64px;
   color: #1d1d1f;
   scroll-margin-top: 84px;
 }

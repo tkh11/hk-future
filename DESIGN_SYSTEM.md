@@ -233,6 +233,12 @@ HEISSKRAFT must be more industrial and technical.
 
 Use generous negative space.
 
+Use the shared `--site-content-width: 1280px` token for the main desktop
+content grid, including the header, company section, solutions, application
+page sections and footer. Allow responsive side gutters; include padding
+outside this content width when a section owns its padding. Keep loading
+skeletons aligned to the same grid. Full-width hero media remain full width.
+
 Sections should usually communicate one strong idea.
 
 Prefer:
@@ -362,9 +368,8 @@ items currently link to `/catalog`. Search submits to `/catalog?q=…`.
 
 The header is fixed at `top: 0`, compact and white, with dark navigation.
 Its rectangular surface spans the entire viewport width with no outer
-gutters, rounded corners or floating shadow. Following the Apple navigation
-reference, the inner bar is constrained to 1024px including 22px horizontal
-padding on desktop, with responsive padding on smaller screens. Reuse these established
+gutters, rounded corners or floating shadow. Its inner bar follows the shared
+1280px content grid, with responsive side gutters. Reuse these established
 dimensions rather than restyling it for an individual page.
 
 Below 834px, show the mobile menu and search with the same navigation and
@@ -400,19 +405,24 @@ Its current sequence is:
    Keep headings readable immediately, without typewriter or entrance
    effects, sticky scroll stages or scroll-driven transforms. The banner
    remains in regular document flow; other sections retain their entry effects.
-2. HomeHero — a white «О компании» section, with concise company copy on
+2. HomeHero — a white «О компании» section, with the user-approved company copy on
    the left and the existing HEISSKRAFT «25» video on the right. Place the
    video inside a square with softly rounded corners and no visible border;
    keep its complete image visible (`object-fit: contain`) without cropping
    the brand mark.
-   Stack the text above the video on mobile. Reuse compact «Продукция» and
+   Preserve the four paragraphs about the company, the «Качество в деталях»
+   motto, quality control and partnerships, followed by «Более 25 лет на рынке…».
+   Keep the copy in readable paragraphs; below 900px stack it above the video.
+   Reuse compact «Продукция» and
    «Наши проекты» buttons with small meaningful vector icons, linking to
-   `/catalog` and `/projects`. Start the video only when its visible area
+   `/catalog` and `/projects`. Center this pair below both columns, with equal
+   button widths and heights (180 × 44px on desktop, equal flexible widths on
+   mobile). Start the video only when its visible area
    enters the viewport and the block has finished loading. Pause offscreen
    or in a hidden browser tab and resume on return. Play automatically in a
    continuous forward-then-reverse cycle using the prepared ping-pong media,
-   preserving the original pace and geometry. A small accessible control
-   allows pause and resume. Reduced motion shows the still. Keep the block
+   preserving the original pace and geometry. Do not show a pause button in
+   this section. Reduced motion shows the still. Keep the block
    background white.
 3. Solutions — start with a separate light banner with softly rounded
    corners, the heading «Инженерные решения», a concise description and the

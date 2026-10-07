@@ -2477,6 +2477,30 @@ html:not(.preloader-done):has(.site-preloader) .site-header {
 .park-banner__dot:hover .park-banner__track { background: #c8c8cd; }
 .park-banner__dot:focus-visible { outline: 2px solid var(--hk-red); outline-offset: 2px; }
 
+@media (min-width: 768px) {
+  .park-banner__slide--video {
+    inset: 0;
+    mask-image: linear-gradient(
+      to bottom right,
+      transparent 0%,
+      transparent 20%,
+      rgb(0 0 0 / 0.28) 42%,
+      rgb(0 0 0 / 0.72) 64%,
+      #000 86%
+    );
+  }
+
+  .park-banner__slide--video .park-banner__video {
+    left: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    transform: none;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 1023px) {
   .park-banner__copy { width: 53%; padding-left: 36px; }
   .park-banner__controls { left: 36px; }

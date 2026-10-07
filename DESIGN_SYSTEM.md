@@ -405,6 +405,15 @@ Its current sequence is:
    Keep headings readable immediately, without typewriter or entrance
    effects, sticky scroll stages or scroll-driven transforms. The banner
    remains in regular document flow; other sections retain their entry effects.
+   Keep the banner copy independent of the shared content grid: use a left
+   gutter of `clamp(32px, 6.5vw, 112px)` on desktop, 36px on tablet and 24px
+   inside the mobile card. Center the mini-timeline selectors horizontally
+   in the viewport on every screen size. On the second desktop slide, use a
+   translucent white scrim (72% opacity) across the full banner height behind
+   the dark-text block, including its CTA and benefits. Fade it out horizontally
+   just beyond the copy and leave the right-hand video clear. Do not apply a
+   diagonal or full-width wash. Keep enough minimum
+   height for the complete copy on short desktop viewports.
 2. HomeHero — a white «О компании» section, with the user-approved company copy on
    the left and the existing HEISSKRAFT «25» video on the right. Place the
    video inside a square with softly rounded corners and no visible border;

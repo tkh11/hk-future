@@ -360,34 +360,75 @@ Reuse the shared `Header` on every page. Its current desktop structure is:
 «Проектировщикам» links to `/designers`; the other catalog-based navigation
 items currently link to `/catalog`. Search submits to `/catalog?q=…`.
 
-The header is fixed, compact and white, with dark navigation, a restrained
-shadow and a 12px corner radius. Its maximum width is 1100px, with responsive
-outer gutters. Reuse these established dimensions rather than restyling it
-for an individual page.
+The header is fixed at `top: 0`, compact and white, with dark navigation.
+Its rectangular surface spans the entire viewport width with no outer
+gutters, rounded corners or floating shadow. Following the Apple navigation
+reference, the inner bar is constrained to 1024px including 22px horizontal
+padding on desktop, with responsive padding on smaller screens. Reuse these established
+dimensions rather than restyling it for an individual page.
 
 Below 834px, show the mobile menu and search with the same navigation and
 lead action. Keep focus, Escape-to-close and scroll locking behavior intact.
 
-On the homepage, the header appears during the park banner's scroll
-transition. On pages without that banner, it is available immediately.
+The header is available immediately on every page, including the homepage.
+Its approved logo reveal starts when the logo asset loads and does not wait
+for scrolling or a banner transition.
 
 # 12. Homepage
 
 The homepage combines a photographic opening with restrained white sections.
 Its current sequence is:
 
-1. ParkBanner — the supplied park photograph loads immediately. The heading
-   appears first, followed by the description's typewriter reveal. Compact
-   Каталог and Проекты buttons with small vector icons sit under the heading.
-   A subtle animated arrow suggests scrolling. Scrolling completes the text
-   reveal before fading the copy, reduces the photograph into an inset scene,
-   and introduces the header. Do not leave partially typed text on scroll.
-2. HomeHero — the HEISSKRAFT «25» video plays once and holds its last frame.
-   Reduced motion shows the still. The media stays fully visible
-   (`object-fit: contain`), followed by short copy and catalog buttons.
-3. Solutions — six application links in a three-column desktop / two-column
-   mobile grid. Reuse the supplied engineering SVGs at 88px desktop / 72px
-   mobile, light gray cards, 4px corners and concise 14–15px labels.
+1. ParkBanner — a pure-white (#FFFFFF) carousel beneath the header, following
+   the approved October 6 park reference. On desktop use the full width, square
+   corners and a stable height filling the viewport beneath the header for both
+   slides. Keep small outer gutters and rounded corners only on mobile, with
+   enough room for all copy. Place dark, left-aligned copy on the left and the
+   user's latest park cutout (`galitsky-hero-cutout.png`) on the right; preserve
+   its clean white background and silhouette without an extra fading mask.
+   Do not darken the photograph. Keep a compact white catalog CTA with dark
+   text, a subtle border and shadow as in the reference, and three small
+   line-icon benefits below the copy. On mobile, stack the copy above the image.
+   Show the park for 7 seconds, then play the supplied pipeline product video
+   muted and inline before returning to the photograph. Include accessible
+   slide selectors as mini timelines: fill the photograph's bar over 7 seconds
+   and the video's bar according to its actual playback position. Reset progress
+   on manual selection; preserve progress offscreen and in hidden tabs. Do not
+   show a pause button. Fit the video to the full desktop slide height without
+   vertical cropping, letterboxing or a top fade; horizontal cropping can fill
+   its media area. Reduced motion keeps the slides still and manually selectable.
+   Keep headings readable immediately, without typewriter or entrance
+   effects, sticky scroll stages or scroll-driven transforms. The banner
+   remains in regular document flow; other sections retain their entry effects.
+2. HomeHero — a white «О компании» section, with concise company copy on
+   the left and the existing HEISSKRAFT «25» video on the right. Place the
+   video inside a square with softly rounded corners and no visible border;
+   keep its complete image visible (`object-fit: contain`) without cropping
+   the brand mark.
+   Stack the text above the video on mobile. Reuse compact «Продукция» and
+   «Наши проекты» buttons with small meaningful vector icons, linking to
+   `/catalog` and `/projects`. Start the video only when its visible area
+   enters the viewport and the block has finished loading. Pause offscreen
+   or in a hidden browser tab and resume on return. Play automatically in a
+   continuous forward-then-reverse cycle using the prepared ping-pong media,
+   preserving the original pace and geometry. A small accessible control
+   allows pause and resume. Reduced motion shows the still. Keep the block
+   background white.
+3. Solutions — start with a separate light banner with softly rounded
+   corners, the heading «Инженерные решения», a concise description and the
+   established compact «Каталог» / «Подбор оборудования» buttons. Follow it
+   with six large, light, rounded application cards, based on the user's
+   supplied image-card reference. Use three columns on desktop, two on
+   tablet and one on compact mobile screens when needed for readability.
+   Each card pairs its clear section title with a prominent supplied image
+   from the user's «иконки» asset folder. Preserve image proportions and
+   equipment details; do not replace these images with the former small
+   SVG-only tiles. Use restrained borders or soft shadows, generous internal
+   spacing and the existing neutral / red palette. Do not reproduce the
+   reference's numbered badge, decorative overlines or arrow buttons.
+   Keep the entire card an accessible application link and preserve its
+   existing destination. This user-approved layout replaces the previous
+   88px / 72px icon cards and their 4px corner treatment.
 4. Footer — light and shared by the root layout, see below.
 
 HomeHero, Solutions and Footer use `DeferredBlock`: they begin loading on

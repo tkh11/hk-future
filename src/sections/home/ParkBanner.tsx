@@ -1,107 +1,194 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
-import Image from "next/image";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
+import { publicPath } from "@/lib/public-path";
 
-const description = "Насосное оборудование, трубопроводные системы и фитинги HEISSKRAFT — в парке Галицкого.";
+const slides = [
+  {
+    title: "Создаём среду для жизни",
+    description: "Комплексные инженерные решения для общественных пространств и объектов любого масштаба.",
+    label: "Парк Галицкого",
+  },
+  {
+    title: "Системы для ваших проектов",
+    description: "Трубы, фитинги и арматура для комплексных инженерных решений.",
+    label: "Трубопроводные системы",
+  },
+];
 
-const clamp = (value: number) => Math.min(1, Math.max(0, value));
-const smooth = (value: number) => value * value * (3 - 2 * value);
+function subscribeVisibility(callback: () => void) {
+  document.addEventListener("visibilitychange", callback);
+  return () => document.removeEventListener("visibilitychange", callback);
+}
+
+function subscribeReducedMotion(callback: () => void) {
+  const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+  media.addEventListener("change", callback);
+  return () => media.removeEventListener("change", callback);
+}
+
+const fallbackDuration = [10000, 10000];
 
 export default function ParkBanner() {
-  const [imageReady, setImageReady] = useState(false);
-  const trackRef = useRef<HTMLElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const copyRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const progressRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const elapsedRef = useRef(0);
+  const [selection, setSelection] = useState({ index: 0, cycle: 0 });
+  const [inView, setInView] = useState(false);
+  const [loadVideo, setLoadVideo] = useState(false);
+  const [failed, setFailed] = useState<[boolean, boolean]>([false, false]);
+  const pageVisible = useSyncExternalStore(subscribeVisibility, () => document.visibilityState === "visible", () => false);
+  const reducedMotion = useSyncExternalStore(subscribeReducedMotion, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => true);
+  const activeSlide = selection.index;
+  const running = inView && pageVisible && !reducedMotion;
+  const slide = slides[activeSlide];
 
-  useEffect(() => {
-    const track = trackRef.current;
-    const stage = stageRef.current;
-    const copy = copyRef.current;
-    if (!track || !stage || !copy) return;
-    const root = document.documentElement;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let frameId = 0;
-
-    const update = () => {
-      frameId = 0;
-      const distance = Math.max(1, track.offsetHeight - stage.offsetHeight);
-      const progress = reduced.matches ? 0 : clamp(-track.getBoundingClientRect().top / distance);
-      // Finish the intro once scrolling starts; never restart it on reverse scroll.
-      if (progress > 0 || reduced.matches) track.dataset.introComplete = "true";
-      const shrink = smooth(clamp((progress - 0.08) / 0.8));
-      const text = smooth(clamp(progress / 0.42));
-      const reveal = reduced.matches ? 1 : smooth(clamp((progress - 0.35) / 0.3));
-      track.style.setProperty("--park-shrink", String(shrink));
-      track.style.setProperty("--park-text", String(text));
-      track.style.setProperty("--park-caption", String(smooth(clamp((progress - 0.65) / 0.25))));
-      // Hidden calls to action must also leave the keyboard navigation order.
-      copy.inert = text > 0.98;
-      root.style.setProperty("--header-reveal", String(reveal));
-      root.classList.toggle("header-in", reveal > 0.02);
-      root.classList.toggle("header-revealed", reveal >= 0.995);
-    };
-    const schedule = () => {
-      if (!frameId) frameId = requestAnimationFrame(update);
-    };
-    update();
-    const observer = new ResizeObserver(schedule);
-    observer.observe(track);
-    observer.observe(stage);
-    window.addEventListener("scroll", schedule, { passive: true });
-    reduced.addEventListener("change", schedule);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", schedule);
-      reduced.removeEventListener("change", schedule);
-      cancelAnimationFrame(frameId);
-      root.style.removeProperty("--header-reveal");
-      root.classList.remove("header-in", "header-revealed");
-      copy.inert = false;
-    };
+  const markFailed = useCallback((index: number) => {
+    setFailed(previous => {
+      if (previous[index]) return previous;
+      const next: [boolean, boolean] = [...previous];
+      next[index] = true;
+      return next;
+    });
   }, []);
 
+  const selectSlide = useCallback((index: number) => {
+    elapsedRef.current = 0;
+    videoRefs.current.forEach(video => {
+      if (!video) return;
+      video.pause();
+      video.currentTime = 0;
+    });
+    progressRefs.current.forEach((fill, slideIndex) => {
+      if (fill) fill.style.transform = `scaleX(${slideIndex < index ? 1 : 0})`;
+    });
+    setSelection(previous => ({ index, cycle: previous.cycle + 1 }));
+  }, []);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      setInView(entry.isIntersecting && entry.intersectionRatio >= 0.2);
+      if (entry.isIntersecting) setLoadVideo(true);
+    }, { threshold: 0.2 });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!running) return;
+    let frame = 0;
+    let previousTime = performance.now();
+    const timedSlide = failed[activeSlide];
+    const duration = fallbackDuration[activeSlide];
+
+    function updateProgress(now: number) {
+      if (document.visibilityState === "hidden") {
+        previousTime = now;
+        frame = requestAnimationFrame(updateProgress);
+        return;
+      }
+      elapsedRef.current += now - previousTime;
+      previousTime = now;
+      const video = videoRefs.current[activeSlide];
+      const progress = timedSlide
+        ? Math.min(1, elapsedRef.current / duration)
+        : video && Number.isFinite(video.duration) && video.duration > 0
+          ? Math.min(1, video.currentTime / video.duration)
+          : 0;
+      const fill = progressRefs.current[activeSlide];
+      if (fill) fill.style.transform = `scaleX(${progress})`;
+      if (timedSlide && progress >= 1) {
+        selectSlide((activeSlide + 1) % slides.length);
+        return;
+      }
+      frame = requestAnimationFrame(updateProgress);
+    }
+
+    frame = requestAnimationFrame(updateProgress);
+    return () => cancelAnimationFrame(frame);
+  }, [selection, activeSlide, running, failed, selectSlide]);
+
+  useEffect(() => {
+    let cancelled = false;
+    videoRefs.current.forEach((video, index) => {
+      if (!video) return;
+      const active = index === activeSlide && running && !failed[index];
+      if (!active) {
+        video.pause();
+        if (index !== activeSlide) video.currentTime = 0;
+        return;
+      }
+      void video.play().catch(() => { if (!cancelled) markFailed(index); });
+    });
+    return () => { cancelled = true; };
+  }, [selection, activeSlide, running, loadVideo, failed, markFailed]);
+
   return (
-    <section ref={trackRef} data-header-theme="light" className="park-banner" aria-label="HEISSKRAFT в парке Галицкого">
-      <div ref={stageRef} className="park-banner__frame">
-        <div className={`park-banner__scene${imageReady ? " is-image-ready" : ""}`}>
-          {!imageReady && <div className="park-banner__skeleton" role="status" aria-label="Загрузка панорамы" />}
-          <Image
-            className="park-banner__image"
-            src="/images/home/galitsky-hero-photo.jpg"
-            alt="Панорама парка Галицкого со стадионом и круговыми садами"
-            fill
-            preload
-            sizes="(max-width: 767px) 180vh, 100vw"
-            draggable={false}
-            onLoad={() => setImageReady(true)}
-            onError={() => setImageReady(true)}
+    <section ref={sectionRef} data-header-theme="light" className="park-banner" aria-label="Решения HEISSKRAFT" aria-roledescription="карусель">
+      <div className="park-banner__scene" data-slide={activeSlide + 1} data-playing={running}>
+        <div className={`park-banner__slide park-banner__slide--park${activeSlide === 0 ? " is-active" : ""}`} aria-hidden={activeSlide !== 0}>
+          <video
+            ref={element => { videoRefs.current[0] = element; }}
+            className="park-banner__video"
+            src={publicPath("/videos/home/hero-opening.mp4")}
+            preload="auto"
+            muted
+            playsInline
+            aria-label="Архитектурная анимация: изогнутый белый фасад"
+            onEnded={() => selectSlide(1)}
+            onError={() => markFailed(0)}
           />
-          <div className="park-banner__shade" />
-          <div ref={copyRef} className="park-banner__copy">
-            <h1 className="park-banner__title">Инженерия за красотой</h1>
-            <div className="park-banner__actions">
-              <Link href="/catalog" className="home-hero__link park-banner__button">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>
-                Каталог
-              </Link>
-              <Link href="/projects" className="home-hero__link home-hero__link--secondary park-banner__button">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l8-4v17M13 10h6v11M8 10v2m0 3v2m8-4v2m0 2v2" /></svg>
-                Проекты
-              </Link>
-            </div>
-            <p className="park-banner__description" aria-label={description}>
-              <span aria-hidden="true">{description.split(" ").map((word, wordIndex, words) => {
-                const offset = words.slice(0, wordIndex).join(" ").length + (wordIndex ? 1 : 0);
-                return <span className="park-banner__word" key={wordIndex}>{Array.from(word + (wordIndex < words.length - 1 ? " " : "")).map((letter, index) => (
-                  <span className="park-banner__letter" key={index} style={{ "--letter-delay": `${0.85 + (offset + index) * 0.023}s` } as CSSProperties}>{letter}</span>
-                ))}</span>;
-              })}</span>
-            </p>
+        </div>
+        <div className={`park-banner__slide park-banner__slide--video${activeSlide === 1 ? " is-active" : ""}`} aria-hidden={activeSlide !== 1}>
+          <video
+            ref={element => { videoRefs.current[1] = element; }}
+            className="park-banner__video"
+            src={loadVideo ? publicPath("/videos/home/gali.mp4") : undefined}
+            poster={publicPath("/images/home/gali-poster.jpg")}
+            preload="auto"
+            muted
+            playsInline
+            aria-label="Панорама парка Галицкого со стадионом и бассейном"
+            onEnded={() => selectSlide(0)}
+            onError={() => markFailed(1)}
+          />
+        </div>
+        <div className="park-banner__copy">
+          <h1 className="park-banner__title">{slide.title}</h1>
+          <p className="park-banner__description">{slide.description}</p>
+          <div className="park-banner__actions">
+            <Link href="/catalog" className="home-hero__link park-banner__button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>
+              Смотреть каталог
+            </Link>
           </div>
-          <div className="park-banner__caption" aria-hidden="true">Парк Галицкого<span>Краснодар</span></div>
-          <div className="park-banner__scroll" aria-hidden="true">Прокрутите, чтобы увидеть больше<span>↓</span></div>
+          <ul className="park-banner__benefits" aria-label="Преимущества HEISSKRAFT">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7Zm-9 5 9 5 9-5M12 12v10" /></svg>
+              <span>Комплексные<br />решения</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" aria-hidden="true"><path d="M12 2 20 5v6c0 5-4 9-8 11-4-2-8-6-8-11V5Z" /></svg>
+              <span>Качество<br />и надёжность</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" aria-hidden="true"><path d="M3 21V10l6 3V8l6 4V3h5l1 18ZM7 17h2m3 0h2m3 0h2" /></svg>
+              <span>Собственное<br />производство</span>
+            </li>
+          </ul>
+        </div>
+        <div className="park-banner__controls" role="group" aria-label="Управление слайдами">
+          {slides.map((item, index) => (
+            <button key={item.label} type="button" className="park-banner__dot" aria-label={`Слайд ${index + 1}: ${item.label}`} aria-pressed={activeSlide === index} onClick={() => selectSlide(index)}>
+              <span className="park-banner__track" aria-hidden="true">
+                <span className="park-banner__progress" ref={element => { progressRefs.current[index] = element; }} />
+              </span>
+            </button>
+          ))}
         </div>
       </div>
     </section>

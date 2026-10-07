@@ -14,7 +14,24 @@ const blocks = {
 type Kind = keyof typeof blocks;
 
 export function BlockSkeleton({ kind }: { kind: Kind }) {
+  if (kind === "hero") return <div className="block-skeleton block-skeleton--hero" role="status" aria-label="Загрузка блока о компании">
+    <div className="block-skeleton__shapes" aria-hidden="true">
+      <div className="block-skeleton__company-copy">
+        <span className="block-skeleton__company-heading" />
+        <span className="block-skeleton__company-description" />
+        <span className="block-skeleton__company-text" />
+        <span className="block-skeleton__company-actions"><span /><span /></span>
+      </div>
+      <span className="block-skeleton__media" />
+    </div>
+  </div>;
   return <div className={`block-skeleton block-skeleton--${kind}`} role="status" aria-label="Загрузка блока">
+    {kind === "solutions" && <div className="block-skeleton__banner" aria-hidden="true">
+      <span className="block-skeleton__line" />
+      <span className="block-skeleton__line block-skeleton__line--short" />
+      <span className="block-skeleton__banner-copy" />
+      <span className="block-skeleton__banner-actions" />
+    </div>}
     <div className="block-skeleton__shapes" aria-hidden="true">
       {Array.from({ length: kind === "solutions" ? 6 : kind === "footer" ? 4 : kind === "dc-intro" || kind === "dc-products" ? 2 : 1 }, (_, index) => (
         <div className="block-skeleton__item" key={index}>

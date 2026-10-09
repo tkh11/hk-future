@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import Lenis from "lenis";
+import { PAGE_SCROLL_EVENT, type PageScrollEvent } from "@/lib/page-scroll";
 
 export default function SmoothScroll() {
   useEffect(() => {
@@ -21,8 +22,15 @@ export default function SmoothScroll() {
     });
 
     const raf = (time: number) => lenis.raf(time * 1000);
+    const scrollTo = (event: Event) => {
+      const { top } = (event as PageScrollEvent).detail;
+      if (!Number.isFinite(top)) return;
+      event.preventDefault();
+      lenis.scrollTo(top, { duration: .7, lerp: 0 });
+    };
 
     gsap.ticker.add(raf);
+    window.addEventListener(PAGE_SCROLL_EVENT, scrollTo);
     gsap.ticker.lagSmoothing(0);
 
     // The preloader and the mobile menu lock the page with plain CSS overflow;
@@ -54,6 +62,7 @@ export default function SmoothScroll() {
 
     return () => {
       observer.disconnect();
+      window.removeEventListener(PAGE_SCROLL_EVENT, scrollTo);
       gsap.ticker.remove(raf);
       gsap.ticker.lagSmoothing(500, 33);
       lenis.destroy();

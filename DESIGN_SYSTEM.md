@@ -448,6 +448,12 @@ Its current sequence is:
    Keep the entire card an accessible application link and preserve its
    existing destination. This user-approved layout replaces the previous
    88px / 72px icon cards and their 4px corner treatment.
+   On mouse hover, tilt and slightly lift the entire card using the same
+   pointer motion as the ClimatFaser banner. Use a soft neutral white/silver
+   sheen that sweeps across the card once on entry, independently of cursor
+   position; never apply the banner's green or cursor-following sheen here.
+   Keep the link target stationary, ease the visual surface back on exit,
+   preserve keyboard focus, and disable motion for touch and reduced motion.
 4. Footer — light and shared by the root layout, see below.
 
 HomeHero, Solutions and Footer use `DeferredBlock`: they begin loading on
@@ -832,8 +838,15 @@ Selecting a card or model part expands that same card smoothly in width and
 height, revealing the image and full description inside its border. Do not
 append a separate preview panel. Animate closing and switching as well; with
 reduced motion, change state immediately. Hovering selectable geometry temporarily
-highlights its category; clicking selects its description. Preserve native
-mobile page scrolling and offer the same selection through keyboard-accessible
+highlights its category; clicking selects its description.
+After a model click, start smooth scrolling immediately alongside the cards'
+opening/closing morph. Measure their final layout in a hidden, non-interactive
+copy with transitions disabled; never wait for the visible morph to finish.
+Scroll just enough to reveal the selected description below the fixed header.
+Do not scroll if the entire expanded card already fits. Repeated clicks on
+the selected model part can reveal its card again. Cancel pending movement if
+the visitor starts scrolling; use instant movement with reduced motion.
+Preserve native mobile page scrolling and offer the same selection through keyboard-accessible
 cards. Show a product preview for the selected category; until product images
 are supplied, use the gray HEISSKRAFT logo as its image placeholder. Use the
 existing ClimatFaser product photo for the pipe card. ClimatFaser highlights supply blue
@@ -871,6 +884,18 @@ Show product selection parameters and short feature lists in a compact
 table with a softly rounded outer shape. Use clear labels and values with
 comfortable cell spacing. Do not decorate these rows with plus signs,
 horizontal rules or accordion-like markers when the rows are not controls.
+
+The fire suppression page at `/solutions/fire-suppression` follows this same
+sequence: animated sprinkler hero, reliability context, supplied FireOff model,
+FireOff promotional banner, HK-Boost FPA/FPV stations, project CTA. Reuse the
+same card morph, help panel, immediate description scrolling, white surfaces
+and lazy-loading placeholders. The fixed model view focuses on a readable
+connection; highlight the main FireOff 125 pipe, 125×40 welded saddles and
+40×40×40 tees independently in red. Use a restrained red/neutral hover sheen
+for the FireOff banner. FPA and FPV have distinct applications; preserve their
+separate descriptions and imagery. Keep provenance in
+`docs/fire-suppression-assets.md`. Do not infer certified pipe dimensions or
+hydraulic performance from the model geometry.
 
 Keep the narrative factual and calm. Verify current industry trends and
 product claims against primary sources, and make the sources available where

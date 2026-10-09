@@ -2,11 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { publicPath } from "@/lib/public-path";
 import SolutionsArchitecture from "./SolutionsArchitecture";
+import SolutionCard from "./SolutionCard";
 import styles from "./Solutions.module.css";
 
 const solutions: { title: string; icon: string; href?: string; ext?: string }[] = [
   { title: "Системы охлаждения ЦОД", icon: "data-center", href: "/solutions/data-centers" },
-  { title: "Системы пожаротушения", icon: "fire-sprinkler-3" },
+  { title: "Системы пожаротушения", icon: "fire-sprinkler-3", href: "/solutions/fire-suppression" },
   { title: "Новое строительство и капитальный ремонт", icon: "buildings-4" },
   { title: "Судостроение", icon: "marine" },
   { title: "Пневматические системы", icon: "pneumatics-3" },
@@ -29,7 +30,7 @@ export default function Solutions() {
       <ul className={styles.grid}>
         {solutions.map((item) => (
           <li key={item.title}>
-            <Link href={item.href ?? "/catalog"} className={styles.card}>
+            <SolutionCard href={item.href ?? "/catalog"}>
               <h3 className={styles.title}>{item.title}</h3>
               <div className={styles.media}>
                 <Image
@@ -42,7 +43,7 @@ export default function Solutions() {
                   aria-hidden="true"
                 />
               </div>
-            </Link>
+            </SolutionCard>
           </li>
         ))}
       </ul>

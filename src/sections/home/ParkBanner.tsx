@@ -6,14 +6,20 @@ import { publicPath } from "@/lib/public-path";
 
 const slides = [
   {
-    title: "Создаём среду для жизни",
+    title: "Инженерные системы будущего",
     description: "Комплексные инженерные решения для общественных пространств и объектов любого масштаба.",
-    label: "Парк Галицкого",
+    label: "Инженерные системы будущего",
   },
   {
-    title: "Системы для ваших проектов",
-    description: "Трубы, фитинги и арматура для комплексных инженерных решений.",
-    label: "Трубопроводные системы",
+    title: "Создаём среду для жизни",
+    description: "Собственное производство и полный цикл поставки оборудования для инженерных систем.",
+    label: "Среда для жизни",
+  },
+  {
+    title: "Инженерия для городской среды",
+    description: "Надёжные системы для парков, стадионов и общественных объектов.",
+    note: "Оборудование HEISSKRAFT в парке Галицкого",
+    label: "Городская среда",
   },
 ];
 
@@ -28,7 +34,7 @@ function subscribeReducedMotion(callback: () => void) {
   return () => media.removeEventListener("change", callback);
 }
 
-const fallbackDuration = [10000, 10000];
+const fallbackDuration = [10000, 10000, 12000];
 
 export default function ParkBanner() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -38,7 +44,7 @@ export default function ParkBanner() {
   const [selection, setSelection] = useState({ index: 0, cycle: 0 });
   const [inView, setInView] = useState(false);
   const [loadVideo, setLoadVideo] = useState(false);
-  const [failed, setFailed] = useState<[boolean, boolean]>([false, false]);
+  const [failed, setFailed] = useState<boolean[]>(() => slides.map(() => false));
   const pageVisible = useSyncExternalStore(subscribeVisibility, () => document.visibilityState === "visible", () => false);
   const reducedMotion = useSyncExternalStore(subscribeReducedMotion, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => true);
   const activeSlide = selection.index;
@@ -48,7 +54,7 @@ export default function ParkBanner() {
   const markFailed = useCallback((index: number) => {
     setFailed(previous => {
       if (previous[index]) return previous;
-      const next: [boolean, boolean] = [...previous];
+      const next = [...previous];
       next[index] = true;
       return next;
     });
@@ -152,34 +158,35 @@ export default function ParkBanner() {
             preload="auto"
             muted
             playsInline
-            aria-label="Панорама парка Галицкого со стадионом и бассейном"
-            onEnded={() => selectSlide(0)}
+            aria-label="Стадион парка Галицкого за водной гладью"
+            onEnded={() => selectSlide(2)}
             onError={() => markFailed(1)}
+          />
+        </div>
+        <div className={`park-banner__slide park-banner__slide--video${activeSlide === 2 ? " is-active" : ""}`} aria-hidden={activeSlide !== 2}>
+          <video
+            ref={element => { videoRefs.current[2] = element; }}
+            className="park-banner__video"
+            src={loadVideo ? publicPath("/videos/home/galits.mp4") : undefined}
+            poster={publicPath("/images/home/galits-poster.jpg")}
+            preload="auto"
+            muted
+            playsInline
+            aria-label="Аэросъёмка парка со стадионом и круговыми дорожками"
+            onEnded={() => selectSlide(0)}
+            onError={() => markFailed(2)}
           />
         </div>
         <div className="park-banner__copy">
           <h1 className="park-banner__title">{slide.title}</h1>
           <p className="park-banner__description">{slide.description}</p>
+          {slide.note && <p className="park-banner__note">{slide.note}</p>}
           <div className="park-banner__actions">
             <Link href="/catalog" className="home-hero__link park-banner__button">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>
               Смотреть каталог
             </Link>
           </div>
-          <ul className="park-banner__benefits" aria-label="Преимущества HEISSKRAFT">
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7Zm-9 5 9 5 9-5M12 12v10" /></svg>
-              <span>Комплексные<br />решения</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" aria-hidden="true"><path d="M12 2 20 5v6c0 5-4 9-8 11-4-2-8-6-8-11V5Z" /></svg>
-              <span>Качество<br />и надёжность</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" aria-hidden="true"><path d="M3 21V10l6 3V8l6 4V3h5l1 18ZM7 17h2m3 0h2m3 0h2" /></svg>
-              <span>Собственное<br />производство</span>
-            </li>
-          </ul>
         </div>
         <div className="park-banner__controls" role="group" aria-label="Управление слайдами">
           {slides.map((item, index) => (

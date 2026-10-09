@@ -856,6 +856,17 @@ In the introduction, a brief definition of a data center in small gray text sits
 below the main heading, rather than the label «Что такое ЦОД». Omit the former long definition paragraphs; retain the
 narrative about increasing computing loads and cooling requirements.
 
+On the ЦОД product section, place ClimatFaser imagery left and its copy right;
+place pump copy left and imagery right. Stack image before copy on mobile.
+Enclose these square images in rounded, clipped frames with visible neutral
+borders, preserving their aspect ratio without additional cropping. The wide
+ClimatFaser banner tilts toward the mouse with a slight lift and enlargement,
+like the cards in Higgsfield Academy. A subtle green sheen follows the same
+pointer position. Measure pointer coordinates on a stationary wrapper, and
+smoothly return the banner to its flat state and fade the sheen on exit. Keep
+its lettering legible; disable these decorative effects for touch input and
+reduced motion.
+
 Show product selection parameters and short feature lists in a compact
 table with a softly rounded outer shape. Use clear labels and values with
 comfortable cell spacing. Do not decorate these rows with plus signs,

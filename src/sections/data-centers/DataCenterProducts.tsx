@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { publicPath } from "@/lib/public-path";
+import ClimatBanner from "./ClimatBanner";
 import styles from "./DataCenters.module.css";
 
 function ProductDetails({ label, rows }: { label: string; rows: [string, string][] }) {
@@ -20,10 +21,8 @@ export default function DataCenterProducts() {
         <h2 id="dc-products-title">Движение теплоносителя.<br /><span>В деталях системы.</span></h2>
         <p>Насосное оборудование и трубопроводы для контуров холодоснабжения.</p>
       </div>
-      <div className={styles.climatBanner}>
-        <Image src={publicPath("/images/data-centers/climatfaser-banner.jpg")} width={1024} height={264} alt="ClimatFaser: труба для холодоснабжения, от −40°C до +95°C" quality={100} unoptimized sizes="(max-width: 767px) 100vw, 1200px" />
-      </div>
-      <article className={`${styles.product} ${styles.productReverse}`}>
+      <ClimatBanner />
+      <article className={styles.product}>
         <div className={styles.productImage}>
           <Image src={publicPath("/images/data-centers/pipes.jpg")} width={1024} height={1024} alt="Полипропиленовые трубы HEISSKRAFT PP-RCT со стекловолокном" sizes="(max-width: 767px) 100vw, 550px" />
         </div>
@@ -41,7 +40,7 @@ export default function DataCenterProducts() {
           </div>
         </div>
       </article>
-      <article className={styles.product}>
+      <article className={`${styles.product} ${styles.productReverse}`}>
         <div className={styles.productImage}>
           <Image src={publicPath("/images/data-centers/pump.jpg")} width={1024} height={1024} alt="Циркуляционный насос HEISSKRAFT" sizes="(max-width: 767px) 100vw, 550px" />
         </div>

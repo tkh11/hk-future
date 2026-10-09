@@ -4,15 +4,14 @@ import DataCenterHero from "@/sections/data-centers/DataCenterHero";
 
 export const metadata: Metadata = {
   title: "Системы охлаждения ЦОД — HEISSKRAFT",
-  description: "Как устроено охлаждение центров обработки данных. Интерактивные схемы, насосное оборудование HEISSKRAFT и трубы ClimatFaser для контуров холодоснабжения.",
+  description: "Как устроено охлаждение центров обработки данных. Интерактивная модель, насосное оборудование HEISSKRAFT и трубы ClimatFaser для контуров холодоснабжения.",
 };
 
 export default function DataCentersPage() {
   return <main>
     <DataCenterHero />
     <DeferredBlock kind="dc-intro" />
-    <DeferredBlock kind="dc-loop" />
-    <DeferredBlock kind="dc-methods" />
+    <DeferredBlock kind="dc-system" />
     <DeferredBlock kind="dc-products" />
   </main>;
 }

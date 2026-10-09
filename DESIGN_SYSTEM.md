@@ -808,10 +808,53 @@ Construct each engineering illustration in a consistent coordinate system.
 Use a coherent ground plane, perspective and back-to-front drawing order so
 equipment stands on its intended surface and correctly occludes objects
 behind it. Supply and return branches must reach the corresponding equipment
-ports. Match the number of connections to the illustrated targets (for
-example, all six server racks in the ЦОД hero); do not leave disconnected
+ports. Match the number of connections to the illustrated targets; do not leave disconnected
 branches floating between racks. Keep pump symbols, flow markers and labels
 clear of adjacent lines, with enough space to read each element separately.
+
+The ЦОД page retains the original animated server illustration in its opening
+banner, without the pump symbol or the «Решения в каталоге» button. Use white
+surfaces with a visible neutral border for the hero, model screen and product
+parameter tables; do not rely on near-white gray fills to define these blocks.
+Align the outer hero surface to the site content grid (1280px maximum), with
+centered side margins and responsive gutters.
+Place the introduction immediately after this banner, then the supplied
+`public/models/chilling.glb` interactive model, then the product sections. The
+model replaces both former schematic explorers; do not restore those explorers.
+Keep a fixed orthographic view matching the user's October 8 reference:
+server racks on the left, pumps and pipework in front, cooler on the right.
+No rotation, dragging, zoom controls or automatic camera movement. Initially
+render the entire model in neutral gray. Let the model screen span the full
+content grid. Place three compact product cards in a horizontal row below it on
+desktop, stacking them on mobile. Collapsed cards show only the short product
+name (ClimatFaser, HIP pumps, HEISSKRAFT valves), without description text.
+Selecting a card or model part expands that same card smoothly in width and
+height, revealing the image and full description inside its border. Do not
+append a separate preview panel. Animate closing and switching as well; with
+reduced motion, change state immediately. Hovering selectable geometry temporarily
+highlights its category; clicking selects its description. Preserve native
+mobile page scrolling and offer the same selection through keyboard-accessible
+cards. Show a product preview for the selected category; until product images
+are supplied, use the gray HEISSKRAFT logo as its image placeholder. Use the
+existing ClimatFaser product photo for the pipe card. ClimatFaser highlights supply blue
+and heat return red; HIP «ин-лайн» highlights both pumps with a subtle light
+pulse; HEISSKRAFT valves highlights only the ball valves in yellow. Preserve the geometry
+and its detail shading, identify parts by asset names/materials, and keep modes
+mutually exclusive. Re-selecting the active option or clearing selection restores
+gray. Do not show a separate «Снять выделение» button. In the lower right of
+the model screen, place an accent-red «Как пользоваться» control. Morph its
+shared surface upward from the compact button into the instructions, using
+the same 600ms easing as product cards, a fixed lower-right corner, and a
+gentle delayed content reveal. Reverse the morph when closing; do not show a
+detached floating panel or scale the text. Respect reduced motion. Explain hover, selecting geometry and toggling product
+cards with small cursor, tap and card icons. Hide hover instructions on
+touch-only devices; support outside-click and Escape dismissal.
+Stop pulse animation offscreen, in hidden tabs and with reduced motion.
+Load the model on viewport entry with a shimmer placeholder and a retry state.
+Keep the page's introduction, product cards and catalog/selection destinations.
+In the introduction, a brief definition of a data center in small gray text sits
+below the main heading, rather than the label «Что такое ЦОД». Omit the former long definition paragraphs; retain the
+narrative about increasing computing loads and cooling requirements.
 
 Show product selection parameters and short feature lists in a compact
 table with a softly rounded outer shape. Use clear labels and values with

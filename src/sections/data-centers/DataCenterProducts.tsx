@@ -20,27 +20,12 @@ export default function DataCenterProducts() {
         <h2 id="dc-products-title">Движение теплоносителя.<br /><span>В деталях системы.</span></h2>
         <p>Насосное оборудование и трубопроводы для контуров холодоснабжения.</p>
       </div>
-      <article className={styles.product}>
-        <div className={styles.productImage}>
-          <Image src={publicPath("/images/data-centers/pump-hbp.png")} width={872} height={568} alt="Консольно-моноблочный насос HEISSKRAFT HBP" sizes="(max-width: 767px) 100vw, 550px" />
-        </div>
-        <div className={styles.productCopy}>
-          <h3>Насосное<br />оборудование</h3>
-          <p>Обеспечивает движение теплоносителя между источником холода и потребителями. Насосы HEISSKRAFT подбираются под расчётные параметры контура.</p>
-          <ProductDetails label="Параметры подбора насосов" rows={[
-            ["Расход и напор", "По гидравлическому расчёту"],
-            ["Исполнение", "С учётом рабочей среды"],
-            ["Режим работы", "Под задачи объекта"],
-          ]} />
-          <div className={styles.productActions}>
-            <Link href="/catalog" className="home-hero__link">Насосы в каталоге</Link>
-            <Link href="/selection/pumps" className="home-hero__link home-hero__link--secondary">Подбор насосов</Link>
-          </div>
-        </div>
-      </article>
+      <div className={styles.climatBanner}>
+        <Image src={publicPath("/images/data-centers/climatfaser-banner.jpg")} width={1024} height={264} alt="ClimatFaser: труба для холодоснабжения, от −40°C до +95°C" quality={100} unoptimized sizes="(max-width: 767px) 100vw, 1200px" />
+      </div>
       <article className={`${styles.product} ${styles.productReverse}`}>
         <div className={styles.productImage}>
-          <Image src={publicPath("/images/data-centers/climatfaser.jpg")} width={3963} height={2642} alt="Полипропиленовая труба HEISSKRAFT ClimatFaser со стекловолокном" sizes="(max-width: 767px) 100vw, 550px" />
+          <Image src={publicPath("/images/data-centers/pipes.jpg")} width={1024} height={1024} alt="Полипропиленовые трубы HEISSKRAFT PP-RCT со стекловолокном" sizes="(max-width: 767px) 100vw, 550px" />
         </div>
         <div className={styles.productCopy}>
           <h3>ClimatFaser</h3>
@@ -53,6 +38,24 @@ export default function DataCenterProducts() {
           <div className={styles.productActions}>
             <Link href="/catalog" className="home-hero__link">Трубы в каталоге</Link>
             <Link href="/selection/pipelines" className="home-hero__link home-hero__link--secondary">Подбор трубопровода</Link>
+          </div>
+        </div>
+      </article>
+      <article className={styles.product}>
+        <div className={styles.productImage}>
+          <Image src={publicPath("/images/data-centers/pump.jpg")} width={1024} height={1024} alt="Циркуляционный насос HEISSKRAFT" sizes="(max-width: 767px) 100vw, 550px" />
+        </div>
+        <div className={styles.productCopy}>
+          <h3>Насосное<br />оборудование</h3>
+          <p>Обеспечивает движение теплоносителя между источником холода и потребителями. Насосы HEISSKRAFT подбираются под расчётные параметры контура.</p>
+          <ProductDetails label="Параметры подбора насосов" rows={[
+            ["Расход и напор", "По гидравлическому расчёту"],
+            ["Исполнение", "С учётом рабочей среды"],
+            ["Режим работы", "Под задачи объекта"],
+          ]} />
+          <div className={styles.productActions}>
+            <Link href="/catalog" className="home-hero__link">Насосы в каталоге</Link>
+            <Link href="/selection/pumps" className="home-hero__link home-hero__link--secondary">Подбор насосов</Link>
           </div>
         </div>
       </article>

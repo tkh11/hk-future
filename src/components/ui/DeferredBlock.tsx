@@ -7,8 +7,7 @@ const blocks = {
   solutions: lazy(() => import("@/sections/home/Solutions")),
   footer: lazy(() => import("@/components/layout/Footer")),
   "dc-intro": lazy(() => import("@/sections/data-centers/DataCenterIntro")),
-  "dc-loop": lazy(() => import("@/sections/data-centers/CoolingExplorer").then(module => ({ default: module.CoolingLoop }))),
-  "dc-methods": lazy(() => import("@/sections/data-centers/CoolingExplorer").then(module => ({ default: module.CoolingMethods }))),
+  "dc-system": lazy(() => import("@/sections/data-centers/CoolingExplorer")),
   "dc-products": lazy(() => import("@/sections/data-centers/DataCenterProducts")),
 };
 type Kind = keyof typeof blocks;

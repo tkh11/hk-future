@@ -1,4 +1,3 @@
-import Link from "next/link";
 import styles from "./DataCenters.module.css";
 
 type Point = readonly [number, number, number];
@@ -37,7 +36,6 @@ function ServerRack({ x, y }: { x: number; y: number }) {
 function ServerHall() {
   const supplyMain: Point[] = [[400, -15, pipeHeight], [400, 290, pipeHeight], [400, 290, 0]];
   const returnMain: Point[] = [[475, -55, pipeHeight], [475, 290, pipeHeight], [475, 290, 0]];
-  const pump = project([400, 235, pipeHeight]);
 
   return (
     <svg viewBox="35 5 760 645" role="img" aria-labelledby="dc-hall-title" className={styles.hall}>
@@ -75,8 +73,6 @@ function ServerHall() {
           <circle cx={returnPort[0]} cy={returnPort[1]} r="2.8" fill="#fff" stroke="#8e8e98" strokeWidth="1.3" />
         </g>;
       })}
-      <circle cx={pump[0]} cy={pump[1]} r="18" fill="#fff" stroke="var(--hk-red)" strokeWidth="1.7" />
-      <path d={`M${pump[0] - 6} ${pump[1] - 8}l15 8-15 8Z`} fill="var(--hk-red)" />
     </svg>
   );
 }
@@ -87,7 +83,6 @@ export default function DataCenterHero() {
       <div className={styles.heroCopy}>
         <h1>Холод для<br />больших данных.</h1>
         <p className={styles.heroDescription}>За каждым вычислением — тепло.<br />За стабильной работой — инженерия.</p>
-        <Link href="/catalog" className="home-hero__link">Решения в каталоге</Link>
       </div>
       <div className={styles.heroVisual}><ServerHall /></div>
     </div>

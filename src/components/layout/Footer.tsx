@@ -5,8 +5,8 @@ const columns = [
   {
     title: "Продукция",
     links: [
-      { href: "/catalog", label: "Трубопроводные системы" },
-      { href: "/catalog", label: "Насосное оборудование" },
+      { href: "/catalog/pipelines", label: "Трубопроводные системы" },
+      { href: "/catalog/pumps", label: "Насосное оборудование" },
       { href: "/catalog", label: "Арматура" },
     ],
   },

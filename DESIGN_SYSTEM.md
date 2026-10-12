@@ -173,6 +173,16 @@ Maintain generous clear space around the logo.
 Reuse `HeaderLogo` for the approved Rive reveal and its static SVG fallback.
 The reveal may uncover the supplied logo; it must not distort its final geometry.
 Reduced motion shows the settled logo without the entrance animation.
+The current `header-logo.riv` uses the `Mark` artboard (1440×320) and the `Build`
+animation (128 frames at 60fps). Use its current lockup bounds, not the previous
+`Artboard` / `Reveal` export's crop. Start with a compact slot for the HK mark.
+Expand that slot with the rendered logo's right edge so the navigation moves
+alongside the reveal, using the animation's own timing and easing. Do not reserve
+the full wordmark width before playback. During loading, keep the compact slot
+empty; the first visible logo must be the initial colored Rive frame. Show the
+static SVG fallback only if Rive fails, never as a loading frame.
+Keep the artboard backgrounds transparent on the white header; preserve the logo's
+own vector geometry, colors and animation tracks.
 
 The official brandbook defines the recommended clear space as 2X,
 where X corresponds to the height of the logo characters.
@@ -376,8 +386,10 @@ Below 834px, show the mobile menu and search with the same navigation and
 lead action. Keep focus, Escape-to-close and scroll locking behavior intact.
 
 The header is available immediately on every page, including the homepage.
-Its approved logo reveal starts when the logo asset loads and does not wait
-for scrolling or a banner transition.
+Its approved logo reveal plays once, three seconds after the loaded logo's first
+frame is displayed on screen. Count only visible time; pause the delay and playback
+in a hidden tab or when the logo is offscreen. Do not tie it to scrolling or a
+banner transition. Cancel pending timers and rendering work when unmounting.
 
 # 12. Homepage
 
@@ -449,9 +461,9 @@ Its current sequence is:
    existing destination. This user-approved layout replaces the previous
    88px / 72px icon cards and their 4px corner treatment.
    On mouse hover, tilt and slightly lift the entire card using the same
-   pointer motion as the ClimatFaser banner. Use a soft neutral white/silver
-   sheen that sweeps across the card once on entry, independently of cursor
-   position; never apply the banner's green or cursor-following sheen here.
+   pointer motion as the ClimatFaser banner. Keep only this tilt interaction:
+   do not add glints, reflections, sweeping light stripes or cursor-following
+   spotlights to category cards.
    Keep the link target stationary, ease the visual surface back on exit,
    preserve keyboard focus, and disable motion for touch and reduced motion.
 4. Footer — light and shared by the root layout, see below.
@@ -766,7 +778,8 @@ The footer is light, in the manner of apple.com.
 
 Columns:
 
-- Продукция — Трубопроводные системы, Насосное оборудование, Арматура (all /catalog)
+- Продукция — Трубопроводные системы (`/catalog/pipelines`), Насосное оборудование
+  (`/catalog/pumps`), Арматура (`/catalog` until its destination is defined)
 - Покупателям — Каталог, Подбор оборудования, База знаний (all /catalog for now)
 - Компания — Информация о компании, Документация, Сервисный центр, Реквизиты организации
   (keep an existing href when the page already has one, otherwise /catalog)
@@ -902,3 +915,34 @@ product claims against primary sources, and make the sources available where
 useful. Do not invent capacities, temperatures, pressure ratings, savings,
 certifications, project participation or guarantees. Distinguish general
 cooling principles from the documented capabilities of a HEISSKRAFT product.
+
+---
+
+# 25. Catalog navigation
+
+The catalog starts at `/catalog` and unfolds one level at a time. Each category
+has its own shareable address and functional breadcrumbs back through its parents.
+Keep this user-approved hierarchy and order in `src/lib/catalog.ts`:
+
+- Трубопроводные системы: Heisskraft Therm, Heisskraft Multilayer, Heisskraft HDPE,
+  Heisskraft FireOff, Heisskraft Black Pipe.
+- Насосное оборудование: Повышение давления, Циркуляционные, Скважинные,
+  Дренажные, Канализационные, Насосные станции, Автоматика / принадлежности.
+- Вспомогательное оборудование, with no invented subcategories.
+
+Use the shared content grid, white surfaces, readable neutral borders, restrained
+headings and rounded category cards. Reuse the homepage's pointer tilt, slight
+lift and smooth return; do not add hover glints, sheens or running light stripes.
+Keep the whole card a keyboard-accessible link. Reduce to two columns on tablets
+and one on narrow screens. Disable decorative motion for touch and reduced motion.
+
+Reveal cards with the existing 650ms block entrance on first viewport entry.
+Mount their illustrations only on entry; show pale shimmer placeholders while
+loading, with no artificial delay. Offscreen placeholders remain static. Functional
+search spans the complete hierarchy and accepts `?q=` from the shared header.
+
+Current illustrations are conceptual engineering drawings, not product photographs
+or dimensional diagrams. Until real assortment data is supplied, category leaves
+show a clear availability placeholder and the existing equipment-selection link
+where applicable. Do not invent products, SKUs, prices, technical specifications
+or additional hierarchy levels.

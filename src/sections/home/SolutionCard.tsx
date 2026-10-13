@@ -6,7 +6,7 @@ import { usePointerTilt } from "@/lib/use-pointer-tilt";
 import styles from "./Solutions.module.css";
 
 export default function SolutionCard({ href, children }: { href: string; children: ReactNode }) {
-  const { surfaceRef, pointerHandlers } = usePointerTilt();
+  const { surfaceRef, pointerHandlers } = usePointerTilt({ trackReflection: true });
 
   return (
     <Link href={href} className={styles.cardLink} {...pointerHandlers}>

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, type PointerEvent } from "react";
 
 const HOVER_MOTION = "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
 
-export function usePointerTilt({ trackSheen = false } = {}) {
+export function usePointerTilt({ trackSheen = false, trackReflection = false } = {}) {
   const surfaceRef = useRef<HTMLDivElement>(null);
   const frame = useRef(0);
   const pointer = useRef({ x: 50, y: 50 });
@@ -44,8 +44,18 @@ export function usePointerTilt({ trackSheen = false } = {}) {
         surface.style.setProperty("--sheen-x", `${pointer.current.x}%`);
         surface.style.setProperty("--sheen-y", `${pointer.current.y}%`);
       }
-      surface.style.setProperty("--tilt-x", `${(50 - pointer.current.y) / 10}deg`);
-      surface.style.setProperty("--tilt-y", `${(pointer.current.x - 50) / 16}deg`);
+      const tiltX = (50 - pointer.current.y) / 10;
+      const tiltY = (pointer.current.x - 50) / 16;
+      surface.style.setProperty("--tilt-x", `${tiltX}deg`);
+      surface.style.setProperty("--tilt-y", `${tiltY}deg`);
+      if (trackReflection) {
+        // A fixed light reflected by the tilted surface, rather than a cursor spotlight.
+        const lightAlignment = (tiltX / 5 - tiltY / 3.125) / 2;
+        surface.style.setProperty("--reflection-x", `${-tiltY * 6}%`);
+        surface.style.setProperty("--reflection-y", `${tiltX * 4}%`);
+        surface.style.setProperty("--reflection-angle", `${-25 + tiltY * 4 + tiltX * 2}deg`);
+        surface.style.setProperty("--reflection-opacity", `${0.15 + lightAlignment * 0.09}`);
+      }
       surface.dataset.hovered = "true";
     });
   }

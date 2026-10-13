@@ -31,18 +31,18 @@ export default function Solutions() {
         {solutions.map((item) => (
           <li key={item.title}>
             <SolutionCard href={item.href ?? "/catalog"}>
-              <h3 className={styles.title}>{item.title}</h3>
               <div className={styles.media}>
                 <Image
                   className={styles.image}
                   src={publicPath(`/images/solutions/${item.icon}.${item.ext ?? "png"}`)}
                   width={1024}
                   height={1024}
-                  sizes="(max-width: 599px) calc(100vw - 40px), (max-width: 899px) calc((100vw - 64px) / 2), (max-width: 1328px) calc((100vw - 96px) / 3), 411px"
+                  sizes="(max-width: 599px) 260px, 280px"
                   alt=""
                   aria-hidden="true"
                 />
               </div>
+              <h3 className={styles.title}>{item.title}</h3>
             </SolutionCard>
           </li>
         ))}

@@ -448,22 +448,29 @@ Its current sequence is:
 3. Solutions — start with a separate light banner with softly rounded
    corners, the heading «Инженерные решения», a concise description and the
    established compact «Каталог» / «Подбор оборудования» buttons. Follow it
-   with six large, light, rounded application cards, based on the user's
-   supplied image-card reference. Use three columns on desktop, two on
+   with six rounded application cards: pure white surfaces with a thin red
+   outline at 24% opacity, red icons and restrained
+   gray titles (18px, medium weight) below the icons. On mouse hover, turn the
+   title HEISSKRAFT red (`--hk-red`) and bring the matching outline to full opacity
+   with the same 250ms transition. Fade in the small soft gray gradient toward
+   the lower corner and the outer shadow only on hover; keep both absent at rest.
+   Preserve the visible keyboard
+   focus ring. Use three columns on desktop, two on
    tablet and one on compact mobile screens when needed for readability.
-   Each card pairs its clear section title with a prominent supplied image
-   from the user's «иконки» asset folder. Preserve image proportions and
-   equipment details; do not replace these images with the former small
-   SVG-only tiles. Use restrained borders or soft shadows, generous internal
-   spacing and the existing neutral / red palette. Do not reproduce the
+   Center each supplied red icon from `public/images/solutions` above its
+   clear section title. Use 280px icon boxes on desktop and 260px on mobile,
+   constrained to the available width, with a 24px gap before the title.
+   Preserve icon proportions, generous internal spacing and readable lettering.
+   Keep a soft shadow only on hover. Do not reproduce the
    reference's numbered badge, decorative overlines or arrow buttons.
    Keep the entire card an accessible application link and preserve its
    existing destination. This user-approved layout replaces the previous
    88px / 72px icon cards and their 4px corner treatment.
    On mouse hover, tilt and slightly lift the entire card using the same
-   pointer motion as the ClimatFaser banner. Keep only this tilt interaction:
-   do not add glints, reflections, sweeping light stripes or cursor-following
-   spotlights to category cards.
+   pointer motion as the ClimatFaser banner. Keep a broad, soft neutral reflection
+   whose position and intensity derive from the same tilt angles, as though
+   a fixed light were reflecting off a physical card. Do not use a timed sweep
+   or a spotlight attached to the cursor. Fade the reflection away on exit.
    Keep the link target stationary, ease the visual surface back on exit,
    preserve keyboard focus, and disable motion for touch and reduced motion.
 4. Footer — light and shared by the root layout, see below.
@@ -930,9 +937,28 @@ Keep this user-approved hierarchy and order in `src/lib/catalog.ts`:
   Дренажные, Канализационные, Насосные станции, Автоматика / принадлежности.
 - Вспомогательное оборудование, with no invented subcategories.
 
-Use the shared content grid, white surfaces, readable neutral borders, restrained
-headings and rounded category cards. Reuse the homepage's pointer tilt, slight
-lift and smooth return; do not add hover glints, sheens or running light stripes.
+The first catalog page has a white heading area below the shared header, with a
+black «Каталог» title aligned to the content grid. Its search fills the grid width. Show
+three red portrait cards with an exact 9:16 aspect ratio. Put each section name
+in white at the bottom, with a large animated engineering illustration above.
+Omit «5 систем», «7 категорий» and other card quantity captions. Preserve the
+search field and all three existing destinations. Use three columns on desktop,
+two on smaller tablets and one on mobile, keeping the portrait ratio.
+Give the three entrance cards soft resting shadows. When one is hovered, preserve
+its existing tilt and smoothly scale the other two to 96.5% with smaller, lighter
+shadows, like settling onto a surface. Restore them on exit; disable this motion
+for touch and reduced-motion preferences.
+All three entrance covers use supplied muted, inline, looping videos filling the
+portrait cards: pipes.mp4, pumpscategory.mp4 and accessories.mp4 respectively.
+Start illustrations on viewport entry, pause them offscreen and in hidden tabs,
+and show still illustrations with reduced motion. Match loading placeholders to
+the portrait cards and the search field.
+
+Deeper catalog levels and search results retain the shared content grid, white
+surfaces, readable neutral borders, restrained headings and rounded category cards.
+Reuse the homepage's pointer tilt, slight
+lift and smooth return unchanged. Add a soft neutral hover reflection that reacts
+to the existing tilt, including on video covers; fade it out on pointer exit.
 Keep the whole card a keyboard-accessible link. Reduce to two columns on tablets
 and one on narrow screens. Disable decorative motion for touch and reduced motion.
 

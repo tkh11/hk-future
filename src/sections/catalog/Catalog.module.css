@@ -1,4 +1,25 @@
 .page { width: min(calc(var(--site-content-width) + 48px), 100%); margin: 0 auto; padding: calc(var(--site-header-height) + 48px) 24px 96px; min-height: 76vh; color: #1d1d1f; }
+.landing {
+  --catalog-accent: #CA3C32;
+  --card-height: min(calc(100svh - var(--site-header-height) * 2 - 148px), calc((min(100vw, var(--site-content-width) + 48px) - 96px) / 3 * 16 / 9));
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  padding: calc(var(--site-header-height) + 24px) 24px;
+  background: #fff;
+  color: #1d1d1f;
+}
+.landingContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  width: min(100%, calc(var(--card-height) * 27 / 16 + 48px));
+  margin: auto;
+  padding: 0;
+}
 .breadcrumbs { margin-bottom: 28px; font-size: 13px; color: #6e6e73; }
 .breadcrumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; list-style: none; padding: 0; margin: 0; }
 .breadcrumbs li { display: flex; gap: 12px; align-items: center; }
@@ -64,3 +85,100 @@
   .emptyCopy h2 { font-size: 24px; }
 }
 @media (prefers-reduced-motion: reduce) { .skeleton::after { animation: none; } .card { transition: none; } }
+
+/* The catalog entrance uses portrait covers; deeper levels retain their own grid. */
+.coverCard {
+  aspect-ratio: 9 / 16;
+  min-height: 0;
+  height: auto;
+  border: 0;
+  background: var(--catalog-accent, var(--hk-red));
+  color: #fff;
+  padding: clamp(20px, 2.5vw, 36px);
+  box-shadow: 0 18px 36px -8px rgb(29 29 31 / 28%), 0 5px 12px rgb(29 29 31 / 10%);
+}
+.coverCard h2 {
+  position: relative;
+  min-height: 0;
+  margin: auto 0 0;
+  max-width: 100%;
+  font-size: clamp(18px, 2.1vw, 30px);
+  line-height: 1.23;
+  font-weight: 500;
+  letter-spacing: -.035em;
+  overflow-wrap: break-word;
+}
+.coverArt { flex: 1; min-height: 0; display: flex; align-items: center; margin: -10px -16px 26px; }
+.coverArt svg { display: block; width: 100%; height: 100%; max-height: 100%; }
+.coverPlaceholder { position: relative; display: block; width: 100%; flex: 1; min-height: 200px; overflow: hidden; border-radius: 12px; background: rgb(255 255 255 / 7%); }
+.coverPlaceholder::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 12%) 48%, transparent 66%); animation: catalog-shimmer 1.8s ease-in-out infinite; transform: translateX(-100%); }
+.coverPlaceholder[data-idle="true"]::after, .coverCard[data-playing="false"] .coverPlaceholder::after { animation-play-state: paused; }
+.coverSearchPlaceholder { box-sizing: border-box; width: 100%; height: 50px; margin-bottom: 24px; border: 1px solid var(--catalog-accent, var(--hk-red)); border-radius: 10px; background: #fff; }
+.coverLoading { gap: 28px; }
+.coverTitlePlaceholder { width: 85%; height: 60px; border-radius: 6px; background: rgb(255 255 255 / 18%); }
+@media (min-width: 760px) { .coverGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 600px) and (max-width: 759px) { .coverGrid { gap: 20px; } }
+@media (max-width: 599px) {
+  .landing { --card-height: auto; height: auto; align-items: stretch; justify-content: flex-start; padding: calc(var(--site-header-height) + 20px) 16px 24px; }
+  .landingContent,
+  .landingContent .toolbar,
+  .landingContent .coverGrid { width: 100%; }
+  .landing .coverCard { width: 100%; height: auto; aspect-ratio: 9 / 16; }
+  .landingContent .coverGrid { display: grid; }
+  .coverSearchPlaceholder { margin-bottom: 22px; }
+  .coverCard { padding: 28px; }
+  .coverCard h2 { font-size: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .coverArt *, .coverPlaceholder::after { animation: none !important; }
+}
+
+.landingContent .toolbar { flex-wrap: wrap; gap: 14px; width: 100%; margin: 0; }
+.landingContent .coverGrid { display: flex; justify-content: center; align-items: stretch; gap: 24px; width: 100%; margin: 0; }
+.landing .coverCard { flex: 0 0 auto; width: calc(var(--card-height) * 9 / 16); height: var(--card-height); min-height: 0; background: var(--catalog-accent); }
+.landingContent .search { width: 100%; background: #fff; border-color: var(--catalog-accent); color: #1d1d1f; }
+.landingContent .search svg,
+.landingContent .search button { color: var(--catalog-accent); }
+.landingContent .search input { color: #1d1d1f; }
+.landingContent .search input::placeholder { color: #6e6e73; }
+.landingContent .search:focus-within { border-color: var(--catalog-accent); outline: 2px solid rgb(202 60 50 / 18%); outline-offset: 2px; }
+.landingContent .search button:focus-visible { outline-color: var(--catalog-accent); }
+@media (max-width: 999px) and (min-width: 600px) {
+  .landing { --card-height: min(calc(100svh - var(--site-header-height) - 160px), calc((min(100vw, var(--site-content-width) + 48px) - 68px) / 2 * 16 / 9)); }
+  .landingContent { width: min(100%, calc(var(--card-height) * 9 / 16 * 2 + 24px)); }
+  .landingContent .coverGrid { flex-wrap: wrap; }
+}
+@media (max-width: 599px) {
+  .landingContent .coverGrid { display: grid; }
+}
+.coverVideo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* A soft surface reflection follows the existing tilt, including over video. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .card::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: -55% -45%;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 40% 35%, #fff 0%, rgb(255 255 255 / 70%) 24%, rgb(116 122 132 / 22%) 46%, transparent 68%);
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-25deg);
+    transition: transform .6s cubic-bezier(.22, 1, .36, 1), opacity .45s ease;
+  }
+  .card[data-hovered="true"]::after {
+    opacity: calc(var(--reflection-opacity, .15) * 1.8);
+    transform: translate3d(var(--reflection-x, 0%), var(--reflection-y, 0%), 0) rotate(var(--reflection-angle, -25deg));
+    transition-duration: .3s, .3s;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .coverGrid .cardLink:hover .coverCard {
+    box-shadow: 0 28px 48px -10px rgb(29 29 31 / 34%), 0 8px 18px rgb(29 29 31 / 13%);
+  }
+  .coverGrid:has(.coverCard[data-hovered="true"]) .coverCard:not([data-hovered="true"]) {
+    transform: perspective(1600px) rotateX(0) rotateY(0) translateZ(0) scale(.965);
+    box-shadow: 0 6px 14px -3px rgb(29 29 31 / 16%), 0 2px 5px rgb(29 29 31 / 6%);
+  }
+}

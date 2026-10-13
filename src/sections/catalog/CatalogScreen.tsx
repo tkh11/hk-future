@@ -8,6 +8,11 @@ import styles from "./Catalog.module.css";
 export default function CatalogScreen({ path = [] }: { path?: string[] }) {
   const entry = getCatalogEntry(path);
   const title = entry?.node.title ?? "Каталог";
+  if (!entry) return <main className={styles.landing} aria-label="Каталог продукции Heisskraft" data-header-theme="light">
+    <div className={styles.landingContent}>
+      <Suspense fallback={<CatalogSkeleton cover />}><CatalogBrowser path={path} /></Suspense>
+    </div>
+  </main>;
   return <main className={styles.page} data-header-theme="light">
     {entry && <nav className={styles.breadcrumbs} aria-label="Путь по каталогу"><ol>
       <li><Link href="/catalog">Каталог</Link></li>

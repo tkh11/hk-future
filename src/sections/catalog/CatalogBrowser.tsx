@@ -19,6 +19,7 @@ function CatalogResults({ path, initialQuery }: { path: string[]; initialQuery: 
   const current = getCatalogEntry(path);
   const children = path.length ? current?.node.children ?? [] : catalog;
   const searching = Boolean(query.trim());
+  const covers = path.length === 0 && !searching;
   const entries: CatalogEntry[] = searching ? searchCatalog(query) : children.map(node => ({ node, path: [...path, node.slug], trail: [...(current?.trail ?? []), node] }));
   const selector = path[0] === "pipelines" ? { href: "/selection/pipelines", label: "Подбор трубопровода" } : path[0] === "pumps" ? { href: "/selection/pumps", label: "Подбор насосов" } : null;
 
@@ -39,10 +40,10 @@ function CatalogResults({ path, initialQuery }: { path: string[]; initialQuery: 
         <input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Найти раздел каталога" aria-label="Найти раздел каталога" autoComplete="off" />
         {query && <button type="button" aria-label="Очистить поиск" onClick={clearSearch}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg></button>}
       </form>
-      <p className={styles.resultCount} role="status">{searching ? `Найдено разделов: ${entries.length}` : children.length ? `Разделов: ${children.length}` : ""}</p>
+      {!covers && <p className={styles.resultCount} role="status">{searching ? `Найдено разделов: ${entries.length}` : children.length ? `Разделов: ${children.length}` : ""}</p>}
     </div>
-    {entries.length > 0 ? <ul className={styles.grid} aria-label={searching ? "Результаты поиска разделов" : "Разделы каталога"}>
-      {entries.map(entry => <CatalogCard key={catalogHref(entry.path)} entry={entry} showParent={searching} />)}
+    {entries.length > 0 ? <ul className={`${styles.grid}${covers ? ` ${styles.coverGrid}` : ""}`} aria-label={searching ? "Результаты поиска разделов" : "Разделы каталога"}>
+      {entries.map(entry => <CatalogCard key={catalogHref(entry.path)} entry={entry} showParent={searching} cover={covers} />)}
     </ul> : searching ? <div className={styles.empty}>
       <div className={styles.emptyCopy}><h2>Разделы не найдены</h2><p>Попробуйте другое название системы или тип оборудования.</p><button type="button" className="home-hero__link home-hero__link--secondary" onClick={clearSearch}>Сбросить поиск</button></div>
     </div> : <div className={`${styles.empty} deferred-block__content is-ready`}>

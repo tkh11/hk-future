@@ -989,3 +989,28 @@ or dimensional diagrams. Until real assortment data is supplied, category leaves
 show a clear availability placeholder and the existing equipment-selection link
 where applicable. Do not invent products, SKUs, prices, technical specifications
 or additional hierarchy levels.
+
+---
+
+# 26. Articles library
+
+The `/articles` library uses `ArticleAccordion`, adapted from the supplied
+`services-animation` reference. Keep the existing search and topic filters.
+The first result is expanded by default; clicking a heading opens its summary
+and closes the previous one. Clicking it again collapses it. Each expanded
+summary keeps its category, reading time and a real «Читать статью» link.
+
+Use a 620ms height transition with cubic-bezier(.625,.05,0,1). Reveal description
+lines through masks over 480ms, starting after 180ms with a 45ms line stagger.
+SplitText must adapt to font loading and resizing and revert on unmount.
+On desktop, crossfade existing HEISSKRAFT category imagery over 300ms and let
+the preview follow the selected heading vertically with .055 interpolation.
+While a summary is open, hover changes heading emphasis but keeps its preview;
+when all summaries are closed, hover or keyboard focus can change the preview.
+Images illustrate the topic, not the exact product discussed in every article.
+
+Below 768px hide the decorative preview and use a readable single-column list.
+Respect reduced motion: expand immediately, show unsplit text and disable image
+and movement transitions. Keep collapsed summaries inert and out of the
+accessibility tree. Preserve SF UI Text, white surfaces, the 1280px content grid
+and restrained red accents. Do not copy the reference's agency copy or artwork.

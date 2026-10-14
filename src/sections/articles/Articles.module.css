@@ -20,6 +20,33 @@
 .empty h2 { font-size: 26px; font-weight: 500; }
 .empty p { margin: 16px 0; }
 .srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.accordionLayout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 320px); gap: clamp(40px, 6vw, 96px); position: relative; }
+.accordionList { min-width: 0; }
+.accordionEntry { border-top: 1px solid #dedede; }
+.accordionEntry:last-child { border-bottom: 1px solid #dedede; }
+.accordionHeading { margin: 0; font-size: clamp(22px, 2.5vw, 34px); font-weight: 500; line-height: 1.25; }
+.articleToggle { display: flex; align-items: center; justify-content: space-between; gap: 24px; width: 100%; padding: 25px 0; text-align: left; color: #777; transition: color 200ms ease; }
+.accordionEntry[data-active="true"] .articleToggle, .articleToggle:hover { color: #1d1d1f; }
+.accordionEntry[data-expanded="true"] .articleToggle { color: var(--hk-red); }
+.toggleMark { position: relative; width: 16px; height: 16px; flex: 0 0 16px; }
+.toggleMark::before, .toggleMark::after { content: ""; position: absolute; background: currentColor; top: 7px; left: 0; width: 16px; height: 1px; }
+.toggleMark::after { transform: rotate(90deg); transition: transform 450ms cubic-bezier(.625,.05,0,1); }
+.accordionEntry[data-expanded="true"] .toggleMark::after { transform: rotate(0); }
+.articlePanel { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows 620ms cubic-bezier(.625,.05,0,1), visibility 0s 620ms; }
+.accordionEntry[data-expanded="true"] .articlePanel { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
+.articlePanelClip { overflow: hidden; min-height: 0; }
+.articlePanelContent { padding: 0 40px 30px 0; opacity: 0; transform: translateY(-8px); transition: opacity 180ms ease, transform 180ms ease; }
+.accordionEntry[data-expanded="true"] .articlePanelContent { opacity: 1; transform: translateY(0); transition: opacity 480ms 180ms cubic-bezier(.625,.05,0,1), transform 480ms 180ms cubic-bezier(.625,.05,0,1); }
+.articleDescription { max-width: 620px; margin: 14px 0 22px; color: #555; font-size: 16px; line-height: 1.65; }
+.readArticle { display: inline-flex; padding: 10px 16px; border: 1px solid var(--hk-red); border-radius: 8px; font-size: 14px; color: var(--hk-red); transition: color 200ms, background 200ms; }
+.readArticle:hover { color: white; background: var(--hk-red); }
+.articleVisual { position: relative; pointer-events: none; }
+.articlePreview { position: relative; width: 100%; aspect-ratio: 4 / 5; will-change: transform; }
+.previewImage { object-fit: contain; opacity: 0; transition: opacity 300ms ease; }
+.previewImage[data-active="true"] { opacity: 1; }
+@media (max-width: 1024px) { .accordionLayout { grid-template-columns: minmax(0, 1fr) minmax(180px, 26%); gap: 32px; } }
+@media (max-width: 767px) { .accordionLayout { grid-template-columns: minmax(0, 1fr); } .articleVisual { display: none; } .articleToggle { padding: 22px 0; gap: 16px; } .articlePanelContent { padding-right: 0; } .accordionHeading { font-size: clamp(22px, 5vw, 30px); } }
+@media (prefers-reduced-motion: reduce) { .articlePanel, .articlePanelContent, .toggleMark::after, .articleToggle, .previewImage, .readArticle { transition: none !important; } .articlePreview { will-change: auto; } }
 .breadcrumbs { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; margin-bottom: 34px; color: #777; }
 .breadcrumbs a { color: #555; text-underline-offset: 4px; }
 .articleHeader { max-width: 990px; margin-bottom: 64px; }

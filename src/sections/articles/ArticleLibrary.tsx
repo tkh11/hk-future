@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import ArticleAccordion from "./ArticleAccordion";
 import type { ArticleSummary } from "@/lib/articles";
 import styles from "./Articles.module.css";
 
@@ -33,15 +33,7 @@ export default function ArticleLibrary({ articles }: { articles: ArticleSummary[
       </div>
       <p className={styles.srOnly} role="status">{visible.length ? `Показано статей: ${visible.length}` : "Статьи не найдены"}</p>
       <div className={styles.list}>
-        {visible.map((article) => (
-          <article key={article.slug} className={styles.row}>
-            <p className={styles.meta}>{article.category}<span>{article.readingMinutes} мин чтения</span></p>
-            <div>
-              <h2><Link href={`/articles/${article.slug}`}>{article.title}</Link></h2>
-              <p>{article.description}</p>
-            </div>
-          </article>
-        ))}
+        {visible.length > 0 && <ArticleAccordion key={`${category}:${query}`} articles={visible} />}
         {!visible.length && <div className={styles.empty}><h2>Статьи не найдены</h2><p>Попробуйте другое слово или выберите все темы.</p><button type="button" onClick={() => { setQuery(""); setCategory("Все темы"); }}>Сбросить поиск</button></div>}
       </div>
     </>

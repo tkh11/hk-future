@@ -25,16 +25,9 @@ export function BlockSkeleton({ kind }: { kind: Kind }) {
         <span className="block-skeleton__company-text" />
       </div>
       <span className="block-skeleton__media" />
-      <span className="block-skeleton__company-actions"><span /><span /></span>
     </div>
   </div>;
   return <div className={`block-skeleton block-skeleton--${skeletonKind}`} role="status" aria-label="Загрузка блока">
-    {kind === "solutions" && <div className="block-skeleton__banner" aria-hidden="true">
-      <span className="block-skeleton__line" />
-      <span className="block-skeleton__line block-skeleton__line--short" />
-      <span className="block-skeleton__banner-copy" />
-      <span className="block-skeleton__banner-actions" />
-    </div>}
     <div className="block-skeleton__shapes" aria-hidden="true">
       {Array.from({ length: skeletonKind === "solutions" ? 6 : skeletonKind === "footer" ? 4 : skeletonKind === "dc-intro" || skeletonKind === "dc-products" ? 2 : 1 }, (_, index) => (
         <div className="block-skeleton__item" key={index}>

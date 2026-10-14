@@ -1,4 +1,3 @@
-import Link from "next/link";
 import HoldFrameVideo from "@/components/ui/HoldFrameVideo";
 import styles from "./HomeHero.module.css";
 
@@ -10,7 +9,7 @@ export default function HomeHero() {
           <h2 id="company-heading" className={styles.heading}>О компании</h2>
           <div className={styles.description}>
             <p>
-              Компания Heisskraft является одним из ведущих производителей инновационной
+              Компания <span className={styles.brand}>Heisskraft</span> является одним из ведущих производителей инновационной
               продукции в области инженерных систем, реализуемых в различных отраслях
               промышленности. Каждый день наша команда работает над увеличением сроков
               службы и эффективности производимой продукции во вновь возводимых или
@@ -51,20 +50,6 @@ export default function HomeHero() {
             videoClassName={styles.video}
             stillClassName={styles.still}
           />
-        </div>
-        <div className={styles.actions}>
-          <Link href="/catalog" className="home-hero__link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-              <rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" />
-            </svg>
-            Продукция
-          </Link>
-          <Link href="/projects" className="home-hero__link home-hero__link--secondary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" aria-hidden="true">
-              <path d="M3 21h18M5 21V8l8-4v17M13 10h6v11M8 10v2m0 3v2m8-4v2m0 2v2" />
-            </svg>
-            Наши проекты
-          </Link>
         </div>
       </div>
     </section>

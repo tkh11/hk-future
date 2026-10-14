@@ -6,60 +6,11 @@
   scroll-margin-top: 84px;
 }
 
-.banner {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  min-height: 320px;
-  padding: 44px 48px;
-  border-radius: 20px;
-  background: #f3f4f6;
-}
-
-.architecture {
-  position: absolute;
-  z-index: -1;
-  right: 0;
-  top: 0;
-  width: 68%;
-  height: 100%;
-}
-
-.banner::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background: linear-gradient(90deg, #f3f4f6 15%, rgb(243 244 246 / 94%) 33%, rgb(243 244 246 / 0%) 64%);
-  pointer-events: none;
-}
-
-.copy { max-width: 440px; }
-
-.heading {
-  margin: 0;
-  font-size: clamp(32px, 3.6vw, 44px);
-  line-height: 1.04;
-  font-weight: 600;
-  letter-spacing: -0.045em;
-}
-
-.description {
-  max-width: 330px;
-  margin: 18px 0 0;
-  font-size: 15px;
-  line-height: 1.5;
-  color: #6e6e73;
-}
-
-.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-.actions a { min-height: 40px; font-size: 14px; }
-
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
-  margin: 24px 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -175,21 +126,12 @@
 
 @media (max-width: 899px) {
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .banner { padding: 36px; }
   .card { min-height: 420px; }
 }
 
 @media (max-width: 599px) {
   .section { padding: 24px 16px 40px; }
-  .banner { min-height: 330px; padding: 30px 24px; border-radius: 16px; }
-  .copy { max-width: 300px; }
-  .heading { font-size: 32px; }
-  .description { font-size: 14px; max-width: 235px; }
-  .architecture { right: -38%; width: 100%; opacity: .5; }
-  .banner::after { background: linear-gradient(90deg, #f3f4f6 5%, rgb(243 244 246 / 90%) 35%, rgb(243 244 246 / 0%) 100%); }
-  .actions { gap: 8px; margin-top: 22px; }
-  .actions a { min-height: 40px; padding: 10px 12px; font-size: 13px; }
-  .grid { grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
+  .grid { grid-template-columns: 1fr; gap: 16px; margin-top: 0; }
   .card { padding: 24px; min-height: 382px; border-radius: 16px; }
   .cardLink { border-radius: 16px; }
   .title { font-size: 18px; }

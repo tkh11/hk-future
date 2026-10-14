@@ -1,7 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
 import { publicPath } from "@/lib/public-path";
-import SolutionsArchitecture from "./SolutionsArchitecture";
 import SolutionCard from "./SolutionCard";
 import styles from "./Solutions.module.css";
 
@@ -16,17 +14,7 @@ const solutions: { title: string; icon: string; href?: string; ext?: string }[] 
 
 export default function Solutions() {
   return (
-    <section id="engineering-solutions" data-header-theme="light" className={styles.section} aria-labelledby="solutions-heading">
-      <div className={styles.banner}>
-        <SolutionsArchitecture className={styles.architecture} />
-        <div className={styles.copy}>
-          <h2 id="solutions-heading" className={styles.heading}>Инженерные<br />решения</h2>
-          <p className={styles.description}>Комплексные системы для надёжной работы объектов любого масштаба.</p>
-          <div className={styles.actions}>
-            <Link href="/catalog" className="home-hero__link home-hero__link--secondary">Подбор оборудования</Link>
-          </div>
-        </div>
-      </div>
+    <section id="engineering-solutions" data-header-theme="light" className={styles.section} aria-label="Инженерные решения">
       <ul className={styles.grid}>
         {solutions.map((item) => (
           <li key={item.title}>

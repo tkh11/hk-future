@@ -4,6 +4,8 @@ export type CatalogNode = {
   slug: string;
   title: string;
   art: CatalogArt;
+  image?: string;
+  tone?: "light";
   children?: CatalogNode[];
 };
 
@@ -12,10 +14,10 @@ export const catalog: CatalogNode[] = [
     slug: "pipelines", title: "Трубопроводные системы", art: "pipes",
     children: [
       { slug: "therm", title: "Heisskraft Therm", art: "pipes" },
-      { slug: "multilayer", title: "Heisskraft Multilayer", art: "layers" },
+      { slug: "multilayer", title: "Heisskraft Multilayer", art: "layers", image: "/images/catalog/multilayer.jpg" },
       { slug: "hdpe", title: "Heisskraft HDPE", art: "pipes" },
       { slug: "fireoff", title: "Heisskraft FireOff", art: "pipes" },
-      { slug: "black-pipe", title: "Heisskraft Black Pipe", art: "pipes" },
+      { slug: "black-pipe", title: "Heisskraft Black Pipe", art: "pipes", image: "/images/catalog/black-pipe.jpg", tone: "light" },
     ],
   },
   {

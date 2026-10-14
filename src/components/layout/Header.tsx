@@ -18,7 +18,7 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { href: "/catalog", label: "Каталог" },
-  { href: "/catalog", label: "База знаний" },
+  { href: "/articles", label: "База знаний" },
   { href: "/designers", label: "Проектировщикам" },
   { href: "/catalog", label: "Подбор оборудования" },
 ];

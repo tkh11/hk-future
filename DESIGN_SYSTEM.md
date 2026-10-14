@@ -967,6 +967,23 @@ Mount their illustrations only on entry; show pale shimmer placeholders while
 loading, with no artificial delay. Offscreen placeholders remain static. Functional
 search spans the complete hierarchy and accepts `?q=` from the shared header.
 
+Category pages (every level below `/catalog`) have no breadcrumbs or search field
+in the page body. Instead, `CatalogFloatingNav` fixes a single glass surface to the
+bottom centre of the viewport: functional breadcrumbs («Каталог / … / текущий раздел»)
+and a search icon. Below 600px the middle of a long path collapses to «…», which links
+one level up. The icon expands the same surface horizontally into an input (600ms,
+the product-card easing, delayed content fade); on narrow screens the path yields its
+width to the field. Typing searches the whole hierarchy and replaces the card grid;
+Enter writes `?q=`. Escape or the close button clears and collapses it, and a blur with an
+empty field collapses it too. Keep the field inert while collapsed. The surface is
+HEISSKRAFT red (`--hk-red` at 95% opacity) over an 18px backdrop blur, with a thin
+translucent white border and a soft red-tinted shadow. All text and icons are white
+(secondary crumbs at about 86%); hover underlines links, focus rings are white.
+Rest the bar on the footer instead of covering it: lift it by the footer's visible
+height, keeping a constant gap above the footer's top edge. Never show section counts («Разделов: N»,
+«Найдено разделов: N») on any catalog screen. The catalog landing keeps its own
+full-width search and is unaffected.
+
 Current illustrations are conceptual engineering drawings, not product photographs
 or dimensional diagrams. Until real assortment data is supplied, category leaves
 show a clear availability placeholder and the existing equipment-selection link

@@ -3,35 +3,30 @@ import { publicPath } from "@/lib/public-path";
 
 const columns = [
   {
-    title: "Продукция",
-    links: [
-      { href: "/catalog/pipelines", label: "Трубопроводные системы" },
-      { href: "/catalog/pumps", label: "Насосное оборудование" },
-      { href: "/catalog", label: "Арматура" },
-    ],
-  },
-  {
     title: "Покупателям",
     links: [
       { href: "/catalog", label: "Каталог" },
       { href: "/catalog", label: "Подбор оборудования" },
-      { href: "/catalog", label: "База знаний" },
+      { href: "/articles", label: "База знаний" },
+      { href: "/docs", label: "Документация" },
     ],
   },
   {
     title: "Компания",
     links: [
       { href: "/about", label: "Информация о компании" },
-      { href: "/docs", label: "Документация" },
+      { href: "/projects", label: "Проекты HEISSKRAFT" },
       { href: "/catalog", label: "Сервисный центр" },
       { href: "/requisites", label: "Реквизиты организации" },
     ],
   },
-];
-
-const legalLinks = [
-  { href: "/privacy", label: "Политика конфиденциальности" },
-  { href: "/personal-data", label: "Обработка персональных данных" },
+  {
+    title: "Правовая информация",
+    links: [
+      { href: "/privacy", label: "Политика конфиденциальности" },
+      { href: "/personal-data", label: "Обработка персональных данных" },
+    ],
+  },
 ];
 
 export default function Footer() {
@@ -79,13 +74,6 @@ export default function Footer() {
 
         <div className="site-footer__bottom">
           <p className="site-footer__copy">© 2026 HEISSKRAFT — все права защищены</p>
-          <nav className="site-footer__legal" aria-label="Правовая информация">
-            {legalLinks.map((item) => (
-              <Link key={item.href} href={item.href} className="site-footer__link">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
           <p className="site-footer__note">Использование материалов сайта без согласования запрещено.</p>
           <Link href="/" className="site-footer__brand" aria-label="HEISSKRAFT">
             <img

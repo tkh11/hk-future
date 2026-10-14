@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { catalogHref, type CatalogEntry } from "@/lib/catalog";
+import { publicPath } from "@/lib/public-path";
 import { usePointerTilt } from "@/lib/use-pointer-tilt";
 import styles from "./Catalog.module.css";
 
@@ -24,6 +25,7 @@ export default function CatalogCard({ entry, showParent = false, cover = false }
   const [visible, setVisible] = useState(false);
   const [playing, setPlaying] = useState(false);
   const { node, path, trail } = entry;
+  const photoBanner = !cover && path[0] === "pipelines" && Boolean(node.image);
   useEffect(() => {
     let inView = false;
     const updatePlayback = () => setPlaying(cover && inView && !document.hidden);
@@ -50,15 +52,22 @@ export default function CatalogCard({ entry, showParent = false, cover = false }
   }, [playing, visible]);
   return <li ref={root} className={visible ? "deferred-block__content is-ready" : undefined}>
     <Link href={catalogHref(path)} className={styles.cardLink} {...pointerHandlers}>
-      <div ref={surfaceRef} className={`${styles.card}${cover ? ` ${styles.coverCard}` : ""}`} data-playing={playing}>
+      <div ref={surfaceRef} className={`${styles.card}${cover ? ` ${styles.coverCard}` : ""}${photoBanner ? ` ${styles.bannerCard}` : ""}`} data-playing={playing} data-tone={photoBanner ? node.tone : undefined}>
         {cover ? <>
           {visible && <video ref={videoRef} className={styles.coverVideo} src={coverVideos[node.art]} muted loop playsInline preload="metadata" aria-hidden="true" />}
           <h2>{node.title}</h2>
+        </> : photoBanner ? <>
+          <span className={styles.bannerSizer} aria-hidden="true" />
+          {visible ? <img src={publicPath(node.image!)} alt="" width={1024} height={768} className={styles.bannerPhoto} /> : <span className={styles.skeleton} data-idle="true" aria-hidden="true" />}
+          <div className={styles.bannerCopy}>
+            <h2>{node.title}</h2>
+            {showParent && trail.length > 1 && <p>{trail[0].title}</p>}
+          </div>
         </> : <>
           <h2>{node.title}</h2>
           {showParent && trail.length > 1 && <p>{trail[0].title}</p>}
           <div className={styles.art}>
-            {visible ? <CatalogArtwork kind={node.art} /> : <span className={styles.skeleton} data-idle="true" aria-hidden="true" />}
+            {visible && node.image ? <img src={publicPath(node.image)} alt="" width={1024} height={768} className={styles.photo} /> : visible ? <CatalogArtwork kind={node.art} /> : <span className={styles.skeleton} data-idle="true" aria-hidden="true" />}
           </div>
         </>}
       </div>

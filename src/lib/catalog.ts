@@ -6,6 +6,7 @@ export type CatalogNode = {
   art: CatalogArt;
   image?: string;
   tone?: "light";
+  description?: string;
   children?: CatalogNode[];
 };
 
@@ -13,11 +14,11 @@ export const catalog: CatalogNode[] = [
   {
     slug: "pipelines", title: "Трубопроводные системы", art: "pipes",
     children: [
-      { slug: "therm", title: "Heisskraft Therm", art: "pipes", image: "/images/catalog/therm.jpg" },
-      { slug: "multilayer", title: "Heisskraft Multilayer", art: "layers", image: "/images/catalog/multilayer.jpg" },
-      { slug: "hdpe", title: "Heisskraft HDPE", art: "pipes", image: "/images/catalog/hdpe.jpg" },
-      { slug: "fireoff", title: "Heisskraft FireOff", art: "pipes", image: "/images/catalog/fireoff.jpg" },
-      { slug: "black-pipe", title: "Heisskraft Black Pipe", art: "pipes", image: "/images/catalog/black-pipe.jpg", tone: "light" },
+      { slug: "therm", title: "Heisskraft Therm", art: "pipes", image: "/images/catalog/therm.jpg", description: "Трубы и фитинги из полипропилена PP-R/PP-R CT для систем ХВС/ГВС/отопления/холодоснабжения" },
+      { slug: "multilayer", title: "Heisskraft Multilayer", art: "layers", image: "/images/catalog/multilayer.jpg", description: "Трубы из термостойкого полиэтилена PE-RT тип I, PE-RT тип II и аксиальные фитинги" },
+      { slug: "hdpe", title: "Heisskraft HDPE", art: "pipes", image: "/images/catalog/hdpe.jpg", description: "Трубы из полиэтилена высокой плотности низкого давления (PE100) и компрессионные фитинги к ним" },
+      { slug: "fireoff", title: "Heisskraft FireOff", art: "pipes", image: "/images/catalog/fireoff.jpg", description: "Трубы и фитинги из огнестойкого компаунда полипропилена (PP-R-Compylen) для систем пожаротушения" },
+      { slug: "black-pipe", title: "Heisskraft Black Pipe", art: "pipes", image: "/images/catalog/black-pipe.jpg", tone: "light", description: "Трубы и фитинги из полипропилена (PP) для систем промышленного/хозяйственно-бытового водоотведения" },
     ],
   },
   {

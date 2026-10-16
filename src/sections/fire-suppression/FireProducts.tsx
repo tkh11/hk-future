@@ -1,5 +1,5 @@
 import Link from "next/link";
-import FireOffBanner from "./FireOffBanner";
+import FireOffBanner, { HKBoostBanner } from "./FireOffBanner";
 import FireStations from "./FireStations";
 import shared from "../data-centers/DataCenters.module.css";
 import styles from "./FireSuppression.module.css";
@@ -14,6 +14,7 @@ export default function FireProducts() {
         <Link href="/selection/pipelines" className="home-hero__link home-hero__link--secondary">Подбор трубопровода</Link>
       </div>
     </div>
+    <HKBoostBanner />
     <FireStations />
     <p className={shared.productNote}>Диаметры трубопроводов, характеристики и комплектация насосных станций определяются проектом.</p>
     <div className={shared.catalogCta}>

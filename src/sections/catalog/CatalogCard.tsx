@@ -63,6 +63,7 @@ export default function CatalogCard({ entry, showParent = false, cover = false }
             <h2>{node.title}</h2>
             {showParent && trail.length > 1 && <p>{trail[0].title}</p>}
           </div>
+          {node.description && <p className={styles.bannerNote}>{node.description}</p>}
         </> : <>
           <h2>{node.title}</h2>
           {showParent && trail.length > 1 && <p>{trail[0].title}</p>}

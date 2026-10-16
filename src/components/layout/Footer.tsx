@@ -16,7 +16,7 @@ const columns = [
     links: [
       { href: "/about", label: "Информация о компании" },
       { href: "/projects", label: "Проекты HEISSKRAFT" },
-      { href: "/catalog", label: "Сервисный центр" },
+      { href: "/contacts#service", label: "Сервисный центр" },
       { href: "/requisites", label: "Реквизиты организации" },
     ],
   },
@@ -50,7 +50,7 @@ export default function Footer() {
           ))}
 
           <div className="site-footer__group">
-            <h2 className="site-footer__heading">Контакты</h2>
+            <h2 className="site-footer__heading"><Link href="/contacts" className="site-footer__link">Контакты</Link></h2>
             <ul className="site-footer__list">
               <li>
                 <a href="tel:+74952584542" className="site-footer__link">

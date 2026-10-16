@@ -12,7 +12,7 @@ function HelpIcon({ kind }: { kind: "info" | "cursor" | "click" | "cards" }) {
   </svg>;
 }
 
-export default function CoolingHelp() {
+export default function CoolingHelp({ cameraViews = false }: { cameraViews?: boolean }) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -44,8 +44,8 @@ export default function CoolingHelp() {
             <h3 id="cooling-help-title">Как пользоваться моделью</h3>
             <ul>
               <li className={styles.hoverInstruction}><HelpIcon kind="cursor" /><div><strong>Наведите курсор</strong><p>Элемент подсветится на модели.</p></div></li>
-              <li><HelpIcon kind="click" /><div><strong>Нажмите на элемент</strong><p>Откроется его описание с изображением.</p></div></li>
-              <li><HelpIcon kind="cards" /><div><strong>Выберите название под моделью</strong><p>Карточка раскроется. Повторное нажатие свернёт её и снимет выделение.</p></div></li>
+              <li><HelpIcon kind="click" /><div><strong>Нажмите на элемент</strong><p>{cameraViews ? "Камера приблизит выбранный узел. Откроется его описание." : "Откроется его описание с изображением."}</p></div></li>
+              <li><HelpIcon kind="cards" /><div><strong>{cameraViews ? "Выберите метку или название слева" : "Выберите название под моделью"}</strong><p>{cameraViews ? "Описание раскроется в панели слева сверху. Повторное нажатие на название или «Общий вид» вернёт всю систему в кадр." : "Карточка раскроется. Повторное нажатие свернёт её и снимет выделение."}</p></div></li>
             </ul>
           </div>
         </div>

@@ -16,36 +16,9 @@ type Props = {
 
 export default function CatalogFloatingNav({ path, trail, query, onQuery, onSubmit, onClear }: Props) {
   const [open, setOpen] = useState(Boolean(query));
-  const bar = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   const mounted = useRef(false);
-
-  // Rest on the footer instead of covering it: lift the bar by however much of
-  // the footer is currently visible, so its bottom edge stays above the footer.
-  useEffect(() => {
-    const element = bar.current;
-    const footer = document.querySelector<HTMLElement>(".deferred-block--footer");
-    if (!element || !footer) return;
-    // Updated inside the scroll event itself, so the bar moves in the same frame
-    // as the footer and never lags behind smooth scrolling.
-    const update = () => {
-      const lift = Math.max(0, window.innerHeight - footer.getBoundingClientRect().top);
-      element.style.setProperty("--float-lift", lift.toFixed(2));
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    // Content above the footer can change height without any scrolling.
-    const observer = new ResizeObserver(update);
-    observer.observe(document.body);
-    observer.observe(footer);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-      observer.disconnect();
-    };
-  }, []);
 
   // Move focus into the field only after the visitor opens it, not on first render.
   useEffect(() => {
@@ -77,7 +50,7 @@ export default function CatalogFloatingNav({ path, trail, query, onQuery, onSubm
     toggle.current?.focus({ preventScroll: true });
   }
 
-  return <div ref={bar} className={styles.floatBar} data-search-open={open}>
+  return <div className={styles.floatBar} data-search-open={open}>
     <div className={styles.floatPath}>
       <nav aria-label="Путь по каталогу"><ol>
         {items.map((item, index) => {

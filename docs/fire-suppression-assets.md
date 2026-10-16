@@ -4,18 +4,58 @@ Route: `/solutions/fire-suppression`.
 
 ## Supplied model
 
-`public/models/fireoff.glb` is derived from the user's `fireoff.glb` using
-`scripts/prepare-fireoff-model.py`. All 281,958 triangles are preserved.
-The single original mesh is separated into semantic groups: main pipe,
-welded saddles, tees and neutral elements. Product dimensions in the UI
-follow the user's brief; they are not measurements certified from the mesh.
+`public/models/parking-sprinkler.glb` replaces the earlier connection-only model.
+It is derived from the user's `Parking_Sprinkler_P04.gltf` and accompanying
+`Parking_Sprinkler_P04.bin`, supplied on 2026-10-16, using
+`scripts/prepare-parking-model.py`. All 1,040,720 triangles and 686 CAD line
+segments are preserved. The geometry is batched into 57 render objects by
+assembly, material and primitive type. The output includes the source hash.
 
-The fixed orthographic camera shows a connection close-up. The source's
-approximately 50 m long runs continue outside the viewport, so the saddle
-and tee remain readable. There are no orbit or zoom controls. Model selection
-and hover use the prepared groups; all inactive components remain gray.
+The model uses six fixed camera presets in `fireoff-model.ts`, matched to the
+six supplied screenshots in order: overview, pump station, FireOff network
+from above, sprinkler assembly, PK-02 fire cabinet connection, and the outlet
+flange between the station manifold and polypropylene pipe. Positions use the
+source's Y-up coordinates in metres. Narrow fields of view approximate the
+orthographic overview/plan; close-ups retain perspective. There are no orbit,
+drag, zoom or automatic rotation controls. Selection animates the camera for
+1.05 seconds, then holds it still; reduced motion switches immediately.
 
-`tee.png` is a transparent render of one tee from the supplied model.
+The scene retains its material families, including green pipework, red cabinets
+and brass fittings. Architecture uses neutral gray; dark pump surfaces are
+lifted slightly so their details remain legible on white. The CAD export's
+sRGB colors are converted to linear colors for lighting. Hover temporarily
+adds a restrained red tint to the corresponding assembly. Selecting a node keeps
+that assembly opaque and fades the remaining geometry toward neutral gray with
+50% material opacity over 420 ms; returning to the overview restores the original
+colors and opacity. Nonselected markers become gray and less prominent while
+remaining interactive. Five numbered markers
+project the world-space anchors in `fireoff-content.ts` onto the model viewport;
+short leader lines connect each marker to its assembly. Hover or keyboard focus
+reveals the name; clicking opens the corresponding fixed view and description.
+Markers outside the camera frame are hidden, as are markers during camera moves.
+The five compact description cards sit inside the model screen at its upper left,
+with larger product previews above the title, a single-sentence description,
+and a «В каталог» button to `/catalog`, with one description expanded at a time. On phones,
+the model sits below this panel inside the same screen to avoid covering the scene.
+«Общий вид» returns to the overview. Selection
+keeps the camera viewport visible rather than scrolling down to the description.
+The two cards without supplied product photos use a gray company-logo placeholder.
+
+The older `fireoff.glb`, its preparation script and the `tee.png` render remain
+as previous source assets; the explorer no longer loads that model.
+
+## Supplied product banners
+
+- `fireoff-cover.png`: the user's `fireoffcover.png` (2172 × 724), supplied on
+  2026-10-16, replaces the previous FireOff banner.
+- `hk-boost-banner.jpg`: the user's `hk-boost.jpg` (6409 × 1276), supplied on
+  2026-10-16, appears immediately before the HK-Boost FPA/FPV station block.
+
+Both images are copied without cropping or changing their artwork. Each banner
+fills the site's content grid and preserves its natural aspect ratio, including
+on mobile. The shared `usePointerTilt` behavior matches ClimatFaser: a stationary
+pointer target controls the tilted surface and a soft sheen; touch and reduced
+motion disable the hover animation.
 
 ## Official product sources
 

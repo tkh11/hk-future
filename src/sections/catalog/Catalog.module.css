@@ -1,4 +1,4 @@
-.page { width: min(calc(var(--site-content-width) + 48px), 100%); margin: 0 auto; padding: calc(var(--site-header-height) + 48px) 24px 136px; min-height: 76vh; color: #1d1d1f; }
+.page { width: min(calc(var(--site-content-width) + 48px), 100%); margin: 0 auto; padding: calc(var(--site-header-height) + 48px) 24px 96px; min-height: 76vh; color: #1d1d1f; }
 .landing {
   --catalog-accent: #CA3C32;
   --card-height: min(calc(100svh - var(--site-header-height) * 2 - 148px), calc((min(100vw, var(--site-content-width) + 48px) - 96px) / 3 * 16 / 9));
@@ -20,9 +20,6 @@
   margin: auto;
   padding: 0;
 }
-.heading { margin-bottom: 38px; }
-.heading h1 { max-width: 930px; font-size: clamp(34px, 4.4vw, 54px); font-weight: 500; line-height: 1.12; letter-spacing: -.045em; }
-.heading p { margin-top: 18px; font-size: 16px; line-height: 1.6; color: #6e6e73; }
 .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
 .search { display: flex; align-items: center; gap: 12px; width: min(100%, 420px); min-height: 48px; padding: 0 16px; border: 1px solid #d4d4d8; border-radius: 10px; }
 .search:focus-within { border-color: var(--hk-red); outline: 2px solid rgb(216 34 43 / 10%); outline-offset: 2px; }
@@ -65,6 +62,30 @@
 .bannerCard[data-tone="light"] .bannerCopy { background: linear-gradient(180deg, rgb(255 255 255 / 82%) 0%, rgb(255 255 255 / 28%) 62%, transparent 100%); }
 .bannerCard[data-tone="light"] .bannerCopy h2 { color: #1d1d1f; }
 .bannerCard[data-tone="light"] .bannerCopy p { color: #6e6e73; }
+.bannerCard .bannerNote {
+  position: absolute;
+  z-index: 4;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 52px 26px 22px;
+  background: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 72%) 58%);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: -.01em;
+}
+.bannerCard[data-tone="light"] .bannerNote { background: linear-gradient(180deg, transparent 0%, rgb(255 255 255 / 92%) 58%); color: #1d1d1f; }
+/* The copy and its gradient enter together, clipped by the card's bottom edge. */
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .bannerCard .bannerNote {
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform .45s cubic-bezier(.22, 1, .36, 1), opacity .3s ease;
+  }
+  .cardLink:is(:hover, :focus-visible) .bannerNote { transform: translateY(0); opacity: 1; }
+}
 .art .photo { height: 100%; }
 .skeleton { display: block; width: 100%; min-height: 220px; border-radius: 12px; background: #f5f5f7; overflow: hidden; position: relative; }
 .skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 70%) 48%, transparent 66%); transform: translateX(-100%); animation: catalog-shimmer 1.8s ease-in-out infinite; }
@@ -89,26 +110,26 @@
 }
 @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .empty { padding: 32px; gap: 30px; } }
 @media (max-width: 599px) {
-  .page { padding: calc(var(--site-header-height) + 28px) 16px 112px; }
-  .heading { margin-bottom: 28px; }
-  .heading h1 { font-size: 34px; }
-  .heading p { font-size: 15px; }
+  .page { padding: calc(var(--site-header-height) + 28px) 16px 64px; }
   .toolbar { align-items: stretch; flex-direction: column; gap: 14px; margin-bottom: 22px; }
   .search { width: 100%; }
   .grid { grid-template-columns: 1fr; gap: 18px; }
+  .page[data-catalog-section="pipelines"] .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .cardLink { border-radius: 16px; }
   .card { padding: 24px; border-radius: 16px; }
   .bannerCard { padding: 0; }
-  .bannerSizer { width: calc(100% - 48px); margin: 69px 24px 24px; }
-  .bannerCopy { padding: 24px 24px 48px; }
+  .bannerSizer { width: 100%; margin: 0; aspect-ratio: 9 / 16; min-height: 280px; }
+  .bannerCopy { padding: 16px 12px 40px; }
+  .bannerCard .bannerNote { padding: 40px 12px 14px; font-size: 12px; line-height: 1.45; overflow-wrap: anywhere; }
   .card h2 { font-size: 22px; min-height: 0; }
+  .bannerCopy h2 { font-size: 16px; line-height: 1.25; overflow-wrap: anywhere; }
   .empty { flex-direction: column; align-items: stretch; padding: 24px; gap: 18px; border-radius: 16px; }
   .emptyArtwork { flex: auto; height: 160px; }
   .emptyArtwork:has(.photo) { height: auto; }
   .emptyArtwork svg { height: 100%; }
   .emptyCopy h2 { font-size: 24px; }
 }
-@media (prefers-reduced-motion: reduce) { .skeleton::after { animation: none; } .card { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .skeleton::after { animation: none; } .card, .bannerCard .bannerNote { transition: none; } }
 
 /* The catalog entrance uses portrait covers; deeper levels retain their own grid. */
 .coverCard {
@@ -207,45 +228,44 @@
   }
 }
 
-/* Floating catalog path and search: one glass surface fixed to the bottom centre. */
+/* Catalog path and search: one light glass bar at the top left that rests against the header while the page scrolls. */
+.srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .floatBar {
-  position: fixed;
+  position: sticky;
   z-index: 30;
-  left: 50%;
-  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-  /* --float-lift is the visible height of the footer, set from script. */
-  transform: translate3d(-50%, calc(var(--float-lift, 0) * -1px), 0);
+  top: calc(var(--site-header-height) + 10px);
   display: flex;
   align-items: center;
-  max-width: calc(100vw - 32px);
+  width: fit-content;
+  max-width: 100%;
   min-height: 50px;
+  margin-bottom: 36px;
   padding: 4px 6px 4px 20px;
-  border: 1px solid rgb(255 255 255 / 22%);
+  border: 1px solid rgb(0 0 0 / 10%);
   border-radius: 14px;
-  background: rgb(216 34 43 / 95%);
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 8px 28px rgb(120 14 20 / 22%);
-  color: rgb(255 255 255 / 86%);
+  background: #fff;
+  color: #6e6e73;
   font-size: 13px;
   line-height: 1.4;
-  transition: border-color .25s, box-shadow .4s;
+  transition: border-color .25s;
 }
-.floatBar:has(input:focus-visible) { border-color: rgb(255 255 255 / 70%); box-shadow: 0 8px 28px rgb(120 14 20 / 22%), 0 0 0 3px rgb(255 255 255 / 22%); }
+.floatBar:has(input:focus) { border-color: var(--hk-red); }
 .floatPath { min-width: 0; overflow: hidden; transition: max-width .6s cubic-bezier(.22, 1, .36, 1), opacity .3s ease; }
 .floatPath ol { display: flex; align-items: center; gap: 0 10px; margin: 0; padding: 0; list-style: none; white-space: nowrap; }
 .floatPath li { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.floatPath li + li::before { content: "/"; color: rgb(255 255 255 / 50%); }
-.floatPath a { text-decoration: none; transition: color .25s; }
-.floatPath a:hover { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
-.floatPath [aria-current] { display: block; max-width: 240px; overflow: hidden; text-overflow: ellipsis; color: #fff; font-weight: 500; }
-.floatPath a:focus-visible, .floatIcon:focus-visible, .floatClose:focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: 6px; }
+.floatPath li + li::before { content: "/"; color: #b4b4ba; }
+.floatPath a { text-decoration: none; transition: color .28s ease, opacity .28s ease; }
+.floatPath a:hover { color: #1d1d1f; }
+.floatPath [aria-current] { transition: opacity .28s ease; }
+.floatPath [aria-current] { display: block; max-width: 240px; overflow: hidden; text-overflow: ellipsis; color: var(--hk-red); font-weight: 500; }
+.floatPath a:focus-visible, .floatIcon:focus-visible, .floatClose:focus-visible { outline: 2px solid var(--hk-red); outline-offset: 2px; border-radius: 6px; }
 .crumbMore { display: none !important; }
-.floatDivider { flex-shrink: 0; width: 1px; height: 22px; margin: 0 8px 0 16px; background: rgb(255 255 255 / 35%); }
+.floatDivider { flex-shrink: 0; width: 1px; height: 22px; margin: 0 8px 0 16px; background: #d4d4d8; }
 .floatSearch { display: flex; align-items: center; flex-shrink: 0; }
-.floatIcon, .floatClose { flex-shrink: 0; display: grid; place-items: center; border: 0; background: transparent; color: #fff; cursor: pointer; transition: color .25s, background .2s; }
+.floatIcon, .floatClose { flex-shrink: 0; display: grid; place-items: center; border: 0; background: transparent; color: #1d1d1f; cursor: pointer; transition: color .28s ease, opacity .28s ease, background .2s; }
 .floatIcon { width: 40px; height: 40px; border-radius: 10px; }
-.floatIcon:hover, .floatClose:hover { background: rgb(255 255 255 / 14%); }
+.floatClose:hover { background: rgb(0 0 0 / 5%); }
+.floatBar[data-search-open="true"] .floatIcon { color: var(--hk-red); }
 .floatField {
   display: flex;
   align-items: center;
@@ -255,14 +275,19 @@
   transition: width .6s cubic-bezier(.22, 1, .36, 1), opacity .18s ease;
 }
 .floatBar[data-search-open="true"] .floatField { width: 260px; opacity: 1; transition: width .6s cubic-bezier(.22, 1, .36, 1), opacity .35s ease .15s; }
-.floatField input { min-width: 0; flex: 1; width: 100%; padding: 10px 4px 10px 6px; border: 0; outline: 0; background: none; color: #fff; caret-color: #fff; font: inherit; font-size: 14px; }
-.floatField input::placeholder { color: rgb(255 255 255 / 70%); }
+.floatField input { min-width: 0; flex: 1; width: 100%; padding: 10px 4px 10px 6px; border: 0; outline: 0; background: none; color: #1d1d1f; caret-color: var(--hk-red); font: inherit; font-size: 14px; }
+.floatField input::placeholder { color: #86868b; }
 .floatField input::-webkit-search-cancel-button { display: none; }
-.floatClose { width: 30px; height: 30px; border-radius: 8px; color: rgb(255 255 255 / 75%); }
-.floatClose:hover { color: #fff; }
+.floatClose { width: 30px; height: 30px; border-radius: 8px; color: #6e6e73; }
+.floatClose:hover { color: #1d1d1f; }
+
+/* As in the header: while one item is hovered, the others fade back. */
+@media (hover: hover) and (pointer: fine) {
+  .floatBar:has(.floatPath a:hover, .floatIcon:hover) :is(.floatPath a, .floatPath [aria-current], .floatIcon):not(:hover) { opacity: .28; }
+}
 
 @media (max-width: 599px) {
-  .floatBar { bottom: calc(14px + env(safe-area-inset-bottom, 0px)); padding-left: 16px; font-size: 12px; }
+  .floatBar { margin-bottom: 24px; padding-left: 16px; font-size: 12px; }
   .floatPath { max-width: min(300px, calc(100vw - 112px)); }
   .floatPath [aria-current] { max-width: 200px; }
   .crumbMiddle { display: none !important; }

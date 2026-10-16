@@ -12,12 +12,8 @@ export default function CatalogScreen({ path = [] }: { path?: string[] }) {
       <Suspense fallback={<CatalogSkeleton cover />}><CatalogBrowser path={path} /></Suspense>
     </div>
   </main>;
-  return <main className={styles.page} data-header-theme="light">
-    <header className={styles.heading}>
-      <h1>{title}</h1>
-      {!entry && <p>Выберите направление, затем систему или тип оборудования.</p>}
-      {entry?.node.children && <p>{path[0] === "pipelines" ? "Выберите трубопроводную систему." : "Выберите категорию насосного оборудования."}</p>}
-    </header>
+  return <main className={styles.page} data-header-theme="light" data-catalog-section={path[0]}>
+    <h1 className={styles.srOnly}>{title}</h1>
     <Suspense fallback={<CatalogSkeleton count={entry?.node.children?.length ?? (entry ? 1 : 3)} />}>
       <CatalogBrowser path={path} />
     </Suspense>

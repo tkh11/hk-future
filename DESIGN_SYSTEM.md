@@ -373,6 +373,11 @@ Reuse the shared `Header` on every page. Its current desktop structure is:
 - action: Оставить заявку, opening the existing lead dialog
 - right: Контакты and accessible expandable search
 
+«Контакты» links to `/contacts`, with office, service, address and opening hours
+verified against the official HEISSKRAFT contacts page. Keep phone numbers and
+email addresses actionable. Reuse the official map constructor, loading it only
+when its block enters the viewport, with a shimmer while loading and a direct
+map link available independently. Use the shared content grid and white surfaces.
 «Проектировщикам» links to `/designers`; the other catalog-based navigation
 items currently link to `/catalog`. Search submits to `/catalog?q=…`.
 
@@ -575,6 +580,30 @@ Prefer:
 
 Avoid placing the entire form inside a heavy card.
 
+The active header request dialog presents one existing field per step, inspired by
+Ando's quiet, centered form transitions: ФИО, Телефон, Email, Ваш город,
+Детали обращения, Прикрепите файл, then the existing personal-data consent.
+Keep field names, order, required status and file formats unchanged. Files stay
+optional. Keep all controls mounted across steps so entered values and attachments
+survive Back/Next. Validate the current step before advancing; Enter advances a
+single-line field, while Enter in details adds a newline. Preserve phone masking.
+Use a white rounded dialog with browser-style Back/Forward icon buttons in its
+header, without a visible dialog title or a segmented top status bar. This form
+navigation is an explicit exception to the no-arrows rule for action buttons.
+Keep the primary Next/Submit action at the bottom. A small circular red progress
+ring in the footer advances only after a successful Next action (including the
+forward arrow or Enter, and a skipped optional file), never while typing or
+changing a field. The final Submit action completes it and shows a green check.
+The phone field has a
+searchable country-code selector matching the site's rounded white surfaces;
+format and validate the number for the selected country. Use soft 160ms exit /
+420ms entrance transitions with a small vertical shift and fade. A successful
+completion triggers one soft red light sweep across the viewport behind the
+dialog. Reverse the step transition direction when going back. Respect
+reduced motion, keyboard focus containment, Escape, and focus restoration.
+Do not introduce additional questions or imply a connected backend: the current
+submission remains the existing local success state until transport is added.
+
 Primary project form heading:
 
 Есть проект?
@@ -612,6 +641,14 @@ Reuse the established homepage button treatment for application pages:
 transparent or white secondary surface with a thin red outline. Use the
 existing red tokens for hover and a visible keyboard focus ring. Small
 vector icons may clarify a destination; they must not replace the label.
+
+Hover on text links and navigation items (breadcrumbs, header, footer, menus)
+changes colour only, as in the header and the footer: the link moves to its
+darker (on light surfaces) or whiter (on dark surfaces) tone over about 280ms
+with the standard ease, and in the header the sibling links dim. Never use
+underlines, underline offsets or animated underlines for hover; underline is
+reserved for links inside running prose. Keyboard focus keeps its own visible
+ring.
 
 In product solution sections, place the equipment-selection action beside
 the catalog action: «Подбор насосов» for pumps and «Подбор трубопровода» for
@@ -734,6 +771,7 @@ Do not introduce without explicit approval:
 - invented brand colors
 - noisy backgrounds
 - excessive shadows
+- underlined links on hover (use the colour shift of the header and footer)
 
 ---
 
@@ -839,9 +877,11 @@ branches floating between racks. Keep pump symbols, flow markers and labels
 clear of adjacent lines, with enough space to read each element separately.
 
 The ЦОД page retains the original animated server illustration in its opening
-banner, without the pump symbol or the «Решения в каталоге» button. Use white
-surfaces with a visible neutral border for the hero, model screen and product
-parameter tables; do not rely on near-white gray fills to define these blocks.
+banner, without the pump symbol or the «Решения в каталоге» button. Keep the
+hero white and borderless. Use neutral gray and dark gray for the animated
+server illustration, without blue tints; retain the red engineering accents.
+Use white surfaces with a visible neutral border for the model screen and
+product parameter tables; do not rely on near-white gray fills to define these blocks.
 Align the outer hero surface to the site content grid (1280px maximum), with
 centered side margins and responsive gutters.
 Place the introduction immediately after this banner, then the supplied
@@ -908,10 +948,25 @@ horizontal rules or accordion-like markers when the rows are not controls.
 The fire suppression page at `/solutions/fire-suppression` follows this same
 sequence: animated sprinkler hero, reliability context, supplied FireOff model,
 FireOff promotional banner, HK-Boost FPA/FPV stations, project CTA. Reuse the
-same card morph, help panel, immediate description scrolling, white surfaces
-and lazy-loading placeholders. The fixed model view focuses on a readable
-connection; highlight the main FireOff 125 pipe, 125×40 welded saddles and
-40×40×40 tees independently in red. Use a restrained red/neutral hover sheen
+same card morph, help panel, white surfaces and lazy-loading placeholders.
+Use the supplied Parking_Sprinkler_P04 parking scene with six fixed views:
+overview, pump station, top-down FireOff network, sprinkler assembly, fire
+cabinet connection and the station's flange transition. Selecting one of the
+five cards, a numbered model marker or an assembly smoothly changes the camera,
+then holds it still. Place the compact description cards in the upper-left corner
+inside the model screen, with one expanded description: a large product preview,
+the title below it, one sentence of text and a catalog button without arrows.
+Anchor the five numbered hints to the actual model nodes, with names on hover/focus
+and short leader lines. Keep the camera framing clear of the panel; on phones the
+model sits below the compact panel within the same screen.
+No orbit, drag, free zoom or automatic rotation. Keep the camera viewport
+visible on selection; «Общий вид» and toggling the active card return to the
+overview. Respect reduced motion and stop rendering when idle/offscreen.
+Retain the model's material families and use restrained hover highlighting.
+On selection, keep the chosen assembly opaque while the surrounding geometry
+fades to a partially transparent neutral tone; mute other markers to gray without
+disabling them. Restore every material and marker on return to the overview.
+Use a restrained red/neutral hover sheen
 for the FireOff banner. FPA and FPV have distinct applications; preserve their
 separate descriptions and imagery. Keep provenance in
 `docs/fire-suppression-assets.md`. Do not infer certified pipe dimensions or
@@ -962,25 +1017,37 @@ to the existing tilt, including on video covers; fade it out on pointer exit.
 Keep the whole card a keyboard-accessible link. Reduce to two columns on tablets
 and one on narrow screens. Disable decorative motion for touch and reduced motion.
 
+Pipeline system photo cards are the exception: keep two columns on mobile,
+with readable portrait proportions and descriptions always visible. On desktop
+with a fine hover pointer, slide each description and its bottom gradient up
+from below the card on hover or keyboard focus, and retract them on exit.
+Keep this reveal clipped inside the rounded card without moving the grid or
+changing its existing tilt/reflection. Touch devices show the descriptions
+immediately; reduced motion removes the sliding transition.
+
 Reveal cards with the existing 650ms block entrance on first viewport entry.
 Mount their illustrations only on entry; show pale shimmer placeholders while
 loading, with no artificial delay. Offscreen placeholders remain static. Functional
 search spans the complete hierarchy and accepts `?q=` from the shared header.
 
-Category pages (every level below `/catalog`) have no breadcrumbs or search field
-in the page body. Instead, `CatalogFloatingNav` fixes a single glass surface to the
-bottom centre of the viewport: functional breadcrumbs («Каталог / … / текущий раздел»)
-and a search icon. Below 600px the middle of a long path collapses to «…», which links
+Category pages (every level below `/catalog`) have no visible heading, description,
+breadcrumbs or search field in the page body (the `h1` stays as screen-reader text).
+Instead, `CatalogFloatingNav` places a single light, fully opaque surface at the top left of
+the content, where the heading would be: functional breadcrumbs («Каталог / … / текущий
+раздел») and a search icon. It is `position: sticky` just below the fixed header
+(header height + 10px), so it rests against the header and travels with the page while
+scrolling. Below 600px the middle of a long path collapses to «…», which links
 one level up. The icon expands the same surface horizontally into an input (600ms,
 the product-card easing, delayed content fade); on narrow screens the path yields its
 width to the field. Typing searches the whole hierarchy and replaces the card grid;
 Enter writes `?q=`. Escape or the close button clears and collapses it, and a blur with an
-empty field collapses it too. Keep the field inert while collapsed. The surface is
-HEISSKRAFT red (`--hk-red` at 95% opacity) over an 18px backdrop blur, with a thin
-translucent white border and a soft red-tinted shadow. All text and icons are white
-(secondary crumbs at about 86%); hover underlines links, focus rings are white.
-Rest the bar on the footer instead of covering it: lift it by the footer's visible
-height, keeping a constant gap above the footer's top edge. Never show section counts («Разделов: N»,
+empty field collapses it too. Keep the field inert while collapsed. The surface is solid
+white (`#fff`, no transparency or backdrop blur) with a thin `rgb(0 0 0 / 10%)` border
+and no shadow. Text is `#6e6e73`, the current (active) crumb HEISSKRAFT red (`--hk-red`) at weight 500;
+links darken to `#1d1d1f` on hover (no underline) while the other path items and the
+search icon fade to 28% opacity, exactly like the header navigation (hover-capable pointers
+only). The focused search field is marked by a thin red border only, with no glow or
+ring; red also colours the open search icon. Never show section counts («Разделов: N»,
 «Найдено разделов: N») on any catalog screen. The catalog landing keeps its own
 full-width search and is unaffected.
 

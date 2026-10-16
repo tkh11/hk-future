@@ -17,17 +17,17 @@ function ServerRack({ x, y }: { x: number; y: number }) {
   const width = 64;
   const depth = 64;
   return <g>
-    <path d={face([[x, y + depth, 0], [x + width, y + depth, 0], [x + width, y + depth, rackHeight], [x, y + depth, rackHeight]])} fill="#303035" stroke="#727279" strokeWidth="1" />
-    <path d={face([[x + width, y + depth, 0], [x + width, y, 0], [x + width, y, rackHeight], [x + width, y + depth, rackHeight]])} fill="#45454c" stroke="#77777f" strokeWidth="1" />
-    <path d={face([[x, y, rackHeight], [x + width, y, rackHeight], [x + width, y + depth, rackHeight], [x, y + depth, rackHeight]])} fill="#e6e6ea" stroke="#9999a0" strokeWidth="1" />
+    <path d={face([[x, y + depth, 0], [x + width, y + depth, 0], [x + width, y + depth, rackHeight], [x, y + depth, rackHeight]])} fill="#303030" stroke="#727272" strokeWidth="1" />
+    <path d={face([[x + width, y + depth, 0], [x + width, y, 0], [x + width, y, rackHeight], [x + width, y + depth, rackHeight]])} fill="#454545" stroke="#777777" strokeWidth="1" />
+    <path d={face([[x, y, rackHeight], [x + width, y, rackHeight], [x + width, y + depth, rackHeight], [x, y + depth, rackHeight]])} fill="#e6e6e6" stroke="#999999" strokeWidth="1" />
     {Array.from({ length: 7 }, (_, index) => {
       const z = 17 + index * 19;
       const light = project([x + 54, y + depth, z + 7]);
       return <g key={index}>
-        <path d={face([[x + 6, y + depth, z], [x + 58, y + depth, z], [x + 58, y + depth, z + 14], [x + 6, y + depth, z + 14]])} fill="#37373e" stroke="#707078" strokeWidth=".65" />
-        <path d={`${line([[x + 12, y + depth, z + 5], [x + 43, y + depth, z + 5]])} ${line([[x + 12, y + depth, z + 9], [x + 43, y + depth, z + 9]])}`} stroke="#91919a" strokeWidth=".65" />
-        <circle cx={light[0]} cy={light[1]} r="1.35" fill={index % 3 === 0 ? "var(--hk-red)" : "#b8b8c0"} />
-        <path d={line([[x + width, y + 9, z + 7], [x + width, y + depth - 9, z + 7]])} stroke="#73737d" strokeWidth=".7" />
+        <path d={face([[x + 6, y + depth, z], [x + 58, y + depth, z], [x + 58, y + depth, z + 14], [x + 6, y + depth, z + 14]])} fill="#373737" stroke="#707070" strokeWidth=".65" />
+        <path d={`${line([[x + 12, y + depth, z + 5], [x + 43, y + depth, z + 5]])} ${line([[x + 12, y + depth, z + 9], [x + 43, y + depth, z + 9]])}`} stroke="#919191" strokeWidth=".65" />
+        <circle cx={light[0]} cy={light[1]} r="1.35" fill={index % 3 === 0 ? "var(--hk-red)" : "#b8b8b8"} />
+        <path d={line([[x + width, y + 9, z + 7], [x + width, y + depth - 9, z + 7]])} stroke="#737373" strokeWidth=".7" />
       </g>;
     })}
   </g>;
@@ -40,10 +40,10 @@ function ServerHall() {
   return (
     <svg viewBox="35 5 760 645" role="img" aria-labelledby="dc-hall-title" className={styles.hall}>
       <title id="dc-hall-title">Шесть серверных стоек, каждая подключена к подающему и обратному коллекторам охлаждения</title>
-      <path d={face([[-30, -65, 0], [495, -65, 0], [495, 310, 0], [-30, 310, 0]])} fill="#eeeef1" stroke="#d9d9df" />
-      <path d={face([[-30, 310, 0], [495, 310, 0], [495, 310, -8], [-30, 310, -8]])} fill="#e1e1e6" />
-      <path d={face([[495, -65, 0], [495, 310, 0], [495, 310, -8], [495, -65, -8]])} fill="#e7e7ec" />
-      <g stroke="#d9d9df" strokeWidth=".8" fill="none">
+      <path d={face([[-30, -65, 0], [495, -65, 0], [495, 310, 0], [-30, 310, 0]])} fill="#eeeeee" stroke="#d9d9d9" />
+      <path d={face([[-30, 310, 0], [495, 310, 0], [495, 310, -8], [-30, 310, -8]])} fill="#e1e1e1" />
+      <path d={face([[495, -65, 0], [495, 310, 0], [495, 310, -8], [495, -65, -8]])} fill="#e7e7e7" />
+      <g stroke="#d9d9d9" strokeWidth=".8" fill="none">
         {[45, 120, 195, 270, 345, 420].map((x) => <path key={`x-${x}`} d={line([[x, -65, 0], [x, 310, 0]])} />)}
         {[10, 85, 160, 235].map((y) => <path key={`y-${y}`} d={line([[-30, y, 0], [495, y, 0]])} />)}
       </g>
@@ -51,10 +51,10 @@ function ServerHall() {
       {racks.map((rack) => <ServerRack key={`${rack.x}-${rack.y}`} {...rack} />)}
       {/* Both collectors run above the racks, with one pair of drops per rack. */}
       <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-        <path d={line(returnMain)} stroke="#9b9ba4" strokeWidth="3" />
+        <path d={line(returnMain)} stroke="#9b9b9b" strokeWidth="3" />
         {rowPositions.map((y) => <g key={`return-${y}`}>
-          <path d={line([[7, y - 100, pipeHeight], [475, y - 100, pipeHeight]])} stroke="#9b9ba4" strokeWidth="2.5" />
-          {columnPositions.map((x) => <path key={x} d={line([[x + 47, y - 100, pipeHeight], [x + 47, y + 20, pipeHeight], [x + 47, y + 20, rackHeight]])} stroke="#9b9ba4" strokeWidth="2" />)}
+          <path d={line([[7, y - 100, pipeHeight], [475, y - 100, pipeHeight]])} stroke="#9b9b9b" strokeWidth="2.5" />
+          {columnPositions.map((x) => <path key={x} d={line([[x + 47, y - 100, pipeHeight], [x + 47, y + 20, pipeHeight], [x + 47, y + 20, rackHeight]])} stroke="#9b9b9b" strokeWidth="2" />)}
         </g>)}
         <path d={line(supplyMain)} stroke="#fff" strokeWidth="7" />
         <path d={line(supplyMain)} stroke="var(--hk-red)" strokeWidth="3.5" />
@@ -70,7 +70,7 @@ function ServerHall() {
         const returnPort = project([x + 47, y + 20, rackHeight]);
         return <g key={`ports-${x}-${y}`}>
           <circle cx={supplyPort[0]} cy={supplyPort[1]} r="2.8" fill="#fff" stroke="var(--hk-red)" strokeWidth="1.4" />
-          <circle cx={returnPort[0]} cy={returnPort[1]} r="2.8" fill="#fff" stroke="#8e8e98" strokeWidth="1.3" />
+          <circle cx={returnPort[0]} cy={returnPort[1]} r="2.8" fill="#fff" stroke="#8e8e8e" strokeWidth="1.3" />
         </g>;
       })}
     </svg>

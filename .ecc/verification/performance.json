@@ -1,0 +1,114 @@
+{
+  "recordedAt": "2026-10-23T14:01:02.718Z",
+  "status": "accepted-after-paired-control",
+  "fullSeries": {
+    "baselineRuns": 60,
+    "currentRuns": 60,
+    "comparison": "../benchmarks/comparison.json",
+    "rawGate": "one-metric-needs-review",
+    "runtimeErrors": []
+  },
+  "rawFlags": [
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "metric": "lcp",
+      "before": 44,
+      "after": 52,
+      "beforeRange": [
+        32,
+        48
+      ],
+      "afterRange": [
+        48,
+        56
+      ],
+      "changePercent": 18.181818181818187,
+      "regression": true
+    }
+  ],
+  "pairedControl": {
+    "source": "../benchmarks/paired-followup.json",
+    "pairs": 5,
+    "additionalRuns": 10,
+    "comparison": [
+      {
+        "route": "/solutions/fire-suppression",
+        "mobile": false,
+        "metrics": {
+          "lcp": {
+            "before": 64,
+            "after": 68,
+            "beforeRange": [
+              56,
+              120
+            ],
+            "afterRange": [
+              44,
+              80
+            ],
+            "changePercent": 6.25,
+            "regression": false
+          },
+          "cls": {
+            "before": 0.002931820440096129,
+            "after": 0.002931820440096129,
+            "beforeRange": [
+              0.002931820440096129,
+              0.002931820440096129
+            ],
+            "afterRange": [
+              0.002931820440096129,
+              0.002931820440096129
+            ],
+            "changePercent": 0,
+            "regression": false
+          },
+          "longTasks": {
+            "before": 0,
+            "after": 0,
+            "beforeRange": [
+              0,
+              0
+            ],
+            "afterRange": [
+              0,
+              0
+            ],
+            "changePercent": null,
+            "regression": false
+          },
+          "bytes": {
+            "before": 2104561,
+            "after": 1789595,
+            "beforeRange": [
+              2104561,
+              2104571
+            ],
+            "afterRange": [
+              1789580,
+              1789600
+            ],
+            "changePercent": -14.965876493957653,
+            "regression": false
+          }
+        }
+      }
+    ],
+    "changesToThreshold": false
+  },
+  "unresolvedRegressions": [],
+  "note": "The original comparison still reports the 44→52 ms desktop FireOff LCP flag. Five alternating cold pairs give 64→68 ms (+6.25%), within the original 10% gate. Both full and follow-up series are retained; no samples discarded or thresholds relaxed.",
+  "models": {
+    "source": "../benchmarks/model-comparison.json",
+    "geometry": "lossless, exact decoded-byte and semantic checks",
+    "accepted": [
+      "chilling.glb",
+      "parking-sprinkler.glb"
+    ],
+    "rejected": [
+      "facade.glb",
+      "communications.glb"
+    ]
+  }
+}

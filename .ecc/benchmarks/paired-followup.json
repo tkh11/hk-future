@@ -1,0 +1,226 @@
+{
+  "browser": "156.0.8078.47",
+  "protocol": {
+    "runs": 5,
+    "initialWindowMs": 12000,
+    "mobile": {
+      "viewport": "390x844",
+      "cpu": 4,
+      "downloadBytesPerSecond": 500000,
+      "latencyMs": 150
+    },
+    "desktop": {
+      "viewport": "1440x900",
+      "cpu": 1,
+      "network": "local unthrottled"
+    },
+    "cache": "cold context, disabled HTTP cache",
+    "note": "12-second laboratory observations, not field Core Web Vitals. Bytes include partial transfers. Visual capture follows separately without throttling."
+  },
+  "note": "Five alternating cold A/B pairs for every flagged route/profile; same 12-second initial window, no visual captures or concurrent tests. Original full series remains unchanged.",
+  "cases": [
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "flaggedMetrics": [
+        "lcp"
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "run": 0,
+      "variant": "baseline",
+      "initial": {
+        "lcp": 120,
+        "cls": 0.002931820440096129,
+        "longTasks": 0,
+        "bytes": 2104561,
+        "errors": []
+      }
+    },
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "run": 0,
+      "variant": "current",
+      "initial": {
+        "lcp": 72,
+        "cls": 0.002931820440096129,
+        "longTasks": 0,
+        "bytes": 1789580,
+        "errors": []
+      }
+    },
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "run": 1,
+      "variant": "current",
+      "initial": {
+        "lcp": 56,
+        "cls": 0.002931820440096129,
+        "longTasks": 0,
+        "bytes": 1789600,
+        "errors": []
+      }
+    },
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "run": 1,
+      "variant": "baseline",
+      "initial": {
+        "lcp": 60,
+        "cls": 0.002931820440096129,
+        "longTasks": 0,
+        "bytes": 2104561,
+        "errors": []
+      }
+    },
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "run": 2,
+      "variant": "baseline",
+      "initial": {
+        "lcp": 64,
+        "cls": 0.002931820440096129,
+        "longTasks": 0,
+        "bytes": 2104571,
+        "errors": []
+      }
+    },
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "run": 2,
+      "variant": "current",
+      "initial": {
+        "lcp": 44,
+        "cls": 0.002931820440096129,
+        "longTasks": 0,
+        "bytes": 1789590,
+        "errors": []
+      }
+    },
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "run": 3,
+      "variant": "current",
+      "initial": {
+        "lcp": 68,
+        "cls": 0.002931820440096129,
+        "longTasks": 0,
+        "bytes": 1789600,
+        "errors": []
+      }
+    },
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "run": 3,
+      "variant": "baseline",
+      "initial": {
+        "lcp": 56,
+        "cls": 0.002931820440096129,
+        "longTasks": 0,
+        "bytes": 2104561,
+        "errors": []
+      }
+    },
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "run": 4,
+      "variant": "baseline",
+      "initial": {
+        "lcp": 64,
+        "cls": 0.002931820440096129,
+        "longTasks": 0,
+        "bytes": 2104566,
+        "errors": []
+      }
+    },
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "run": 4,
+      "variant": "current",
+      "initial": {
+        "lcp": 80,
+        "cls": 0.002931820440096129,
+        "longTasks": 0,
+        "bytes": 1789595,
+        "errors": []
+      }
+    }
+  ],
+  "comparison": [
+    {
+      "route": "/solutions/fire-suppression",
+      "mobile": false,
+      "metrics": {
+        "lcp": {
+          "before": 64,
+          "after": 68,
+          "beforeRange": [
+            56,
+            120
+          ],
+          "afterRange": [
+            44,
+            80
+          ],
+          "changePercent": 6.25,
+          "regression": false
+        },
+        "cls": {
+          "before": 0.002931820440096129,
+          "after": 0.002931820440096129,
+          "beforeRange": [
+            0.002931820440096129,
+            0.002931820440096129
+          ],
+          "afterRange": [
+            0.002931820440096129,
+            0.002931820440096129
+          ],
+          "changePercent": 0,
+          "regression": false
+        },
+        "longTasks": {
+          "before": 0,
+          "after": 0,
+          "beforeRange": [
+            0,
+            0
+          ],
+          "afterRange": [
+            0,
+            0
+          ],
+          "changePercent": null,
+          "regression": false
+        },
+        "bytes": {
+          "before": 2104561,
+          "after": 1789595,
+          "beforeRange": [
+            2104561,
+            2104571
+          ],
+          "afterRange": [
+            1789580,
+            1789600
+          ],
+          "changePercent": -14.965876493957653,
+          "regression": false
+        }
+      }
+    }
+  ]
+}

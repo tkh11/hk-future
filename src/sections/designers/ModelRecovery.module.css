@@ -1,0 +1,39 @@
+.outlet { display: none; }
+
+.outlet:not(:empty) {
+  display: block;
+  flex: 0 0 auto;
+  pointer-events: auto;
+}
+
+/* Only a genuine model failure enters this outlet. Keep it in the UI flow,
+   rather than stacking a retry button underneath the growing product panel. */
+:global(.pipeline):has(.outlet:not(:empty)) {
+  height: auto;
+  min-height: 100dvh;
+  overflow: visible;
+}
+
+:global(.pipeline):has(.outlet:not(:empty)) :global(.pipeline__overlay) {
+  position: relative;
+  min-height: 100dvh;
+}
+
+:global(.pipeline):has(.outlet:not(:empty)) :global(.pipeline__tools) {
+  margin-top: 0;
+}
+
+:global(.pipeline):has(.outlet:not(:empty)) :global(.pipeline__stage) {
+  pointer-events: none;
+  touch-action: auto;
+}
+
+@media (min-width: 1024px) {
+  .outlet:not(:empty) {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: center;
+    justify-self: center;
+    width: min(100%, 440px);
+  }
+}

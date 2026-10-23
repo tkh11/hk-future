@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
+import { preload } from "react-dom";
 import { publicPath } from "@/lib/public-path";
 
 const slides = [
@@ -37,6 +38,7 @@ function subscribeReducedMotion(callback: () => void) {
 const fallbackDuration = [10000, 10000, 12000];
 
 export default function ParkBanner() {
+  preload(publicPath("/images/home/hero-opening-poster.jpg"), { as: "image", fetchPriority: "high" });
   const sectionRef = useRef<HTMLElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const progressRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -44,6 +46,7 @@ export default function ParkBanner() {
   const [selection, setSelection] = useState({ index: 0, cycle: 0 });
   const [inView, setInView] = useState(false);
   const [loadVideo, setLoadVideo] = useState(false);
+  const [requested, setRequested] = useState([true, false, false]);
   const [failed, setFailed] = useState<boolean[]>(() => slides.map(() => false));
   const pageVisible = useSyncExternalStore(subscribeVisibility, () => document.visibilityState === "visible", () => false);
   const reducedMotion = useSyncExternalStore(subscribeReducedMotion, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => true);
@@ -61,6 +64,7 @@ export default function ParkBanner() {
   }, []);
 
   const selectSlide = useCallback((index: number) => {
+    setRequested(current => current[index] ? current : current.map((value, i) => value || i === index));
     elapsedRef.current = 0;
     videoRefs.current.forEach(video => {
       if (!video) return;
@@ -90,6 +94,7 @@ export default function ParkBanner() {
     let previousTime = performance.now();
     const timedSlide = failed[activeSlide];
     const duration = fallbackDuration[activeSlide];
+    let preparedNext = false;
 
     function updateProgress(now: number) {
       if (document.visibilityState === "hidden") {
@@ -105,6 +110,12 @@ export default function ParkBanner() {
         : video && Number.isFinite(video.duration) && video.duration > 0
           ? Math.min(1, video.currentTime / video.duration)
           : 0;
+      // Prepare only the next slide near the end, instead of fetching every video on entry.
+      if (!preparedNext && (timedSlide ? duration - elapsedRef.current <= 3000 : video && Number.isFinite(video.duration) && video.duration - video.currentTime <= 3)) {
+        preparedNext = true;
+        const next = (activeSlide + 1) % slides.length;
+        setRequested(current => current[next] ? current : current.map((value, i) => value || i === next));
+      }
       const fill = progressRefs.current[activeSlide];
       if (fill) fill.style.transform = `scaleX(${progress})`;
       if (timedSlide && progress >= 1) {
@@ -131,7 +142,7 @@ export default function ParkBanner() {
       void video.play().catch(() => { if (!cancelled) markFailed(index); });
     });
     return () => { cancelled = true; };
-  }, [selection, activeSlide, running, loadVideo, failed, markFailed]);
+  }, [selection, activeSlide, running, loadVideo, requested, failed, markFailed]);
 
   return (
     <section ref={sectionRef} data-header-theme="light" className="park-banner" aria-label="Решения HEISSKRAFT" aria-roledescription="карусель">
@@ -140,7 +151,8 @@ export default function ParkBanner() {
           <video
             ref={element => { videoRefs.current[0] = element; }}
             className="park-banner__video"
-            src={publicPath("/videos/home/hero-opening.mp4")}
+            src={loadVideo && !reducedMotion && requested[0] ? publicPath("/videos/home/hero-opening.mp4") : undefined}
+            poster={publicPath("/images/home/hero-opening-poster.jpg")}
             preload="auto"
             muted
             playsInline
@@ -153,8 +165,8 @@ export default function ParkBanner() {
           <video
             ref={element => { videoRefs.current[1] = element; }}
             className="park-banner__video"
-            src={loadVideo ? publicPath("/videos/home/gali.mp4") : undefined}
-            poster={publicPath("/images/home/gali-poster.jpg")}
+            src={loadVideo && !reducedMotion && requested[1] ? publicPath("/videos/home/gali.mp4") : undefined}
+            poster={requested[1] ? publicPath("/images/home/gali-poster.jpg") : undefined}
             preload="auto"
             muted
             playsInline
@@ -167,8 +179,8 @@ export default function ParkBanner() {
           <video
             ref={element => { videoRefs.current[2] = element; }}
             className="park-banner__video"
-            src={loadVideo ? publicPath("/videos/home/galits.mp4") : undefined}
-            poster={publicPath("/images/home/galits-poster.jpg")}
+            src={loadVideo && !reducedMotion && requested[2] ? publicPath("/videos/home/galits.mp4") : undefined}
+            poster={requested[2] ? publicPath("/images/home/galits-poster.jpg") : undefined}
             preload="auto"
             muted
             playsInline

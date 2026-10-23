@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import styles from "./CoolingExplorer.module.css";
+import { useId, useEffect, useRef, useState } from "react";
+import styles from "./ModelHelp.module.css";
 
 function HelpIcon({ kind }: { kind: "info" | "cursor" | "click" | "cards" }) {
   return <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -12,7 +12,8 @@ function HelpIcon({ kind }: { kind: "info" | "cursor" | "click" | "cards" }) {
   </svg>;
 }
 
-export default function CoolingHelp({ cameraViews = false }: { cameraViews?: boolean }) {
+export default function ModelHelp({ cameraViews = false }: { cameraViews?: boolean }) {
+  const id = useId();
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -38,10 +39,10 @@ export default function CoolingHelp({ cameraViews = false }: { cameraViews?: boo
 
   return <div ref={root} className={styles.help}>
     <div className={styles.helpMorph} data-open={open}>
-      <div id="cooling-help" className={styles.helpPanel} role="region" aria-labelledby="cooling-help-title" aria-hidden={!open} inert={!open}>
+      <div id={id} className={styles.helpPanel} role="region" aria-labelledby={`${id}-title`} aria-hidden={!open} inert={!open}>
         <div className={styles.helpPanelClip}>
           <div className={styles.helpContent}>
-            <h3 id="cooling-help-title">Как пользоваться моделью</h3>
+            <h3 id={`${id}-title`}>Как пользоваться моделью</h3>
             <ul>
               <li className={styles.hoverInstruction}><HelpIcon kind="cursor" /><div><strong>Наведите курсор</strong><p>Элемент подсветится на модели.</p></div></li>
               <li><HelpIcon kind="click" /><div><strong>Нажмите на элемент</strong><p>{cameraViews ? "Камера приблизит выбранный узел. Откроется его описание." : "Откроется его описание с изображением."}</p></div></li>
@@ -50,7 +51,7 @@ export default function CoolingHelp({ cameraViews = false }: { cameraViews?: boo
           </div>
         </div>
       </div>
-      <button ref={trigger} type="button" className={styles.helpButton} aria-expanded={open} aria-controls="cooling-help" onClick={() => setOpen(value => !value)}>
+      <button ref={trigger} type="button" className={styles.helpButton} aria-expanded={open} aria-controls={id} onClick={() => setOpen(value => !value)}>
         <HelpIcon kind="info" />Как пользоваться
       </button>
     </div>

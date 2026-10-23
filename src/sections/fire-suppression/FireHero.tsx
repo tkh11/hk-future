@@ -1,3 +1,4 @@
+import { fireHero } from "@/content/solution-pages";
 import shared from "../data-centers/DataCenters.module.css";
 import styles from "./FireSuppression.module.css";
 
@@ -18,8 +19,8 @@ export default function FireHero() {
   return <section className={shared.hero} data-header-theme="light" aria-labelledby="fire-title">
     <div className={shared.heroInner}>
       <div className={shared.heroCopy}>
-        <h1 id="fire-title">Системы<br />пожаротушения</h1>
-        <p className={shared.heroDescription}>Надёжность каждого соединения.<br />Готовность всей системы.</p>
+        <h1 id="fire-title">{fireHero.heading}<br />{fireHero.headingSecondLine}</h1>
+        <p className={shared.heroDescription}>{fireHero.description}<br />{fireHero.descriptionSecondLine}</p>
       </div>
       <div className={shared.heroVisual}>
         <svg className={styles.heroDiagram} viewBox="0 0 760 560" role="img" aria-label="Условная схема спринклерной системы: магистраль с тремя подключёнными оросителями">

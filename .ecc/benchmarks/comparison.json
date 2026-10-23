@@ -1,0 +1,746 @@
+[
+  {
+    "route": "/",
+    "mobile": false,
+    "metrics": {
+      "lcp": {
+        "before": 180,
+        "after": 56,
+        "beforeRange": [
+          148,
+          516
+        ],
+        "afterRange": [
+          44,
+          64
+        ],
+        "changePercent": -68.88888888888889,
+        "regression": false
+      },
+      "cls": {
+        "before": 0.003188418122803069,
+        "after": 0.003188418122803069,
+        "beforeRange": [
+          0.003188418122803069,
+          0.003188418122803069
+        ],
+        "afterRange": [
+          0.003188418122803069,
+          0.003188418122803069
+        ],
+        "changePercent": 0,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 0,
+        "after": 0,
+        "beforeRange": [
+          0,
+          0
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": null,
+        "regression": false
+      },
+      "bytes": {
+        "before": 57874762,
+        "after": 13442203,
+        "beforeRange": [
+          57251188,
+          57940298
+        ],
+        "afterRange": [
+          13442178,
+          13442228
+        ],
+        "changePercent": -76.77363580346127,
+        "regression": false
+      }
+    }
+  },
+  {
+    "route": "/catalog",
+    "mobile": false,
+    "metrics": {
+      "lcp": {
+        "before": 144,
+        "after": 108,
+        "beforeRange": [
+          132,
+          512
+        ],
+        "afterRange": [
+          104,
+          124
+        ],
+        "changePercent": -25,
+        "regression": false
+      },
+      "cls": {
+        "before": 0.003188418122803069,
+        "after": 0.003188418122803069,
+        "beforeRange": [
+          0.003188418122803069,
+          0.003188418122803069
+        ],
+        "afterRange": [
+          0.003188418122803069,
+          0.003188418122803069
+        ],
+        "changePercent": 0,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 0,
+        "after": 0,
+        "beforeRange": [
+          0,
+          92
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": null,
+        "regression": false
+      },
+      "bytes": {
+        "before": 94191056,
+        "after": 23646958,
+        "beforeRange": [
+          94191031,
+          94191071
+        ],
+        "afterRange": [
+          23646958,
+          23646988
+        ],
+        "changePercent": -74.89468851479911,
+        "regression": false
+      }
+    }
+  },
+  {
+    "route": "/solutions/data-centers",
+    "mobile": false,
+    "metrics": {
+      "lcp": {
+        "before": 56,
+        "after": 56,
+        "beforeRange": [
+          52,
+          68
+        ],
+        "afterRange": [
+          40,
+          68
+        ],
+        "changePercent": 0,
+        "regression": false
+      },
+      "cls": {
+        "before": 0.002931820440096129,
+        "after": 0.002931820440096129,
+        "beforeRange": [
+          0.002931820440096129,
+          0.002931820440096129
+        ],
+        "afterRange": [
+          0.002931820440096129,
+          0.002931820440096129
+        ],
+        "changePercent": 0,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 0,
+        "after": 0,
+        "beforeRange": [
+          0,
+          0
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": null,
+        "regression": false
+      },
+      "bytes": {
+        "before": 2104341,
+        "after": 1781234,
+        "beforeRange": [
+          2104326,
+          2104361
+        ],
+        "afterRange": [
+          1781224,
+          1781244
+        ],
+        "changePercent": -15.35430807079271,
+        "regression": false
+      }
+    }
+  },
+  {
+    "route": "/solutions/fire-suppression",
+    "mobile": false,
+    "metrics": {
+      "lcp": {
+        "before": 44,
+        "after": 52,
+        "beforeRange": [
+          32,
+          48
+        ],
+        "afterRange": [
+          48,
+          56
+        ],
+        "changePercent": 18.181818181818187,
+        "regression": true
+      },
+      "cls": {
+        "before": 0.002931820440096129,
+        "after": 0.002931820440096129,
+        "beforeRange": [
+          0.002931820440096129,
+          0.002931820440096129
+        ],
+        "afterRange": [
+          0.002931820440096129,
+          0.002931820440096129
+        ],
+        "changePercent": 0,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 0,
+        "after": 0,
+        "beforeRange": [
+          0,
+          0
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": null,
+        "regression": false
+      },
+      "bytes": {
+        "before": 2104571,
+        "after": 1789605,
+        "beforeRange": [
+          2104561,
+          2104581
+        ],
+        "afterRange": [
+          1789590,
+          1789610
+        ],
+        "changePercent": -14.965805382664687,
+        "regression": false
+      }
+    }
+  },
+  {
+    "route": "/designers",
+    "mobile": false,
+    "metrics": {
+      "lcp": {
+        "before": 56,
+        "after": 44,
+        "beforeRange": [
+          44,
+          244
+        ],
+        "afterRange": [
+          40,
+          56
+        ],
+        "changePercent": -21.42857142857143,
+        "regression": false
+      },
+      "cls": {
+        "before": 0.002931820440096129,
+        "after": 0.002931820440096129,
+        "beforeRange": [
+          0.002931820440096129,
+          0.002931820440096129
+        ],
+        "afterRange": [
+          0.002931820440096129,
+          0.002931820440096129
+        ],
+        "changePercent": 0,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 0,
+        "after": 0,
+        "beforeRange": [
+          0,
+          254
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": null,
+        "regression": false
+      },
+      "bytes": {
+        "before": 5173673,
+        "after": 4848494,
+        "beforeRange": [
+          5173658,
+          5173693
+        ],
+        "afterRange": [
+          4848454,
+          4848951
+        ],
+        "changePercent": -6.285263873460889,
+        "regression": false
+      }
+    }
+  },
+  {
+    "route": "/contacts",
+    "mobile": false,
+    "metrics": {
+      "lcp": {
+        "before": 52,
+        "after": 52,
+        "beforeRange": [
+          48,
+          56
+        ],
+        "afterRange": [
+          40,
+          76
+        ],
+        "changePercent": 0,
+        "regression": false
+      },
+      "cls": {
+        "before": 0.002931820440096129,
+        "after": 0.002931820440096129,
+        "beforeRange": [
+          0.002931820440096129,
+          0.002951762048959405
+        ],
+        "afterRange": [
+          0.002931820440096129,
+          0.0029320983719269764
+        ],
+        "changePercent": 0,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 0,
+        "after": 0,
+        "beforeRange": [
+          0,
+          0
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": null,
+        "regression": false
+      },
+      "bytes": {
+        "before": 2104148,
+        "after": 1785112,
+        "beforeRange": [
+          2104133,
+          2104158
+        ],
+        "afterRange": [
+          1785092,
+          1785127
+        ],
+        "changePercent": -15.16224143929039,
+        "regression": false
+      }
+    }
+  },
+  {
+    "route": "/",
+    "mobile": true,
+    "metrics": {
+      "lcp": {
+        "before": 1752,
+        "after": 1856,
+        "beforeRange": [
+          1748,
+          1764
+        ],
+        "afterRange": [
+          1688,
+          1856
+        ],
+        "changePercent": 5.936073059360725,
+        "regression": false
+      },
+      "cls": {
+        "before": 0,
+        "after": 0,
+        "beforeRange": [
+          0,
+          0
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": null,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 10,
+        "after": 2,
+        "beforeRange": [
+          4,
+          18
+        ],
+        "afterRange": [
+          1,
+          3
+        ],
+        "changePercent": -80,
+        "regression": false
+      },
+      "bytes": {
+        "before": 5751432,
+        "after": 5344594,
+        "beforeRange": [
+          5742437,
+          5751437
+        ],
+        "afterRange": [
+          5322094,
+          5362589
+        ],
+        "changePercent": -7.073681823935329,
+        "regression": false
+      }
+    }
+  },
+  {
+    "route": "/catalog",
+    "mobile": true,
+    "metrics": {
+      "lcp": {
+        "before": 7880,
+        "after": 3888,
+        "beforeRange": [
+          7868,
+          7888
+        ],
+        "afterRange": [
+          3848,
+          3948
+        ],
+        "changePercent": -50.65989847715736,
+        "regression": false
+      },
+      "cls": {
+        "before": 0,
+        "after": 0,
+        "beforeRange": [
+          0,
+          0
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": null,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 15,
+        "after": 4,
+        "beforeRange": [
+          3,
+          34
+        ],
+        "afterRange": [
+          3,
+          11
+        ],
+        "changePercent": -73.33333333333334,
+        "regression": false
+      },
+      "bytes": {
+        "before": 5648736,
+        "after": 5642194,
+        "beforeRange": [
+          5642741,
+          5650241
+        ],
+        "afterRange": [
+          5636194,
+          5649694
+        ],
+        "changePercent": -0.11581352005121115,
+        "regression": false
+      }
+    }
+  },
+  {
+    "route": "/solutions/data-centers",
+    "mobile": true,
+    "metrics": {
+      "lcp": {
+        "before": 852,
+        "after": 608,
+        "beforeRange": [
+          844,
+          852
+        ],
+        "afterRange": [
+          568,
+          616
+        ],
+        "changePercent": -28.638497652582164,
+        "regression": false
+      },
+      "cls": {
+        "before": 0,
+        "after": 0,
+        "beforeRange": [
+          0,
+          0
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": null,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 6,
+        "after": 5,
+        "beforeRange": [
+          5,
+          27
+        ],
+        "afterRange": [
+          2,
+          6
+        ],
+        "changePercent": -16.666666666666664,
+        "regression": false
+      },
+      "bytes": {
+        "before": 2104426,
+        "after": 1796078,
+        "beforeRange": [
+          2104426,
+          2104431
+        ],
+        "afterRange": [
+          1796073,
+          1796078
+        ],
+        "changePercent": -14.652356509566033,
+        "regression": false
+      }
+    }
+  },
+  {
+    "route": "/solutions/fire-suppression",
+    "mobile": true,
+    "metrics": {
+      "lcp": {
+        "before": 1816,
+        "after": 588,
+        "beforeRange": [
+          824,
+          1828
+        ],
+        "afterRange": [
+          584,
+          596
+        ],
+        "changePercent": -67.62114537444934,
+        "regression": false
+      },
+      "cls": {
+        "before": 0,
+        "after": 0,
+        "beforeRange": [
+          0,
+          0
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": null,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 8,
+        "after": 3,
+        "beforeRange": [
+          3,
+          14
+        ],
+        "afterRange": [
+          3,
+          11
+        ],
+        "changePercent": -62.5,
+        "regression": false
+      },
+      "bytes": {
+        "before": 2104641,
+        "after": 1794445,
+        "beforeRange": [
+          2104626,
+          2104641
+        ],
+        "afterRange": [
+          1794430,
+          1794445
+        ],
+        "changePercent": -14.738665644164495,
+        "regression": false
+      }
+    }
+  },
+  {
+    "route": "/designers",
+    "mobile": true,
+    "metrics": {
+      "lcp": {
+        "before": 1756,
+        "after": 584,
+        "beforeRange": [
+          1748,
+          1888
+        ],
+        "afterRange": [
+          580,
+          592
+        ],
+        "changePercent": -66.74259681093395,
+        "regression": false
+      },
+      "cls": {
+        "before": 0,
+        "after": 0,
+        "beforeRange": [
+          0,
+          0
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": null,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 158,
+        "after": 140,
+        "beforeRange": [
+          154,
+          197
+        ],
+        "afterRange": [
+          129,
+          166
+        ],
+        "changePercent": -11.392405063291145,
+        "regression": false
+      },
+      "bytes": {
+        "before": 5170525,
+        "after": 4846569,
+        "beforeRange": [
+          5170520,
+          5170525
+        ],
+        "afterRange": [
+          4846564,
+          4846574
+        ],
+        "changePercent": -6.265437262173568,
+        "regression": false
+      }
+    }
+  },
+  {
+    "route": "/contacts",
+    "mobile": true,
+    "metrics": {
+      "lcp": {
+        "before": 1468,
+        "after": 1352,
+        "beforeRange": [
+          1468,
+          1488
+        ],
+        "afterRange": [
+          1344,
+          1360
+        ],
+        "changePercent": -7.901907356948223,
+        "regression": false
+      },
+      "cls": {
+        "before": 0.00022470759261403002,
+        "after": 0,
+        "beforeRange": [
+          0.00022470759261403002,
+          0.00022470759261403002
+        ],
+        "afterRange": [
+          0,
+          0
+        ],
+        "changePercent": -100,
+        "regression": false
+      },
+      "longTasks": {
+        "before": 7,
+        "after": 5,
+        "beforeRange": [
+          3,
+          14
+        ],
+        "afterRange": [
+          4,
+          17
+        ],
+        "changePercent": -28.57142857142857,
+        "regression": false
+      },
+      "bytes": {
+        "before": 2104218,
+        "after": 1785177,
+        "beforeRange": [
+          2104213,
+          2104218
+        ],
+        "afterRange": [
+          1785172,
+          1785182
+        ],
+        "changePercent": -15.161974662321109,
+        "regression": false
+      }
+    }
+  }
+]

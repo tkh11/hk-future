@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HEISSKRAFT
 
-## Getting Started
+Next.js 16.4.2, React 19, TypeScript strict. Существующий дизайн описан в `DESIGN_SYSTEM.md`.
 
-First, run the development server:
+## Локальный запуск
 
-```bash
+Node 24.21.0 и npm 11.19.0; версия Node закреплена в `.nvmrc`.
+
+```sh
+nvm use
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Сайт: http://localhost:3000. Не запускайте несколько dev-серверов в одной папке сборки.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Проверки
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+npm run typecheck
+npm run lint
+npm test
+npm test -- --coverage
+npm run audit:dependencies
+npm run build:production
+npx playwright install chromium
+npm run test:e2e
+npm run build:export
+npm run test:assets
+E2E_EXPORT=true E2E_BASE_PATH=/hk-future npm run test:e2e
+```
 
-## Learn More
+Для установленного Google Chrome: `PLAYWRIGHT_CHANNEL=chrome npm run test:e2e`. Playwright сам поднимает production-сервер на порту 3100 и проверяет desktop 1440×900 и mobile 390×844. Обычные проверки запускаются с reduced motion; отдельные видео-сценарии включают движение. Отчёт — `playwright-report/index.html`, ошибки и traces — `test-results/`. Проверки WebGL в headless подтверждают функциональность, но не FPS пользовательского устройства.
 
-To learn more about Next.js, take a look at the following resources:
+`npm run build` / `npm start` — стандартные команды Next. `build:production` и `start:production` используют `.next-production`, не затрагивая `.next` работающего dev-сервера. `build:export` собирает проект во временной изолированной копии и сохраняет готовый сайт в `out/`. Это необходимо: при `output: export` параметр Next `distDir` меняет папку экспорта, а промежуточная сборка всё равно использует `.next`. Не запускайте ручной `GITHUB_PAGES=true next build` рядом с работающим dev-сервером.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+GitHub Actions выполняет типизацию, lint, unit-тесты, аудит, обе production-сборки и браузерные сценарии. Обычная сборка и экспорт — разные задания. Публикация Pages возможна только из `main` после всех проверок; PR-проверки не имеют прав публикации.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Структура
 
-## Deploy on Vercel
+- `src/app` — маршруты, метаданные и композиция страниц на сервере/при сборке.
+- `src/content` — типизированные локальные данные каталога, контактов, статей и страниц решений; `src/data/articles.json` — исходные статьи.
+- `src/lib/catalog.ts` — чистые функции поиска и обхода переданных данных, без встроенного каталога.
+- `src/sections` — компоненты конкретных страниц; интерактивные островки получают данные через props.
+- `src/components/ui/RevealBlock.tsx` — появление при прокрутке, без ожидания изображений и без скрытия текста в HTML без JavaScript.
+- `ViewportMount` — загрузка тяжёлых сцен при появлении в экране; заглушка занимает только область модели.
+- `ViewportImage` — большие товарные баннеры загружаются в своём viewport, сохраняют пропорции и доступны через `noscript` без JavaScript.
+- `src/components/models/ModelHelp` — общий интерфейс инструкций моделей.
+- `createRetryableModel` — локальная граница ошибки динамического viewer; повторная попытка после сетевого отказа не перезагружает страницу. Ошибки GLB/WebGL обрабатываются внутри сцены. Описания остаются доступны.
+- `src/lib/model-loader.ts` — локальный Meshopt, отмена/таймаут загрузки и освобождение ресурсов.
+- `public` — изображения, видео, модели, локальные шрифты и декодеры. Пути файлов в компонентах проходят через `publicPath` для поддержки `/hk-future`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Для будущей CMS заменяется локальный поставщик `src/content`, сохраняя сериализуемые контракты из `types.ts` и `catalog.ts`. Секреты и SDK CMS должны оставаться на сервере. Пока CMS, база данных, preview и webhooks не подключены. Описания продукции отделены от координат, камер и идентификаторов 3D-сцен. Эти идентификаторы — технический контракт: их нельзя менять при редактуре текста или оптимизации модели.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Воспроизводимые измерения и медиа
+
+```sh
+PLAYWRIGHT_CHANNEL=chrome BENCHMARK_URL=http://localhost:3100 BENCHMARK_LABEL=current npm run benchmark
+node scripts/compare-benchmarks.mjs
+PLAYWRIGHT_CHANNEL=chrome BASELINE_URL=http://localhost:3101 node scripts/benchmark-paired.mjs
+PLAYWRIGHT_CHANNEL=chrome BENCHMARK_URL=http://localhost:3100 BENCHMARK_LABEL=current node scripts/benchmark-models.mjs
+```
+
+Каждый вариант проверяется отдельно: пять холодных контекстов, одинаковый Chrome/компьютер, desktop и mobile (4 Мбит/с, 150 мс, CPU ×4). Не запускайте параллельно сборки, кодирование видео или другие браузерные проверки. Результаты — `.ecc/benchmarks/`. Сравниваются медиана и диапазон; превышение 10% требует разбора. Первые 12 секунд загрузки и загрузка моделей после прокрутки измеряются отдельно. Это лабораторные наблюдения, а не полевые Core Web Vitals.
+
+`benchmark-paired.mjs` нужен только при отклонениях полного сравнения: исходная сборка должна работать отдельно на `BASELINE_URL`, текущая — на `BENCHMARK_URL` (по умолчанию 3100). Он выполняет пять чередующихся холодных пар для каждого отмеченного маршрута и профиля. Исходные результаты и порог 10% сохраняются; повторный контроль не подменяет полную серию.
+
+Оптимизированные медиа уже находятся в `public`; кодирование не выполняется при сборке/CI. `scripts/optimize-videos.mjs` создаёт облегчённые MP4. Команда `PLAYWRIGHT_CHANNEL=chrome node scripts/generate-video-posters.mjs` обновляет четыре постера по первому кадру видео с запущенного сайта (`POSTER_BASE_URL`, по умолчанию порт 3100). Постеры снимаются через браузер, чтобы сохранить цветовое преобразование BT.709. `scripts/verify-videos.mjs <исходная-копия-проекта>` проверяет длительность, FPS, пропорции и SSIM. Исходные файлы доступны в Git/сохранённой копии; не перекодируйте уже оптимизированное видео повторно.
+
+`scripts/compress-models.mjs` использует lossless EXT_meshopt_compression: без квантования, изменения топологии, имён, материалов и transforms. Режим `--report <папка-исходных-GLB>` повторно декодирует и сравнивает каждый bufferView. Камеры и выбор элементов дополнительно проверяются в браузере. В итоговом наборе сжаты только ЦОД и FireOff: для здания и этажа преобразование отклонено, поскольку реальная передача после HTTP gzip выросла. Не применяйте сжатие ко всем ресурсам автоматически, проверяйте сетевые и временные показатели каждого кандидата.
+
+## Известные ограничения
+
+- Форма заявки демонстрационная. Успешный тест и экран подтверждения **не означают доставку заявки**.
+- `/privacy`, `/personal-data`, `/about`, `/docs`, `/requisites` пока не реализованы. Проверки отмечают эти известные ссылки отдельно.
+- Пять записей полного npm audit относятся к одной неисправленной уязвимости `braces` в цепочке ESLint. Production-аудит чист. `audit:dependencies` допускает только эту конкретную документированную цепочку, остальные находки блокируют проверку. Подробности — `docs/FOUNDATION_REPORT.md`.
+- Существующие предупреждения lint о `<img>` перечисляются явно; они не подавляются массово.
+- Выбор CMS, реальная отправка/защита файлов и заявок, финальные юридические тексты, CSP/HTTP-заголовки хостинга и коммерческая публикация — отдельный этап.

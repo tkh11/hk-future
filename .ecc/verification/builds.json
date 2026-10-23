@@ -1,0 +1,36 @@
+{
+  "production": {
+    "command": "npm run build:production",
+    "next": "16.4.2",
+    "pages": 49,
+    "status": "passed"
+  },
+  "export": {
+    "command": "npm run build:export",
+    "basePath": "/hk-future",
+    "pages": 49,
+    "status": "passed"
+  },
+  "assets": {
+    "command": "npm run test:assets",
+    "pages": 49,
+    "status": "passed"
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "status": "passed"
+  },
+  "lint": {
+    "command": "npm run lint",
+    "errors": 0,
+    "warnings": 11,
+    "note": "10 existing no-img-element warnings plus one intentional broken-image unit fixture"
+  },
+  "lockInstall": {
+    "command": "npm ci --prefix /private/tmp/heisskraft-lock-check.rSnBdP --no-audit --offline",
+    "status": "passed",
+    "packages": 514,
+    "note": "Isolated clean install using the populated npm cache; deprecated ESLint9 warning and 3 allowScripts notices were not suppressed."
+  },
+  "recordedAt": "2026-10-23T13:43:51.044Z"
+}

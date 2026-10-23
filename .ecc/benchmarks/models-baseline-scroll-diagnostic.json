@@ -1,0 +1,1332 @@
+{
+  "label": "baseline",
+  "baseURL": "http://localhost:3101",
+  "browser": "156.0.8078.47",
+  "elapsedMs": 281082,
+  "protocol": {
+    "runs": 5,
+    "cache": "fresh context + disabled HTTP cache",
+    "reducedMotion": "no-preference",
+    "softwareWebGL": "May be used; no FPS measured",
+    "desktop": {
+      "viewport": "1440x900",
+      "cpuRate": 1,
+      "network": "local unthrottled"
+    },
+    "mobile": {
+      "viewport": "390x844",
+      "cpuRate": 4,
+      "downloadBytesPerSecond": 500000,
+      "latencyMs": 150
+    },
+    "timings": "ready = model canvas exists and viewer loading/error state is gone, or designers veil aria-hidden=true; responseEndToReady also includes DOM scheduling. Interaction = click event to an expanded description heading inside viewport/clip bounds with ancestor opacity >= 0.5. Not a field INP measurement.",
+    "memory": "CDP JSHeapUsedSize; actual GPU allocation size unavailable. WebGL live resource counters are diagnostic only."
+  },
+  "samples": [
+    {
+      "profile": "desktop",
+      "route": "/solutions/data-centers",
+      "run": 1,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 82.70000000298023,
+        "readyAtMs": 713.7000000029802,
+        "actionToReadyMs": 631,
+        "resource": {
+          "durationMs": 90.29999999701977,
+          "startMs": 524.4000000059605,
+          "responseEndMs": 614.7000000029802,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 99,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19502244,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "failure": "page.waitForFunction: Timeout 15000ms exceeded.",
+        "visibility": {
+          "viewportHeight": 900,
+          "parents": [
+            {
+              "tag": "H3",
+              "className": "",
+              "top": 904.484375,
+              "bottom": 931.484375,
+              "height": 27,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__productCopy",
+              "top": 904.484375,
+              "bottom": 1158.609375,
+              "height": 254.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__productContent",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__disclosureClip",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "hidden",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__disclosure",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "ARTICLE",
+              "className": "CoolingExplorer-module__hjTKZG__card",
+              "top": 815.484375,
+              "bottom": 1187.609375,
+              "height": 372.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__menu",
+              "top": 815.484375,
+              "bottom": 1187.609375,
+              "height": 372.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__layout",
+              "top": 63.484375,
+              "bottom": 1187.609375,
+              "height": 1124.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "SECTION",
+              "className": "CoolingExplorer-module__hjTKZG__section",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "deferred-block__content is-ready",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "deferred-block deferred-block--dc-system",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "MAIN",
+              "className": "",
+              "top": -1437,
+              "bottom": 3721.109375,
+              "height": 5158.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "BODY",
+              "className": "",
+              "top": -1437,
+              "bottom": 4121.109375,
+              "height": 5558.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "HTML",
+              "className": "sfprodisplay_526bd9a3-module__nevTHa__variable sfprotext_595dbb21-module__fylrqW__variable lenis",
+              "top": -1437,
+              "bottom": 4121.109375,
+              "height": 5558.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/data-centers",
+      "run": 2,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 30.799999997019768,
+        "readyAtMs": 630,
+        "actionToReadyMs": 599.2000000029802,
+        "resource": {
+          "durationMs": 89.70000000298023,
+          "startMs": 452.09999999403954,
+          "responseEndMs": 541.7999999970198,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 88.20000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19495224,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "failure": "page.waitForFunction: Timeout 15000ms exceeded.",
+        "visibility": {
+          "viewportHeight": 900,
+          "parents": [
+            {
+              "tag": "H3",
+              "className": "",
+              "top": 904.484375,
+              "bottom": 931.484375,
+              "height": 27,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__productCopy",
+              "top": 904.484375,
+              "bottom": 1158.609375,
+              "height": 254.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__productContent",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__disclosureClip",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "hidden",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__disclosure",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "ARTICLE",
+              "className": "CoolingExplorer-module__hjTKZG__card",
+              "top": 815.484375,
+              "bottom": 1187.609375,
+              "height": 372.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__menu",
+              "top": 815.484375,
+              "bottom": 1187.609375,
+              "height": 372.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__layout",
+              "top": 63.484375,
+              "bottom": 1187.609375,
+              "height": 1124.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "SECTION",
+              "className": "CoolingExplorer-module__hjTKZG__section",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "deferred-block__content is-ready",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "deferred-block deferred-block--dc-system",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "MAIN",
+              "className": "",
+              "top": -1437,
+              "bottom": 3721.109375,
+              "height": 5158.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "BODY",
+              "className": "",
+              "top": -1437,
+              "bottom": 4121.109375,
+              "height": 5558.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "HTML",
+              "className": "sfprodisplay_526bd9a3-module__nevTHa__variable sfprotext_595dbb21-module__fylrqW__variable lenis",
+              "top": -1437,
+              "bottom": 4121.109375,
+              "height": 5558.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/data-centers",
+      "run": 3,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 61.6000000089407,
+        "readyAtMs": 651.4000000059605,
+        "actionToReadyMs": 589.7999999970198,
+        "resource": {
+          "durationMs": 90.19999998807907,
+          "startMs": 455.80000001192093,
+          "responseEndMs": 546,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 105.40000000596046,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19382512,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "failure": "page.waitForFunction: Timeout 15000ms exceeded.",
+        "visibility": {
+          "viewportHeight": 900,
+          "parents": [
+            {
+              "tag": "H3",
+              "className": "",
+              "top": 904.484375,
+              "bottom": 931.484375,
+              "height": 27,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__productCopy",
+              "top": 904.484375,
+              "bottom": 1158.609375,
+              "height": 254.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__productContent",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__disclosureClip",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "hidden",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__disclosure",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "ARTICLE",
+              "className": "CoolingExplorer-module__hjTKZG__card",
+              "top": 815.484375,
+              "bottom": 1187.609375,
+              "height": 372.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__menu",
+              "top": 815.484375,
+              "bottom": 1187.609375,
+              "height": 372.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__layout",
+              "top": 63.484375,
+              "bottom": 1187.609375,
+              "height": 1124.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "SECTION",
+              "className": "CoolingExplorer-module__hjTKZG__section",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "deferred-block__content is-ready",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "deferred-block deferred-block--dc-system",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "MAIN",
+              "className": "",
+              "top": -1437,
+              "bottom": 3721.109375,
+              "height": 5158.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "BODY",
+              "className": "",
+              "top": -1437,
+              "bottom": 4121.109375,
+              "height": 5558.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "HTML",
+              "className": "sfprodisplay_526bd9a3-module__nevTHa__variable sfprotext_595dbb21-module__fylrqW__variable lenis",
+              "top": -1437,
+              "bottom": 4121.109375,
+              "height": 5558.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/data-centers",
+      "run": 4,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 46.599999994039536,
+        "readyAtMs": 678.1999999880791,
+        "actionToReadyMs": 631.5999999940395,
+        "resource": {
+          "durationMs": 102.90000000596046,
+          "startMs": 466.69999998807907,
+          "responseEndMs": 569.5999999940395,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 108.59999999403954,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 15143504,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "clickToDescriptionMs": 296.79999999701977
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/data-centers",
+      "run": 5,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 44.79999999701977,
+        "readyAtMs": 603.8999999910593,
+        "actionToReadyMs": 559.0999999940395,
+        "resource": {
+          "durationMs": 79.69999998807907,
+          "startMs": 437,
+          "responseEndMs": 516.6999999880791,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 87.20000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19511080,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "failure": "page.waitForFunction: Timeout 15000ms exceeded.",
+        "visibility": {
+          "viewportHeight": 900,
+          "parents": [
+            {
+              "tag": "H3",
+              "className": "",
+              "top": 904.484375,
+              "bottom": 931.484375,
+              "height": 27,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__productCopy",
+              "top": 904.484375,
+              "bottom": 1158.609375,
+              "height": 254.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__productContent",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__disclosureClip",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "hidden",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__disclosure",
+              "top": 900.484375,
+              "bottom": 1186.609375,
+              "height": 286.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "ARTICLE",
+              "className": "CoolingExplorer-module__hjTKZG__card",
+              "top": 815.484375,
+              "bottom": 1187.609375,
+              "height": 372.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__menu",
+              "top": 815.484375,
+              "bottom": 1187.609375,
+              "height": 372.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "CoolingExplorer-module__hjTKZG__layout",
+              "top": 63.484375,
+              "bottom": 1187.609375,
+              "height": 1124.125,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "SECTION",
+              "className": "CoolingExplorer-module__hjTKZG__section",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "deferred-block__content is-ready",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "DIV",
+              "className": "deferred-block deferred-block--dc-system",
+              "top": -116.015625,
+              "bottom": 1267.609375,
+              "height": 1383.625,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "MAIN",
+              "className": "",
+              "top": -1437,
+              "bottom": 3721.109375,
+              "height": 5158.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "BODY",
+              "className": "",
+              "top": -1437,
+              "bottom": 4121.109375,
+              "height": 5558.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            },
+            {
+              "tag": "HTML",
+              "className": "sfprodisplay_526bd9a3-module__nevTHa__variable sfprotext_595dbb21-module__fylrqW__variable lenis",
+              "top": -1437,
+              "bottom": 4121.109375,
+              "height": 5558.109375,
+              "opacity": "1",
+              "visibility": "visible",
+              "overflowY": "visible",
+              "inert": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/fire-suppression",
+      "run": 1,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 42.20000000298023,
+        "readyAtMs": 825.5,
+        "actionToReadyMs": 783.2999999970198,
+        "resource": {
+          "durationMs": 316.6000000089407,
+          "startMs": 458.20000000298023,
+          "responseEndMs": 774.8000000119209,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 50.69999998807907,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11309488,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 220.20000000298023
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/fire-suppression",
+      "run": 2,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 42,
+        "readyAtMs": 824.5999999940395,
+        "actionToReadyMs": 782.5999999940395,
+        "resource": {
+          "durationMs": 319.59999999403954,
+          "startMs": 468.59999999403954,
+          "responseEndMs": 788.1999999880791,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 36.400000005960464,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11249736,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 227
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/fire-suppression",
+      "run": 3,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 41.6000000089407,
+        "readyAtMs": 812.1000000089407,
+        "actionToReadyMs": 770.5,
+        "resource": {
+          "durationMs": 316.79999999701977,
+          "startMs": 461.6000000089407,
+          "responseEndMs": 778.4000000059605,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 33.70000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 12902124,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 222.79999999701977
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/fire-suppression",
+      "run": 4,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 65.5,
+        "readyAtMs": 824.4000000059605,
+        "actionToReadyMs": 758.9000000059605,
+        "resource": {
+          "durationMs": 314,
+          "startMs": 476.79999999701977,
+          "responseEndMs": 790.7999999970198,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 33.6000000089407,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11070232,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 224.40000000596046
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/fire-suppression",
+      "run": 5,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 64.79999999701977,
+        "readyAtMs": 832,
+        "actionToReadyMs": 767.2000000029802,
+        "resource": {
+          "durationMs": 314,
+          "startMs": 481,
+          "responseEndMs": 795,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 37,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11285312,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 224.90000000596046
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/designers",
+      "run": 1,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 46,
+        "readyAtMs": 531.7000000029802,
+        "actionToReadyMs": 485.70000000298023,
+        "resource": {
+          "durationMs": 100.20000000298023,
+          "startMs": 127.59999999403954,
+          "responseEndMs": 227.79999999701977,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 303.90000000596046,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 3,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 23672996,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 549.7000000029802,
+        "readyAtMs": 1312.5999999940395,
+        "actionToReadyMs": 762.8999999910593,
+        "resource": {
+          "durationMs": 86,
+          "startMs": 1006.5,
+          "responseEndMs": 1092.5,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 220.09999999403954,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 356,
+          "colorClears": 48,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 23993492,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "interaction": {
+        "clickToDescriptionMs": 96.29999999701977
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/designers",
+      "run": 2,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 61.1000000089407,
+        "readyAtMs": 529.3000000119209,
+        "actionToReadyMs": 468.20000000298023,
+        "resource": {
+          "durationMs": 96.30000001192093,
+          "startMs": 129,
+          "responseEndMs": 225.30000001192093,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 304,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 3,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 23762680,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 535.7000000029802,
+        "readyAtMs": 1296.1000000089407,
+        "actionToReadyMs": 760.4000000059605,
+        "resource": {
+          "durationMs": 81.8999999910593,
+          "startMs": 990.6000000089407,
+          "responseEndMs": 1072.5,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 223.6000000089407,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 356,
+          "colorClears": 48,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19351968,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "interaction": {
+        "clickToDescriptionMs": 80
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/designers",
+      "run": 3,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 46.29999999701977,
+        "readyAtMs": 521,
+        "actionToReadyMs": 474.70000000298023,
+        "resource": {
+          "durationMs": 101.29999999701977,
+          "startMs": 120.79999999701977,
+          "responseEndMs": 222.09999999403954,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 298.90000000596046,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 3,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 23763816,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 527,
+        "readyAtMs": 1288.7000000029802,
+        "actionToReadyMs": 761.7000000029802,
+        "resource": {
+          "durationMs": 83.5,
+          "startMs": 983.7999999970198,
+          "responseEndMs": 1067.2999999970198,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 221.40000000596046,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 356,
+          "colorClears": 48,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19181948,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "interaction": {
+        "clickToDescriptionMs": 81.3999999910593
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/designers",
+      "run": 4,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 46.20000000298023,
+        "readyAtMs": 520.5999999940395,
+        "actionToReadyMs": 474.3999999910593,
+        "resource": {
+          "durationMs": 95.1000000089407,
+          "startMs": 129.09999999403954,
+          "responseEndMs": 224.20000000298023,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 296.3999999910593,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 3,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 23767596,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 532.5999999940395,
+        "readyAtMs": 1293.2999999970198,
+        "actionToReadyMs": 760.7000000029802,
+        "resource": {
+          "durationMs": 82.29999999701977,
+          "startMs": 988.7000000029802,
+          "responseEndMs": 1071,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 222.29999999701977,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 356,
+          "colorClears": 48,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19196292,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "interaction": {
+        "clickToDescriptionMs": 79.5
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/designers",
+      "run": 5,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 41.29999999701977,
+        "readyAtMs": 519.2999999970198,
+        "actionToReadyMs": 478,
+        "resource": {
+          "durationMs": 101,
+          "startMs": 119.70000000298023,
+          "responseEndMs": 220.70000000298023,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 298.59999999403954,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 3,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 23757472,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 527.7000000029802,
+        "readyAtMs": 1290.2999999970198,
+        "actionToReadyMs": 762.5999999940395,
+        "resource": {
+          "durationMs": 83.79999999701977,
+          "startMs": 985.2999999970198,
+          "responseEndMs": 1069.0999999940395,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 221.20000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 356,
+          "colorClears": 48,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19306704,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "interaction": {
+        "clickToDescriptionMs": 80.69999998807907
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 1,
+      "errors": [],
+      "failure": "locator.waitFor: Timeout 150000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#cooling-system') to be visible\u001b[22m\n"
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 2,
+      "errors": [],
+      "failure": "locator.waitFor: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('#cooling-system') to be visible\u001b[22m\n"
+    }
+  ]
+}

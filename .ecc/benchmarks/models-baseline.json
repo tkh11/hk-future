@@ -1,0 +1,1407 @@
+{
+  "label": "baseline",
+  "baseURL": "http://localhost:3101",
+  "browser": "156.0.8078.47",
+  "elapsedMs": 501405,
+  "protocol": {
+    "runs": 5,
+    "cache": "fresh context + disabled HTTP cache",
+    "reducedMotion": "no-preference",
+    "softwareWebGL": "May be used; no FPS measured",
+    "desktop": {
+      "viewport": "1440x900",
+      "cpuRate": 1,
+      "network": "local unthrottled"
+    },
+    "mobile": {
+      "viewport": "390x844",
+      "cpuRate": 4,
+      "downloadBytesPerSecond": 500000,
+      "latencyMs": 150
+    },
+    "timings": "ready = model canvas exists and viewer loading/error state is gone, or designers veil aria-hidden=true. actionToReady starts after DOMContentLoaded and includes hydration/viewport scroll; viewportToReady uses first model-wrapper intersection. responseEndToReady also includes DOM scheduling. Interaction = click event to expanded description heading inside viewport/clip bounds with ancestor opacity >= 0.5. Not field INP.",
+    "memory": "CDP JSHeapUsedSize; actual GPU allocation size unavailable. WebGL live resource counters are diagnostic only."
+  },
+  "samples": [
+    {
+      "profile": "desktop",
+      "route": "/solutions/data-centers",
+      "run": 1,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 102.5,
+        "readyAtMs": 1044.5999999940395,
+        "actionToReadyMs": 942.0999999940395,
+        "viewportEnteredAtMs": 797.1999999880791,
+        "viewportToReadyMs": 247.40000000596046,
+        "resource": {
+          "durationMs": 159.30000001192093,
+          "startMs": 777.6999999880791,
+          "responseEndMs": 937,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 107.59999999403954,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 20215764,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "clickToDescriptionMs": 309.5
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/data-centers",
+      "run": 2,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 40.5,
+        "readyAtMs": 846,
+        "actionToReadyMs": 805.5,
+        "viewportEnteredAtMs": 679.9000000059605,
+        "viewportToReadyMs": 166.09999999403954,
+        "resource": {
+          "durationMs": 89.19999998807907,
+          "startMs": 672.3000000119209,
+          "responseEndMs": 761.5,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 84.5,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 27786620,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "clickToDescriptionMs": 311
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/data-centers",
+      "run": 3,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 49.70000000298023,
+        "readyAtMs": 887.7000000029802,
+        "actionToReadyMs": 838,
+        "viewportEnteredAtMs": 683.2000000029802,
+        "viewportToReadyMs": 204.5,
+        "resource": {
+          "durationMs": 126.79999999701977,
+          "startMs": 675.6000000089407,
+          "responseEndMs": 802.4000000059605,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 85.29999999701977,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 27866756,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "clickToDescriptionMs": 307
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/data-centers",
+      "run": 4,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 47.400000005960464,
+        "readyAtMs": 850.7000000029802,
+        "actionToReadyMs": 803.2999999970198,
+        "viewportEnteredAtMs": 688,
+        "viewportToReadyMs": 162.70000000298023,
+        "resource": {
+          "durationMs": 88.5,
+          "startMs": 681.1000000089407,
+          "responseEndMs": 769.6000000089407,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 81.09999999403954,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 27774912,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "clickToDescriptionMs": 308.59999999403954
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/data-centers",
+      "run": 5,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 45.29999999701977,
+        "readyAtMs": 842.2999999970198,
+        "actionToReadyMs": 797,
+        "viewportEnteredAtMs": 683.0999999940395,
+        "viewportToReadyMs": 159.20000000298023,
+        "resource": {
+          "durationMs": 90.20000000298023,
+          "startMs": 668.8999999910593,
+          "responseEndMs": 759.0999999940395,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 83.20000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19537012,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "clickToDescriptionMs": 309.5
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/fire-suppression",
+      "run": 1,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 30.099999994039536,
+        "readyAtMs": 1042,
+        "actionToReadyMs": 1011.9000000059605,
+        "viewportEnteredAtMs": 677.7999999970198,
+        "viewportToReadyMs": 364.20000000298023,
+        "resource": {
+          "durationMs": 343.6000000089407,
+          "startMs": 660.0999999940395,
+          "responseEndMs": 1003.7000000029802,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 38.29999999701977,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11252044,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 220.80000001192093
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/fire-suppression",
+      "run": 2,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 45.29999999701977,
+        "readyAtMs": 1020.2000000029802,
+        "actionToReadyMs": 974.9000000059605,
+        "viewportEnteredAtMs": 665.1000000089407,
+        "viewportToReadyMs": 355.09999999403954,
+        "resource": {
+          "durationMs": 332.6000000089407,
+          "startMs": 651,
+          "responseEndMs": 983.6000000089407,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 36.599999994039536,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11260896,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 227.29999999701977
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/fire-suppression",
+      "run": 3,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 47.79999999701977,
+        "readyAtMs": 1020.0999999940395,
+        "actionToReadyMs": 972.2999999970198,
+        "viewportEnteredAtMs": 683.2999999970198,
+        "viewportToReadyMs": 336.79999999701977,
+        "resource": {
+          "durationMs": 322.79999999701977,
+          "startMs": 660.7999999970198,
+          "responseEndMs": 983.5999999940395,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 36.5,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11321816,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 223.40000000596046
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/fire-suppression",
+      "run": 4,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 46.79999999701977,
+        "readyAtMs": 1030.2999999970198,
+        "actionToReadyMs": 983.5,
+        "viewportEnteredAtMs": 682.3999999910593,
+        "viewportToReadyMs": 347.90000000596046,
+        "resource": {
+          "durationMs": 329.79999999701977,
+          "startMs": 665.5999999940395,
+          "responseEndMs": 995.3999999910593,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 34.900000005960464,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 12893980,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 222.1000000089407
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/solutions/fire-suppression",
+      "run": 5,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 46,
+        "readyAtMs": 1012.2999999970198,
+        "actionToReadyMs": 966.2999999970198,
+        "viewportEnteredAtMs": 676.5999999940395,
+        "viewportToReadyMs": 335.70000000298023,
+        "resource": {
+          "durationMs": 320.3999999910593,
+          "startMs": 654.7999999970198,
+          "responseEndMs": 975.1999999880791,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 37.1000000089407,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11361744,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 222.19999998807907
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/designers",
+      "run": 1,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 40.400000005960464,
+        "readyAtMs": 522.5,
+        "actionToReadyMs": 482.09999999403954,
+        "viewportEnteredAtMs": 43.1000000089407,
+        "viewportToReadyMs": 479.3999999910593,
+        "resource": {
+          "durationMs": 98.40000000596046,
+          "startMs": 121.20000000298023,
+          "responseEndMs": 219.6000000089407,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 302.8999999910593,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 3,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 23987400,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 1813.4000000059605,
+        "readyAtMs": 2579.1000000089407,
+        "actionToReadyMs": 765.7000000029802,
+        "viewportEnteredAtMs": 43.1000000089407,
+        "viewportToReadyMs": 2536,
+        "resource": {
+          "durationMs": 85.1000000089407,
+          "startMs": 2272,
+          "responseEndMs": 2357.1000000089407,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 222,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 356,
+          "colorClears": 49,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 22443132,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "interaction": {
+        "clickToDescriptionMs": 94.70000000298023
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/designers",
+      "run": 2,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 46.29999999701977,
+        "readyAtMs": 523.2000000029802,
+        "actionToReadyMs": 476.90000000596046,
+        "viewportEnteredAtMs": 29.399999991059303,
+        "viewportToReadyMs": 493.80000001192093,
+        "resource": {
+          "durationMs": 97.09999999403954,
+          "startMs": 123,
+          "responseEndMs": 220.09999999403954,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 303.1000000089407,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 3,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 23792132,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 1845.0999999940395,
+        "readyAtMs": 2617.3999999910593,
+        "actionToReadyMs": 772.2999999970198,
+        "viewportEnteredAtMs": 29.399999991059303,
+        "viewportToReadyMs": 2588,
+        "resource": {
+          "durationMs": 90.80000001192093,
+          "startMs": 2311.3999999910593,
+          "responseEndMs": 2402.2000000029802,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 215.19999998807907,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 356,
+          "colorClears": 49,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 24232980,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "interaction": {
+        "clickToDescriptionMs": 93.59999999403954
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/designers",
+      "run": 3,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 52.20000000298023,
+        "readyAtMs": 522.2000000029802,
+        "actionToReadyMs": 470,
+        "viewportEnteredAtMs": 33.900000005960464,
+        "viewportToReadyMs": 488.29999999701977,
+        "resource": {
+          "durationMs": 97.1000000089407,
+          "startMs": 130,
+          "responseEndMs": 227.1000000089407,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 295.09999999403954,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 3,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 23981040,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 1826.4000000059605,
+        "readyAtMs": 2605.800000011921,
+        "actionToReadyMs": 779.4000000059605,
+        "viewportEnteredAtMs": 33.900000005960464,
+        "viewportToReadyMs": 2571.9000000059605,
+        "resource": {
+          "durationMs": 82.79999999701977,
+          "startMs": 2297.800000011921,
+          "responseEndMs": 2380.6000000089407,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 225.20000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 349,
+          "colorClears": 47,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 22471264,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "interaction": {
+        "clickToDescriptionMs": 94.59999999403954
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/designers",
+      "run": 4,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 46.20000000298023,
+        "readyAtMs": 527.9000000059605,
+        "actionToReadyMs": 481.70000000298023,
+        "viewportEnteredAtMs": 29.799999997019768,
+        "viewportToReadyMs": 498.1000000089407,
+        "resource": {
+          "durationMs": 96.79999999701977,
+          "startMs": 124.29999999701977,
+          "responseEndMs": 221.09999999403954,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 306.80000001192093,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 3,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 23909196,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 1849.5,
+        "readyAtMs": 2626.0999999940395,
+        "actionToReadyMs": 776.5999999940395,
+        "viewportEnteredAtMs": 29.799999997019768,
+        "viewportToReadyMs": 2596.2999999970198,
+        "resource": {
+          "durationMs": 87.6000000089407,
+          "startMs": 2315.2999999970198,
+          "responseEndMs": 2402.9000000059605,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 223.19999998807907,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 356,
+          "colorClears": 48,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 22620556,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "interaction": {
+        "clickToDescriptionMs": 95.20000000298023
+      }
+    },
+    {
+      "profile": "desktop",
+      "route": "/designers",
+      "run": 5,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 38.70000000298023,
+        "readyAtMs": 540.4000000059605,
+        "actionToReadyMs": 501.70000000298023,
+        "viewportEnteredAtMs": 55.6000000089407,
+        "viewportToReadyMs": 484.79999999701977,
+        "resource": {
+          "durationMs": 114.8999999910593,
+          "startMs": 136.1000000089407,
+          "responseEndMs": 251,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 289.40000000596046,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 3,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 23802168,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 1858.7000000029802,
+        "readyAtMs": 2628.300000011921,
+        "actionToReadyMs": 769.6000000089407,
+        "viewportEnteredAtMs": 55.6000000089407,
+        "viewportToReadyMs": 2572.7000000029802,
+        "resource": {
+          "durationMs": 83.8999999910593,
+          "startMs": 2321.800000011921,
+          "responseEndMs": 2405.7000000029802,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 222.6000000089407,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 349,
+          "colorClears": 48,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 26898208,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "interaction": {
+        "clickToDescriptionMs": 95.40000000596046
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 1,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 765.3999999910593,
+        "readyAtMs": 10157.89999999106,
+        "actionToReadyMs": 9392.5,
+        "viewportEnteredAtMs": 3422.5999999940395,
+        "viewportToReadyMs": 6735.29999999702,
+        "resource": {
+          "durationMs": 4571,
+          "startMs": 5159.79999999702,
+          "responseEndMs": 9730.79999999702,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 427.09999999403954,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19961988,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "clickToDescriptionMs": 291.5
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 2,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 759,
+        "readyAtMs": 10069.29999999702,
+        "actionToReadyMs": 9310.29999999702,
+        "viewportEnteredAtMs": 3474.7999999970198,
+        "viewportToReadyMs": 6594.5,
+        "resource": {
+          "durationMs": 5261.5,
+          "startMs": 4402.100000008941,
+          "responseEndMs": 9663.60000000894,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 405.69999998807907,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 20059288,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "clickToDescriptionMs": 309.70000000298023
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 3,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 766,
+        "readyAtMs": 9980.79999999702,
+        "actionToReadyMs": 9214.79999999702,
+        "viewportEnteredAtMs": 3414.199999988079,
+        "viewportToReadyMs": 6566.600000008941,
+        "resource": {
+          "durationMs": 5176.5,
+          "startMs": 4405.899999991059,
+          "responseEndMs": 9582.39999999106,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 398.40000000596046,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 20155416,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "clickToDescriptionMs": 309
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 4,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 764.5,
+        "readyAtMs": 10075.59999999404,
+        "actionToReadyMs": 9311.09999999404,
+        "viewportEnteredAtMs": 3457.199999988079,
+        "viewportToReadyMs": 6618.4000000059605,
+        "resource": {
+          "durationMs": 5296.800000011921,
+          "startMs": 4360.699999988079,
+          "responseEndMs": 9657.5,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 418.09999999403954,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 20266492,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "clickToDescriptionMs": 311.20000000298023
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 5,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 768.2999999970198,
+        "readyAtMs": 10064.5,
+        "actionToReadyMs": 9296.20000000298,
+        "viewportEnteredAtMs": 3384.2999999970198,
+        "viewportToReadyMs": 6680.20000000298,
+        "resource": {
+          "durationMs": 4851.20000000298,
+          "startMs": 4842.399999991059,
+          "responseEndMs": 9693.59999999404,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 370.90000000596046,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19992572,
+        "cdpEncodedTransferBytes": 1554638
+      },
+      "interaction": {
+        "clickToDescriptionMs": 294.20000000298023
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/fire-suppression",
+      "run": 1,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 1821.5,
+        "readyAtMs": 29322.70000000298,
+        "actionToReadyMs": 27501.20000000298,
+        "viewportEnteredAtMs": 3445.2999999970198,
+        "viewportToReadyMs": 25877.40000000596,
+        "resource": {
+          "durationMs": 23685.79999999702,
+          "startMs": 5479.20000000298,
+          "responseEndMs": 29165,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 157.70000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11136400,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 228
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/fire-suppression",
+      "run": 2,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 743.5999999940395,
+        "readyAtMs": 29254.90000000596,
+        "actionToReadyMs": 28511.30000001192,
+        "viewportEnteredAtMs": 3376.5,
+        "viewportToReadyMs": 25878.40000000596,
+        "resource": {
+          "durationMs": 24023.5,
+          "startMs": 5047.70000000298,
+          "responseEndMs": 29071.20000000298,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 183.70000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11220748,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 226.29999999701977
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/fire-suppression",
+      "run": 3,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 1823.4000000059605,
+        "readyAtMs": 29308.60000000894,
+        "actionToReadyMs": 27485.20000000298,
+        "viewportEnteredAtMs": 3446.800000011921,
+        "viewportToReadyMs": 25861.79999999702,
+        "resource": {
+          "durationMs": 23729.79999999702,
+          "startMs": 5442.9000000059605,
+          "responseEndMs": 29172.70000000298,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 135.90000000596046,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11083364,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 210.8999999910593
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/fire-suppression",
+      "run": 4,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 1819.0999999940395,
+        "readyAtMs": 29312.89999999106,
+        "actionToReadyMs": 27493.79999999702,
+        "viewportEnteredAtMs": 3438.0999999940395,
+        "viewportToReadyMs": 25874.79999999702,
+        "resource": {
+          "durationMs": 23693.20000000298,
+          "startMs": 5488,
+          "responseEndMs": 29181.20000000298,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 131.69999998807907,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11169972,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 226.5
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/fire-suppression",
+      "run": 5,
+      "errors": [],
+      "initial": {
+        "asset": "parking-sprinkler.glb",
+        "startMs": 1820.2000000029802,
+        "readyAtMs": 29431,
+        "actionToReadyMs": 27610.79999999702,
+        "viewportEnteredAtMs": 3479.3999999910593,
+        "viewportToReadyMs": 25951.60000000894,
+        "resource": {
+          "durationMs": 23745.40000000596,
+          "startMs": 5463.5999999940395,
+          "responseEndMs": 29209,
+          "transferSize": 8757288,
+          "encodedBodySize": 8756988,
+          "decodedBodySize": 35055272
+        },
+        "responseEndToReadyMs": 222,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 57,
+          "totalCalls": 57,
+          "colorClears": 1,
+          "liveBuffers": 165,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 11120536,
+        "cdpEncodedTransferBytes": 8764514
+      },
+      "interaction": {
+        "clickToDescriptionMs": 225.6000000089407
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/designers",
+      "run": 1,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 1753.9000000059605,
+        "readyAtMs": 11441.10000000894,
+        "actionToReadyMs": 9687.20000000298,
+        "viewportEnteredAtMs": 1746.7000000029802,
+        "viewportToReadyMs": 9694.40000000596,
+        "resource": {
+          "durationMs": 7055,
+          "startMs": 4093.800000011921,
+          "responseEndMs": 11148.800000011921,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 292.29999999701977,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 5,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 26484632,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 11454.90000000596,
+        "readyAtMs": 17213.5,
+        "actionToReadyMs": 5758.5999999940395,
+        "viewportEnteredAtMs": 1746.7000000029802,
+        "viewportToReadyMs": 15466.79999999702,
+        "resource": {
+          "durationMs": 5104.300000011921,
+          "startMs": 11919,
+          "responseEndMs": 17023.30000001192,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 190.19999998807907,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 350,
+          "colorClears": 342,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 22679432,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "failure": "locator.evaluate: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('complementary', { name: 'Элементы трубопровода' }).getByRole('button', { name: /Труба KraftPipePlus SDR 7.4/ })\u001b[22m\n"
+    },
+    {
+      "profile": "mobile",
+      "route": "/designers",
+      "run": 2,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 1750.0999999940395,
+        "readyAtMs": 11310.09999999404,
+        "actionToReadyMs": 9560,
+        "viewportEnteredAtMs": 1744,
+        "viewportToReadyMs": 9566.09999999404,
+        "resource": {
+          "durationMs": 6856.5,
+          "startMs": 4176.899999991059,
+          "responseEndMs": 11033.39999999106,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 276.70000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 5,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 26807872,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 11325.89999999106,
+        "readyAtMs": 17013.89999999106,
+        "actionToReadyMs": 5688,
+        "viewportEnteredAtMs": 1744,
+        "viewportToReadyMs": 15269.89999999106,
+        "resource": {
+          "durationMs": 5094.899999991059,
+          "startMs": 11788.5,
+          "responseEndMs": 16883.39999999106,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 130.5,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 277,
+          "colorClears": 341,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 15630108,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "failure": "locator.evaluate: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('complementary', { name: 'Элементы трубопровода' }).getByRole('button', { name: /Труба KraftPipePlus SDR 7.4/ })\u001b[22m\n"
+    },
+    {
+      "profile": "mobile",
+      "route": "/designers",
+      "run": 3,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 540.6000000089407,
+        "readyAtMs": 11237.300000011921,
+        "actionToReadyMs": 10696.70000000298,
+        "viewportEnteredAtMs": 618.4000000059605,
+        "viewportToReadyMs": 10618.90000000596,
+        "resource": {
+          "durationMs": 6860.9000000059605,
+          "startMs": 4102,
+          "responseEndMs": 10962.90000000596,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 274.40000000596046,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 5,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 26523480,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 11249.60000000894,
+        "readyAtMs": 16950.70000000298,
+        "actionToReadyMs": 5701.0999999940395,
+        "viewportEnteredAtMs": 618.4000000059605,
+        "viewportToReadyMs": 16332.29999999702,
+        "resource": {
+          "durationMs": 5097.699999988079,
+          "startMs": 11727.300000011921,
+          "responseEndMs": 16825,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 125.70000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 277,
+          "colorClears": 341,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 20550536,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "failure": "locator.evaluate: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('complementary', { name: 'Элементы трубопровода' }).getByRole('button', { name: /Труба KraftPipePlus SDR 7.4/ })\u001b[22m\n"
+    },
+    {
+      "profile": "mobile",
+      "route": "/designers",
+      "run": 4,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 1752.6000000089407,
+        "readyAtMs": 11379.90000000596,
+        "actionToReadyMs": 9627.29999999702,
+        "viewportEnteredAtMs": 1747,
+        "viewportToReadyMs": 9632.90000000596,
+        "resource": {
+          "durationMs": 6853,
+          "startMs": 4208.70000000298,
+          "responseEndMs": 11061.70000000298,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 318.20000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 5,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 27298428,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 11387.60000000894,
+        "readyAtMs": 17091.70000000298,
+        "actionToReadyMs": 5704.0999999940395,
+        "viewportEnteredAtMs": 1747,
+        "viewportToReadyMs": 15344.70000000298,
+        "resource": {
+          "durationMs": 5097.5999999940395,
+          "startMs": 11867.60000000894,
+          "responseEndMs": 16965.20000000298,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 126.5,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 277,
+          "colorClears": 341,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 25378604,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "failure": "locator.evaluate: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('complementary', { name: 'Элементы трубопровода' }).getByRole('button', { name: /Труба KraftPipePlus SDR 7.4/ })\u001b[22m\n"
+    },
+    {
+      "profile": "mobile",
+      "route": "/designers",
+      "run": 5,
+      "errors": [],
+      "initial": {
+        "asset": "facade.glb",
+        "startMs": 552.3000000119209,
+        "readyAtMs": 11292.800000011921,
+        "actionToReadyMs": 10740.5,
+        "viewportEnteredAtMs": 625.6000000089407,
+        "viewportToReadyMs": 10667.20000000298,
+        "resource": {
+          "durationMs": 6887.5,
+          "startMs": 4098.100000008941,
+          "responseEndMs": 10985.60000000894,
+          "transferSize": 2789517,
+          "encodedBodySize": 2789217,
+          "decodedBodySize": 7406776
+        },
+        "responseEndToReadyMs": 307.20000000298023,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 7,
+          "totalCalls": 21,
+          "colorClears": 5,
+          "liveBuffers": 22,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 17048892,
+        "cdpEncodedTransferBytes": 2791561
+      },
+      "floor": {
+        "asset": "communications.glb",
+        "startMs": 11300,
+        "readyAtMs": 17002,
+        "actionToReadyMs": 5702,
+        "viewportEnteredAtMs": 625.6000000089407,
+        "viewportToReadyMs": 16376.39999999106,
+        "resource": {
+          "durationMs": 5097.399999991059,
+          "startMs": 11776.800000011921,
+          "responseEndMs": 16874.20000000298,
+          "transferSize": 2470631,
+          "encodedBodySize": 2470331,
+          "decodedBodySize": 5305524
+        },
+        "responseEndToReadyMs": 127.79999999701977,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 80,
+          "totalCalls": 277,
+          "colorClears": 342,
+          "liveBuffers": 258,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 15603688,
+        "cdpEncodedTransferBytes": 2472417
+      },
+      "failure": "locator.evaluate: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('complementary', { name: 'Элементы трубопровода' }).getByRole('button', { name: /Труба KraftPipePlus SDR 7.4/ })\u001b[22m\n"
+    }
+  ]
+}

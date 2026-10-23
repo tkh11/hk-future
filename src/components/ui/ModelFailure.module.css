@@ -1,0 +1,30 @@
+.failure {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  background: var(--pipeline-bg, #fff);
+  text-align: center;
+}
+
+.failure p { max-width: 340px; }
+
+.inline {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  gap: 12px;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid rgb(0 0 0 / 10%);
+  border-radius: var(--hk-radius-card-mobile);
+  background: #fff;
+  pointer-events: auto;
+}
+
+.inline p { font-size: 14px; line-height: 1.5; }

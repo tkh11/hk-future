@@ -1,0 +1,134 @@
+[
+  {
+    "source": "public/videos/home/hero-opening.mp4",
+    "before": 18373760,
+    "after": 2700272,
+    "maxWidth": 1920,
+    "crf": 20,
+    "audio": "removed (muted UI)",
+    "poster": "public/images/home/hero-opening-poster.jpg",
+    "original": {
+      "width": 3840,
+      "height": 2160,
+      "duration": 9.97,
+      "fps": 30
+    },
+    "optimized": {
+      "width": 1920,
+      "height": 1080,
+      "duration": 9.97,
+      "fps": 30
+    },
+    "ssim": 0.997042
+  },
+  {
+    "source": "public/videos/home/gali.mp4",
+    "before": 15811346,
+    "after": 2471305,
+    "maxWidth": 1920,
+    "crf": 20,
+    "audio": "removed (muted UI)",
+    "poster": "public/images/home/gali-poster.jpg",
+    "original": {
+      "width": 2206,
+      "height": 946,
+      "duration": 5.04,
+      "fps": 24
+    },
+    "optimized": {
+      "width": 1920,
+      "height": 824,
+      "duration": 5.04,
+      "fps": 24
+    },
+    "ssim": 0.988137
+  },
+  {
+    "source": "public/videos/home/galits.mp4",
+    "before": 14803099,
+    "after": 14803099,
+    "maxWidth": 1920,
+    "crf": 20,
+    "audio": "removed (muted UI)",
+    "poster": "public/images/home/galits-poster.jpg",
+    "original": {
+      "width": 1920,
+      "height": 1080,
+      "duration": 11.88,
+      "fps": 25
+    },
+    "optimized": {
+      "width": 1920,
+      "height": 1080,
+      "duration": 11.88,
+      "fps": 25
+    },
+    "ssim": 1
+  },
+  {
+    "source": "public/videos/catalog/pipes.mp4",
+    "before": 23253242,
+    "after": 7701585,
+    "maxWidth": 720,
+    "crf": 20,
+    "audio": "removed (muted UI)",
+    "poster": "public/images/catalog/pipes-poster.jpg",
+    "original": {
+      "width": 1080,
+      "height": 1920,
+      "duration": 12.13,
+      "fps": 30
+    },
+    "optimized": {
+      "width": 720,
+      "height": 1280,
+      "duration": 12.13,
+      "fps": 30
+    },
+    "ssim": 0.993046
+  },
+  {
+    "source": "public/videos/catalog/pumpscategory.mp4",
+    "before": 40145504,
+    "after": 9602881,
+    "maxWidth": 720,
+    "crf": 20,
+    "audio": "removed (muted UI)",
+    "poster": "public/images/catalog/pumpscategory-poster.jpg",
+    "original": {
+      "width": 1080,
+      "height": 1920,
+      "duration": 21.23,
+      "fps": 30
+    },
+    "optimized": {
+      "width": 720,
+      "height": 1280,
+      "duration": 21.23,
+      "fps": 30
+    },
+    "ssim": 0.995164
+  },
+  {
+    "source": "public/videos/catalog/accessories.mp4",
+    "before": 28676508,
+    "after": 4205033,
+    "maxWidth": 720,
+    "crf": 20,
+    "audio": "removed (muted UI)",
+    "poster": "public/images/catalog/accessories-poster.jpg",
+    "original": {
+      "width": 1080,
+      "height": 1920,
+      "duration": 15.13,
+      "fps": 30
+    },
+    "optimized": {
+      "width": 720,
+      "height": 1280,
+      "duration": 15.13,
+      "fps": 30
+    },
+    "ssim": 0.996332
+  }
+]

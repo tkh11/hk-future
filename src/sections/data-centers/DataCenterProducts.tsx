@@ -1,3 +1,4 @@
+import { dcProducts } from "@/content/solution-pages";
 import Image from "next/image";
 import Link from "next/link";
 import { publicPath } from "@/lib/public-path";
@@ -18,8 +19,8 @@ export default function DataCenterProducts() {
   return (
     <section className={styles.products} aria-labelledby="dc-products-title">
       <div className={styles.sectionHeading}>
-        <h2 id="dc-products-title">Движение теплоносителя.<br /><span>В деталях системы.</span></h2>
-        <p>Насосное оборудование и трубопроводы для контуров холодоснабжения.</p>
+        <h2 id="dc-products-title">{dcProducts.heading}<br /><span>{dcProducts.headingAccent}</span></h2>
+        <p>{dcProducts.description}</p>
       </div>
       <ClimatBanner />
       <article className={styles.product}>
@@ -27,13 +28,9 @@ export default function DataCenterProducts() {
           <Image src={publicPath("/images/data-centers/pipes.jpg")} width={1024} height={1024} alt="Полипропиленовые трубы HEISSKRAFT PP-RCT со стекловолокном" sizes="(max-width: 767px) 100vw, 550px" />
         </div>
         <div className={styles.productCopy}>
-          <h3>ClimatFaser</h3>
-          <p>Многослойные трубы из термостабилизированного полипропилена PP-RCT со стекловолокном. Для обвязки чиллеров и фанкойлов, магистралей холодоснабжения и кондиционирования.</p>
-          <ProductDetails label="Свойства труб ClimatFaser" rows={[
-            ["Армирование", "Стекловолокно"],
-            ["Коррозия", "Не подвержены"],
-            ["Монтаж", "Без зачистки перед сваркой"],
-          ]} />
+          <h3>{dcProducts.pipeTitle}</h3>
+          <p>{dcProducts.pipeDescription}</p>
+          <ProductDetails label="Свойства труб ClimatFaser" rows={dcProducts.pipeProperties} />
           <div className={styles.productActions}>
             <Link href="/catalog" className="home-hero__link">Трубы в каталоге</Link>
             <Link href="/selection/pipelines" className="home-hero__link home-hero__link--secondary">Подбор трубопровода</Link>
@@ -45,22 +42,18 @@ export default function DataCenterProducts() {
           <Image src={publicPath("/images/data-centers/pump.jpg")} width={1024} height={1024} alt="Циркуляционный насос HEISSKRAFT" sizes="(max-width: 767px) 100vw, 550px" />
         </div>
         <div className={styles.productCopy}>
-          <h3>Насосное<br />оборудование</h3>
-          <p>Обеспечивает движение теплоносителя между источником холода и потребителями. Насосы HEISSKRAFT подбираются под расчётные параметры контура.</p>
-          <ProductDetails label="Параметры подбора насосов" rows={[
-            ["Расход и напор", "По гидравлическому расчёту"],
-            ["Исполнение", "С учётом рабочей среды"],
-            ["Режим работы", "Под задачи объекта"],
-          ]} />
+          <h3>{dcProducts.pumpTitle}<br />{dcProducts.pumpTitleSecondLine}</h3>
+          <p>{dcProducts.pumpDescription}</p>
+          <ProductDetails label="Параметры подбора насосов" rows={dcProducts.pumpProperties} />
           <div className={styles.productActions}>
             <Link href="/catalog" className="home-hero__link">Насосы в каталоге</Link>
             <Link href="/selection/pumps" className="home-hero__link home-hero__link--secondary">Подбор насосов</Link>
           </div>
         </div>
       </article>
-      <p className={styles.productNote}>Диаметры, исполнение и режимы работы подбираются по проекту с учётом температуры, давления и состава теплоносителя.</p>
+      <p className={styles.productNote}>{dcProducts.projectNote}</p>
       <div className={styles.catalogCta}>
-        <h2>Соберите решение<br />для вашего проекта.</h2>
+        <h2>{dcProducts.ctaTitle}<br />{dcProducts.ctaTitleSecondLine}</h2>
         <Link href="/catalog" className="home-hero__link">Перейти в каталог</Link>
       </div>
     </section>

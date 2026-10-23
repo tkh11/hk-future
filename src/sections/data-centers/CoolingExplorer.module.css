@@ -38,25 +38,7 @@
 .productCopy .detail { margin-top: 7px; color: var(--hk-ink); }
 .option:focus-visible { outline: 2px solid var(--hk-red); outline-offset: 4px; }
 /* Keep the lower-right corner fixed while one shared surface grows upwards. */
-.help { position: relative; flex: 0 0 174px; height: 44px; z-index: 2; }
-.helpMorph { position: absolute; right: 0; bottom: 0; width: 174px; overflow: hidden; border: 1px solid var(--hk-red); border-radius: 10px; background: var(--hk-red); transition: width .6s cubic-bezier(.22, 1, .36, 1), border-radius .6s cubic-bezier(.22, 1, .36, 1), background .4s, box-shadow .4s; }
-.helpMorph[data-open="true"] { width: min(340px, calc(100vw - 80px)); border-radius: 14px; background: #fff; box-shadow: 0 8px 28px rgb(0 0 0 / 8%); }
-.helpButton { display: flex; align-items: center; justify-content: flex-end; gap: 8px; width: 100%; min-height: 44px; padding: 10px 14px; border: 0; background: transparent; color: #fff; white-space: nowrap; font-size: 13px; line-height: 1.4; cursor: pointer; transition: color .35s, background .2s; }
-.helpButton:hover { background: rgb(0 0 0 / 5%); }
-.helpButton:focus-visible { outline: 2px solid currentColor; outline-offset: -5px; }
-.helpMorph[data-open="true"] .helpButton { color: var(--hk-red); }
-.helpButton svg { flex-shrink: 0; }
-.helpPanel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s cubic-bezier(.22, 1, .36, 1); }
-.helpMorph[data-open="true"] .helpPanel { grid-template-rows: 1fr; }
-.helpPanelClip { min-height: 0; overflow: hidden; }
-.helpContent { padding: 22px 22px 12px; opacity: 0; transform: translateY(10px); transition: opacity .18s, transform .3s; }
-.helpMorph[data-open="true"] .helpContent { opacity: 1; transform: translateY(0); transition: opacity .35s .15s, transform .45s .1s; }
-.helpPanel h3 { font-size: 15px; line-height: 1.4; font-weight: 500; margin-bottom: 18px; }
-.helpPanel ul { display: grid; gap: 18px; list-style: none; padding: 0; margin: 0; }
-.helpPanel li { display: flex; gap: 12px; align-items: flex-start; }
-.helpPanel li svg { flex-shrink: 0; color: var(--hk-red); margin-top: 1px; }
-.helpPanel strong { display: block; font-size: 13px; line-height: 1.4; font-weight: 500; }
-.helpPanel p { margin-top: 5px; color: var(--hk-text-secondary); font-size: 12px; line-height: 1.5; }
+
 .yellow { background: #efbf00; }
 @media (max-width: 1000px) {
   .layout { gap: 20px; }
@@ -78,11 +60,9 @@
   .legend { gap: 10px 16px; font-size: 11px; }
   .modelFooter { flex-wrap: wrap; justify-content: flex-end; gap: 14px; padding: 8px 16px 16px; }
   .legend { flex-basis: 100%; }
-  .helpContent { padding: 18px 18px 10px; }
   .heading p { font-size: var(--hk-type-body); line-height: 1.5; font-family: var(--hk-font-text); letter-spacing: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .loading > span { animation: none; }
-  .card, .disclosure, .productContent, .card[data-expanded="true"] .productContent, .helpMorph, .helpPanel, .helpContent, .helpMorph[data-open="true"] .helpContent, .helpButton { transition: none; transform: none; }
+  .card, .disclosure, .productContent, .card[data-expanded="true"] .productContent { transition: none; transform: none; }
 }
-@media (hover: none) { .helpPanel .hoverInstruction { display: none; } }

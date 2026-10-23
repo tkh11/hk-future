@@ -1,0 +1,217 @@
+{
+  "label": "baseline-heap",
+  "baseURL": "http://localhost:3101",
+  "browser": "156.0.8078.47",
+  "elapsedMs": 57201,
+  "protocol": {
+    "runs": 5,
+    "cache": "fresh context + disabled HTTP cache",
+    "reducedMotion": "no-preference",
+    "softwareWebGL": "May be used; no FPS measured",
+    "desktop": {
+      "viewport": "1440x900",
+      "cpuRate": 1,
+      "network": "local unthrottled"
+    },
+    "mobile": {
+      "viewport": "390x844",
+      "cpuRate": 4,
+      "downloadBytesPerSecond": 500000,
+      "latencyMs": 150
+    },
+    "timings": "ready = model canvas exists and viewer loading/error state is gone, or designers veil aria-hidden=true. actionToReady starts after DOMContentLoaded and includes hydration/viewport scroll; viewportToReady uses first model-wrapper intersection. responseEndToReady also includes DOM scheduling. Interaction = click event to expanded description heading inside viewport/clip bounds with ancestor opacity >= 0.5. Not field INP.",
+    "memory": "CDP JSHeapUsedSize; actual GPU allocation size unavailable. WebGL live resource counters are diagnostic only."
+  },
+  "samples": [
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 1,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 1866.4000000059605,
+        "readyAtMs": 10159.40000000596,
+        "actionToReadyMs": 8293,
+        "viewportEnteredAtMs": 3510.800000011921,
+        "viewportToReadyMs": 6648.5999999940395,
+        "resource": {
+          "durationMs": 4873.9000000059605,
+          "startMs": 4915.9000000059605,
+          "responseEndMs": 9789.800000011921,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 369.59999999403954,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19896148,
+        "cdpEncodedTransferBytes": 1554638,
+        "retainedJSHeapBytes": 11453632
+      },
+      "interaction": {
+        "clickToDescriptionMs": 298.69999998807907
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 2,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 767.2000000029802,
+        "readyAtMs": 10124.5,
+        "actionToReadyMs": 9357.29999999702,
+        "viewportEnteredAtMs": 3425,
+        "viewportToReadyMs": 6699.5,
+        "resource": {
+          "durationMs": 4708.70000000298,
+          "startMs": 5057.79999999702,
+          "responseEndMs": 9766.5,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 358,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19662356,
+        "cdpEncodedTransferBytes": 1554638,
+        "retainedJSHeapBytes": 11385596
+      },
+      "interaction": {
+        "clickToDescriptionMs": 294.79999999701977
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 3,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 760.0999999940395,
+        "readyAtMs": 9906,
+        "actionToReadyMs": 9145.90000000596,
+        "viewportEnteredAtMs": 3385.7999999970198,
+        "viewportToReadyMs": 6520.20000000298,
+        "resource": {
+          "durationMs": 5138.5999999940395,
+          "startMs": 4409.5,
+          "responseEndMs": 9548.09999999404,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 357.90000000596046,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19801340,
+        "cdpEncodedTransferBytes": 1554638,
+        "retainedJSHeapBytes": 11458452
+      },
+      "interaction": {
+        "clickToDescriptionMs": 309.6000000089407
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 4,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 768.5999999940395,
+        "readyAtMs": 9910.90000000596,
+        "actionToReadyMs": 9142.300000011921,
+        "viewportEnteredAtMs": 3392.7000000029802,
+        "viewportToReadyMs": 6518.20000000298,
+        "resource": {
+          "durationMs": 5149.699999988079,
+          "startMs": 4408.9000000059605,
+          "responseEndMs": 9558.59999999404,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 352.30000001192093,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 19713224,
+        "cdpEncodedTransferBytes": 1554638,
+        "retainedJSHeapBytes": 11450724
+      },
+      "interaction": {
+        "clickToDescriptionMs": 293.20000000298023
+      }
+    },
+    {
+      "profile": "mobile",
+      "route": "/solutions/data-centers",
+      "run": 5,
+      "errors": [],
+      "initial": {
+        "asset": "chilling.glb",
+        "startMs": 759.7999999970198,
+        "readyAtMs": 9947,
+        "actionToReadyMs": 9187.20000000298,
+        "viewportEnteredAtMs": 3403.0999999940395,
+        "viewportToReadyMs": 6543.9000000059605,
+        "resource": {
+          "durationMs": 5112.9000000059605,
+          "startMs": 4461.0999999940395,
+          "responseEndMs": 9574,
+          "transferSize": 1553310,
+          "encodedBodySize": 1553010,
+          "decodedBodySize": 9374516
+        },
+        "responseEndToReadyMs": 373,
+        "webgl": {
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "calls": 33,
+          "totalCalls": 33,
+          "colorClears": 1,
+          "liveBuffers": 66,
+          "liveTextures": 5,
+          "note": "Actual draw calls since last color clear; includes transparent passes. Not source mesh count or FPS."
+        },
+        "jsHeapBytes": 20044152,
+        "cdpEncodedTransferBytes": 1554638,
+        "retainedJSHeapBytes": 11452240
+      },
+      "interaction": {
+        "clickToDescriptionMs": 326.09999999403954
+      }
+    }
+  ]
+}

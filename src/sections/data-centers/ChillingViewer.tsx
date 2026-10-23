@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { loadModel } from "@/lib/model-loader";
 import { publicPath } from "@/lib/public-path";
 import { prepareChillingModel, type Selection } from "./chilling-model";
 import styles from "./CoolingExplorer.module.css";
@@ -18,9 +18,10 @@ export default function ChillingViewer({ selection, onSelect }: { selection: Sel
   useEffect(() => {
     if (!host.current) return;
     const element = host.current;
-    let disposed = false, frame = 0, visible = true;
+    let disposed = false, failed = false, frame = 0, visible = true;
     let model: ReturnType<typeof prepareChillingModel> | undefined;
     let renderer: THREE.WebGLRenderer;
+    let cancelLoad = () => {};
     try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" }); }
     catch { queueMicrotask(() => { if (!disposed) setStatus("error"); }); return () => { disposed = true; }; }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -36,7 +37,7 @@ export default function ChillingViewer({ selection, onSelect }: { selection: Sel
     let hovered: Selection = null, hoverFrame = 0;
     const raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2();
     function pick(clientX: number, clientY: number): Selection {
-      if (!model) return null;
+      if (failed || !model) return null;
       const bounds = renderer.domElement.getBoundingClientRect();
       pointer.set((clientX - bounds.left) / bounds.width * 2 - 1, -(clientY - bounds.top) / bounds.height * 2 + 1);
       raycaster.setFromCamera(pointer, camera);
@@ -56,6 +57,7 @@ export default function ChillingViewer({ selection, onSelect }: { selection: Sel
     function leave() { cancelAnimationFrame(hoverFrame); hovered = null; renderer.domElement.style.cursor = "default"; refresh(); }
     let press: { x: number; y: number } | null = null;
     function pointerDown(event: PointerEvent) { press = { x: event.clientX, y: event.clientY }; }
+    function pointerCancel() { press = null; }
     function click(event: MouseEvent) {
       if (!press || Math.hypot(event.clientX - press.x, event.clientY - press.y) > 6) return;
       const next = pick(event.clientX, event.clientY);
@@ -65,10 +67,11 @@ export default function ChillingViewer({ selection, onSelect }: { selection: Sel
     renderer.domElement.addEventListener("pointermove", hover);
     renderer.domElement.addEventListener("pointerleave", leave);
     renderer.domElement.addEventListener("pointerdown", pointerDown);
+    renderer.domElement.addEventListener("pointercancel", pointerCancel);
     renderer.domElement.addEventListener("click", click);
     function render(time = performance.now()) {
       frame = 0;
-      if (disposed || !model) return;
+      if (disposed || failed || !model) return;
       const active = hovered ?? selected.current;
       const animate = visible && !document.hidden && !reduced.matches && active === "pumps";
       const beat = animate ? Math.pow((Math.sin(time / 1000 * Math.PI) + 1) / 2, 4) : 0;
@@ -91,21 +94,25 @@ export default function ChillingViewer({ selection, onSelect }: { selection: Sel
     const observer = new ResizeObserver(resize); observer.observe(element);
     const visibility = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; refresh(); }); visibility.observe(element);
     document.addEventListener("visibilitychange", refresh); reduced.addEventListener("change", refresh);
-    const contextLost = (event: Event) => { event.preventDefault(); cancelAnimationFrame(frame); setStatus("error"); };
+    function fail() {
+      if (disposed) return;
+      failed = true;
+      cancelLoad();
+      cancelAnimationFrame(frame); cancelAnimationFrame(hoverFrame);
+      setStatus("error");
+    }
+    const contextLost = (event: Event) => { event.preventDefault(); fail(); };
     renderer.domElement.addEventListener("webglcontextlost", contextLost);
-    new GLTFLoader().load(publicPath("/models/chilling.glb"), gltf => {
-      try {
-        const prepared = prepareChillingModel(gltf.scene);
-        if (disposed) { prepared.dispose(); return; }
-        model = prepared; scene.add(model.group); refreshRef.current = refresh; resize(); setStatus("ready");
-      } catch { if (!disposed) setStatus("error"); }
-    }, undefined, () => { if (!disposed) setStatus("error"); });
+    cancelLoad = loadModel(publicPath("/models/chilling.glb"), gltf => {
+      model = prepareChillingModel(gltf.scene);
+      scene.add(model.group); refreshRef.current = refresh; resize(); if (!failed) setStatus("ready");
+    }, fail);
     return () => {
-      disposed = true; cancelAnimationFrame(frame); cancelAnimationFrame(hoverFrame); refreshRef.current = null;
+      disposed = true; cancelLoad(); cancelAnimationFrame(frame); cancelAnimationFrame(hoverFrame); refreshRef.current = null;
       observer.disconnect(); visibility.disconnect(); document.removeEventListener("visibilitychange", refresh); reduced.removeEventListener("change", refresh);
       renderer.domElement.removeEventListener("webglcontextlost", contextLost); model?.dispose(); renderer.dispose(); renderer.domElement.remove();
       renderer.domElement.removeEventListener("pointermove", hover); renderer.domElement.removeEventListener("pointerleave", leave);
-      renderer.domElement.removeEventListener("pointerdown", pointerDown); renderer.domElement.removeEventListener("click", click);
+      renderer.domElement.removeEventListener("pointerdown", pointerDown); renderer.domElement.removeEventListener("pointercancel", pointerCancel); renderer.domElement.removeEventListener("click", click);
     };
   }, [attempt]);
   return <div className={styles.viewer} data-model-status={status}>

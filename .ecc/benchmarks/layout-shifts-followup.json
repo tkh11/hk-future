@@ -1,0 +1,516 @@
+{
+  "browser": "156.0.8078.47",
+  "protocol": "Five alternating baseline/current cold mobile runs; 390x844, CPU4, 4Mbit/s, 150ms; 20-second window, sources retained; no user input.",
+  "samples": [
+    {
+      "variant": "baseline",
+      "run": 0,
+      "cls12": 0,
+      "cls20": 0,
+      "shifts": [],
+      "logo": "<span class=\"site-header__logo\" data-logo-state=\"complete\" style=\"--logo-width: 1304.00;\"><canvas class=\"site-header__logo-canvas\" aria-hidden=\"true\" width=\"211\" height=\"47\" style=\"width: 211.765px; height: 47.0588px; left: -10px; top: -13.5294px;\"></canvas></span>",
+      "videos": [
+        {
+          "time": 0.9463,
+          "paused": false
+        },
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0,
+          "paused": true
+        }
+      ]
+    },
+    {
+      "variant": "current",
+      "run": 0,
+      "cls12": 0.0012896524468574036,
+      "cls20": 0.004062023372073335,
+      "shifts": [
+        {
+          "time": 2226.3999999910593,
+          "value": 0.0012896524468574036,
+          "sources": [
+            {
+              "before": {
+                "x": 16,
+                "y": 660.578125,
+                "width": 358,
+                "height": 183.421875,
+                "top": 660.578125,
+                "right": 374,
+                "bottom": 844,
+                "left": 16
+              },
+              "after": {
+                "x": 16,
+                "y": 660.578125,
+                "width": 358,
+                "height": 183.421875,
+                "top": 660.578125,
+                "right": 374,
+                "bottom": 844,
+                "left": 16
+              }
+            }
+          ]
+        },
+        {
+          "time": 18361.09999999404,
+          "value": 0.0027723709252159313,
+          "sources": [
+            {
+              "html": "<div class=\"park-banner__actions\"><a class=\"home-hero__link park-banner__button\" href=\"/catalog\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"14\" y=\"14\" wi",
+              "before": {
+                "x": 14,
+                "y": 225.09375,
+                "width": 252.953125,
+                "height": 80.09375,
+                "top": 225.09375,
+                "right": 266.953125,
+                "bottom": 305.1875,
+                "left": 14
+              },
+              "after": {
+                "x": 14,
+                "y": 253.28125,
+                "width": 252.953125,
+                "height": 80.09375,
+                "top": 253.28125,
+                "right": 266.953125,
+                "bottom": 333.375,
+                "left": 14
+              }
+            }
+          ]
+        }
+      ],
+      "logo": "<span class=\"site-header__logo\" data-logo-state=\"complete\" style=\"--logo-width: 1304.00;\"><canvas class=\"site-header__logo-canvas\" aria-hidden=\"true\" width=\"211\" height=\"47\" style=\"width: 211.765px; height: 47.0588px; left: -10px; top: -13.5294px;\"></canvas></span>",
+      "videos": [
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0.865,
+          "paused": false
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "run": 1,
+      "cls12": 0,
+      "cls20": 0,
+      "shifts": [],
+      "logo": "<span class=\"site-header__logo\" data-logo-state=\"complete\" style=\"--logo-width: 1304.00;\"><canvas class=\"site-header__logo-canvas\" aria-hidden=\"true\" width=\"211\" height=\"47\" style=\"width: 211.765px; height: 47.0588px; left: -10px; top: -13.5294px;\"></canvas></span>",
+      "videos": [
+        {
+          "time": 0.9464,
+          "paused": false
+        },
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0,
+          "paused": true
+        }
+      ]
+    },
+    {
+      "variant": "current",
+      "run": 1,
+      "cls12": 0.0012896524468574036,
+      "cls20": 0.004062023372073335,
+      "shifts": [
+        {
+          "time": 2221.699999988079,
+          "value": 0.0012896524468574036,
+          "sources": [
+            {
+              "before": {
+                "x": 16,
+                "y": 660.578125,
+                "width": 358,
+                "height": 183.421875,
+                "top": 660.578125,
+                "right": 374,
+                "bottom": 844,
+                "left": 16
+              },
+              "after": {
+                "x": 16,
+                "y": 660.578125,
+                "width": 358,
+                "height": 183.421875,
+                "top": 660.578125,
+                "right": 374,
+                "bottom": 844,
+                "left": 16
+              }
+            }
+          ]
+        },
+        {
+          "time": 18219.09999999404,
+          "value": 0.0027723709252159313,
+          "sources": [
+            {
+              "html": "<div class=\"park-banner__actions\"><a class=\"home-hero__link park-banner__button\" href=\"/catalog\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"14\" y=\"14\" wi",
+              "before": {
+                "x": 14,
+                "y": 225.09375,
+                "width": 252.953125,
+                "height": 80.09375,
+                "top": 225.09375,
+                "right": 266.953125,
+                "bottom": 305.1875,
+                "left": 14
+              },
+              "after": {
+                "x": 14,
+                "y": 253.28125,
+                "width": 252.953125,
+                "height": 80.09375,
+                "top": 253.28125,
+                "right": 266.953125,
+                "bottom": 333.375,
+                "left": 14
+              }
+            }
+          ]
+        }
+      ],
+      "logo": "<span class=\"site-header__logo\" data-logo-state=\"complete\" style=\"--logo-width: 1304.00;\"><canvas class=\"site-header__logo-canvas\" aria-hidden=\"true\" width=\"211\" height=\"47\" style=\"width: 211.765px; height: 47.0588px; left: -10px; top: -13.5294px;\"></canvas></span>",
+      "videos": [
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 1.0168,
+          "paused": false
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "run": 2,
+      "cls12": 0,
+      "cls20": 0,
+      "shifts": [],
+      "logo": "<span class=\"site-header__logo\" data-logo-state=\"complete\" style=\"--logo-width: 1304.00;\"><canvas class=\"site-header__logo-canvas\" aria-hidden=\"true\" width=\"211\" height=\"47\" style=\"width: 211.765px; height: 47.0588px; left: -10px; top: -13.5294px;\"></canvas></span>",
+      "videos": [
+        {
+          "time": 0.95,
+          "paused": false
+        },
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0,
+          "paused": true
+        }
+      ]
+    },
+    {
+      "variant": "current",
+      "run": 2,
+      "cls12": 0.0012896524468574036,
+      "cls20": 0.004062023372073335,
+      "shifts": [
+        {
+          "time": 2222.7999999970198,
+          "value": 0.0012896524468574036,
+          "sources": [
+            {
+              "before": {
+                "x": 16,
+                "y": 660.578125,
+                "width": 358,
+                "height": 183.421875,
+                "top": 660.578125,
+                "right": 374,
+                "bottom": 844,
+                "left": 16
+              },
+              "after": {
+                "x": 16,
+                "y": 660.578125,
+                "width": 358,
+                "height": 183.421875,
+                "top": 660.578125,
+                "right": 374,
+                "bottom": 844,
+                "left": 16
+              }
+            }
+          ]
+        },
+        {
+          "time": 18346.10000000894,
+          "value": 0.0027723709252159313,
+          "sources": [
+            {
+              "html": "<div class=\"park-banner__actions\"><a class=\"home-hero__link park-banner__button\" href=\"/catalog\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"14\" y=\"14\" wi",
+              "before": {
+                "x": 14,
+                "y": 225.09375,
+                "width": 252.953125,
+                "height": 80.09375,
+                "top": 225.09375,
+                "right": 266.953125,
+                "bottom": 305.1875,
+                "left": 14
+              },
+              "after": {
+                "x": 14,
+                "y": 253.28125,
+                "width": 252.953125,
+                "height": 80.09375,
+                "top": 253.28125,
+                "right": 266.953125,
+                "bottom": 333.375,
+                "left": 14
+              }
+            }
+          ]
+        }
+      ],
+      "logo": "<span class=\"site-header__logo\" data-logo-state=\"complete\" style=\"--logo-width: 1304.00;\"><canvas class=\"site-header__logo-canvas\" aria-hidden=\"true\" width=\"211\" height=\"47\" style=\"width: 211.765px; height: 47.0588px; left: -10px; top: -13.5294px;\"></canvas></span>",
+      "videos": [
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0.8976,
+          "paused": false
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "run": 3,
+      "cls12": 0,
+      "cls20": 0,
+      "shifts": [],
+      "logo": "<span class=\"site-header__logo\" data-logo-state=\"complete\" style=\"--logo-width: 1304.00;\"><canvas class=\"site-header__logo-canvas\" aria-hidden=\"true\" width=\"211\" height=\"47\" style=\"width: 211.765px; height: 47.0588px; left: -10px; top: -13.5294px;\"></canvas></span>",
+      "videos": [
+        {
+          "time": 0.9495,
+          "paused": false
+        },
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0,
+          "paused": true
+        }
+      ]
+    },
+    {
+      "variant": "current",
+      "run": 3,
+      "cls12": 0.0012896524468574036,
+      "cls20": 0.004062023372073335,
+      "shifts": [
+        {
+          "time": 2214.6000000089407,
+          "value": 0.0012896524468574036,
+          "sources": [
+            {
+              "before": {
+                "x": 16,
+                "y": 660.578125,
+                "width": 358,
+                "height": 183.421875,
+                "top": 660.578125,
+                "right": 374,
+                "bottom": 844,
+                "left": 16
+              },
+              "after": {
+                "x": 16,
+                "y": 660.578125,
+                "width": 358,
+                "height": 183.421875,
+                "top": 660.578125,
+                "right": 374,
+                "bottom": 844,
+                "left": 16
+              }
+            }
+          ]
+        },
+        {
+          "time": 18332.10000000894,
+          "value": 0.0027723709252159313,
+          "sources": [
+            {
+              "html": "<div class=\"park-banner__actions\"><a class=\"home-hero__link park-banner__button\" href=\"/catalog\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"14\" y=\"14\" wi",
+              "before": {
+                "x": 14,
+                "y": 225.09375,
+                "width": 252.953125,
+                "height": 80.09375,
+                "top": 225.09375,
+                "right": 266.953125,
+                "bottom": 305.1875,
+                "left": 14
+              },
+              "after": {
+                "x": 14,
+                "y": 253.28125,
+                "width": 252.953125,
+                "height": 80.09375,
+                "top": 253.28125,
+                "right": 266.953125,
+                "bottom": 333.375,
+                "left": 14
+              }
+            }
+          ]
+        }
+      ],
+      "logo": "<span class=\"site-header__logo\" data-logo-state=\"complete\" style=\"--logo-width: 1304.00;\"><canvas class=\"site-header__logo-canvas\" aria-hidden=\"true\" width=\"211\" height=\"47\" style=\"width: 211.765px; height: 47.0588px; left: -10px; top: -13.5294px;\"></canvas></span>",
+      "videos": [
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0.877,
+          "paused": false
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "run": 4,
+      "cls12": 0,
+      "cls20": 0,
+      "shifts": [],
+      "logo": "<span class=\"site-header__logo\" data-logo-state=\"complete\" style=\"--logo-width: 1304.00;\"><canvas class=\"site-header__logo-canvas\" aria-hidden=\"true\" width=\"211\" height=\"47\" style=\"width: 211.765px; height: 47.0588px; left: -10px; top: -13.5294px;\"></canvas></span>",
+      "videos": [
+        {
+          "time": 0.9485,
+          "paused": false
+        },
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0,
+          "paused": true
+        }
+      ]
+    },
+    {
+      "variant": "current",
+      "run": 4,
+      "cls12": 0.0012896524468574036,
+      "cls20": 0.004062023372073335,
+      "shifts": [
+        {
+          "time": 2238.2999999970198,
+          "value": 0.0012896524468574036,
+          "sources": [
+            {
+              "before": {
+                "x": 16,
+                "y": 660.578125,
+                "width": 358,
+                "height": 183.421875,
+                "top": 660.578125,
+                "right": 374,
+                "bottom": 844,
+                "left": 16
+              },
+              "after": {
+                "x": 16,
+                "y": 660.578125,
+                "width": 358,
+                "height": 183.421875,
+                "top": 660.578125,
+                "right": 374,
+                "bottom": 844,
+                "left": 16
+              }
+            }
+          ]
+        },
+        {
+          "time": 18334.79999999702,
+          "value": 0.0027723709252159313,
+          "sources": [
+            {
+              "html": "<div class=\"park-banner__actions\"><a class=\"home-hero__link park-banner__button\" href=\"/catalog\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"></rect><rect x=\"14\" y=\"14\" wi",
+              "before": {
+                "x": 14,
+                "y": 225.09375,
+                "width": 252.953125,
+                "height": 80.09375,
+                "top": 225.09375,
+                "right": 266.953125,
+                "bottom": 305.1875,
+                "left": 14
+              },
+              "after": {
+                "x": 14,
+                "y": 253.28125,
+                "width": 252.953125,
+                "height": 80.09375,
+                "top": 253.28125,
+                "right": 266.953125,
+                "bottom": 333.375,
+                "left": 14
+              }
+            }
+          ]
+        }
+      ],
+      "logo": "<span class=\"site-header__logo\" data-logo-state=\"complete\" style=\"--logo-width: 1304.00;\"><canvas class=\"site-header__logo-canvas\" aria-hidden=\"true\" width=\"211\" height=\"47\" style=\"width: 211.765px; height: 47.0588px; left: -10px; top: -13.5294px;\"></canvas></span>",
+      "videos": [
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0,
+          "paused": true
+        },
+        {
+          "time": 0.899,
+          "paused": false
+        }
+      ]
+    }
+  ]
+}

@@ -54,7 +54,7 @@ export default function CatalogCard({ entry, showParent = false, cover = false }
     <Link href={catalogHref(path)} className={styles.cardLink} {...pointerHandlers}>
       <div ref={surfaceRef} className={`${styles.card}${cover ? ` ${styles.coverCard}` : ""}${photoBanner ? ` ${styles.bannerCard}` : ""}`} data-playing={playing} data-tone={photoBanner ? node.tone : undefined}>
         {cover ? <>
-          {visible && <video ref={videoRef} className={styles.coverVideo} src={coverVideos[node.art]} muted loop playsInline preload="metadata" aria-hidden="true" />}
+          {visible && <video ref={videoRef} className={styles.coverVideo} src={publicPath(coverVideos[node.art])} poster={publicPath(coverVideos[node.art].replace("/videos/", "/images/").replace(".mp4", "-poster.jpg"))} muted loop playsInline preload="none" aria-hidden="true" />}
           <h2>{node.title}</h2>
         </> : photoBanner ? <>
           <span className={styles.bannerSizer} aria-hidden="true" />

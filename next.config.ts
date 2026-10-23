@@ -7,6 +7,7 @@ const basePath = "/hk-future";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  ...(process.env.NEXT_BUILD_DIR ? { distDir: process.env.NEXT_BUILD_DIR } : {}),
   ...(githubPages
     ? {
         output: "export",

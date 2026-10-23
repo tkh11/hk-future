@@ -1,0 +1,760 @@
+[
+  {
+    "port": 3100,
+    "route": "/",
+    "mobile": true,
+    "lcp": [
+      {
+        "time": 412,
+        "size": 64965,
+        "url": "",
+        "element": "<p>Компания <span class=\"GZPeRW_brand\">Heisskraft</span> является одним из ведущих производителей инновационной продукции в области инженерных систем, реализуемых в различных отраслях промышленности. Каждый день наша команда работает над увеличением сроков службы и эффективности производимой продукции во вновь возводимых или реконструируемых инженерных коммуникациях.</p>"
+      },
+      {
+        "time": 1364,
+        "size": 69190,
+        "url": "http://localhost:3100/images/home/hero-opening-poster.jpg",
+        "element": "<video class=\"park-banner__video\" poster=\"/images/home/hero-opening-poster.jpg\" preload=\"auto\" muted=\"\" playsinline=\"\" aria-label=\"Архитектурная анимация: изогнутый белый фасад\"></video>"
+      }
+    ],
+    "shifts": [],
+    "resources": [
+      {
+        "url": "http://localhost:3100/videos/home/hero-opening.mp4",
+        "start": 2336.6000000089407,
+        "end": 9803.800000011921,
+        "encoded": 2700272,
+        "transfer": 2700572,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3100/rive.wasm",
+        "start": 2682.7000000029802,
+        "end": 6182.100000008941,
+        "encoded": 814822,
+        "transfer": 815122,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/images/home/gali-poster.jpg",
+        "start": 10406.90000000596,
+        "end": 11566.800000011921,
+        "encoded": 249491,
+        "transfer": 249791,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3100/images/home/hero-opening-poster.jpg",
+        "start": 59.70000000298023,
+        "end": 1357.9000000059605,
+        "encoded": 124709,
+        "transfer": 125009,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Semibold-s.3v4h42gif3s6d.woff2",
+        "start": 371.90000000596046,
+        "end": 1900.800000011921,
+        "encoded": 119140,
+        "transfer": 119440,
+        "type": "css"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Semibold-s.2ujc34xod6v4w.woff2",
+        "start": 372.1000000089407,
+        "end": 2110.9000000059605,
+        "encoded": 117044,
+        "transfer": 117344,
+        "type": "css"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Medium-s.40t8zwn4yvhyt.woff2",
+        "start": 372.70000000298023,
+        "end": 2210.2000000029802,
+        "encoded": 116212,
+        "transfer": 116512,
+        "type": "css"
+      },
+      {
+        "url": "http://localhost:3100/images/home/hero-hk-25-first.jpg",
+        "start": 61,
+        "end": 1264.9000000059605,
+        "encoded": 114009,
+        "transfer": 114309,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Regular-s.1qjkqj2etekls.woff2",
+        "start": 366,
+        "end": 1609.9000000059605,
+        "encoded": 100596,
+        "transfer": 100896,
+        "type": "css"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2nii411saqstq.js",
+        "start": 60.900000005960464,
+        "end": 1136.6000000089407,
+        "encoded": 65362,
+        "transfer": 65662,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2vxdm9s5yi-f1.js",
+        "start": 2295.800000011921,
+        "end": 2608.800000011921,
+        "encoded": 56161,
+        "transfer": 56461,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/04fkhx6oxxc-k.js",
+        "start": 60.900000005960464,
+        "end": 2144.2000000029802,
+        "encoded": 51355,
+        "transfer": 51655,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0do2t05ysoa-w.js",
+        "start": 60.900000005960464,
+        "end": 875,
+        "encoded": 45063,
+        "transfer": 45363,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3c90rmm1r9nxb.js",
+        "start": 60.900000005960464,
+        "end": 2039.2000000029802,
+        "encoded": 27123,
+        "transfer": 27423,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/favicon.ico?favicon.2vob68tjqpejf.ico",
+        "start": 2271.300000011921,
+        "end": 2522.2000000029802,
+        "encoded": 25931,
+        "transfer": 26231,
+        "type": "other"
+      },
+      {
+        "url": "http://localhost:3100/_next/image?url=%2Fimages%2Fsolutions%2Fdata-center.png&w=384&q=75",
+        "start": 391.70000000298023,
+        "end": 2224.9000000059605,
+        "encoded": 24541,
+        "transfer": 24841,
+        "type": "img"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0k-xhc49tv6t-.css",
+        "start": 60.80000001192093,
+        "end": 328.90000000596046,
+        "encoded": 12473,
+        "transfer": 12773,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0br0_nex5tnx5.js",
+        "start": 61,
+        "end": 1981.800000011921,
+        "encoded": 10829,
+        "transfer": 11129,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3_mc0s1zu9zs2.js",
+        "start": 60.900000005960464,
+        "end": 1705.800000011921,
+        "encoded": 10562,
+        "transfer": 10862,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1bcey3-cnm_ka.js",
+        "start": 2881.7000000029802,
+        "end": 3122.7000000029802,
+        "encoded": 10188,
+        "transfer": 10488,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2bzlqb104tejm.js",
+        "start": 60.900000005960464,
+        "end": 581.1000000089407,
+        "encoded": 9018,
+        "transfer": 9318,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/brand/header-logo.riv",
+        "start": 6212.5,
+        "end": 6405,
+        "encoded": 8912,
+        "transfer": 9212,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3j9s_k6jhpcga.css",
+        "start": 60.80000001192093,
+        "end": 298.90000000596046,
+        "encoded": 8362,
+        "transfer": 8662,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2tnpvs5642w8m.js",
+        "start": 60.900000005960464,
+        "end": 442.80000001192093,
+        "encoded": 6923,
+        "transfer": 7223,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3mp8d93olq06y.js",
+        "start": 2802.9000000059605,
+        "end": 3059,
+        "encoded": 5169,
+        "transfer": 5469,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0ymazw75cxd74.js",
+        "start": 2933.300000011921,
+        "end": 3130.800000011921,
+        "encoded": 5064,
+        "transfer": 5364,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "start": 60.900000005960464,
+        "end": 1459.9000000059605,
+        "encoded": 3940,
+        "transfer": 4240,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1umkr1jermsht.js",
+        "start": 61,
+        "end": 2087.300000011921,
+        "encoded": 3905,
+        "transfer": 4205,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/37bdpszay6r8f.css",
+        "start": 2487.2000000029802,
+        "end": 2663.9000000059605,
+        "encoded": 3814,
+        "transfer": 4114,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2i8p_gh5f_uki.js",
+        "start": 60.900000005960464,
+        "end": 1553.800000011921,
+        "encoded": 3671,
+        "transfer": 3971,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/articles?_rsc=BVehnWCYng9YI2VT",
+        "start": 2696.2000000029802,
+        "end": 2880,
+        "encoded": 3589,
+        "transfer": 3889,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/contacts?_rsc=it74Pyr4eQ5ArpD_",
+        "start": 2774.9000000059605,
+        "end": 2975,
+        "encoded": 2935,
+        "transfer": 3235,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=8nTjltbQWvg6NcbE",
+        "start": 2490,
+        "end": 2771.800000011921,
+        "encoded": 2548,
+        "transfer": 2848,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0blh8kltj_cqg.css",
+        "start": 2489.2000000029802,
+        "end": 2683.7000000029802,
+        "encoded": 2370,
+        "transfer": 2670,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=yIp22O3xgPPxC28X",
+        "start": 2489,
+        "end": 2656.800000011921,
+        "encoded": 2213,
+        "transfer": 2513,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/catalog?_rsc=xAGq0MVd7wQqVE8E",
+        "start": 2492.6000000089407,
+        "end": 2800.800000011921,
+        "encoded": 2179,
+        "transfer": 2479,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/brand/full-logo.svg",
+        "start": 60.80000001192093,
+        "end": 242.30000001192093,
+        "encoded": 2125,
+        "transfer": 2425,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1ckvzn7sfprko.js",
+        "start": 60.80000001192093,
+        "end": 260.70000000298023,
+        "encoded": 2035,
+        "transfer": 2335,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/444fnoc2ixx8z.css",
+        "start": 2694.4000000059605,
+        "end": 2866.800000011921,
+        "encoded": 2009,
+        "transfer": 2309,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3o69ipoozswii.js",
+        "start": 2976,
+        "end": 3148.9000000059605,
+        "encoded": 1632,
+        "transfer": 1932,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/designers?_rsc=dDnUO12v91owl1v7",
+        "start": 2701.2000000029802,
+        "end": 2930.800000011921,
+        "encoded": 1045,
+        "transfer": 1345,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/catalog?_rsc=5CB68i4pnAekjehf",
+        "start": 2316.800000011921,
+        "end": 2480,
+        "encoded": 242,
+        "transfer": 542,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/contacts?_rsc=5CB68i4pnAekjehf",
+        "start": 2484.5,
+        "end": 2639.300000011921,
+        "encoded": 241,
+        "transfer": 541,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/articles?_rsc=5CB68i4pnAekjehf",
+        "start": 2316.800000011921,
+        "end": 2483.300000011921,
+        "encoded": 240,
+        "transfer": 540,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/designers?_rsc=5CB68i4pnAekjehf",
+        "start": 2316.9000000059605,
+        "end": 2486.1000000089407,
+        "encoded": 230,
+        "transfer": 530,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=5CB68i4pnAekjehf",
+        "start": 2316.800000011921,
+        "end": 2477.300000011921,
+        "encoded": 210,
+        "transfer": 510,
+        "type": "fetch"
+      }
+    ],
+    "models": []
+  },
+  {
+    "port": 3100,
+    "route": "/contacts",
+    "mobile": true,
+    "lcp": [
+      {
+        "time": 308,
+        "size": 4176,
+        "url": "",
+        "element": "<h2 id=\"messengers-title\"><svg class=\"EqYjUq_icon\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z\"></path></svg>Мессенджеры</h2>"
+      },
+      {
+        "time": 1684,
+        "size": 25063,
+        "url": "",
+        "element": "<p>Свяжитесь с нами по вопросам продукции, сотрудничества и сервисного обслуживания.</p>"
+      }
+    ],
+    "shifts": [],
+    "resources": [
+      {
+        "url": "http://localhost:3100/rive.wasm",
+        "start": 2045.9000000059605,
+        "end": 3970.4000000059605,
+        "encoded": 814822,
+        "transfer": 815122,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Semibold-s.3v4h42gif3s6d.woff2",
+        "start": 284.90000000596046,
+        "end": 1750.1000000089407,
+        "encoded": 119140,
+        "transfer": 119440,
+        "type": "css"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Semibold-s.2ujc34xod6v4w.woff2",
+        "start": 285,
+        "end": 1766,
+        "encoded": 117044,
+        "transfer": 117344,
+        "type": "css"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Medium-s.40t8zwn4yvhyt.woff2",
+        "start": 284.90000000596046,
+        "end": 1725.9000000059605,
+        "encoded": 116212,
+        "transfer": 116512,
+        "type": "css"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Regular-s.1qjkqj2etekls.woff2",
+        "start": 278.70000000298023,
+        "end": 1631.300000011921,
+        "encoded": 100596,
+        "transfer": 100896,
+        "type": "css"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2nii411saqstq.js",
+        "start": 16.900000005960464,
+        "end": 832.6000000089407,
+        "encoded": 65362,
+        "transfer": 65662,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2vxdm9s5yi-f1.js",
+        "start": 1712.300000011921,
+        "end": 1995.9000000059605,
+        "encoded": 56161,
+        "transfer": 56461,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/04fkhx6oxxc-k.js",
+        "start": 17.200000002980232,
+        "end": 1366.5,
+        "encoded": 51355,
+        "transfer": 51655,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0do2t05ysoa-w.js",
+        "start": 16.900000005960464,
+        "end": 622.7000000029802,
+        "encoded": 45063,
+        "transfer": 45363,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3c90rmm1r9nxb.js",
+        "start": 17.200000002980232,
+        "end": 1321.9000000059605,
+        "encoded": 27123,
+        "transfer": 27423,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/favicon.ico?favicon.2vob68tjqpejf.ico",
+        "start": 2049.7000000029802,
+        "end": 2345.2000000029802,
+        "encoded": 25931,
+        "transfer": 26231,
+        "type": "other"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0k-xhc49tv6t-.css",
+        "start": 15.900000005960464,
+        "end": 260.40000000596046,
+        "encoded": 12473,
+        "transfer": 12773,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0br0_nex5tnx5.js",
+        "start": 17.200000002980232,
+        "end": 1598.4000000059605,
+        "encoded": 10829,
+        "transfer": 11129,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3_mc0s1zu9zs2.js",
+        "start": 17.100000008940697,
+        "end": 502.40000000596046,
+        "encoded": 10562,
+        "transfer": 10862,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1bcey3-cnm_ka.js",
+        "start": 2249.300000011921,
+        "end": 2468.2000000029802,
+        "encoded": 10188,
+        "transfer": 10488,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2bzlqb104tejm.js",
+        "start": 17,
+        "end": 451.80000001192093,
+        "encoded": 9018,
+        "transfer": 9318,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/brand/header-logo.riv",
+        "start": 4000.7000000029802,
+        "end": 4183.100000008941,
+        "encoded": 8912,
+        "transfer": 9212,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3j9s_k6jhpcga.css",
+        "start": 15.900000005960464,
+        "end": 247,
+        "encoded": 8362,
+        "transfer": 8662,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2tnpvs5642w8m.js",
+        "start": 16,
+        "end": 245.40000000596046,
+        "encoded": 6923,
+        "transfer": 7223,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3mp8d93olq06y.js",
+        "start": 2162.9000000059605,
+        "end": 2422.7000000029802,
+        "encoded": 5169,
+        "transfer": 5469,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0ymazw75cxd74.js",
+        "start": 2244.5,
+        "end": 2437.800000011921,
+        "encoded": 5064,
+        "transfer": 5364,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "start": 17.100000008940697,
+        "end": 439.70000000298023,
+        "encoded": 3940,
+        "transfer": 4240,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1umkr1jermsht.js",
+        "start": 2058.300000011921,
+        "end": 2254.4000000059605,
+        "encoded": 3905,
+        "transfer": 4205,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/37bdpszay6r8f.css",
+        "start": 1887.6000000089407,
+        "end": 2062.5,
+        "encoded": 3814,
+        "transfer": 4114,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2i8p_gh5f_uki.js",
+        "start": 17.100000008940697,
+        "end": 442.40000000596046,
+        "encoded": 3671,
+        "transfer": 3971,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/articles?_rsc=WpodEY-fak4gdZsN",
+        "start": 2052.300000011921,
+        "end": 2248.2000000029802,
+        "encoded": 3589,
+        "transfer": 3889,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/icons/messengers/max.png",
+        "start": 301.1000000089407,
+        "end": 1768.2000000029802,
+        "encoded": 3154,
+        "transfer": 3454,
+        "type": "img"
+      },
+      {
+        "url": "http://localhost:3100/contacts?_rsc=6IOXAsqp3Rn11zsI",
+        "start": 2080.4000000059605,
+        "end": 2339,
+        "encoded": 2935,
+        "transfer": 3235,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=TLjUUdZao_3WmaKE",
+        "start": 1909,
+        "end": 2077.6000000089407,
+        "encoded": 2548,
+        "transfer": 2848,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0blh8kltj_cqg.css",
+        "start": 1908,
+        "end": 2068.5,
+        "encoded": 2370,
+        "transfer": 2670,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=iydsEiwx1mEVEELP",
+        "start": 1889.7000000029802,
+        "end": 2056.4000000059605,
+        "encoded": 2213,
+        "transfer": 2513,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/catalog?_rsc=h-L0SU4ZIJg2MuI-",
+        "start": 1924.6000000089407,
+        "end": 2161.9000000059605,
+        "encoded": 2179,
+        "transfer": 2479,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/brand/full-logo.svg",
+        "start": 15.900000005960464,
+        "end": 202.40000000596046,
+        "encoded": 2125,
+        "transfer": 2425,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1ckvzn7sfprko.js",
+        "start": 16,
+        "end": 214.6000000089407,
+        "encoded": 2035,
+        "transfer": 2335,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/444fnoc2ixx8z.css",
+        "start": 16,
+        "end": 208.20000000298023,
+        "encoded": 2009,
+        "transfer": 2309,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3o69ipoozswii.js",
+        "start": 17.200000002980232,
+        "end": 1552.4000000059605,
+        "encoded": 1632,
+        "transfer": 1932,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/designers?_rsc=-ToBh47waAFHWTe-",
+        "start": 2061.300000011921,
+        "end": 2243,
+        "encoded": 1045,
+        "transfer": 1345,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/icons/messengers/wechat.svg",
+        "start": 301.1000000089407,
+        "end": 1714.300000011921,
+        "encoded": 714,
+        "transfer": 1014,
+        "type": "img"
+      },
+      {
+        "url": "http://localhost:3100/catalog?_rsc=Jx82zEwppzb8ayr_",
+        "start": 1722.6000000089407,
+        "end": 1885.2000000029802,
+        "encoded": 242,
+        "transfer": 542,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/contacts?_rsc=Jx82zEwppzb8ayr_",
+        "start": 1884.2000000029802,
+        "end": 2047.7000000029802,
+        "encoded": 241,
+        "transfer": 541,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/articles?_rsc=Jx82zEwppzb8ayr_",
+        "start": 1722.6000000089407,
+        "end": 1906.4000000059605,
+        "encoded": 240,
+        "transfer": 540,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/designers?_rsc=Jx82zEwppzb8ayr_",
+        "start": 1722.6000000089407,
+        "end": 1922.2000000029802,
+        "encoded": 230,
+        "transfer": 530,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=Jx82zEwppzb8ayr_",
+        "start": 1722.5,
+        "end": 1879.4000000059605,
+        "encoded": 210,
+        "transfer": 510,
+        "type": "fetch"
+      }
+    ],
+    "models": []
+  }
+]

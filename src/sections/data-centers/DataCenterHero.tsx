@@ -1,3 +1,4 @@
+import { dcHero } from "@/content/solution-pages";
 import styles from "./DataCenters.module.css";
 
 type Point = readonly [number, number, number];
@@ -81,8 +82,8 @@ export default function DataCenterHero() {
   return <section className={styles.hero} data-header-theme="light">
     <div className={styles.heroInner}>
       <div className={styles.heroCopy}>
-        <h1>Холод для<br />больших данных.</h1>
-        <p className={styles.heroDescription}>За каждым вычислением — тепло.<br />За стабильной работой — инженерия.</p>
+        <h1>{dcHero.heading}<br />{dcHero.headingSecondLine}</h1>
+        <p className={styles.heroDescription}>{dcHero.description}<br />{dcHero.descriptionSecondLine}</p>
       </div>
       <div className={styles.heroVisual}><ServerHall /></div>
     </div>

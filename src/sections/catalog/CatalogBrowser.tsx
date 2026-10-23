@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { Suspense, useEffect, useState, type FormEvent, type Dispatch, type SetStateAction } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
-import { catalog, catalogHref, getCatalogEntry, searchCatalog, type CatalogEntry } from "@/lib/catalog";
+import { catalogHref, searchCatalog, type CatalogEntry, type CatalogNode } from "@/lib/catalog";
 import { publicPath } from "@/lib/public-path";
 import CatalogCard from "./CatalogCard";
 import CatalogFloatingNav from "./CatalogFloatingNav";
@@ -15,14 +15,23 @@ const CatalogArtwork = dynamic(() => import("./CatalogArtwork"), {
   loading: () => <span className={styles.skeleton} aria-hidden="true" />,
 });
 
-function CatalogResults({ path, initialQuery }: { path: string[]; initialQuery: string }) {
-  const [query, setQuery] = useState(initialQuery);
+// Only this leaf needs the URL at runtime; the list above its Suspense boundary
+// remains in the exported HTML, including when JavaScript is disabled.
+function QuerySync({ onQuery }: { onQuery: Dispatch<SetStateAction<string>> }) {
+  const params = useSearchParams();
+  const query = params.get("q") ?? "";
+  useEffect(() => { onQuery(query); }, [query, onQuery]);
+  return null;
+}
+
+export default function CatalogBrowser({ path, current, nodes, searchEntries }: {
+  path: string[]; current: CatalogEntry | null; nodes: CatalogNode[]; searchEntries: CatalogEntry[];
+}) {
+  const [query, setQuery] = useState("");
   const router = useRouter();
-  const current = getCatalogEntry(path);
-  const children = path.length ? current?.node.children ?? [] : catalog;
   const searching = Boolean(query.trim());
   const covers = path.length === 0 && !searching;
-  const entries: CatalogEntry[] = searching ? searchCatalog(query) : children.map(node => ({ node, path: [...path, node.slug], trail: [...(current?.trail ?? []), node] }));
+  const entries: CatalogEntry[] = searching ? searchCatalog(searchEntries, query) : nodes.map(node => ({ node, path: [...path, node.slug], trail: [...(current?.trail ?? []), node] }));
   const selector = path[0] === "pipelines" ? { href: "/selection/pipelines", label: "Подбор трубопровода" } : path[0] === "pumps" ? { href: "/selection/pumps", label: "Подбор насосов" } : null;
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -32,10 +41,11 @@ function CatalogResults({ path, initialQuery }: { path: string[]; initialQuery: 
   }
   function clearSearch() {
     setQuery("");
-    if (initialQuery) router.replace(catalogHref(path), { scroll: false });
+    router.replace(catalogHref(path), { scroll: false });
   }
 
   return <>
+    <Suspense fallback={null}><QuerySync onQuery={setQuery} /></Suspense>
     {current ? <CatalogFloatingNav path={path} trail={current.trail} query={query} onQuery={setQuery} onSubmit={submit} onClear={clearSearch} /> : <div className={styles.toolbar}>
       <form className={styles.search} role="search" aria-label="Поиск разделов каталога" onSubmit={submit}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
@@ -54,10 +64,4 @@ function CatalogResults({ path, initialQuery }: { path: string[]; initialQuery: 
       </div>
     </div>}
   </>;
-}
-
-export default function CatalogBrowser({ path }: { path: string[] }) {
-  const params = useSearchParams();
-  const query = params.get("q") ?? "";
-  return <CatalogResults key={`${catalogHref(path)}?${query}`} path={path} initialQuery={query} />;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import ViewportImage from "@/components/ui/ViewportImage";
 import { publicPath } from "@/lib/public-path";
 import { usePointerTilt } from "@/lib/use-pointer-tilt";
 import styles from "./FireSuppression.module.css";
@@ -15,7 +15,7 @@ function ProductBanner({ kind }: { kind: keyof typeof banners }) {
   const banner = banners[kind];
   return <div className={styles.bannerStage} data-product-banner={kind} {...pointerHandlers}>
     <div ref={surfaceRef} className={styles.banner}>
-      <Image className={styles.bannerImage} src={publicPath(banner.src)} width={banner.width} height={banner.height} sizes="(max-width: 767px) 100vw, 1440px" alt={banner.alt} quality={100} unoptimized draggable={false} />
+      <ViewportImage className={styles.bannerImage} src={publicPath(banner.src)} width={banner.width} height={banner.height} sizes="(max-width: 767px) 100vw, 1440px" alt={banner.alt} />
     </div>
   </div>;
 }

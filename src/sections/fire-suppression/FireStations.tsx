@@ -1,5 +1,6 @@
 "use client";
 
+import type { FireStation } from "@/content/types";
 import { useState, type KeyboardEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,12 +8,9 @@ import { publicPath } from "@/lib/public-path";
 import shared from "../data-centers/DataCenters.module.css";
 import styles from "./FireSuppression.module.css";
 
-const stations = [
-  { id: "fpa", name: "HK-Boost FPA", application: "Автоматические установки пожаротушения", description: "Насосные установки для автоматических систем водяного и пенного пожаротушения. Объединяют насосы HMV, коллекторы, арматуру и систему управления на общей раме." },
-  { id: "fpv", name: "HK-Boost FPV", application: "Внутренний противопожарный водопровод", description: "Насосные установки для внутреннего противопожарного водопровода. Насосы HMV, трубопроводная обвязка и система управления собраны в единый комплект." },
-] as const;
 
-export default function FireStations() {
+
+export default function FireStations({ stations }: { stations: FireStation[] }) {
   const [selected, setSelected] = useState(0);
   const station = stations[selected];
   function handleKey(event: KeyboardEvent<HTMLButtonElement>) {

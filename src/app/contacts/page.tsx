@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { contacts, contactRouteUrl } from "@/lib/contacts";
+import { contacts, contactRouteUrl, contactMapUrl } from "@/lib/contacts";
 import { publicPath } from "@/lib/public-path";
 import ContactsMap from "@/sections/contacts/ContactsMap";
 import QuietLeadButton from "@/sections/contacts/QuietLeadButton";
@@ -100,7 +100,7 @@ export default function ContactsPage() {
           </div>
         </div>
         <div className={styles.mapColumn}>
-          <ContactsMap />
+          <ContactsMap mapEmbed={contacts.mapEmbed} mapUrl={contactMapUrl} />
         </div>
       </div>
     </main>

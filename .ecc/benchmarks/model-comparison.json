@@ -1,0 +1,1704 @@
+{
+  "protocol": {
+    "browser": "156.0.8078.47",
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "runsPerModelProfile": 5,
+    "desktop": {
+      "viewport": "1440x900",
+      "cpuRate": 1,
+      "network": "local unthrottled"
+    },
+    "mobile": {
+      "viewport": "390x844",
+      "cpuRate": 4,
+      "downloadBytesPerSecond": 500000,
+      "latencyMs": 150
+    },
+    "cache": "fresh context + disabled HTTP cache",
+    "fpsMeasured": false,
+    "baselineSources": [
+      "models-baseline.json",
+      "models-baseline-designers-mobile.json"
+    ],
+    "candidateSource": "models-current.json",
+    "acceptedSources": [
+      "models-current.json (data-centers and fire-suppression)",
+      "models-accepted-designers.json"
+    ],
+    "caveats": [
+      "viewportToReady measures first DOM visual intersection. For cooling/fire the baseline visual mounts after deferred JS, while current visual exists initially; do not compare that boundary as a performance regression. Both raw values are retained.",
+      "For the floor, the stage remains in view during transition: summary viewportToReady starts at the user view-switch action; original raw files also retain the earlier facade intersection.",
+      "prepareProxy is responseEnd→ready: decode, geometry/material preparation, renderer and DOM scheduling combined. It is not isolated geometry CPU time.",
+      "Facade interaction is the building-block click→floor-ready transition including camera motion/network; other interactions are selection→description heading visible with ancestor opacity >=0.5.",
+      "JS heap snapshots are not GPU memory or peak memory. The independent GC diagnostic runs after all loading metrics and does not alter their timing windows.",
+      "Original baseline mobile product accessible name was missing. The repeated baseline designers measurement clicks the same button by DOM text. The a11y defect was fixed independently in current."
+    ]
+  },
+  "decisions": [
+    {
+      "asset": "chilling.glb",
+      "transformation": "lossless EXT_meshopt_compression",
+      "decision": "accepted",
+      "reason": "HTTP wire decreases 6.6%; desktop/mobile overall ready improves; exact semantic and decoded-byte verification passed."
+    },
+    {
+      "asset": "parking-sprinkler.glb",
+      "transformation": "lossless EXT_meshopt_compression",
+      "decision": "accepted",
+      "reason": "HTTP wire decreases 66.3% and mobile overall ready improves about 40%; exact semantic and decoded-byte verification passed."
+    },
+    {
+      "asset": "facade.glb",
+      "transformation": "original bytes restored",
+      "decision": "meshopt rejected",
+      "reason": "Candidate HTTP gzip wire grew 1.6% despite a smaller raw GLB; no proven compressed-asset gain. Accepted file is byte-identical to the source."
+    },
+    {
+      "asset": "communications.glb",
+      "transformation": "original bytes restored",
+      "decision": "meshopt rejected",
+      "reason": "Candidate HTTP gzip wire grew 3.6% and floor-ready slowed; accepted file is byte-identical to the source."
+    }
+  ],
+  "comparisons": [
+    {
+      "asset": "chilling.glb",
+      "profile": "desktop",
+      "baseline": {
+        "wireBytes": {
+          "n": 5,
+          "median": 1554638,
+          "min": 1554638,
+          "max": 1554638
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 805.5,
+          "min": 797,
+          "max": 942.1
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 166.1,
+          "min": 159.2,
+          "max": 247.4
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 173.7,
+          "min": 169.6,
+          "max": 266.9
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 90.2,
+          "min": 88.5,
+          "max": 159.3
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 84.5,
+          "min": 81.1,
+          "max": 107.6
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 33,
+          "min": 33,
+          "max": 33
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 27774912,
+          "min": 19537012,
+          "max": 27866756
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 309.5,
+          "min": 307,
+          "max": 311
+        }
+      },
+      "candidate": {
+        "wireBytes": {
+          "n": 5,
+          "median": 1451806,
+          "min": 1451806,
+          "max": 1451806
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 631.5,
+          "min": 613.3,
+          "max": 661.6
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 492.7,
+          "min": 477.5,
+          "max": 520.2
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 175.7,
+          "min": 164,
+          "max": 191.4
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 81.7,
+          "min": 68.7,
+          "max": 83.4
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 95.3,
+          "min": 89.8,
+          "max": 109.7
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 33,
+          "min": 33,
+          "max": 33
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 27780012,
+          "min": 27610300,
+          "max": 27873140
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 295.1,
+          "min": 285.4,
+          "max": 311.6
+        }
+      },
+      "accepted": {
+        "wireBytes": {
+          "n": 5,
+          "median": 1451806,
+          "min": 1451806,
+          "max": 1451806
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 631.5,
+          "min": 613.3,
+          "max": 661.6
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 492.7,
+          "min": 477.5,
+          "max": 520.2
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 175.7,
+          "min": 164,
+          "max": 191.4
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 81.7,
+          "min": 68.7,
+          "max": 83.4
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 95.3,
+          "min": 89.8,
+          "max": 109.7
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 33,
+          "min": 33,
+          "max": 33
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 27780012,
+          "min": 27610300,
+          "max": 27873140
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 295.1,
+          "min": 285.4,
+          "max": 311.6
+        }
+      },
+      "candidateDeltaPercent": {
+        "wireBytes": -6.61,
+        "readyMs": -21.6,
+        "viewportToReadyMs": 196.63,
+        "requestToReadyMs": 1.15,
+        "networkMs": -9.42,
+        "prepareProxyMs": 12.78,
+        "drawCalls": 0,
+        "heapBytes": 0.02,
+        "interactionMs": -4.65
+      },
+      "acceptedDeltaPercent": {
+        "wireBytes": -6.61,
+        "readyMs": -21.6,
+        "viewportToReadyMs": 196.63,
+        "requestToReadyMs": 1.15,
+        "networkMs": -9.42,
+        "prepareProxyMs": 12.78,
+        "drawCalls": 0,
+        "heapBytes": 0.02,
+        "interactionMs": -4.65
+      },
+      "flagsAboveTenPercent": [
+        {
+          "metric": "viewportToReadyMs",
+          "percent": 196.63,
+          "interpretation": "Not comparable for lazy baseline vs initially rendered current visual. DOM observer starts later in the baseline; overall ready and request-to-ready remain comparable."
+        },
+        {
+          "metric": "prepareProxyMs",
+          "percent": 12.78,
+          "interpretation": "Includes lossless meshopt decode and DOM/render scheduling, not isolated geometry time. Absolute increase is reported; overall and request-to-ready determine the net loading outcome."
+        }
+      ]
+    },
+    {
+      "asset": "chilling.glb",
+      "profile": "mobile",
+      "baseline": {
+        "wireBytes": {
+          "n": 5,
+          "median": 1554638,
+          "min": 1554638,
+          "max": 1554638
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 9310.3,
+          "min": 9214.8,
+          "max": 9392.5
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 6618.4,
+          "min": 6566.6,
+          "max": 6735.3
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 5574.9,
+          "min": 4998.1,
+          "max": 5714.9
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 5176.5,
+          "min": 4571,
+          "max": 5296.8
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 405.7,
+          "min": 370.9,
+          "max": 427.1
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 33,
+          "min": 33,
+          "max": 33
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 20059288,
+          "min": 19961988,
+          "max": 20266492
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 309,
+          "min": 291.5,
+          "max": 311.2
+        }
+      },
+      "candidate": {
+        "wireBytes": {
+          "n": 5,
+          "median": 1451806,
+          "min": 1451806,
+          "max": 1451806
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 8728.8,
+          "min": 8721.8,
+          "max": 8749.3
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 6590.3,
+          "min": 6580.7,
+          "max": 6611.8
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 4911.4,
+          "min": 4898.3,
+          "max": 4931.8
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 4568.1,
+          "min": 4509.8,
+          "max": 4571.8
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 351.4,
+          "min": 342.8,
+          "max": 395.8
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 33,
+          "min": 33,
+          "max": 33
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 27304644,
+          "min": 19702184,
+          "max": 27786356
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 294.3,
+          "min": 293.3,
+          "max": 306.6
+        }
+      },
+      "accepted": {
+        "wireBytes": {
+          "n": 5,
+          "median": 1451806,
+          "min": 1451806,
+          "max": 1451806
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 8728.8,
+          "min": 8721.8,
+          "max": 8749.3
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 6590.3,
+          "min": 6580.7,
+          "max": 6611.8
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 4911.4,
+          "min": 4898.3,
+          "max": 4931.8
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 4568.1,
+          "min": 4509.8,
+          "max": 4571.8
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 351.4,
+          "min": 342.8,
+          "max": 395.8
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 33,
+          "min": 33,
+          "max": 33
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 27304644,
+          "min": 19702184,
+          "max": 27786356
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 294.3,
+          "min": 293.3,
+          "max": 306.6
+        }
+      },
+      "candidateDeltaPercent": {
+        "wireBytes": -6.61,
+        "readyMs": -6.25,
+        "viewportToReadyMs": -0.42,
+        "requestToReadyMs": -11.9,
+        "networkMs": -11.75,
+        "prepareProxyMs": -13.38,
+        "drawCalls": 0,
+        "heapBytes": 36.12,
+        "interactionMs": -4.76
+      },
+      "acceptedDeltaPercent": {
+        "wireBytes": -6.61,
+        "readyMs": -6.25,
+        "viewportToReadyMs": -0.42,
+        "requestToReadyMs": -11.9,
+        "networkMs": -11.75,
+        "prepareProxyMs": -13.38,
+        "drawCalls": 0,
+        "heapBytes": 36.12,
+        "interactionMs": -4.76
+      },
+      "flagsAboveTenPercent": [
+        {
+          "metric": "heapBytes",
+          "percent": 36.12,
+          "interpretation": "Raw snapshot before GC; see independent paired retainedHeapDiagnostic."
+        }
+      ]
+    },
+    {
+      "asset": "parking-sprinkler.glb",
+      "profile": "desktop",
+      "baseline": {
+        "wireBytes": {
+          "n": 5,
+          "median": 8764514,
+          "min": 8764514,
+          "max": 8764514
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 974.9,
+          "min": 966.3,
+          "max": 1011.9
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 347.9,
+          "min": 335.7,
+          "max": 364.2
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 364.7,
+          "min": 357.5,
+          "max": 381.9
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 329.8,
+          "min": 320.4,
+          "max": 343.6
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 36.6,
+          "min": 34.9,
+          "max": 38.3
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 57,
+          "min": 57,
+          "max": 57
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 11321816,
+          "min": 11252044,
+          "max": 12893980
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 222.2,
+          "min": 220.8,
+          "max": 227.3
+        }
+      },
+      "candidate": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2951797,
+          "min": 2951797,
+          "max": 2951797
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 634.3,
+          "min": 610.7,
+          "max": 652.6
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 491.2,
+          "min": 487.8,
+          "max": 519.6
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 179.6,
+          "min": 174.2,
+          "max": 207.7
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 115,
+          "min": 114.6,
+          "max": 146.8
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 60.9,
+          "min": 59.6,
+          "max": 70
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 57,
+          "min": 57,
+          "max": 57
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 10997452,
+          "min": 10932936,
+          "max": 11033724
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 230.5,
+          "min": 210.1,
+          "max": 245.8
+        }
+      },
+      "accepted": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2951797,
+          "min": 2951797,
+          "max": 2951797
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 634.3,
+          "min": 610.7,
+          "max": 652.6
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 491.2,
+          "min": 487.8,
+          "max": 519.6
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 179.6,
+          "min": 174.2,
+          "max": 207.7
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 115,
+          "min": 114.6,
+          "max": 146.8
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 60.9,
+          "min": 59.6,
+          "max": 70
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 57,
+          "min": 57,
+          "max": 57
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 10997452,
+          "min": 10932936,
+          "max": 11033724
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 230.5,
+          "min": 210.1,
+          "max": 245.8
+        }
+      },
+      "candidateDeltaPercent": {
+        "wireBytes": -66.32,
+        "readyMs": -34.94,
+        "viewportToReadyMs": 41.19,
+        "requestToReadyMs": -50.75,
+        "networkMs": -65.13,
+        "prepareProxyMs": 66.39,
+        "drawCalls": 0,
+        "heapBytes": -2.86,
+        "interactionMs": 3.74
+      },
+      "acceptedDeltaPercent": {
+        "wireBytes": -66.32,
+        "readyMs": -34.94,
+        "viewportToReadyMs": 41.19,
+        "requestToReadyMs": -50.75,
+        "networkMs": -65.13,
+        "prepareProxyMs": 66.39,
+        "drawCalls": 0,
+        "heapBytes": -2.86,
+        "interactionMs": 3.74
+      },
+      "flagsAboveTenPercent": [
+        {
+          "metric": "viewportToReadyMs",
+          "percent": 41.19,
+          "interpretation": "Not comparable for lazy baseline vs initially rendered current visual. DOM observer starts later in the baseline; overall ready and request-to-ready remain comparable."
+        },
+        {
+          "metric": "prepareProxyMs",
+          "percent": 66.39,
+          "interpretation": "Includes lossless meshopt decode and DOM/render scheduling, not isolated geometry time. Absolute increase is reported; overall and request-to-ready determine the net loading outcome."
+        }
+      ]
+    },
+    {
+      "asset": "parking-sprinkler.glb",
+      "profile": "mobile",
+      "baseline": {
+        "wireBytes": {
+          "n": 5,
+          "median": 8764514,
+          "min": 8764514,
+          "max": 8764514
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 27501.2,
+          "min": 27485.2,
+          "max": 28511.3
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 25877.4,
+          "min": 25861.8,
+          "max": 25951.6
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 23865.7,
+          "min": 23824.9,
+          "max": 24207.2
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 23729.8,
+          "min": 23685.8,
+          "max": 24023.5
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 157.7,
+          "min": 131.7,
+          "max": 222
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 57,
+          "min": 57,
+          "max": 57
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 11136400,
+          "min": 11083364,
+          "max": 11220748
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 226.3,
+          "min": 210.9,
+          "max": 228
+        }
+      },
+      "candidate": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2951797,
+          "min": 2951797,
+          "max": 2951797
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 16576.5,
+          "min": 16569.8,
+          "max": 16589.5
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 14425.4,
+          "min": 14408.4,
+          "max": 14438
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 12637.5,
+          "min": 12586.7,
+          "max": 12638
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 12408.5,
+          "min": 12367,
+          "max": 12425.3
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 214.5,
+          "min": 205.9,
+          "max": 236.7
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 57,
+          "min": 57,
+          "max": 57
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 11024000,
+          "min": 10962168,
+          "max": 11435324
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 211.4,
+          "min": 210.2,
+          "max": 226.9
+        }
+      },
+      "accepted": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2951797,
+          "min": 2951797,
+          "max": 2951797
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 16576.5,
+          "min": 16569.8,
+          "max": 16589.5
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 14425.4,
+          "min": 14408.4,
+          "max": 14438
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 12637.5,
+          "min": 12586.7,
+          "max": 12638
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 12408.5,
+          "min": 12367,
+          "max": 12425.3
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 214.5,
+          "min": 205.9,
+          "max": 236.7
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 57,
+          "min": 57,
+          "max": 57
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 11024000,
+          "min": 10962168,
+          "max": 11435324
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 211.4,
+          "min": 210.2,
+          "max": 226.9
+        }
+      },
+      "candidateDeltaPercent": {
+        "wireBytes": -66.32,
+        "readyMs": -39.72,
+        "viewportToReadyMs": -44.25,
+        "requestToReadyMs": -47.05,
+        "networkMs": -47.71,
+        "prepareProxyMs": 36.02,
+        "drawCalls": 0,
+        "heapBytes": -1.01,
+        "interactionMs": -6.58
+      },
+      "acceptedDeltaPercent": {
+        "wireBytes": -66.32,
+        "readyMs": -39.72,
+        "viewportToReadyMs": -44.25,
+        "requestToReadyMs": -47.05,
+        "networkMs": -47.71,
+        "prepareProxyMs": 36.02,
+        "drawCalls": 0,
+        "heapBytes": -1.01,
+        "interactionMs": -6.58
+      },
+      "flagsAboveTenPercent": [
+        {
+          "metric": "prepareProxyMs",
+          "percent": 36.02,
+          "interpretation": "Includes lossless meshopt decode and DOM/render scheduling, not isolated geometry time. Absolute increase is reported; overall and request-to-ready determine the net loading outcome."
+        }
+      ]
+    },
+    {
+      "asset": "facade.glb",
+      "profile": "desktop",
+      "baseline": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2791561,
+          "min": 2791561,
+          "max": 2791561
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 481.7,
+          "min": 470,
+          "max": 501.7
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 488.3,
+          "min": 479.4,
+          "max": 498.1
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 401.3,
+          "min": 392.2,
+          "max": 404.3
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 97.1,
+          "min": 96.8,
+          "max": 114.9
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 302.9,
+          "min": 289.4,
+          "max": 306.8
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 7,
+          "min": 7,
+          "max": 7
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 23909196,
+          "min": 23792132,
+          "max": 23987400
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 772.3,
+          "min": 765.7,
+          "max": 779.4
+        }
+      },
+      "candidate": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2837275,
+          "min": 2837275,
+          "max": 2837275
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 395.1,
+          "min": 391.8,
+          "max": 480
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 394.7,
+          "min": 389.2,
+          "max": 503
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 322.2,
+          "min": 308.4,
+          "max": 405.2
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 75.6,
+          "min": 73.6,
+          "max": 88.8
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 248.1,
+          "min": 219.6,
+          "max": 319.4
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 7,
+          "min": 7,
+          "max": 7
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 23986456,
+          "min": 23900576,
+          "max": 24147060
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 828.5,
+          "min": 826.3,
+          "max": 830.5
+        }
+      },
+      "accepted": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2791561,
+          "min": 2791561,
+          "max": 2791561
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 401,
+          "min": 390.1,
+          "max": 555.7
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 416.4,
+          "min": 389.9,
+          "max": 593.5
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 333.3,
+          "min": 312.1,
+          "max": 401.6
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 103.4,
+          "min": 91.2,
+          "max": 275.1
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 219.4,
+          "min": 110.5,
+          "max": 291.1
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 7,
+          "min": 7,
+          "max": 7
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 23972768,
+          "min": 23791400,
+          "max": 24778344
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 840.7,
+          "min": 824.6,
+          "max": 858
+        }
+      },
+      "candidateDeltaPercent": {
+        "wireBytes": 1.64,
+        "readyMs": -17.98,
+        "viewportToReadyMs": -19.17,
+        "requestToReadyMs": -19.71,
+        "networkMs": -22.14,
+        "prepareProxyMs": -18.09,
+        "drawCalls": 0,
+        "heapBytes": 0.32,
+        "interactionMs": 7.28
+      },
+      "acceptedDeltaPercent": {
+        "wireBytes": 0,
+        "readyMs": -16.75,
+        "viewportToReadyMs": -14.72,
+        "requestToReadyMs": -16.94,
+        "networkMs": 6.49,
+        "prepareProxyMs": -27.57,
+        "drawCalls": 0,
+        "heapBytes": 0.27,
+        "interactionMs": 8.86
+      },
+      "flagsAboveTenPercent": []
+    },
+    {
+      "asset": "facade.glb",
+      "profile": "mobile",
+      "baseline": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2791561,
+          "min": 2791561,
+          "max": 2791561
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 10705.1,
+          "min": 9609.9,
+          "max": 10709.5
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 10629.6,
+          "min": 9615.3,
+          "max": 10633.9
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 7190.6,
+          "min": 7173.2,
+          "max": 7345.4
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 6901.5,
+          "min": 6882.3,
+          "max": 7072.6
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 289.5,
+          "min": 272.8,
+          "max": 296.6
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 7,
+          "min": 7,
+          "max": 7
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 26775884,
+          "min": 23787096,
+          "max": 29409528
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 5702.6,
+          "min": 5670.9,
+          "max": 5731
+        }
+      },
+      "candidate": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2837275,
+          "min": 2837275,
+          "max": 2837275
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 10610.4,
+          "min": 9607.8,
+          "max": 10640.2
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 10537.2,
+          "min": 9613.7,
+          "max": 10567.1
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 7433.7,
+          "min": 7415.5,
+          "max": 7458.7
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 7132.1,
+          "min": 7113.8,
+          "max": 7144.5
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 306.5,
+          "min": 301.6,
+          "max": 324
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 7,
+          "min": 7,
+          "max": 7
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 26534392,
+          "min": 23799572,
+          "max": 27607556
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 5964.1,
+          "min": 5957.2,
+          "max": 5997
+        }
+      },
+      "accepted": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2791561,
+          "min": 2791561,
+          "max": 2791561
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 9525.8,
+          "min": 9481.6,
+          "max": 10571.1
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 9536.6,
+          "min": 9494.6,
+          "max": 10498.5
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 7300.2,
+          "min": 7163.4,
+          "max": 7362.4
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 7010.2,
+          "min": 6861.7,
+          "max": 7038.4
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 309.9,
+          "min": 290,
+          "max": 324
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 7,
+          "min": 7,
+          "max": 7
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 26637436,
+          "min": 23768108,
+          "max": 27201304
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 5786.1,
+          "min": 5762.1,
+          "max": 5799.3
+        }
+      },
+      "candidateDeltaPercent": {
+        "wireBytes": 1.64,
+        "readyMs": -0.88,
+        "viewportToReadyMs": -0.87,
+        "requestToReadyMs": 3.38,
+        "networkMs": 3.34,
+        "prepareProxyMs": 5.87,
+        "drawCalls": 0,
+        "heapBytes": -0.9,
+        "interactionMs": 4.59
+      },
+      "acceptedDeltaPercent": {
+        "wireBytes": 0,
+        "readyMs": -11.02,
+        "viewportToReadyMs": -10.28,
+        "requestToReadyMs": 1.52,
+        "networkMs": 1.58,
+        "prepareProxyMs": 7.05,
+        "drawCalls": 0,
+        "heapBytes": -0.52,
+        "interactionMs": 1.46
+      },
+      "flagsAboveTenPercent": []
+    },
+    {
+      "asset": "communications.glb",
+      "profile": "desktop",
+      "baseline": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2472417,
+          "min": 2472417,
+          "max": 2472417
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 772.3,
+          "min": 765.7,
+          "max": 779.4
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 772.3,
+          "min": 765.7,
+          "max": 779.4
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 307.1,
+          "min": 306,
+          "max": 310.8
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 85.1,
+          "min": 82.8,
+          "max": 90.8
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 222.6,
+          "min": 215.2,
+          "max": 225.2
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 80,
+          "min": 80,
+          "max": 80
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 22620556,
+          "min": 22443132,
+          "max": 26898208
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 94.7,
+          "min": 93.6,
+          "max": 95.4
+        }
+      },
+      "candidate": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2560276,
+          "min": 2560276,
+          "max": 2560276
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 828.5,
+          "min": 826.3,
+          "max": 830.5
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 828.5,
+          "min": 826.3,
+          "max": 830.5
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 303.9,
+          "min": 303.6,
+          "max": 304.1
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 74.3,
+          "min": 72.6,
+          "max": 76.3
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 229.5,
+          "min": 227.6,
+          "max": 231.4
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 80,
+          "min": 80,
+          "max": 80
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 20890584,
+          "min": 20694796,
+          "max": 24825736
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 79.6,
+          "min": 78.8,
+          "max": 96.4
+        }
+      },
+      "accepted": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2472417,
+          "min": 2472417,
+          "max": 2472417
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 840.7,
+          "min": 824.6,
+          "max": 858
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 840.7,
+          "min": 824.6,
+          "max": 858
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 304.2,
+          "min": 303.3,
+          "max": 306
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 95.6,
+          "min": 84.2,
+          "max": 101
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 208.6,
+          "min": 202.3,
+          "max": 221.8
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 80,
+          "min": 80,
+          "max": 80
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 20401992,
+          "min": 17580584,
+          "max": 24574664
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 82.7,
+          "min": 76.9,
+          "max": 97.5
+        }
+      },
+      "candidateDeltaPercent": {
+        "wireBytes": 3.55,
+        "readyMs": 7.28,
+        "viewportToReadyMs": 7.28,
+        "requestToReadyMs": -1.04,
+        "networkMs": -12.69,
+        "prepareProxyMs": 3.1,
+        "drawCalls": 0,
+        "heapBytes": -7.65,
+        "interactionMs": -15.95
+      },
+      "acceptedDeltaPercent": {
+        "wireBytes": 0,
+        "readyMs": 8.86,
+        "viewportToReadyMs": 8.86,
+        "requestToReadyMs": -0.94,
+        "networkMs": 12.34,
+        "prepareProxyMs": -6.29,
+        "drawCalls": 0,
+        "heapBytes": -9.81,
+        "interactionMs": -12.67
+      },
+      "flagsAboveTenPercent": [
+        {
+          "metric": "networkMs",
+          "percent": 12.34,
+          "interpretation": "Review against range and scenario; no blanket suppression."
+        }
+      ]
+    },
+    {
+      "asset": "communications.glb",
+      "profile": "mobile",
+      "baseline": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2472417,
+          "min": 2472417,
+          "max": 2472417
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 5702.6,
+          "min": 5670.9,
+          "max": 5731
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 5702.6,
+          "min": 5670.9,
+          "max": 5731
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 5223.2,
+          "min": 5206,
+          "max": 5239.7
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 5094.5,
+          "min": 5094.3,
+          "max": 5096.1
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 127.6,
+          "min": 111.5,
+          "max": 145.4
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 80,
+          "min": 80,
+          "max": 80
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 20398180,
+          "min": 15484604,
+          "max": 23418668
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 79.2,
+          "min": 78.3,
+          "max": 80.7
+        }
+      },
+      "candidate": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2560276,
+          "min": 2560276,
+          "max": 2560276
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 5964.1,
+          "min": 5957.2,
+          "max": 5997
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 5964.1,
+          "min": 5957.2,
+          "max": 5997
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 5431.1,
+          "min": 5418.9,
+          "max": 5448.5
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 5270,
+          "min": 5268.5,
+          "max": 5272.7
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 161.6,
+          "min": 148.9,
+          "max": 180
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 80,
+          "min": 80,
+          "max": 80
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 16875676,
+          "min": 15207700,
+          "max": 32171248
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 79.4,
+          "min": 75.3,
+          "max": 79.5
+        }
+      },
+      "accepted": {
+        "wireBytes": {
+          "n": 5,
+          "median": 2472417,
+          "min": 2472417,
+          "max": 2472417
+        },
+        "readyMs": {
+          "n": 5,
+          "median": 5786.1,
+          "min": 5762.1,
+          "max": 5799.3
+        },
+        "viewportToReadyMs": {
+          "n": 5,
+          "median": 5786.1,
+          "min": 5762.1,
+          "max": 5799.3
+        },
+        "requestToReadyMs": {
+          "n": 5,
+          "median": 5234.6,
+          "min": 5227.9,
+          "max": 5247.8
+        },
+        "networkMs": {
+          "n": 5,
+          "median": 5097.2,
+          "min": 5094.6,
+          "max": 5097.5
+        },
+        "prepareProxyMs": {
+          "n": 5,
+          "median": 137.1,
+          "min": 132.6,
+          "max": 150.6
+        },
+        "drawCalls": {
+          "n": 5,
+          "median": 80,
+          "min": 80,
+          "max": 80
+        },
+        "heapBytes": {
+          "n": 5,
+          "median": 17000616,
+          "min": 15378368,
+          "max": 28564108
+        },
+        "interactionMs": {
+          "n": 5,
+          "median": 77.2,
+          "min": 76.5,
+          "max": 79.8
+        }
+      },
+      "candidateDeltaPercent": {
+        "wireBytes": 3.55,
+        "readyMs": 4.59,
+        "viewportToReadyMs": 4.59,
+        "requestToReadyMs": 3.98,
+        "networkMs": 3.44,
+        "prepareProxyMs": 26.65,
+        "drawCalls": 0,
+        "heapBytes": -17.27,
+        "interactionMs": 0.25
+      },
+      "acceptedDeltaPercent": {
+        "wireBytes": 0,
+        "readyMs": 1.46,
+        "viewportToReadyMs": 1.46,
+        "requestToReadyMs": 0.22,
+        "networkMs": 0.05,
+        "prepareProxyMs": 7.45,
+        "drawCalls": 0,
+        "heapBytes": -16.66,
+        "interactionMs": -2.53
+      },
+      "flagsAboveTenPercent": []
+    }
+  ],
+  "retainedHeapDiagnostic": {
+    "asset": "chilling.glb",
+    "profile": "mobile",
+    "runs": 5,
+    "method": "HeapProfiler.collectGarbage after initial readiness metrics, then CDP JSHeapUsedSize",
+    "sources": [
+      "models-baseline-heap.json",
+      "models-current-heap.json"
+    ],
+    "baselineBytes": {
+      "n": 5,
+      "median": 11452240,
+      "min": 11385596,
+      "max": 11458452
+    },
+    "acceptedBytes": {
+      "n": 5,
+      "median": 11321628,
+      "min": 11313284,
+      "max": 11327476
+    },
+    "deltaPercent": -1.14
+  },
+  "visualCaptures": {
+    "baseline": "test-results/models-baseline",
+    "current": "test-results/models-current",
+    "states": [
+      "data-centers-ready",
+      "data-centers-selected",
+      "fire-suppression-ready",
+      "fire-suppression-selected"
+    ],
+    "review": "Viewed: model geometry, camera composition and selected state preserved. Small whole-page scroll offsets are not geometry changes."
+  },
+  "runtimePageErrors": {
+    "baseline": [],
+    "candidate": [],
+    "accepted": []
+  }
+}

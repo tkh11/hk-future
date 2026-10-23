@@ -1,0 +1,2684 @@
+[
+  {
+    "port": 3101,
+    "route": "/",
+    "mobile": true,
+    "lcp": [
+      {
+        "time": 1812,
+        "size": 21726,
+        "url": "",
+        "element": "<p class=\"park-banner__description\">Комплексные инженерные решения для общественных пространств и объектов любого масштаба.</p>"
+      }
+    ],
+    "shifts": [],
+    "resources": [
+      {
+        "url": "http://localhost:3101/rive.wasm",
+        "start": 4707.29999999702,
+        "end": 11793.20000000298,
+        "encoded": 814822,
+        "transfer": 815122,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/images/home/galits-poster.jpg",
+        "start": 190.79999999701977,
+        "end": 6689.9000000059605,
+        "encoded": 555309,
+        "transfer": 555609,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3101/images/home/gali-poster.jpg",
+        "start": 190.79999999701977,
+        "end": 3930.4000000059605,
+        "encoded": 249491,
+        "transfer": 249791,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/media/SFProDisplay_Semibold-s.p.3v4h42gif3s6d.woff2",
+        "start": 189.5,
+        "end": 1713.2999999970198,
+        "encoded": 119140,
+        "transfer": 119440,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/media/SFProDisplay_Medium-s.p.1ykbm8-hm3cyp.woff2",
+        "start": 188.90000000596046,
+        "end": 1707.0999999940395,
+        "encoded": 118672,
+        "transfer": 118972,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/media/SFProText_Semibold-s.p.2ujc34xod6v4w.woff2",
+        "start": 189.59999999403954,
+        "end": 2955.2999999970198,
+        "encoded": 117044,
+        "transfer": 117344,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/media/SFProText_Medium-s.p.40t8zwn4yvhyt.woff2",
+        "start": 189.5,
+        "end": 1695.5999999940395,
+        "encoded": 116212,
+        "transfer": 116512,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/images/home/hero-hk-25-first.jpg",
+        "start": 4179.70000000298,
+        "end": 6138.29999999702,
+        "encoded": 114009,
+        "transfer": 114309,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/media/SFProDisplay_Bold-s.p.1lahigq04k1xu.woff2",
+        "start": 187.59999999403954,
+        "end": 1668.7999999970198,
+        "encoded": 113056,
+        "transfer": 113356,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/media/SFProText_Bold-s.p.28_igs-slaw9l.woff2",
+        "start": 189.5,
+        "end": 1649.9000000059605,
+        "encoded": 110640,
+        "transfer": 110940,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/media/SFProText_Regular-s.p.1qjkqj2etekls.woff2",
+        "start": 189.59999999403954,
+        "end": 2742.5,
+        "encoded": 100596,
+        "transfer": 100896,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/media/SFProDisplay_Regular-s.p.0ji13_rmsmtix.woff2",
+        "start": 189,
+        "end": 1539.5999999940395,
+        "encoded": 99980,
+        "transfer": 100280,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/34wvn5zw0a69w.js",
+        "start": 189.59999999403954,
+        "end": 2862.5999999940395,
+        "encoded": 64619,
+        "transfer": 64919,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/0u6mj80unx_i6.js",
+        "start": 3591.2000000029802,
+        "end": 4587,
+        "encoded": 56169,
+        "transfer": 56469,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/1k2rid3ac5tgq.js",
+        "start": 190.5,
+        "end": 3459,
+        "encoded": 51549,
+        "transfer": 51849,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/3bawhkhjtuhib.js",
+        "start": 189.59999999403954,
+        "end": 2562.5,
+        "encoded": 43778,
+        "transfer": 44078,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/1-o912xxpjquk.js",
+        "start": 190.5,
+        "end": 3345.4000000059605,
+        "encoded": 27135,
+        "transfer": 27435,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/favicon.ico?favicon.2vob68tjqpejf.ico",
+        "start": 13049.29999999702,
+        "end": 13413.40000000596,
+        "encoded": 25931,
+        "transfer": 26231,
+        "type": "other"
+      },
+      {
+        "url": "http://localhost:3101/videos/home/gali.mp4",
+        "start": 4717.79999999702,
+        "end": 5904.4000000059605,
+        "encoded": 17170,
+        "transfer": 17470,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/3i6bulk3s3nk7.css",
+        "start": 189.59999999403954,
+        "end": 1740.2000000029802,
+        "encoded": 14907,
+        "transfer": 15207,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/42m7ex1byb65r.js",
+        "start": 4906.5999999940395,
+        "end": 6419.9000000059605,
+        "encoded": 10215,
+        "transfer": 10515,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/2holi_oa531ub.js",
+        "start": 190.5,
+        "end": 3042.4000000059605,
+        "encoded": 10010,
+        "transfer": 10310,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/3450qyhportkm.js",
+        "start": 189.70000000298023,
+        "end": 2823.2999999970198,
+        "encoded": 9030,
+        "transfer": 9330,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/brand/header-logo.riv",
+        "start": 11828.40000000596,
+        "end": 12060.5,
+        "encoded": 8912,
+        "transfer": 9212,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/0eadf-nod4b1c.js",
+        "start": 3618.7000000029802,
+        "end": 4169.79999999702,
+        "encoded": 8822,
+        "transfer": 9122,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/37sps3yehmyop.js",
+        "start": 5540.29999999702,
+        "end": 6609.5,
+        "encoded": 7586,
+        "transfer": 7886,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/17q_xydmi41_k.js",
+        "start": 189.59999999403954,
+        "end": 1982.9000000059605,
+        "encoded": 7332,
+        "transfer": 7632,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/0hjhungi3q5lf.js",
+        "start": 4525.70000000298,
+        "end": 5334.5,
+        "encoded": 6740,
+        "transfer": 7040,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/2lkpqub0wx3br.js",
+        "start": 4906.5,
+        "end": 6144.4000000059605,
+        "encoded": 5754,
+        "transfer": 6054,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/15-ekz411q589.js",
+        "start": 5098.5999999940395,
+        "end": 6365.9000000059605,
+        "encoded": 5184,
+        "transfer": 5484,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/articles?_rsc=BVehnWCYng9YI2VT",
+        "start": 3918.2000000029802,
+        "end": 4905.0999999940395,
+        "encoded": 4420,
+        "transfer": 4720,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/0at70l3cwwn8-.css",
+        "start": 3753.2000000029802,
+        "end": 4094.7999999970198,
+        "encoded": 3951,
+        "transfer": 4251,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/turbopack-1vha-ik8y9nrn.js",
+        "start": 189.70000000298023,
+        "end": 2928.0999999940395,
+        "encoded": 3862,
+        "transfer": 4162,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/2qkbn1zsjm_k8.js",
+        "start": 190.5,
+        "end": 3150.5,
+        "encoded": 3607,
+        "transfer": 3907,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/contacts?_rsc=it74Pyr4eQ5ArpD_",
+        "start": 4528.9000000059605,
+        "end": 5538.4000000059605,
+        "encoded": 3603,
+        "transfer": 3903,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/41h3baptouxmm.css",
+        "start": 3756,
+        "end": 4092,
+        "encoded": 2449,
+        "transfer": 2749,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/catalog?_rsc=xAGq0MVd7wQqVE8E",
+        "start": 3754.7999999970198,
+        "end": 4523.9000000059605,
+        "encoded": 2133,
+        "transfer": 2433,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/0eggu84ax3cpw.css",
+        "start": 4339.9000000059605,
+        "end": 4701.5,
+        "encoded": 2071,
+        "transfer": 2371,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/3s6nzrbk-8mnv.js",
+        "start": 189.59999999403954,
+        "end": 1893.0999999940395,
+        "encoded": 2029,
+        "transfer": 2329,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/designers?_rsc=dDnUO12v91owl1v7",
+        "start": 4341.20000000298,
+        "end": 5095.0999999940395,
+        "encoded": 1831,
+        "transfer": 2131,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/?_rsc=8nTjltbQWvg6NcbE",
+        "start": 3757,
+        "end": 4758.20000000298,
+        "encoded": 1807,
+        "transfer": 2107,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/1nmfxuw50e81t.css",
+        "start": 3619.2999999970198,
+        "end": 3909,
+        "encoded": 680,
+        "transfer": 980,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3101/contacts?_rsc=5CB68i4pnAekjehf",
+        "start": 3751,
+        "end": 4338,
+        "encoded": 419,
+        "transfer": 719,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/catalog?_rsc=5CB68i4pnAekjehf",
+        "start": 3585.5,
+        "end": 3750.2000000029802,
+        "encoded": 418,
+        "transfer": 718,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/articles?_rsc=5CB68i4pnAekjehf",
+        "start": 3585.5,
+        "end": 3753.2000000029802,
+        "encoded": 418,
+        "transfer": 718,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/designers?_rsc=5CB68i4pnAekjehf",
+        "start": 3586.2999999970198,
+        "end": 3915.5,
+        "encoded": 405,
+        "transfer": 705,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/?_rsc=5CB68i4pnAekjehf",
+        "start": 3585.5,
+        "end": 3747,
+        "encoded": 393,
+        "transfer": 693,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3101/_next/static/chunks/0ivhe3stiz50o.js",
+        "start": 3591.0999999940395,
+        "end": 3921.5999999940395,
+        "encoded": 218,
+        "transfer": 518,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3101/videos/home/gali.mp4",
+        "start": 3622.4000000059605,
+        "end": 4719.29999999702,
+        "encoded": 0,
+        "transfer": 300,
+        "type": "video"
+      }
+    ],
+    "models": []
+  },
+  {
+    "port": 3100,
+    "route": "/",
+    "mobile": true,
+    "lcp": [
+      {
+        "time": 852,
+        "size": 64965,
+        "url": "",
+        "element": "<p>Компания <span class=\"GZPeRW_brand\">Heisskraft</span> является одним из ведущих производителей инновационной продукции в области инженерных систем, реализуемых в различных отраслях промышленности. Каждый день наша команда работает над увеличением сроков службы и эффективности производимой продукции во вновь возводимых или реконструируемых инженерных коммуникациях.</p>"
+      },
+      {
+        "time": 3160,
+        "size": 69190,
+        "url": "http://localhost:3100/images/home/hero-opening-poster.jpg",
+        "element": "<video class=\"park-banner__video\" poster=\"/images/home/hero-opening-poster.jpg\" preload=\"auto\" muted=\"\" playsinline=\"\" aria-label=\"Архитектурная анимация: изогнутый белый фасад\"></video>"
+      }
+    ],
+    "shifts": [],
+    "resources": [
+      {
+        "url": "http://localhost:3100/videos/home/hero-opening.mp4",
+        "start": 4315.5,
+        "end": 12181.29999999702,
+        "encoded": 2700272,
+        "transfer": 2700572,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3100/rive.wasm",
+        "start": 4780.399999991059,
+        "end": 8515.699999988079,
+        "encoded": 814822,
+        "transfer": 815122,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/images/home/galits-poster.jpg",
+        "start": 167.5,
+        "end": 5563.5,
+        "encoded": 555309,
+        "transfer": 555609,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3100/images/home/gali-poster.jpg",
+        "start": 167.5,
+        "end": 4144.399999991059,
+        "encoded": 249491,
+        "transfer": 249791,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3100/images/home/hero-opening-poster.jpg",
+        "start": 167.5,
+        "end": 3144.8999999910593,
+        "encoded": 124709,
+        "transfer": 125009,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Semibold-s.p.3v4h42gif3s6d.woff2",
+        "start": 166,
+        "end": 1630.7999999970198,
+        "encoded": 119140,
+        "transfer": 119440,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Medium-s.p.1ykbm8-hm3cyp.woff2",
+        "start": 166,
+        "end": 1633.5999999940395,
+        "encoded": 118672,
+        "transfer": 118972,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Semibold-s.p.2ujc34xod6v4w.woff2",
+        "start": 166,
+        "end": 2990.0999999940395,
+        "encoded": 117044,
+        "transfer": 117344,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Medium-s.p.40t8zwn4yvhyt.woff2",
+        "start": 166,
+        "end": 2020.8999999910593,
+        "encoded": 116212,
+        "transfer": 116512,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/images/home/hero-hk-25-first.jpg",
+        "start": 180.19999998807907,
+        "end": 3355.8999999910593,
+        "encoded": 114009,
+        "transfer": 114309,
+        "type": "video"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Bold-s.p.1lahigq04k1xu.woff2",
+        "start": 165.5,
+        "end": 1585.7999999970198,
+        "encoded": 113056,
+        "transfer": 113356,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Bold-s.p.28_igs-slaw9l.woff2",
+        "start": 166,
+        "end": 1567.5999999940395,
+        "encoded": 110640,
+        "transfer": 110940,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Regular-s.p.1qjkqj2etekls.woff2",
+        "start": 166,
+        "end": 2569.5,
+        "encoded": 100596,
+        "transfer": 100896,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Regular-s.p.0ji13_rmsmtix.woff2",
+        "start": 166,
+        "end": 1454,
+        "encoded": 99980,
+        "transfer": 100280,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2nii411saqstq.js",
+        "start": 166.69999998807907,
+        "end": 3862.3999999910593,
+        "encoded": 65362,
+        "transfer": 65662,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2vxdm9s5yi-f1.js",
+        "start": 4288.699999988079,
+        "end": 4730,
+        "encoded": 56161,
+        "transfer": 56461,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/04fkhx6oxxc-k.js",
+        "start": 166.79999999701977,
+        "end": 4159.5,
+        "encoded": 51355,
+        "transfer": 51655,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0do2t05ysoa-w.js",
+        "start": 166.69999998807907,
+        "end": 3559.3999999910593,
+        "encoded": 45063,
+        "transfer": 45363,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3c90rmm1r9nxb.js",
+        "start": 166.79999999701977,
+        "end": 4033.3999999910593,
+        "encoded": 27123,
+        "transfer": 27423,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/favicon.ico?favicon.2vob68tjqpejf.ico",
+        "start": 5566.29999999702,
+        "end": 5876,
+        "encoded": 25931,
+        "transfer": 26231,
+        "type": "other"
+      },
+      {
+        "url": "http://localhost:3100/_next/image?url=%2Fimages%2Fsolutions%2Fdata-center.png&w=384&q=75",
+        "start": 847.8999999910593,
+        "end": 4282.399999991059,
+        "encoded": 24541,
+        "transfer": 24841,
+        "type": "img"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0k-xhc49tv6t-.css",
+        "start": 166.59999999403954,
+        "end": 739.8999999910593,
+        "encoded": 12473,
+        "transfer": 12773,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0br0_nex5tnx5.js",
+        "start": 167.3999999910593,
+        "end": 4093.5,
+        "encoded": 10829,
+        "transfer": 11129,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0tuwjnwlpcdc0.js",
+        "start": 166.79999999701977,
+        "end": 3827,
+        "encoded": 10195,
+        "transfer": 10495,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1bcey3-cnm_ka.js",
+        "start": 5007.699999988079,
+        "end": 5329.5999999940395,
+        "encoded": 10188,
+        "transfer": 10488,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2bzlqb104tejm.js",
+        "start": 166.69999998807907,
+        "end": 3430.8999999910593,
+        "encoded": 9018,
+        "transfer": 9318,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/brand/header-logo.riv",
+        "start": 8545,
+        "end": 8735,
+        "encoded": 8912,
+        "transfer": 9212,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/40zgkj09kfxd5.css",
+        "start": 166.59999999403954,
+        "end": 430.3999999910593,
+        "encoded": 8270,
+        "transfer": 8570,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2tnpvs5642w8m.js",
+        "start": 166.69999998807907,
+        "end": 3167,
+        "encoded": 6923,
+        "transfer": 7223,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3mp8d93olq06y.js",
+        "start": 4899.899999991059,
+        "end": 5197.5999999940395,
+        "encoded": 5169,
+        "transfer": 5469,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0ymazw75cxd74.js",
+        "start": 4995.5999999940395,
+        "end": 5212.399999991059,
+        "encoded": 5064,
+        "transfer": 5364,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "start": 166.69999998807907,
+        "end": 3550.3999999910593,
+        "encoded": 3940,
+        "transfer": 4240,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3zi0sglb1zzsi.js",
+        "start": 167.5,
+        "end": 4061,
+        "encoded": 3818,
+        "transfer": 4118,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/37bdpszay6r8f.css",
+        "start": 4463.5,
+        "end": 4657.399999991059,
+        "encoded": 3814,
+        "transfer": 4114,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2i8p_gh5f_uki.js",
+        "start": 166.69999998807907,
+        "end": 3616.2999999970198,
+        "encoded": 3671,
+        "transfer": 3971,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/articles?_rsc=BVehnWCYng9YI2VT",
+        "start": 4624.5,
+        "end": 5005.899999991059,
+        "encoded": 3588,
+        "transfer": 3888,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/contacts?_rsc=it74Pyr4eQ5ArpD_",
+        "start": 4831.5,
+        "end": 5083.79999999702,
+        "encoded": 2931,
+        "transfer": 3231,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=8nTjltbQWvg6NcbE",
+        "start": 4468.0999999940395,
+        "end": 4828.29999999702,
+        "encoded": 2545,
+        "transfer": 2845,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0blh8kltj_cqg.css",
+        "start": 4467.5,
+        "end": 4648.5999999940395,
+        "encoded": 2370,
+        "transfer": 2670,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=yIp22O3xgPPxC28X",
+        "start": 4466.399999991059,
+        "end": 4789.5,
+        "encoded": 2207,
+        "transfer": 2507,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/catalog?_rsc=xAGq0MVd7wQqVE8E",
+        "start": 4470.29999999702,
+        "end": 4898,
+        "encoded": 2176,
+        "transfer": 2476,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/brand/full-logo.svg",
+        "start": 166.59999999403954,
+        "end": 2756,
+        "encoded": 2125,
+        "transfer": 2425,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1ckvzn7sfprko.js",
+        "start": 166.69999998807907,
+        "end": 2942.199999988079,
+        "encoded": 2035,
+        "transfer": 2335,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/444fnoc2ixx8z.css",
+        "start": 4623.29999999702,
+        "end": 4819.5999999940395,
+        "encoded": 2009,
+        "transfer": 2309,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3o69ipoozswii.js",
+        "start": 5085.0999999940395,
+        "end": 5368.5,
+        "encoded": 1632,
+        "transfer": 1932,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/designers?_rsc=dDnUO12v91owl1v7",
+        "start": 4794,
+        "end": 4993.699999988079,
+        "encoded": 1043,
+        "transfer": 1343,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/catalog?_rsc=5CB68i4pnAekjehf",
+        "start": 4300.5,
+        "end": 4459.699999988079,
+        "encoded": 428,
+        "transfer": 728,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/contacts?_rsc=5CB68i4pnAekjehf",
+        "start": 4461.199999988079,
+        "end": 4621.5999999940395,
+        "encoded": 427,
+        "transfer": 727,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/articles?_rsc=5CB68i4pnAekjehf",
+        "start": 4300.5,
+        "end": 4465.5999999940395,
+        "encoded": 426,
+        "transfer": 726,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/designers?_rsc=5CB68i4pnAekjehf",
+        "start": 4300.5,
+        "end": 4468.699999988079,
+        "encoded": 414,
+        "transfer": 714,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=5CB68i4pnAekjehf",
+        "start": 4300.399999991059,
+        "end": 4456.79999999702,
+        "encoded": 395,
+        "transfer": 695,
+        "type": "fetch"
+      }
+    ],
+    "models": []
+  },
+  {
+    "port": 3100,
+    "route": "/solutions/fire-suppression",
+    "mobile": false,
+    "lcp": [
+      {
+        "time": 56,
+        "size": 52608,
+        "url": "",
+        "element": "<h1 id=\"fire-title\">Системы<br>пожаротушения</h1>"
+      }
+    ],
+    "shifts": [
+      {
+        "value": 0.00027388885874807104,
+        "time": 1905.2999999970198,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 130.515625,
+              "y": 0,
+              "width": 1185.484375,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 130.515625
+            },
+            "after": {
+              "x": 140.546875,
+              "y": 0,
+              "width": 1175.453125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 140.546875
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00027157756036201136,
+        "time": 1921.1000000089407,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 140.546875,
+              "y": 0,
+              "width": 1175.453125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 140.546875
+            },
+            "after": {
+              "x": 150.578125,
+              "y": 0,
+              "width": 1165.421875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 150.578125
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00026926626197595167,
+        "time": 1937.7999999970198,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 150.578125,
+              "y": 0,
+              "width": 1165.421875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 150.578125
+            },
+            "after": {
+              "x": 160.609375,
+              "y": 0,
+              "width": 1155.390625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 160.609375
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00024034263077096194,
+        "time": 1954.7000000029802,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 160.609375,
+              "y": 0,
+              "width": 1155.390625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 160.609375
+            },
+            "after": {
+              "x": 169.640625,
+              "y": 0,
+              "width": 1146.359375,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 169.640625
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00021206486705889916,
+        "time": 1971.4000000059605,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 169.640625,
+              "y": 0,
+              "width": 1146.359375,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 169.640625
+            },
+            "after": {
+              "x": 177.671875,
+              "y": 0,
+              "width": 1138.328125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 177.671875
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00021017478660300927,
+        "time": 1988.4000000059605,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 177.671875,
+              "y": 0,
+              "width": 1138.328125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 177.671875
+            },
+            "after": {
+              "x": 185.6875,
+              "y": 0,
+              "width": 1130.3125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 185.6875
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.0002091041010266632,
+        "time": 2005,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 185.6875,
+              "y": 0,
+              "width": 1130.3125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 185.6875
+            },
+            "after": {
+              "x": 193.71875,
+              "y": 0,
+              "width": 1122.28125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 193.71875
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00018136780036329733,
+        "time": 2021.2999999970198,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 193.71875,
+              "y": 0,
+              "width": 1122.28125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 193.71875
+            },
+            "after": {
+              "x": 200.734375,
+              "y": 0,
+              "width": 1115.265625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 200.734375
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00015454557860993226,
+        "time": 2037.7000000029802,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 200.734375,
+              "y": 0,
+              "width": 1115.265625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 200.734375
+            },
+            "after": {
+              "x": 206.75,
+              "y": 0,
+              "width": 1109.25,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 206.75
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.0001537139432093407,
+        "time": 2054.7999999970198,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 206.75,
+              "y": 0,
+              "width": 1109.25,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 206.75
+            },
+            "after": {
+              "x": 212.765625,
+              "y": 0,
+              "width": 1103.234375,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 212.765625
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00012746810599119083,
+        "time": 2071,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 212.765625,
+              "y": 0,
+              "width": 1103.234375,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 212.765625
+            },
+            "after": {
+              "x": 217.78125,
+              "y": 0,
+              "width": 1098.21875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 217.78125
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00012689028139467593,
+        "time": 2087.7999999970198,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 217.78125,
+              "y": 0,
+              "width": 1098.21875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 217.78125
+            },
+            "after": {
+              "x": 222.796875,
+              "y": 0,
+              "width": 1093.203125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 222.796875
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00010112866478855882,
+        "time": 2104.4000000059605,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 222.796875,
+              "y": 0,
+              "width": 1093.203125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 222.796875
+            },
+            "after": {
+              "x": 226.8125,
+              "y": 0,
+              "width": 1089.1875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 226.8125
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00010075856903452932,
+        "time": 2120.9000000059605,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 226.8125,
+              "y": 0,
+              "width": 1089.1875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 226.8125
+            },
+            "after": {
+              "x": 230.828125,
+              "y": 0,
+              "width": 1085.171875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 230.828125
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.0000753890091172625,
+        "time": 2137.6000000089407,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 230.828125,
+              "y": 0,
+              "width": 1085.171875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 230.828125
+            },
+            "after": {
+              "x": 233.84375,
+              "y": 0,
+              "width": 1082.15625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 233.84375
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00007479102366255143,
+        "time": 2154.2000000029802,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 233.84375,
+              "y": 0,
+              "width": 1082.15625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 233.84375
+            },
+            "after": {
+              "x": 236.84375,
+              "y": 0,
+              "width": 1079.15625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 236.84375
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00007497211137099194,
+        "time": 2170.9000000059605,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 236.84375,
+              "y": 0,
+              "width": 1079.15625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 236.84375
+            },
+            "after": {
+              "x": 239.859375,
+              "y": 0,
+              "width": 1076.140625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 239.859375
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00007437628600823045,
+        "time": 2187.7000000029802,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 239.859375,
+              "y": 0,
+              "width": 1076.140625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 239.859375
+            },
+            "after": {
+              "x": 242.859375,
+              "y": 0,
+              "width": 1073.140625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 242.859375
+            }
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "url": "http://localhost:3100/rive.wasm",
+        "start": 104.70000000298023,
+        "end": 154.1000000089407,
+        "encoded": 814822,
+        "transfer": 815122,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Semibold-s.p.3v4h42gif3s6d.woff2",
+        "start": 5.5,
+        "end": 10.600000008940697,
+        "encoded": 119140,
+        "transfer": 119440,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Medium-s.p.1ykbm8-hm3cyp.woff2",
+        "start": 5.5,
+        "end": 7.600000008940697,
+        "encoded": 118672,
+        "transfer": 118972,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Semibold-s.p.2ujc34xod6v4w.woff2",
+        "start": 5.600000008940697,
+        "end": 19.700000002980232,
+        "encoded": 117044,
+        "transfer": 117344,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Medium-s.p.40t8zwn4yvhyt.woff2",
+        "start": 5.5,
+        "end": 18.200000002980232,
+        "encoded": 116212,
+        "transfer": 116512,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Bold-s.p.1lahigq04k1xu.woff2",
+        "start": 5.4000000059604645,
+        "end": 7.9000000059604645,
+        "encoded": 113056,
+        "transfer": 113356,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Bold-s.p.28_igs-slaw9l.woff2",
+        "start": 5.5,
+        "end": 12.100000008940697,
+        "encoded": 110640,
+        "transfer": 110940,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Regular-s.p.1qjkqj2etekls.woff2",
+        "start": 5.600000008940697,
+        "end": 20.400000005960464,
+        "encoded": 100596,
+        "transfer": 100896,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Regular-s.p.0ji13_rmsmtix.woff2",
+        "start": 5.5,
+        "end": 9.5,
+        "encoded": 99980,
+        "transfer": 100280,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2nii411saqstq.js",
+        "start": 5.700000002980232,
+        "end": 42.20000000298023,
+        "encoded": 65362,
+        "transfer": 65662,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2vxdm9s5yi-f1.js",
+        "start": 84.1000000089407,
+        "end": 89,
+        "encoded": 56161,
+        "transfer": 56461,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/04fkhx6oxxc-k.js",
+        "start": 5.799999997019768,
+        "end": 47.20000000298023,
+        "encoded": 51355,
+        "transfer": 51655,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0do2t05ysoa-w.js",
+        "start": 5.700000002980232,
+        "end": 39.400000005960464,
+        "encoded": 45063,
+        "transfer": 45363,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3c90rmm1r9nxb.js",
+        "start": 5.9000000059604645,
+        "end": 43.70000000298023,
+        "encoded": 27123,
+        "transfer": 27423,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/favicon.ico?favicon.2vob68tjqpejf.ico",
+        "start": 85.1000000089407,
+        "end": 86.20000000298023,
+        "encoded": 25931,
+        "transfer": 26231,
+        "type": "other"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0k-xhc49tv6t-.css",
+        "start": 5.600000008940697,
+        "end": 20.200000002980232,
+        "encoded": 12473,
+        "transfer": 12773,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0br0_nex5tnx5.js",
+        "start": 5.9000000059604645,
+        "end": 41.900000005960464,
+        "encoded": 10829,
+        "transfer": 11129,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0tuwjnwlpcdc0.js",
+        "start": 5.799999997019768,
+        "end": 37.70000000298023,
+        "encoded": 10195,
+        "transfer": 10495,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1bcey3-cnm_ka.js",
+        "start": 113.20000000298023,
+        "end": 117.20000000298023,
+        "encoded": 10188,
+        "transfer": 10488,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2bzlqb104tejm.js",
+        "start": 5.700000002980232,
+        "end": 27.799999997019768,
+        "encoded": 9018,
+        "transfer": 9318,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/brand/header-logo.riv",
+        "start": 160.5,
+        "end": 161.29999999701977,
+        "encoded": 8912,
+        "transfer": 9212,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/40zgkj09kfxd5.css",
+        "start": 5.600000008940697,
+        "end": 19,
+        "encoded": 8270,
+        "transfer": 8570,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2tnpvs5642w8m.js",
+        "start": 5.700000002980232,
+        "end": 24.100000008940697,
+        "encoded": 6923,
+        "transfer": 7223,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3mp8d93olq06y.js",
+        "start": 112.40000000596046,
+        "end": 117,
+        "encoded": 5169,
+        "transfer": 5469,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0ymazw75cxd74.js",
+        "start": 115.29999999701977,
+        "end": 117.29999999701977,
+        "encoded": 5064,
+        "transfer": 5364,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/image?url=%2Fimages%2Ffire-suppression%2Fstation-fpa.png&w=256&q=75",
+        "start": 38.70000000298023,
+        "end": 44.400000005960464,
+        "encoded": 4807,
+        "transfer": 5107,
+        "type": "img"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "start": 5.700000002980232,
+        "end": 27.200000002980232,
+        "encoded": 3940,
+        "transfer": 4240,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3zi0sglb1zzsi.js",
+        "start": 109.29999999701977,
+        "end": 115,
+        "encoded": 3818,
+        "transfer": 4118,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/37bdpszay6r8f.css",
+        "start": 106.1000000089407,
+        "end": 109.29999999701977,
+        "encoded": 3814,
+        "transfer": 4114,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2i8p_gh5f_uki.js",
+        "start": 5.700000002980232,
+        "end": 36.5,
+        "encoded": 3671,
+        "transfer": 3971,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/articles?_rsc=i7TuSveLHqN5LVQd",
+        "start": 108.90000000596046,
+        "end": 113,
+        "encoded": 3588,
+        "transfer": 3888,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/contacts?_rsc=O212ObGIiJNsEQJV",
+        "start": 110.79999999701977,
+        "end": 116,
+        "encoded": 2931,
+        "transfer": 3231,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=-Spt-a6MbxYqHuC_",
+        "start": 106.79999999701977,
+        "end": 110,
+        "encoded": 2545,
+        "transfer": 2845,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0blh8kltj_cqg.css",
+        "start": 106.70000000298023,
+        "end": 110,
+        "encoded": 2370,
+        "transfer": 2670,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=ME2EAeOoZQF9xLFL",
+        "start": 106.5,
+        "end": 108.79999999701977,
+        "encoded": 2207,
+        "transfer": 2507,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/catalog?_rsc=wlCiccqzUqOH6Q9F",
+        "start": 107.1000000089407,
+        "end": 112.1000000089407,
+        "encoded": 2176,
+        "transfer": 2476,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/brand/full-logo.svg",
+        "start": 5.600000008940697,
+        "end": 21,
+        "encoded": 2125,
+        "transfer": 2425,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1ckvzn7sfprko.js",
+        "start": 5.700000002980232,
+        "end": 22.5,
+        "encoded": 2035,
+        "transfer": 2335,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/444fnoc2ixx8z.css",
+        "start": 108.70000000298023,
+        "end": 113.29999999701977,
+        "encoded": 2009,
+        "transfer": 2309,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/image?url=%2Fimages%2Ffire-suppression%2Fsaddle.jpg&w=256&q=75",
+        "start": 38.70000000298023,
+        "end": 45.1000000089407,
+        "encoded": 1705,
+        "transfer": 2005,
+        "type": "img"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3o69ipoozswii.js",
+        "start": 116.20000000298023,
+        "end": 117.40000000596046,
+        "encoded": 1632,
+        "transfer": 1932,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/image?url=%2Fimages%2Ffire-suppression%2Fpipe.png&w=256&q=75",
+        "start": 38.70000000298023,
+        "end": 44.29999999701977,
+        "encoded": 1302,
+        "transfer": 1602,
+        "type": "img"
+      },
+      {
+        "url": "http://localhost:3100/designers?_rsc=oyNZXXcR-OThatDi",
+        "start": 109.79999999701977,
+        "end": 114.70000000298023,
+        "encoded": 1043,
+        "transfer": 1343,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/brand/small-black-logo.svg",
+        "start": 38.70000000298023,
+        "end": 44.900000005960464,
+        "encoded": 562,
+        "transfer": 862,
+        "type": "img"
+      },
+      {
+        "url": "http://localhost:3100/catalog?_rsc=mSCIOQXAkIThG6Md",
+        "start": 90.29999999701977,
+        "end": 92.70000000298023,
+        "encoded": 428,
+        "transfer": 728,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/contacts?_rsc=mSCIOQXAkIThG6Md",
+        "start": 105.70000000298023,
+        "end": 108.5,
+        "encoded": 427,
+        "transfer": 727,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/articles?_rsc=mSCIOQXAkIThG6Md",
+        "start": 90.29999999701977,
+        "end": 92.70000000298023,
+        "encoded": 426,
+        "transfer": 726,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/designers?_rsc=mSCIOQXAkIThG6Md",
+        "start": 90.29999999701977,
+        "end": 92.70000000298023,
+        "encoded": 414,
+        "transfer": 714,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=mSCIOQXAkIThG6Md",
+        "start": 90.20000000298023,
+        "end": 92.6000000089407,
+        "encoded": 395,
+        "transfer": 695,
+        "type": "fetch"
+      }
+    ],
+    "models": [
+      {
+        "top": 1464.546875,
+        "height": 758
+      }
+    ]
+  },
+  {
+    "port": 3100,
+    "route": "/solutions/data-centers",
+    "mobile": false,
+    "lcp": [
+      {
+        "time": 76,
+        "size": 55552,
+        "url": "",
+        "element": "<h1>Холод для<br>больших данных.</h1>"
+      }
+    ],
+    "shifts": [
+      {
+        "value": 0.00027388885874807104,
+        "time": 1908.2999999970198,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 130.515625,
+              "y": 0,
+              "width": 1185.484375,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 130.515625
+            },
+            "after": {
+              "x": 140.546875,
+              "y": 0,
+              "width": 1175.453125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 140.546875
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00027157756036201136,
+        "time": 1924,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 140.546875,
+              "y": 0,
+              "width": 1175.453125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 140.546875
+            },
+            "after": {
+              "x": 150.578125,
+              "y": 0,
+              "width": 1165.421875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 150.578125
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00026926626197595167,
+        "time": 1941.4000000059605,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 150.578125,
+              "y": 0,
+              "width": 1165.421875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 150.578125
+            },
+            "after": {
+              "x": 160.609375,
+              "y": 0,
+              "width": 1155.390625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 160.609375
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00024034263077096194,
+        "time": 1957,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 160.609375,
+              "y": 0,
+              "width": 1155.390625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 160.609375
+            },
+            "after": {
+              "x": 169.640625,
+              "y": 0,
+              "width": 1146.359375,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 169.640625
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00021206486705889916,
+        "time": 1975.2000000029802,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 169.640625,
+              "y": 0,
+              "width": 1146.359375,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 169.640625
+            },
+            "after": {
+              "x": 177.671875,
+              "y": 0,
+              "width": 1138.328125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 177.671875
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00021017478660300927,
+        "time": 1991.2000000029802,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 177.671875,
+              "y": 0,
+              "width": 1138.328125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 177.671875
+            },
+            "after": {
+              "x": 185.6875,
+              "y": 0,
+              "width": 1130.3125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 185.6875
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.0002091041010266632,
+        "time": 2007.7999999970198,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 185.6875,
+              "y": 0,
+              "width": 1130.3125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 185.6875
+            },
+            "after": {
+              "x": 193.71875,
+              "y": 0,
+              "width": 1122.28125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 193.71875
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00018136780036329733,
+        "time": 2024.5999999940395,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 193.71875,
+              "y": 0,
+              "width": 1122.28125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 193.71875
+            },
+            "after": {
+              "x": 200.734375,
+              "y": 0,
+              "width": 1115.265625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 200.734375
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00015454557860993226,
+        "time": 2041.2999999970198,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 200.734375,
+              "y": 0,
+              "width": 1115.265625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 200.734375
+            },
+            "after": {
+              "x": 206.75,
+              "y": 0,
+              "width": 1109.25,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 206.75
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.0001537139432093407,
+        "time": 2057.4000000059605,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 206.75,
+              "y": 0,
+              "width": 1109.25,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 206.75
+            },
+            "after": {
+              "x": 212.765625,
+              "y": 0,
+              "width": 1103.234375,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 212.765625
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00012746810599119083,
+        "time": 2075,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 212.765625,
+              "y": 0,
+              "width": 1103.234375,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 212.765625
+            },
+            "after": {
+              "x": 217.78125,
+              "y": 0,
+              "width": 1098.21875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 217.78125
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00012689028139467593,
+        "time": 2091.2999999970198,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 217.78125,
+              "y": 0,
+              "width": 1098.21875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 217.78125
+            },
+            "after": {
+              "x": 222.796875,
+              "y": 0,
+              "width": 1093.203125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 222.796875
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00010112866478855882,
+        "time": 2108.4000000059605,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 222.796875,
+              "y": 0,
+              "width": 1093.203125,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 222.796875
+            },
+            "after": {
+              "x": 226.8125,
+              "y": 0,
+              "width": 1089.1875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 226.8125
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00010075856903452932,
+        "time": 2123.9000000059605,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 226.8125,
+              "y": 0,
+              "width": 1089.1875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 226.8125
+            },
+            "after": {
+              "x": 230.828125,
+              "y": 0,
+              "width": 1085.171875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 230.828125
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.0000753890091172625,
+        "time": 2141.7999999970198,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 230.828125,
+              "y": 0,
+              "width": 1085.171875,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 230.828125
+            },
+            "after": {
+              "x": 233.84375,
+              "y": 0,
+              "width": 1082.15625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 233.84375
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00007479102366255143,
+        "time": 2157.7000000029802,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 233.84375,
+              "y": 0,
+              "width": 1082.15625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 233.84375
+            },
+            "after": {
+              "x": 236.84375,
+              "y": 0,
+              "width": 1079.15625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 236.84375
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00007497211137099194,
+        "time": 2175.4000000059605,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 236.84375,
+              "y": 0,
+              "width": 1079.15625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 236.84375
+            },
+            "after": {
+              "x": 239.859375,
+              "y": 0,
+              "width": 1076.140625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 239.859375
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00007437628600823045,
+        "time": 2191.0999999940395,
+        "sources": [
+          {
+            "html": "<nav class=\"site-header__nav\" aria-label=\"Навигация\"><a class=\"site-header__link\" href=\"/catalog\">Каталог</a><a class=\"site-header__link\" href=\"/articles\">База знаний</a><a class=\"site-header__link\" href=\"/designers\">Проектировщикам</a><a class=\"site-header__link\" href=\"/catalog\">Подбор оборудования</a><button type=\"button\" class=\"site-header__request\">Оставить заявку</button><div class=\"site-head",
+            "before": {
+              "x": 239.859375,
+              "y": 0,
+              "width": 1076.140625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 239.859375
+            },
+            "after": {
+              "x": 242.859375,
+              "y": 0,
+              "width": 1073.140625,
+              "height": 43,
+              "top": 0,
+              "right": 1316,
+              "bottom": 43,
+              "left": 242.859375
+            }
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "url": "http://localhost:3100/rive.wasm",
+        "start": 106.09999999403954,
+        "end": 148.5,
+        "encoded": 814822,
+        "transfer": 815122,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Semibold-s.p.3v4h42gif3s6d.woff2",
+        "start": 6.5,
+        "end": 12.400000005960464,
+        "encoded": 119140,
+        "transfer": 119440,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Medium-s.p.1ykbm8-hm3cyp.woff2",
+        "start": 6.4000000059604645,
+        "end": 10.299999997019768,
+        "encoded": 118672,
+        "transfer": 118972,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Semibold-s.p.2ujc34xod6v4w.woff2",
+        "start": 6.5999999940395355,
+        "end": 21.599999994039536,
+        "encoded": 117044,
+        "transfer": 117344,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Medium-s.p.40t8zwn4yvhyt.woff2",
+        "start": 6.5,
+        "end": 19.099999994039536,
+        "encoded": 116212,
+        "transfer": 116512,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Bold-s.p.1lahigq04k1xu.woff2",
+        "start": 6.299999997019768,
+        "end": 9.700000002980232,
+        "encoded": 113056,
+        "transfer": 113356,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Bold-s.p.28_igs-slaw9l.woff2",
+        "start": 6.5,
+        "end": 13.900000005960464,
+        "encoded": 110640,
+        "transfer": 110940,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProText_Regular-s.p.1qjkqj2etekls.woff2",
+        "start": 6.5999999940395355,
+        "end": 20,
+        "encoded": 100596,
+        "transfer": 100896,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/media/SFProDisplay_Regular-s.p.0ji13_rmsmtix.woff2",
+        "start": 6.4000000059604645,
+        "end": 10.799999997019768,
+        "encoded": 99980,
+        "transfer": 100280,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2nii411saqstq.js",
+        "start": 6.700000002980232,
+        "end": 35,
+        "encoded": 65362,
+        "transfer": 65662,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2vxdm9s5yi-f1.js",
+        "start": 81.29999999701977,
+        "end": 87.90000000596046,
+        "encoded": 56161,
+        "transfer": 56461,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/04fkhx6oxxc-k.js",
+        "start": 6.700000002980232,
+        "end": 36.900000005960464,
+        "encoded": 51355,
+        "transfer": 51655,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0do2t05ysoa-w.js",
+        "start": 6.700000002980232,
+        "end": 32.79999999701977,
+        "encoded": 45063,
+        "transfer": 45363,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3c90rmm1r9nxb.js",
+        "start": 6.700000002980232,
+        "end": 33.900000005960464,
+        "encoded": 27123,
+        "transfer": 27423,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/favicon.ico?favicon.2vob68tjqpejf.ico",
+        "start": 78,
+        "end": 79.5,
+        "encoded": 25931,
+        "transfer": 26231,
+        "type": "other"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0k-xhc49tv6t-.css",
+        "start": 6.5999999940395355,
+        "end": 21.200000002980232,
+        "encoded": 12473,
+        "transfer": 12773,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0br0_nex5tnx5.js",
+        "start": 6.700000002980232,
+        "end": 33.79999999701977,
+        "encoded": 10829,
+        "transfer": 11129,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0tuwjnwlpcdc0.js",
+        "start": 6.700000002980232,
+        "end": 31.299999997019768,
+        "encoded": 10195,
+        "transfer": 10495,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1bcey3-cnm_ka.js",
+        "start": 96.70000000298023,
+        "end": 98.40000000596046,
+        "encoded": 10188,
+        "transfer": 10488,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2bzlqb104tejm.js",
+        "start": 6.700000002980232,
+        "end": 29.299999997019768,
+        "encoded": 9018,
+        "transfer": 9318,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/brand/header-logo.riv",
+        "start": 155,
+        "end": 156.20000000298023,
+        "encoded": 8912,
+        "transfer": 9212,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/40zgkj09kfxd5.css",
+        "start": 6.5999999940395355,
+        "end": 22,
+        "encoded": 8270,
+        "transfer": 8570,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2tnpvs5642w8m.js",
+        "start": 6.700000002980232,
+        "end": 28.099999994039536,
+        "encoded": 6923,
+        "transfer": 7223,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3mp8d93olq06y.js",
+        "start": 96.20000000298023,
+        "end": 97.90000000596046,
+        "encoded": 5169,
+        "transfer": 5469,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0ymazw75cxd74.js",
+        "start": 98,
+        "end": 99.20000000298023,
+        "encoded": 5064,
+        "transfer": 5364,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "start": 6.700000002980232,
+        "end": 29.599999994039536,
+        "encoded": 3940,
+        "transfer": 4240,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3zi0sglb1zzsi.js",
+        "start": 95,
+        "end": 96.29999999701977,
+        "encoded": 3818,
+        "transfer": 4118,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/37bdpszay6r8f.css",
+        "start": 87.29999999701977,
+        "end": 90.90000000596046,
+        "encoded": 3814,
+        "transfer": 4114,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/2i8p_gh5f_uki.js",
+        "start": 6.700000002980232,
+        "end": 30.5,
+        "encoded": 3671,
+        "transfer": 3971,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/articles?_rsc=_umr0uEczdpnMKvo",
+        "start": 93.20000000298023,
+        "end": 94.40000000596046,
+        "encoded": 3588,
+        "transfer": 3888,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/contacts?_rsc=VCPoE5MpwH3YiNPY",
+        "start": 96,
+        "end": 97.40000000596046,
+        "encoded": 2931,
+        "transfer": 3231,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=AXhnPNCF7gUxL4nv",
+        "start": 87.40000000596046,
+        "end": 90.59999999403954,
+        "encoded": 2545,
+        "transfer": 2845,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/0blh8kltj_cqg.css",
+        "start": 86.70000000298023,
+        "end": 90.5,
+        "encoded": 2370,
+        "transfer": 2670,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=FB3c0SE_l2aUpq25",
+        "start": 87.09999999403954,
+        "end": 90.29999999701977,
+        "encoded": 2207,
+        "transfer": 2507,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/catalog?_rsc=dj_Ljq8FPp2p0TcS",
+        "start": 87.59999999403954,
+        "end": 90.79999999701977,
+        "encoded": 2176,
+        "transfer": 2476,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/brand/full-logo.svg",
+        "start": 6.5999999940395355,
+        "end": 23,
+        "encoded": 2125,
+        "transfer": 2425,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/1ckvzn7sfprko.js",
+        "start": 6.700000002980232,
+        "end": 24.400000005960464,
+        "encoded": 2035,
+        "transfer": 2335,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/444fnoc2ixx8z.css",
+        "start": 92.90000000596046,
+        "end": 94.59999999403954,
+        "encoded": 2009,
+        "transfer": 2309,
+        "type": "link"
+      },
+      {
+        "url": "http://localhost:3100/_next/static/chunks/3o69ipoozswii.js",
+        "start": 98.40000000596046,
+        "end": 99.09999999403954,
+        "encoded": 1632,
+        "transfer": 1932,
+        "type": "script"
+      },
+      {
+        "url": "http://localhost:3100/designers?_rsc=ChQ5_Zm584yq_cxP",
+        "start": 95.5,
+        "end": 97.20000000298023,
+        "encoded": 1043,
+        "transfer": 1343,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/catalog?_rsc=cTn4fW4CHV0wP2RW",
+        "start": 83.29999999701977,
+        "end": 85.79999999701977,
+        "encoded": 428,
+        "transfer": 728,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/contacts?_rsc=cTn4fW4CHV0wP2RW",
+        "start": 86.29999999701977,
+        "end": 89.59999999403954,
+        "encoded": 427,
+        "transfer": 727,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/articles?_rsc=cTn4fW4CHV0wP2RW",
+        "start": 83.40000000596046,
+        "end": 85.70000000298023,
+        "encoded": 426,
+        "transfer": 726,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/designers?_rsc=cTn4fW4CHV0wP2RW",
+        "start": 83.40000000596046,
+        "end": 85.79999999701977,
+        "encoded": 414,
+        "transfer": 714,
+        "type": "fetch"
+      },
+      {
+        "url": "http://localhost:3100/?_rsc=cTn4fW4CHV0wP2RW",
+        "start": 83.29999999701977,
+        "end": 85.70000000298023,
+        "encoded": 395,
+        "transfer": 695,
+        "type": "fetch"
+      }
+    ],
+    "models": [
+      {
+        "top": 1516.484375,
+        "height": 728
+      }
+    ]
+  }
+]

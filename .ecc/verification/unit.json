@@ -1,0 +1,15 @@
+{
+  "command": "npm run test -- --coverage",
+  "status": "passed",
+  "testFiles": 7,
+  "tests": 16,
+  "coverage": {
+    "scope": "Modules imported by the unit tests only; not whole-application coverage. Browser scenarios are reported separately.",
+    "statements": 80.36,
+    "branches": 67.87,
+    "functions": 85.48,
+    "lines": 84.1
+  },
+  "coverageReport": "coverage/index.html",
+  "recordedAt": "2026-10-23T13:41:16.860Z"
+}

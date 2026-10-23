@@ -1,12 +1,16 @@
 "use client";
 
-import { Suspense, useEffect, useRef } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, useProgress } from "@react-three/drei";
+import { Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
+import { WebGLRenderer } from "three";
+import ModelErrorBoundary from "@/components/ui/ModelErrorBoundary";
+import ModelFailure from "@/components/ui/ModelFailure";
+import { DESIGNERS_MODEL_RECOVERY_ID } from "./model-recovery";
+import { OrbitControls, useGLTF, useProgress } from "@react-three/drei";
 import type { BuildingBlock, BuildingBlockId } from "@/sections/designers/building-blocks";
 import type { PipelineSystemId } from "@/sections/designers/pipeline-data";
-import FacadeModel, { FACADE_RANGE } from "@/sections/designers/FacadeModel";
-import FloorModel, { FLOOR_RANGE } from "@/sections/designers/FloorModel";
+import FacadeModel, { FACADE_RANGE, FACADE_URL } from "@/sections/designers/FacadeModel";
+import FloorModel, { FLOOR_RANGE, FLOOR_URL } from "@/sections/designers/FloorModel";
 import {
   CameraRig,
   type CameraGoal,
@@ -55,7 +59,27 @@ export type BuildingSceneProps = {
   onViewReady: () => void;
 };
 
-export default function BuildingScene({
+export default function BuildingScene(props: BuildingSceneProps) {
+  const [attempt, setAttempt] = useState(0);
+  const [contextFailure, setContextFailure] = useState<string | null>(null);
+  const attemptKey = `${props.view}:${attempt}`;
+  function retry() {
+    // useGLTF caches rejected promises too: remounting alone would fail again.
+    useGLTF.clear(props.view === "facade" ? FACADE_URL : FLOOR_URL);
+    setContextFailure(null);
+    setAttempt(value => value + 1);
+  }
+  const failure = <ModelFailure onRetry={retry} portalTargetId={DESIGNERS_MODEL_RECOVERY_ID} />;
+  return contextFailure === attemptKey ? failure : (
+    <ModelErrorBoundary key={attemptKey} fallback={failure}>
+      {/* Canvas also renders its native fallback inside a healthy canvas element.
+          Keep that hidden HTML local; only an actual error uses the UI outlet. */}
+      <SceneCanvas {...props} fallback={<ModelFailure onRetry={retry} />} onFailure={() => setContextFailure(attemptKey)} />
+    </ModelErrorBoundary>
+  );
+}
+
+function SceneCanvas({
   view,
   phase,
   activeBlockId,
@@ -69,9 +93,13 @@ export default function BuildingScene({
   isolated,
   resetToken,
   onViewReady,
-}: BuildingSceneProps) {
+  onFailure,
+  fallback,
+}: BuildingSceneProps & { onFailure: () => void; fallback: ReactNode }) {
   const controlsRef: OrbitControlsRef = useRef(null);
   const goalRef = useRef<CameraGoal | null>(null);
+  const [ready, setReady] = useState(false);
+  const handleReady = useCallback(() => { setReady(true); onViewReady(); }, [onViewReady]);
   const range = view === "facade" ? FACADE_RANGE : FLOOR_RANGE;
 
   return (
@@ -80,7 +108,17 @@ export default function BuildingScene({
         className="pipeline__canvas"
         dpr={[1, 2]}
         frameloop="demand"
-        gl={{ antialias: true }}
+        fallback={fallback}
+        gl={async defaults => {
+          try { return new WebGLRenderer({ ...defaults, antialias: true }); }
+          catch {
+            onFailure();
+            // R3F awaits the renderer factory without an error handler. The owner
+            // unmounts this Canvas; leave configuration suspended, without timers
+            // or a rejected promise that could escape to the whole page.
+            return new Promise<WebGLRenderer>(() => {});
+          }
+        }}
         camera={{ position: [130, 86, 134], fov: 36 }}
         onPointerMissed={() => {
           if (view === "floor") {
@@ -90,6 +128,7 @@ export default function BuildingScene({
           }
         }}
       >
+        <ContextGuard onFailure={onFailure} />
         <Suspense fallback={null}>
           {view === "facade" ? (
             <FacadeModel
@@ -112,7 +151,7 @@ export default function BuildingScene({
             />
           )}
 
-          <ViewReady view={view} onReady={onViewReady} />
+          <ViewReady view={view} onReady={handleReady} />
         </Suspense>
 
         <OrbitControls
@@ -134,9 +173,20 @@ export default function BuildingScene({
         />
       </Canvas>
 
-      <SceneVeil phase={phase} />
+      <SceneVeil phase={!ready ? "entering" : phase} />
     </>
   );
+}
+
+function ContextGuard({ onFailure }: { onFailure: () => void }) {
+  const renderer = useThree(state => state.gl);
+  useEffect(() => {
+    const canvas = renderer.domElement;
+    const lost = (event: Event) => { event.preventDefault(); onFailure(); };
+    canvas.addEventListener("webglcontextlost", lost);
+    return () => canvas.removeEventListener("webglcontextlost", lost);
+  }, [renderer, onFailure]);
+  return null;
 }
 
 /**

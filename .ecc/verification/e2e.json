@@ -1,0 +1,152 @@
+{
+  "recordedAt": "2026-10-23T13:43:51.044Z",
+  "browser": "Google Chrome via Playwright channel chrome",
+  "projects": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "isMobile": true,
+      "hasTouch": true
+    }
+  ],
+  "workers": 1,
+  "production": {
+    "basePath": "",
+    "status": "passed",
+    "runs": [
+      {
+        "command": "PLAYWRIGHT_CHANNEL=chrome npm run test:e2e",
+        "total": 62,
+        "passed": 61,
+        "failed": 0,
+        "skipped": 1,
+        "durationSeconds": 57.4
+      },
+      {
+        "command": "PLAYWRIGHT_CHANNEL=chrome npm run test:e2e -- --grep 'corrupt GLB'",
+        "total": 6,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 11.1
+      }
+    ],
+    "uniqueScenariosPassed": 77,
+    "timelineFollowup": {
+      "command": "PLAYWRIGHT_CHANNEL=chrome E2E_URL=http://localhost:3100 npm run test:e2e -- --grep 'hero keeps'",
+      "passed": 2,
+      "failed": 0,
+      "note": "Checks numeric timeline fill strictly between 0 and 1, then subsequent increase."
+    },
+    "finalRun": {
+      "command": "E2E_URL=http://localhost:3100 PLAYWRIGHT_CHANNEL=chrome npm run test:e2e",
+      "total": 78,
+      "passed": 77,
+      "failed": 0,
+      "skipped": 1,
+      "durationDisplay": "1.3m"
+    }
+  },
+  "staticExport": {
+    "basePath": "/hk-future",
+    "status": "passed",
+    "command": "E2E_URL=http://localhost:3102 E2E_EXPORT=true E2E_BASE_PATH=/hk-future PLAYWRIGHT_CHANNEL=chrome npm run test:e2e",
+    "total": 78,
+    "passed": 77,
+    "failed": 0,
+    "skipped": 1,
+    "durationDisplay": "1.3m"
+  },
+  "intentionalSkip": "The two-column mobile-only layout assertion is skipped in the desktop project; it passes in the mobile project.",
+  "coverage": [
+    "Initial HTML without JavaScript: company, categories, catalog and solution pages",
+    "Missing media does not block text or category links",
+    "Catalog URL search, submit, clear, back/forward navigation and mobile two-column descriptions",
+    "Hero video playback, timeline progress, slide controls and media ended transition",
+    "Reduced motion, company video visibility and desktop category tilt",
+    "Seven-step demo form: required fields, phone country selector, email validation, previous step, optional attachment, consent, progress only on advance, success and Escape",
+    "Cooling selections and all five FireOff camera/detail mappings, annotations and catalog links",
+    "Designers facade/floor/product navigation",
+    "HTTP 503, corrupt GLB and unavailable WebGL for all three scenes; retries clear cached failures",
+    "Cooling context loss/recreation preserves accessible description selection",
+    "Direct route smoke: page errors, hydration errors and unexpected local 404 responses",
+    "Catalog video paths, looping, playback readiness and visibility pause under root and prefixed deployment",
+    "Large product banners make no image request before their viewport, render after scrolling, and remain visible with JavaScript disabled",
+    "Failed viewer JavaScript chunks for all three scenes; accessible description selection before retry; new chunk request without document reload, including the selected mobile designer product"
+  ],
+  "explicitExceptions": {
+    "unfinishedLegacyPages": [
+      "/privacy",
+      "/personal-data",
+      "/about",
+      "/docs",
+      "/requisites"
+    ],
+    "externalMap": "Yandex map iframe is replaced by a local HTML fixture in route smoke; the external provider is not part of these tests.",
+    "submission": "The form success check verifies the demo UI only. No real request delivery is connected or claimed.",
+    "renderer": "SwiftShader may be used by Chrome. These are correctness tests, not FPS or device-performance measurements."
+  },
+  "initialRun": {
+    "passed": 42,
+    "failed": 19,
+    "skipped": 1,
+    "productIssuesFoundAndFixed": [
+      "Route-level loading streamed content into a hidden boundary without JavaScript.",
+      "Mobile designer product buttons lost accessible names when CSS hid their title.",
+      "Mobile designer selected-product panel covered the failed-viewer retry button; recovery now occupies its own flow outlet."
+    ],
+    "testIssuesFixed": [
+      "Explicit no-preference in autoplay tests, since default config is reduced motion.",
+      "Root catalog uses an accessible main label instead of an h1 in the existing design.",
+      "Bounded retry for a scroll action while React replaces a streaming shell."
+    ]
+  },
+  "exportServerChecks": {
+    "status": "passed",
+    "checks": [
+      "Nested direct URLs",
+      "Base path enforcement",
+      "404 without SPA fallback",
+      "Symlink escape blocked",
+      "Encoded path traversal blocked",
+      "HEAD content length",
+      "206 byte range",
+      "416 invalid range"
+    ]
+  },
+  "finalFollowup": {
+    "reason": "Full final suites after corrected semibold fallback metrics, retryable viewer imports and designer recovery layout",
+    "production": {
+      "passed": 77,
+      "failed": 0,
+      "skipped": 1
+    },
+    "staticExport": {
+      "passed": 77,
+      "failed": 0,
+      "skipped": 1
+    }
+  },
+  "devSmoke": {
+    "url": "http://localhost:3000",
+    "next": "16.4.2",
+    "passed": 16,
+    "failed": 0,
+    "profiles": [
+      "desktop",
+      "mobile"
+    ],
+    "command": "E2E_URL=http://localhost:3000 PLAYWRIGHT_CHANNEL=chrome npm run test:e2e -- --grep 'direct production navigation'",
+    "note": "Only a local development smoke check; full behavior suites were run against both production builds separately."
+  }
+}

@@ -2,18 +2,23 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import { createRetryableModel } from "@/components/models/createRetryableModel";
+import ModelFailure from "@/components/ui/ModelFailure";
+import ViewportMount from "@/components/ui/ViewportMount";
 import { useEffect, useRef, useState } from "react";
 import { publicPath } from "@/lib/public-path";
 import { scrollPageTo } from "@/lib/page-scroll";
-import CoolingHelp from "../data-centers/CoolingHelp";
+import ModelHelp from "@/components/models/ModelHelp";
 import styles from "../data-centers/CoolingExplorer.module.css";
 import fireStyles from "./FireExplorer.module.css";
 import type { FireSelection } from "./fireoff-model";
-import { FIRE_PARTS } from "./fireoff-content";
+import type { ProductDescription } from "@/content/types";
 
-const FireOffViewer = dynamic(() => import("./FireOffViewer"), { ssr: false, loading: () => <div className={styles.viewer}><div className={styles.loading} role="status"><span />Загрузка системы FireOff</div></div> });
-export default function FireExplorer() {
+const FireOffViewer = createRetryableModel(() => import("./FireOffViewer"), {
+  loading: () => <div className={styles.viewer}><div className={styles.loading} role="status"><span />Загрузка системы FireOff</div></div>,
+  fallback: retry => <div className={fireStyles.viewer}><ModelFailure onRetry={retry} /></div>,
+});
+export default function FireExplorer({ items }: { items: ProductDescription<NonNullable<FireSelection>>[] }) {
   const [selection, setSelection] = useState<FireSelection>(null);
   const visual = useRef<HTMLDivElement>(null);
   const screen = useRef<HTMLDivElement>(null);
@@ -41,9 +46,9 @@ export default function FireExplorer() {
     <div className={styles.layout}>
       <div ref={visual} className={styles.visual} onKeyDown={event => { if (event.key === "Escape") select(null); }}>
         <div ref={screen} className={fireStyles.screen}>
-          <FireOffViewer selection={selection} onSelect={select} />
+          <ViewportMount fallback={<div className={fireStyles.viewer}><div className={styles.loading} role="status"><span />Загрузка системы FireOff</div></div>}><FireOffViewer selection={selection} onSelect={select} labels={Object.fromEntries(items.map(({ id, label }) => [id, label]))} /></ViewportMount>
           <div ref={panel} className={fireStyles.panel} role="group" aria-label="Элементы системы FireOff" data-lenis-prevent>
-            {FIRE_PARTS.map((item, index) => {
+            {items.map((item, index) => {
               const expanded = selection === item.id;
               return <article key={item.id} className={fireStyles.card} data-expanded={expanded}>
                 <button id={`fireoff-toggle-${item.id}`} type="button" aria-expanded={expanded} aria-controls={`fireoff-detail-${item.id}`} className={fireStyles.option} onClick={() => select(expanded ? null : item.id)}>
@@ -66,8 +71,8 @@ export default function FireExplorer() {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" /><rect x="8" y="8" width="8" height="8" rx="1" /></svg>
             Общий вид
           </button>
-          <div className={styles.legend} aria-live="polite"><span>{selection && <i className={styles.red} />}{FIRE_PARTS.find(item => item.id === selection)?.label ?? "Система пожаротушения паркинга"}</span></div>
-          <CoolingHelp cameraViews />
+          <div className={styles.legend} aria-live="polite"><span>{selection && <i className={styles.red} />}{items.find(item => item.id === selection)?.label ?? "Система пожаротушения паркинга"}</span></div>
+          <ModelHelp cameraViews />
         </div>
       </div>
     </div>

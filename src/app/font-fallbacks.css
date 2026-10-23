@@ -1,0 +1,22 @@
+/* SF Pro remains the final font. These local faces only prevent reflow while
+   it downloads. Regular metrics match next/font's original Arial fallback.
+   Semibold metrics use SFProText-Semibold and Arial Bold, measured with the
+   same weighted Latin sample used by next/font (size-adjust = 103.1029%). */
+@font-face {
+  font-family: "HEISSKRAFT Text Fallback";
+  src: local("Arial");
+  size-adjust: 106.99%;
+  ascent-override: 89%;
+  descent-override: 22.55%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "HEISSKRAFT Text Fallback";
+  src: local("Arial Bold");
+  font-weight: 600;
+  size-adjust: 103.10%;
+  ascent-override: 92.35%;
+  descent-override: 23.40%;
+  line-gap-override: 0%;
+}

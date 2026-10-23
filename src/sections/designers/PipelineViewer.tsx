@@ -1,7 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
-import dynamic from "next/dynamic";
+import { createRetryableModel } from "@/components/models/createRetryableModel";
+import ModelFailure from "@/components/ui/ModelFailure";
+import { DESIGNERS_MODEL_RECOVERY_ID } from "./model-recovery";
+import recoveryStyles from "./ModelRecovery.module.css";
 import Link from "next/link";
 import { publicPath } from "@/lib/public-path";
 import {
@@ -20,8 +23,8 @@ import {
 } from "@/sections/designers/pipeline-data";
 import type { DesignersPhase, DesignersView } from "@/sections/designers/BuildingScene";
 
-const BuildingScene = dynamic(() => import("@/sections/designers/BuildingScene"), {
-  ssr: false,
+const BuildingScene = createRetryableModel(() => import("@/sections/designers/BuildingScene"), {
+  fallback: retry => <ModelFailure onRetry={retry} portalTargetId={DESIGNERS_MODEL_RECOVERY_ID} />,
 });
 
 /** The camera push into a block, and the pull-back out of it, run under the veil. */
@@ -163,6 +166,8 @@ export default function PipelineViewer() {
           </p>
         </div>
 
+        <div id={DESIGNERS_MODEL_RECOVERY_ID} className={recoveryStyles.outlet} />
+
         <div className="pipeline__tools">
           {onFacade ? null : (
             <>
@@ -236,6 +241,7 @@ export default function PipelineViewer() {
                       }
                     }}
                     onBlur={() => endHover(block.id)}
+                    aria-label={block.title}
                     onClick={() => selectBlock(block)}
                   >
                     <span className="pipeline__item-index">{block.index}</span>
@@ -296,6 +302,7 @@ export default function PipelineViewer() {
                       }`}
                       aria-current={product.id === selected?.product.id}
                       disabled={count === 0}
+                      aria-label={product.title}
                       onClick={() => selectProduct(product)}
                     >
                       <span className="pipeline__item-index">{product.index}</span>

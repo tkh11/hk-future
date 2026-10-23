@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { loadModel } from "@/lib/model-loader";
 import { publicPath } from "@/lib/public-path";
-import { FIRE_VIEWS, isFirePart, prepareFireOffModel, type FireSelection, type FireView } from "./fireoff-model";
+import { FIRE_VIEWS, isFirePart, prepareFireOffModel, type FireSelection, type FireView, type FirePart } from "./fireoff-model";
 import styles from "../data-centers/CoolingExplorer.module.css";
 import fireStyles from "./FireExplorer.module.css";
-import { FIRE_PARTS } from "./fireoff-content";
+import { FIRE_MARKERS } from "./fireoff-markers";
 
 type CameraPose = { target: THREE.Vector3; rotation: THREE.Quaternion; height: number; fov: number };
 
@@ -20,7 +20,7 @@ function getPose(view: FireView, aspect: number): CameraPose {
   return { target: new THREE.Vector3(...preset.target), rotation, height: Math.max(preset.height, preset.width / aspect), fov: preset.fov };
 }
 
-export default function FireOffViewer({ selection, onSelect }: { selection: FireSelection; onSelect: (selection: FireSelection) => void }) {
+export default function FireOffViewer({ selection, onSelect, labels }: { selection: FireSelection; onSelect: (selection: FireSelection) => void; labels: Partial<Record<FirePart, string>> }) {
   const host = useRef<HTMLDivElement>(null);
   const annotations = useRef<HTMLDivElement>(null);
   const hoverRef = useRef<((part: FireSelection) => void) | null>(null);
@@ -35,9 +35,10 @@ export default function FireOffViewer({ selection, onSelect }: { selection: Fire
   useEffect(() => {
     if (!host.current) return;
     const element = host.current;
-    let disposed = false, hoverFrame = 0, cameraFrame = 0, moving = false, visible = true;
+    let disposed = false, failed = false, hoverFrame = 0, cameraFrame = 0, moving = false, visible = true;
     let model: ReturnType<typeof prepareFireOffModel> | undefined;
     let renderer: THREE.WebGLRenderer;
+    let cancelLoad = () => {};
     try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" }); }
     catch { queueMicrotask(() => { if (!disposed) setStatus("error"); }); return () => { disposed = true; }; }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -58,7 +59,7 @@ export default function FireOffViewer({ selection, onSelect }: { selection: Fire
     const raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2();
     const direction = new THREE.Vector3();
     const projected = new THREE.Vector3();
-    const markers = FIRE_PARTS.map(part => ({
+    const markers = FIRE_MARKERS.map(part => ({
       ...part,
       point: new THREE.Vector3(...part.anchor),
       element: annotations.current?.querySelector<HTMLDivElement>(`[data-fire-marker="${part.id}"]`),
@@ -86,7 +87,7 @@ export default function FireOffViewer({ selection, onSelect }: { selection: Fire
     }
 
     function render() {
-      if (disposed || !model || !visible || document.hidden) return;
+      if (disposed || failed || !model || !visible || document.hidden) return;
       model.updateAppearance(hovered, emphasisProgress);
       camera.fov = pose.fov;
       const distance = pose.height / (2 * Math.tan(THREE.MathUtils.degToRad(pose.fov / 2)));
@@ -116,7 +117,7 @@ export default function FireOffViewer({ selection, onSelect }: { selection: Fire
       cancelAnimationFrame(hoverFrame);
       hovered = null;
       renderer.domElement.style.cursor = "default";
-      if (!model) return;
+      if (failed || !model) return;
       model.select(selected.current);
       if (reducedMotion.matches || !visible || document.hidden) { finishMove(); return; }
       const start = pose;
@@ -128,7 +129,7 @@ export default function FireOffViewer({ selection, onSelect }: { selection: Fire
       emphasisProgress = 0;
       element.dataset.cameraMoving = "true";
       function animate(now: number) {
-        if (disposed) return;
+        if (disposed || failed) return;
         const progress = Math.min(1, (now - began) / 1050);
         const t = progress * progress * (3 - 2 * progress);
         const emphasis = Math.min(1, (now - began) / 420);
@@ -147,7 +148,7 @@ export default function FireOffViewer({ selection, onSelect }: { selection: Fire
     }
 
     function pick(clientX: number, clientY: number): FireSelection {
-      if (!model || moving) return null;
+      if (failed || !model || moving) return null;
       const bounds = renderer.domElement.getBoundingClientRect();
       pointer.set((clientX - bounds.left) / bounds.width * 2 - 1, -(clientY - bounds.top) / bounds.height * 2 + 1);
       raycaster.setFromCamera(pointer, camera);
@@ -198,22 +199,26 @@ export default function FireOffViewer({ selection, onSelect }: { selection: Fire
     intersection.observe(element);
     document.addEventListener("visibilitychange", visibilityChange);
     reducedMotion.addEventListener("change", motionChange);
-    const contextLost = (event: Event) => { event.preventDefault(); cancelAnimationFrame(cameraFrame); setStatus("error"); };
+    function fail() {
+      if (disposed) return;
+      failed = true;
+      cancelLoad();
+      cancelAnimationFrame(cameraFrame); cancelAnimationFrame(hoverFrame);
+      setStatus("error");
+    }
+    const contextLost = (event: Event) => { event.preventDefault(); fail(); };
     renderer.domElement.addEventListener("webglcontextlost", contextLost);
-    new GLTFLoader().load(publicPath("/models/parking-sprinkler.glb"), gltf => {
-      try {
-        const prepared = prepareFireOffModel(gltf.scene);
-        if (disposed) { prepared.dispose(); return; }
-        model = prepared;
-        model.select(selected.current);
-        scene.add(model.group);
-        changeViewRef.current = changeView;
-        resize();
-        setStatus("ready");
-      } catch { if (!disposed) setStatus("error"); }
-    }, undefined, () => { if (!disposed) setStatus("error"); });
+    cancelLoad = loadModel(publicPath("/models/parking-sprinkler.glb"), gltf => {
+      model = prepareFireOffModel(gltf.scene);
+      model.select(selected.current);
+      scene.add(model.group);
+      changeViewRef.current = changeView;
+      resize();
+      if (!failed) setStatus("ready");
+    }, fail);
     return () => {
       disposed = true;
+      cancelLoad();
       cancelAnimationFrame(hoverFrame); cancelAnimationFrame(cameraFrame);
       changeViewRef.current = null;
       hoverRef.current = null;
@@ -231,10 +236,10 @@ export default function FireOffViewer({ selection, onSelect }: { selection: Fire
   return <div className={fireStyles.viewer} data-model-status={status} data-model-view={selection ?? "overview"}>
     <div ref={host} className={styles.canvas} role="img" aria-label="Система пожаротушения паркинга. Выберите метку на модели или название в панели слева сверху, чтобы перейти к фиксированному ракурсу узла." />
     <div ref={annotations} className={fireStyles.annotations} aria-label="Подсказки на модели" role="group" hidden={status !== "ready"}>
-      {FIRE_PARTS.map((part, index) => <div key={part.id} className={fireStyles.marker} data-fire-marker={part.id} data-muted={!!selection && selection !== part.id} hidden>
+      {FIRE_MARKERS.map((part, index) => <div key={part.id} className={fireStyles.marker} data-fire-marker={part.id} data-muted={!!selection && selection !== part.id} hidden>
         <svg className={fireStyles.leader} width="1" height="1" aria-hidden="true"><line x1="0" y1="0" x2="0" y2="0" /><circle r="3" /></svg>
-        <button type="button" className={fireStyles.pin} aria-label={`Показать: ${part.label}`} aria-pressed={selection === part.id} aria-controls={`fireoff-detail-${part.id}`} onClick={() => { onSelect(part.id); document.getElementById(`fireoff-toggle-${part.id}`)?.focus({ preventScroll: true }); }} onPointerEnter={() => hoverRef.current?.(part.id)} onPointerLeave={() => hoverRef.current?.(null)} onFocus={() => hoverRef.current?.(part.id)} onBlur={() => hoverRef.current?.(null)}>
-          <span aria-hidden="true">0{index + 1}</span><span className={fireStyles.tooltip} aria-hidden="true">{part.label}</span>
+        <button type="button" className={fireStyles.pin} aria-label={`Показать: ${labels[part.id] ?? part.id}`} aria-pressed={selection === part.id} aria-controls={`fireoff-detail-${part.id}`} onClick={() => { onSelect(part.id); document.getElementById(`fireoff-toggle-${part.id}`)?.focus({ preventScroll: true }); }} onPointerEnter={() => hoverRef.current?.(part.id)} onPointerLeave={() => hoverRef.current?.(null)} onFocus={() => hoverRef.current?.(part.id)} onBlur={() => hoverRef.current?.(null)}>
+          <span aria-hidden="true">0{index + 1}</span><span className={fireStyles.tooltip} aria-hidden="true">{labels[part.id] ?? part.id}</span>
         </button>
       </div>)}
     </div>

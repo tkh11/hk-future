@@ -1,0 +1,49 @@
+{
+  "verification": "Every bufferView decoded byte-for-byte; semantic glTF JSON (names, transforms, materials, extras, accessors, scenes) unchanged. No quantization, reordering or topology changes.",
+  "models": [
+    {
+      "file": "public/models/chilling.glb",
+      "verifiedViews": 2204,
+      "sourceSHA256": "c06e7048614627e3acba5315d5245658cff98d5a4a392ef0d709c62aaccba610",
+      "compressedSHA256": "58edd2cc2aa79e71f15aaaf8deb65b8c31ccaea3c431f82dbd857cac137409f6",
+      "transformation": "lossless meshopt",
+      "originalBytes": 9374516,
+      "compressedBytes": 6681528,
+      "compressedViews": 2154,
+      "reductionPercent": 28.73
+    },
+    {
+      "file": "public/models/parking-sprinkler.glb",
+      "verifiedViews": 165,
+      "sourceSHA256": "3d9d512709ed64694d94afbd15cc56d6d4b240273a287049fe2d35f58dbf98aa",
+      "compressedSHA256": "98371fb10bf64ac47ef3a2cdbdcdc6c0f4321143ee3cf2c2b44d340406d7414a",
+      "transformation": "lossless meshopt",
+      "originalBytes": 35055272,
+      "compressedBytes": 13562376,
+      "compressedViews": 165,
+      "reductionPercent": 61.31
+    },
+    {
+      "file": "public/models/facade.glb",
+      "verifiedViews": 972,
+      "sourceSHA256": "834c9eee4be28f5cde1a6bc64416d9c4590482f04f2ad6548712f9587c1aaa53",
+      "compressedSHA256": "834c9eee4be28f5cde1a6bc64416d9c4590482f04f2ad6548712f9587c1aaa53",
+      "transformation": "unchanged original",
+      "originalBytes": 7406776,
+      "compressedBytes": 7406776,
+      "compressedViews": 0,
+      "reductionPercent": 0
+    },
+    {
+      "file": "public/models/communications.glb",
+      "verifiedViews": 427,
+      "sourceSHA256": "89c28c62d478570269cbd635a6731a6352b99dabbc64c942d2396b86176cfb92",
+      "compressedSHA256": "89c28c62d478570269cbd635a6731a6352b99dabbc64c942d2396b86176cfb92",
+      "transformation": "unchanged original",
+      "originalBytes": 5305524,
+      "compressedBytes": 5305524,
+      "compressedViews": 0,
+      "reductionPercent": 0
+    }
+  ]
+}

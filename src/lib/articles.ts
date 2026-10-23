@@ -1,8 +1,7 @@
-import content from "@/data/articles.json";
+import { articles } from "@/content/articles";
+export { articles };
+export type { Article, ArticleSummary } from "@/content/types";
 
-export const articles = content;
-export type Article = (typeof articles)[number];
-export type ArticleSummary = Pick<Article, "slug" | "title" | "description" | "category" | "readingMinutes">;
 
 export function getArticle(slug: string) {
   return articles.find((article) => article.slug === slug);

@@ -2904,3 +2904,10 @@ html:not(.preloader-done):has(.site-preloader) .site-header {
  .home-hero__link, .home-tile__link, .category-split__link, .site-footer__link { transition: none; }
 }
 .pipeline__detail-link:active { background: var(--hk-red-strong); }
+
+/* Viewport reveal never gates semantic HTML on an unrelated media request. */
+.section-reveal[data-reveal="pending"] { opacity: 0; transform: translateY(16px); }
+.section-reveal[data-reveal="visible"] { animation: block-enter 650ms cubic-bezier(.22, 1, .36, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal[data-reveal] { opacity: 1; transform: none; animation: none; }
+}

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import LeadDialog from "@/components/layout/LeadDialog";
 
 const HeaderLogo = dynamic(() => import("@/components/layout/HeaderLogo"), {
@@ -148,6 +148,8 @@ function HeaderSearch({
 }
 
 export default function Header() {
+  const pathname = usePathname();
+  const contactsCurrent = pathname === "/contacts" || pathname.startsWith("/contacts/");
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [leadOpen, setLeadOpen] = useState(false);
@@ -195,6 +197,15 @@ export default function Header() {
     setLeadOpen(true);
   }
 
+  useEffect(() => {
+    function onOpenLead() {
+      openLead();
+    }
+
+    window.addEventListener("hk-open-lead", onOpenLead);
+    return () => window.removeEventListener("hk-open-lead", onOpenLead);
+  }, []);
+
   return (
     <>
       {menuOpen ? (
@@ -223,7 +234,12 @@ export default function Header() {
             </button>
             <div className="site-header__aside">
               {rightLinks.map((item) => (
-                <Link key={item.label} href={item.href} className="site-header__link">
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="site-header__link"
+                  aria-current={item.href === "/contacts" && contactsCurrent ? "page" : undefined}
+                >
                   {item.label}
                 </Link>
               ))}
@@ -280,6 +296,7 @@ export default function Header() {
               href={item.href}
               className="site-header__mobile-link"
               style={{ "--nav-index": navLinks.length + index } as CSSProperties}
+              aria-current={item.href === "/contacts" && contactsCurrent ? "page" : undefined}
               onClick={() => setMenuOpen(false)}
             >
               {item.label}

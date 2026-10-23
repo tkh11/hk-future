@@ -262,7 +262,6 @@ export default function PipelineViewer() {
                       onClick={() => selectBlock(shownBlock)}
                     >
                       Открыть модель
-                      <span aria-hidden="true">→</span>
                     </button>
                   ) : null}
                 </div>
@@ -352,7 +351,6 @@ export default function PipelineViewer() {
 
                 <Link className="pipeline__detail-link" href={selected.product.href}>
                   Каталог продукции
-                  <span aria-hidden="true">→</span>
                 </Link>
               </div>
             ) : (

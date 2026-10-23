@@ -4,10 +4,10 @@
 .card { border: 1px solid transparent; border-radius: 10px; transition: border-color .25s, background .25s; }
 .card + .card { margin-top: 3px; }
 .card[data-expanded="true"] { border-color: rgb(216 34 43 / 28%); background: #fff; }
-.option { display: flex; align-items: center; gap: 9px; width: 100%; min-height: 42px; padding: 10px; border: 0; border-radius: 9px; background: transparent; text-align: left; cursor: pointer; color: #3b3b3b; transition: color .2s, background .2s; }
+.option { display: flex; align-items: center; gap: 9px; width: 100%; min-height: 44px; padding: 10px; border: 0; border-radius: 9px; background: transparent; text-align: left; cursor: pointer; color: #3b3b3b; transition: color .2s, background .2s; }
 .option:hover { background: #f7f7f7; color: var(--hk-red); }
 .option strong { flex: 1; font-size: 13px; line-height: 1.4; font-weight: 500; }
-.number { flex-shrink: 0; color: #8a8a8a; font-size: 11px; font-variant-numeric: tabular-nums; }
+.number { flex-shrink: 0; color: var(--hk-text-secondary); font-size: 13px; font-variant-numeric: tabular-nums; }
 .option svg { flex-shrink: 0; transition: transform .35s; }
 .option[aria-expanded="true"], .option[aria-expanded="true"] .number { color: var(--hk-red); }
 .option[aria-expanded="true"] svg { transform: rotate(180deg); }
@@ -20,8 +20,8 @@
 .productImage img { width: 100%; height: 100%; object-fit: contain; }
 .placeholder img { max-width: 116px; filter: brightness(0); opacity: .32; }
 .productContent h3 { font-size: 14px; line-height: 1.4; font-weight: 500; }
-.productContent p { grid-column: 1 / -1; color: #6e6e73; font-size: 12px; line-height: 1.6; }
-.productContent .catalogLink { justify-content: center; min-height: 38px; padding: 8px 14px; font-size: 13px; border-radius: 9px; }
+.productContent p { grid-column: 1 / -1; color: var(--hk-text-secondary); font-size: 13px; line-height: 1.6; }
+.productContent .catalogLink { justify-content: center; min-height: 44px; padding: 8px 14px; font-size: 14px; border-radius: 9px; }
 .annotations { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .marker { position: absolute; top: 0; left: 0; color: var(--hk-red); transition: opacity .35s, color .35s; }
 .marker[data-muted="true"] { color: #929292; opacity: .48; }
@@ -30,13 +30,13 @@
 .leader { position: absolute; overflow: visible; pointer-events: none; }
 .leader line { stroke: currentColor; stroke-width: 1; opacity: .65; }
 .leader circle { fill: currentColor; stroke: #fff; stroke-width: 1; }
-.pin { position: absolute; top: -19px; left: -19px; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid rgb(216 34 43 / 55%); border-radius: 50%; background: rgb(255 255 255 / 96%); color: var(--hk-red); box-shadow: 0 2px 8px rgb(0 0 0 / 9%); font-size: 12px; font-weight: 500; font-variant-numeric: tabular-nums; cursor: pointer; pointer-events: auto; transition: color .2s, background .2s, box-shadow .2s; }
+.pin { position: absolute; top: -22px; left: -22px; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid rgb(216 34 43 / 55%); border-radius: 50%; background: rgb(255 255 255 / 96%); color: var(--hk-red); box-shadow: 0 2px 8px rgb(0 0 0 / 9%); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; cursor: pointer; pointer-events: auto; transition: color .2s, background .2s, box-shadow .2s; }
 .pin:hover, .pin[aria-pressed="true"] { color: #fff; background: var(--hk-red); box-shadow: 0 3px 12px rgb(216 34 43 / 18%); }
 .marker[data-muted="true"] .pin { color: #848484; border-color: #bababa; background: #fff; box-shadow: none; }
-.tooltip { position: absolute; left: calc(100% + 7px); top: 50%; max-width: 180px; width: max-content; padding: 7px 10px; border: 1px solid #e5e5e5; border-radius: 7px; color: #353535; background: #fff; font-size: 12px; line-height: 1.4; text-align: left; pointer-events: none; opacity: 0; transform: translate(0, -50%); transition: opacity .18s; }
+.tooltip { position: absolute; left: calc(100% + 7px); top: 50%; max-width: 180px; width: max-content; padding: 7px 10px; border: 1px solid #e5e5e5; border-radius: 7px; color: #353535; background: #fff; font-size: 13px; line-height: 1.4; text-align: left; pointer-events: none; opacity: 0; transform: translate(0, -50%); transition: opacity .18s; }
 .marker[data-align="left"] .tooltip { right: calc(100% + 7px); left: auto; }
 .pin:hover .tooltip, .pin:focus-visible .tooltip, .pin[aria-pressed="true"] .tooltip { opacity: 1; }
-.overview { display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0; min-height: 42px; padding: 9px 13px; border: 1px solid #d4d4d4; border-radius: 10px; background: #fff; color: #626262; font-size: 13px; cursor: pointer; transition: color .2s, border-color .2s; }
+.overview { display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0; min-height: 44px; padding: 9px 13px; border: 1px solid #d4d4d4; border-radius: 10px; background: #fff; color: #626262; font-size: 13px; cursor: pointer; transition: color .2s, border-color .2s; }
 .overview:hover, .overview[aria-pressed="true"] { color: var(--hk-red); border-color: var(--hk-red); }
 .overview:focus-visible, .option:focus-visible, .pin:focus-visible { outline: 2px solid var(--hk-red); outline-offset: 2px; }
 @media (min-width: 768px) and (max-width: 1100px) {
@@ -46,10 +46,10 @@
   .screen { height: calc(var(--fire-panel-height, 246px) + 330px); }
   .panel { top: 12px; left: 12px; width: calc(100% - 24px); max-height: none; }
   .viewer { top: calc(var(--fire-panel-height, 246px) + 24px); left: 0; bottom: 0; }
-  .option { min-height: 38px; padding: 8px 10px; }
-  .overview { margin-right: auto; }
-  .pin { width: 40px; height: 40px; top: -20px; left: -20px; }
-  .tooltip { max-width: 140px; font-size: 11px; }
+  .option { min-height: 44px; padding: 8px 10px; }
+  .overview { margin-right: auto; min-height: 44px; }
+  .pin { width: 44px; height: 44px; top: -22px; left: -22px; font-size: 13px; }
+  .tooltip { max-width: 140px; font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .screen, .card, .option, .option svg, .disclosure, .productContent, .card[data-expanded="true"] .productContent, .marker, .pin, .tooltip { transition: none; }

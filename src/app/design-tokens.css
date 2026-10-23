@@ -1,0 +1,84 @@
+/* HEISSKRAFT foundations. Component-specific media, morphs and brand exceptions
+   stay in their own stylesheets. Real SF Pro Display/Text WOFF2 assets are loaded
+   locally through next/font in layout.tsx, including metric-adjusted fallbacks. */
+:root {
+  --hk-red: #d8222b;
+  --hk-red-strong: #b81c24;
+  --hk-canvas: #ffffff;
+  --hk-surface-muted: #f5f5f7;
+  --hk-surface-dark: #1d1d1f;
+  --hk-ink: #1d1d1f;
+  --hk-text-secondary: #6e6e73;
+  --hk-on-dark: #ffffff;
+  --hk-on-dark-secondary: rgb(255 255 255 / 72%);
+  --hk-border: #d4d4d8;
+  --hk-hairline: rgb(0 0 0 / 10%);
+  --hk-placeholder: #e8e8ed;
+  --hk-success-icon: #26955a;
+
+  --hk-font-display: var(--font-sf-pro-display), sans-serif;
+  --hk-font-text: var(--font-sf-pro-text), sans-serif;
+  --hk-type-hero: 2rem;
+  --hk-type-section: 1.75rem;
+  --hk-type-product: 1.5rem;
+  --hk-type-lead: 1.0625rem;
+  --hk-type-body: 1.0625rem;
+  --hk-type-compact: 0.9375rem;
+  --hk-type-caption: 0.8125rem;
+  --hk-type-footer: 0.8125rem;
+
+  --hk-space-1: 4px;
+  --hk-space-2: 8px;
+  --hk-space-3: 12px;
+  --hk-space-4: 16px;
+  --hk-space-5: 24px;
+  --hk-space-6: 32px;
+  --hk-space-7: 48px;
+  --hk-space-8: 64px;
+  --hk-space-9: 80px;
+  --hk-section-space: var(--hk-space-7);
+  --hk-gutter: var(--hk-space-4);
+
+  --hk-radius-none: 0;
+  --hk-radius-utility: 8px;
+  --hk-radius-field: 12px;
+  --hk-radius-card-mobile: 16px;
+  --hk-radius-card: 18px;
+  --hk-radius-panel: 20px;
+  --hk-radius-pill: 9999px;
+  --hk-radius-circle: 50%;
+
+  --hk-shadow-card-hover: 0 18px 38px -22px rgb(29 29 31 / 24%);
+  --hk-shadow-dialog: 0 24px 80px -16px rgb(0 0 0 / 24%);
+  --hk-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --site-header-height: 44px;
+  --site-content-width: 1280px;
+}
+
+@media (max-width: 419px) {
+  :root { --hk-type-hero: 1.75rem; }
+}
+
+@media (min-width: 600px) {
+  :root { --hk-gutter: var(--hk-space-5); }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --hk-type-hero: 2.5rem;
+    --hk-type-section: 2.125rem;
+    --hk-type-product: 1.75rem;
+    --hk-type-lead: 1.1875rem;
+    --hk-type-footer: 0.75rem;
+    --hk-section-space: var(--hk-space-8);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --hk-type-hero: 3.5rem;
+    --hk-type-section: 2.5rem;
+    --hk-type-lead: 1.3125rem;
+    --hk-section-space: var(--hk-space-9);
+  }
+}

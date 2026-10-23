@@ -5,17 +5,17 @@
 @keyframes fire-water { 0%, 100% { opacity: .22; transform: translateY(0); } 55% { opacity: .7; transform: translateY(5px); } }
 .introColumns { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 48px; }
 .introColumns h3 { font-size: 18px; font-weight: 500; line-height: 1.4; margin-bottom: 18px; }
-.introColumns p { font-size: 15px; line-height: 1.7; color: #6e6e73; margin-bottom: 14px; }
+.introColumns p { font-size: var(--hk-type-body); line-height: 1.5; color: var(--hk-text-secondary); margin-bottom: 14px; font-family: var(--hk-font-text); letter-spacing: 0; }
 .bannerStage { width: 100%; margin-bottom: 40px; }
 .pipeSummary { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; margin-bottom: 104px; }
-.pipeSummary h3 { font-size: 26px; font-weight: 500; line-height: 1.25; letter-spacing: -.03em; margin-bottom: 18px; }
-.pipeSummary p { max-width: 640px; font-size: 15px; line-height: 1.7; color: #6e6e73; }
-.stationDescription { font-size: 14px; line-height: 1.7; color: #6e6e73; margin-bottom: 24px; }
-.banner { position: relative; isolation: isolate; overflow: hidden; border: 1px solid #d4d4d8; border-radius: 20px; background: #fff; pointer-events: none; }
+.pipeSummary h3 { font-size: var(--hk-type-product); font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 18px; font-family: var(--hk-font-display); }
+.pipeSummary p { max-width: 640px; font-size: var(--hk-type-body); line-height: 1.5; color: var(--hk-text-secondary); font-family: var(--hk-font-text); letter-spacing: 0; }
+.stationDescription { font-size: var(--hk-type-compact); line-height: 1.6; color: var(--hk-text-secondary); margin-bottom: 24px; font-family: var(--hk-font-text); letter-spacing: 0; }
+.banner { position: relative; isolation: isolate; overflow: hidden; border: 1px solid #d4d4d8; border-radius: var(--hk-radius-panel); background: #fff; pointer-events: none; }
 .bannerImage { display: block; width: 100%; height: auto; object-fit: contain; }
-.banner::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 150% at var(--sheen-x, 50%) var(--sheen-y, 50%), rgb(186 230 160 / 16%), rgb(214 240 196 / 8%) 40%, transparent 75%); mix-blend-mode: multiply; opacity: 0; transition: opacity .45s ease; }
-.stationTabs { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid #d4d4d8; border-radius: 12px; margin: 24px 0 0; }
-.stationTabs button { padding: 11px 18px; background: #fff; border: 0; border-radius: 8px; font-size: 14px; color: #6e6e73; cursor: pointer; transition: color .2s, background .2s; }
+.banner::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 150% at var(--sheen-x, 50%) var(--sheen-y, 50%), rgb(216 34 43 / 10%), rgb(210 210 215 / 8%) 40%, transparent 75%); mix-blend-mode: multiply; opacity: 0; transition: opacity .45s ease; }
+.stationTabs { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid #d4d4d8; border-radius: var(--hk-radius-field); margin: 24px 0 0; }
+.stationTabs button { padding: 11px 18px; background: #fff; border: 0; border-radius: var(--hk-radius-utility); font-size: 14px; color: var(--hk-text-secondary); cursor: pointer; transition: color .2s, background .2s; min-height: 44px; }
 .stationTabs button[aria-selected="true"] { background: var(--hk-red); color: #fff; }
 .stationTabs button:focus-visible { outline: 2px solid var(--hk-red); outline-offset: 3px; }
 .stationPicture { animation: picture-in .3s ease-out; }
@@ -30,7 +30,7 @@
   .introColumns { grid-template-columns: 1fr; gap: 20px; margin-top: 32px; }
   .bannerStage { margin-bottom: 28px; }
   .pipeSummary { grid-template-columns: 1fr; gap: 24px; margin-bottom: 64px; }
-  .banner { border-radius: 16px; }
-  .stationTabs button { padding: 11px 14px; }
+  .banner { border-radius: var(--hk-radius-card-mobile); }
+  .stationTabs button { padding: 11px 14px; min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) { .flow, .water, .stationPicture { animation: none; } .banner::after, .stationTabs button { transition: none; } }

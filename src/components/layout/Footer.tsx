@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { contacts } from "@/lib/contacts";
 import { publicPath } from "@/lib/public-path";
 
 const columns = [
@@ -53,13 +54,18 @@ export default function Footer() {
             <h2 className="site-footer__heading"><Link href="/contacts" className="site-footer__link">Контакты</Link></h2>
             <ul className="site-footer__list">
               <li>
-                <a href="tel:+74952584542" className="site-footer__link">
-                  +7 (495) 258-45-42
+                <a href={contacts.phoneHref} className="site-footer__link">
+                  {contacts.phone}
                 </a>
               </li>
               <li>
-                <a href="mailto:info@heisskraft.ru" className="site-footer__link">
-                  info@heisskraft.ru
+                <a href={`mailto:${contacts.email}`} className="site-footer__link">
+                  {contacts.email}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${contacts.serviceEmail}`} className="site-footer__link">
+                  {contacts.serviceEmail}
                 </a>
               </li>
               <li>

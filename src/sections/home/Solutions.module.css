@@ -2,7 +2,7 @@
   width: min(calc(var(--site-content-width) + 48px), 100%);
   margin: 0 auto;
   padding: 32px 24px 64px;
-  color: #1d1d1f;
+  color: var(--hk-ink);
   scroll-margin-top: 84px;
 }
 
@@ -21,8 +21,8 @@
   display: block;
   position: relative;
   height: 100%;
-  border-radius: 18px;
-  color: #1d1d1f;
+  border-radius: var(--hk-radius-card);
+  color: var(--hk-ink);
 }
 
 .card {
@@ -37,10 +37,10 @@
   min-height: 420px;
   padding: 24px 28px 28px;
   border: 1px solid rgb(216 34 43 / 24%);
-  border-radius: 18px;
+  border-radius: var(--hk-radius-card);
   background: #fff;
   box-shadow: none;
-  color: #1d1d1f;
+  color: var(--hk-ink);
   transition: border-color 250ms ease, box-shadow 450ms ease;
 }
 
@@ -57,6 +57,7 @@
   transition: color 250ms ease;
   text-align: center;
   text-wrap: balance;
+  font-family: var(--hk-font-text);
 }
 
 .media {
@@ -92,7 +93,7 @@
     transition: opacity 450ms ease;
   }
   .cardLink:hover { z-index: 1; }
-  .cardLink:hover .card { border-color: var(--hk-red); box-shadow: 0 18px 38px -22px rgb(29 29 31 / 24%); }
+  .cardLink:hover .card { border-color: var(--hk-red); box-shadow: var(--hk-shadow-card-hover); }
   .cardLink:hover .card::before { opacity: 1; }
   .cardLink:hover .title { color: var(--hk-red); }
 }
@@ -132,9 +133,9 @@
 @media (max-width: 599px) {
   .section { padding: 24px 16px 40px; }
   .grid { grid-template-columns: 1fr; gap: 16px; margin-top: 0; }
-  .card { padding: 24px; min-height: 382px; border-radius: 16px; }
-  .cardLink { border-radius: 16px; }
-  .title { font-size: 18px; }
+  .card { padding: 24px; min-height: 382px; border-radius: var(--hk-radius-card-mobile); }
+  .cardLink { border-radius: var(--hk-radius-card-mobile); }
+  .title { font-size: 18px; font-family: var(--hk-font-text); }
   .media { flex-basis: 260px; }
   .image { width: 260px; height: 260px; }
 }

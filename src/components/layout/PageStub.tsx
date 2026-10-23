@@ -15,7 +15,6 @@ export default function PageStub({
         <p className="page-stub__note">{note}</p>
         <Link href="/catalog" className="page-stub__cta">
           Оставить заявку
-          <span aria-hidden="true">→</span>
         </Link>
       </div>
     </section>

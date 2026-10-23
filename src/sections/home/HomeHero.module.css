@@ -1,7 +1,7 @@
 .section {
-  padding: 80px 24px 48px;
+  padding: var(--hk-section-space) var(--hk-gutter) var(--hk-space-7);
   background: #fff;
-  color: #1d1d1f;
+  color: var(--hk-ink);
   scroll-margin-top: 84px;
 }
 
@@ -18,27 +18,31 @@
 
 .heading {
   margin: 0 0 24px;
-  font-size: clamp(30px, 3.2vw, 40px);
-  line-height: 1.1;
+  font-size: var(--hk-type-section);
+  line-height: 1.15;
   font-weight: 600;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
+  font-family: var(--hk-font-display);
 }
 
 .description {
   margin: 0;
-  font-size: 16px;
-  line-height: 1.65;
-  letter-spacing: -0.015em;
+  font-size: var(--hk-type-body);
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-family: var(--hk-font-text);
 }
 
-.description p + p { margin-top: 16px; }
+.description p + p { margin-top: var(--hk-space-4); }
 .brand { color: var(--hk-red); font-weight: 600; }
 
 .text {
   margin: 16px 0 0;
-  font-size: 15px;
+  font-size: var(--hk-type-compact);
   line-height: 1.6;
-  color: #6e6e73;
+  color: var(--hk-text-secondary);
+  font-family: var(--hk-font-text);
+  letter-spacing: 0;
 }
 
 .media {
@@ -46,7 +50,7 @@
   width: 100%;
   aspect-ratio: 1;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: var(--hk-radius-panel);
   background: #fff;
 }
 
@@ -57,15 +61,15 @@
 @media (max-width: 899px) {
   .inner { grid-template-columns: 1fr; gap: 28px; }
   .media { max-width: 608px; justify-self: center; }
-  .heading { margin-bottom: 20px; }
+  .heading { margin-bottom: 20px; font-family: var(--hk-font-display); font-size: var(--hk-type-section); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
 }
 
 @media (max-width: 699px) {
-  .section { padding: 48px 16px 24px; }
-  .heading { font-size: 30px; }
-  .description { font-size: 16px; }
-  .text { font-size: 14px; }
-  .media { border-radius: 16px; }
+  .section { padding: var(--hk-section-space) var(--hk-gutter) var(--hk-space-7); }
+  .heading { font-size: var(--hk-type-section); font-family: var(--hk-font-display); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
+  .description { font-size: var(--hk-type-body); font-family: var(--hk-font-text); line-height: 1.5; letter-spacing: 0; }
+  .text { font-size: var(--hk-type-compact); font-family: var(--hk-font-text); line-height: 1.6; letter-spacing: 0; }
+  .media { border-radius: var(--hk-radius-card-mobile); }
 }
 
 @media (prefers-reduced-motion: reduce) {

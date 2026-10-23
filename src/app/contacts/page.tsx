@@ -3,6 +3,7 @@ import Image from "next/image";
 import { contacts, contactRouteUrl } from "@/lib/contacts";
 import { publicPath } from "@/lib/public-path";
 import ContactsMap from "@/sections/contacts/ContactsMap";
+import QuietLeadButton from "@/sections/contacts/QuietLeadButton";
 import styles from "@/sections/contacts/Contacts.module.css";
 
 export const metadata: Metadata = {
@@ -19,58 +20,89 @@ function ContactIcon({ type }: { type: "phone" | "service" | "pin" | "message" }
   </svg>;
 }
 
+function MessengerLinks() {
+  return <div className={styles.messengerLinks}>
+    {contacts.messengers.map(item => <a key={item.name} href={item.href} target="_blank" rel="noopener noreferrer" className={`${styles.messengerLink} ${item.name === "MAX" ? styles.messengerMax : styles.messengerWechat}`}>
+      <Image src={publicPath(item.icon)} alt="" width={36} height={36} unoptimized className={styles.messengerIcon} />
+      <span>{item.name}</span>
+    </a>)}
+  </div>;
+}
+
+function AddressLines() {
+  return <address className={styles.address}>
+    <span className={styles.region}>{contacts.region}</span>
+    <span>{contacts.locality}</span>
+    <span>{contacts.street}</span>
+  </address>;
+}
+
+function Hours() {
+  return <div className={styles.hours}>
+    <h3>Режим работы</h3>
+    <dl>
+      <div><dt>Понедельник — пятница</dt><dd>{contacts.hours}</dd></div>
+      <div><dt>Суббота — воскресенье</dt><dd>Выходные</dd></div>
+    </dl>
+  </div>;
+}
+
+function RouteLink() {
+  return <a href={contactRouteUrl} target="_blank" rel="noopener noreferrer" className={`home-hero__link ${styles.routeButton}`}>Построить маршрут</a>;
+}
+
+function ServiceNote() {
+  return <p className={styles.extensions}>
+    Добавочные {contacts.serviceExtensions} относятся к сервисному центру. Номер тот же:{" "}
+    <a href={contacts.phoneHref}>{contacts.phone}</a>
+  </p>;
+}
+
 export default function ContactsPage() {
-  return <main className={styles.page} data-header-theme="light">
-    <header className={styles.intro}>
-      <h1>Контакты</h1>
-      <p>Свяжитесь с нами по вопросам продукции, сотрудничества и сервисного обслуживания.</p>
-    </header>
-
-    <div className={styles.channels}>
-      <section className={styles.channel} aria-labelledby="office-title">
-        <h2 id="office-title"><ContactIcon type="phone" />Офис</h2>
-        <a className={styles.phone} href={contacts.phoneHref}>{contacts.phone}</a>
-        <a className={styles.email} href={`mailto:${contacts.email}`}>{contacts.email}</a>
-      </section>
-      <section id="service" className={styles.channel} aria-labelledby="service-title">
-        <h2 id="service-title"><ContactIcon type="service" />Сервисный центр</h2>
-        <a className={styles.phone} href={contacts.phoneHref}>{contacts.phone}</a>
-        <p className={styles.extensions}>Добавочные номера: {contacts.serviceExtensions}</p>
-        <a className={styles.email} href={`mailto:${contacts.serviceEmail}`}>{contacts.serviceEmail}</a>
-      </section>
-    </div>
-
-    <section className={styles.messengers} aria-labelledby="messengers-title">
-      <div>
-        <h2 id="messengers-title"><ContactIcon type="message" />Напишите нам</h2>
-        <p>Выберите удобный мессенджер.</p>
-      </div>
-      <div className={styles.messengerLinks}>
-        {contacts.messengers.map(item => <a key={item.name} href={item.href} target="_blank" rel="noopener noreferrer" className={styles.messengerLink} aria-label={`Написать в ${item.name}`} title={item.name}>
-          <Image src={publicPath(item.icon)} alt="" width={36} height={36} unoptimized className={styles.messengerIcon} />
-        </a>)}
-      </div>
-    </section>
-
-    <section className={styles.location} aria-labelledby="location-title">
-      <div className={styles.locationInfo}>
-        <h2 id="location-title"><ContactIcon type="pin" />Как нас найти</h2>
-        <address className={styles.address}>
-          <span className={styles.region}>{contacts.region}</span>
-          <span>{contacts.locality}</span>
-          <span>{contacts.street}</span>
-        </address>
-        <div className={styles.hours}>
-          <h3>Режим работы</h3>
-          <dl>
-            <div><dt>Понедельник — пятница</dt><dd>{contacts.hours}</dd></div>
-            <div><dt>Суббота — воскресенье</dt><dd>Выходные</dd></div>
-          </dl>
+  return (
+    <main className={styles.page} data-header-theme="light">
+      <div className={styles.split}>
+        <div>
+          <header className={`${styles.intro} ${styles.introCompact}`}>
+            <h1>Контакты</h1>
+            <p>Свяжитесь с нами по вопросам продукции, сотрудничества и сервисного обслуживания.</p>
+          </header>
+          <div className={`${styles.channels} ${styles.channelStack}`}>
+            <section className={styles.channel} aria-labelledby="office-title">
+              <h2 id="office-title"><ContactIcon type="phone" />Офис</h2>
+              <div className={styles.phoneRow}>
+                <a className={styles.phone} href={contacts.phoneHref}>{contacts.phone}</a>
+                <QuietLeadButton />
+              </div>
+              <a className={styles.email} href={`mailto:${contacts.email}`}>
+                <span className={styles.role}>Продукция</span>
+                {contacts.email}
+              </a>
+            </section>
+            <section id="service" className={styles.channel} aria-labelledby="service-title">
+              <h2 id="service-title"><ContactIcon type="service" />Сервисный центр</h2>
+              <ServiceNote />
+              <a className={styles.email} href={`mailto:${contacts.serviceEmail}`}>
+                <span className={styles.role}>Сервис</span>
+                {contacts.serviceEmail}
+              </a>
+            </section>
+          </div>
+          <section className={styles.messengers} aria-labelledby="messengers-title">
+            <h2 id="messengers-title"><ContactIcon type="message" />Мессенджеры</h2>
+            <MessengerLinks />
+          </section>
+          <div className={styles.visit}>
+            <h2 id="location-title"><ContactIcon type="pin" />Как нас найти</h2>
+            <AddressLines />
+            <Hours />
+            <RouteLink />
+          </div>
         </div>
-        <a href={contactRouteUrl} target="_blank" rel="noopener noreferrer" className={`home-hero__link ${styles.routeButton}`}>Построить маршрут</a>
+        <div className={styles.mapColumn}>
+          <ContactsMap />
+        </div>
       </div>
-      <ContactsMap />
-    </section>
-
-  </main>;
+    </main>
+  );
 }

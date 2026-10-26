@@ -1,12 +1,23 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { createElement } from "react";
+import { cleanup, fireEvent, render } from "@testing-library/react";
 import { parsePublicBlocks } from "@/cms/blocks/parse";
 import { populatedMedia, safeContentHref } from "@/cms/blocks/types";
 import { analyticsPath, setAnalyticsCounter, trackGoal } from "@/cms/analytics/goals";
 import { getMetrikaSummary } from "@/cms/analytics/metrika";
+import MetrikaTracker from "@/cms/analytics/MetrikaTracker";
+
+const navigation = vi.hoisted(() => ({ pathname: "/" }));
+vi.mock("next/navigation", () => ({ usePathname: () => navigation.pathname }));
 
 vi.mock("server-only", () => ({}));
 
-afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals(); setAnalyticsCounter(undefined); delete window.ym; });
+afterEach(() => {
+  cleanup();
+  document.querySelectorAll('script[data-hk-metrika="true"]').forEach(script => script.remove());
+  window.history.replaceState({}, "", "/"); navigation.pathname = "/";
+  vi.unstubAllEnvs(); vi.unstubAllGlobals(); setAnalyticsCounter(undefined); delete window.ym;
+});
 
 describe("CMS public content boundary", () => {
   it("only emits registered visible blocks and excludes private Payload fields", () => {
@@ -82,5 +93,80 @@ describe("aggregate analytics", () => {
     trackGoal("lead_demo_completed"); expect(ym).not.toHaveBeenCalled();
     setAnalyticsCounter(12345); trackGoal("lead_demo_completed");
     expect(ym).toHaveBeenCalledWith(12345, "reachGoal", "lead_demo_completed");
+  });
+
+  it.each(["/admin", "/api/preview", "/preview/page", "/%61dmin/users", "/person@example.org", "//outside.example", "/catalog/private%2Fidentifier", "/catalog\\private"])("does not initialize analytics on unsafe or non-public path %s", pathname => {
+    navigation.pathname = pathname;
+    const ym = vi.fn(); window.ym = ym;
+    render(createElement(MetrikaTracker, { enabled: true, counterId: "12345" }));
+    trackGoal("contact_click");
+    expect(ym).not.toHaveBeenCalled();
+    expect(document.querySelector('[data-hk-metrika]')).toBeNull();
+  });
+
+  it("stays off without explicit opt-in, including direct calls from form and model handlers", () => {
+    const ym = vi.fn(); window.ym = ym;
+    const view = render(createElement(MetrikaTracker, { counterId: "12345" }));
+    trackGoal("lead_demo_completed"); trackGoal("model_interaction");
+    view.rerender(createElement(MetrikaTracker, { enabled: false, counterId: "12345" }));
+    expect(ym).not.toHaveBeenCalled();
+    expect(document.querySelector('[data-hk-metrika]')).toBeNull();
+  });
+
+  it.each(["", "abc", "0", "9007199254740992"])("rejects invalid counter %s before loading a third-party script", counterId => {
+    const ym = vi.fn(); window.ym = ym;
+    render(createElement(MetrikaTracker, { enabled: true, counterId }));
+    expect(ym).not.toHaveBeenCalled();
+    expect(document.querySelector('[data-hk-metrika]')).toBeNull();
+  });
+
+  it("uses safe SDK defaults and emits one allowlisted event per click without URLs, text, or form values", () => {
+    window.history.replaceState({}, "", "/catalog?q=private@example.org#phone");
+    vi.spyOn(document, "referrer", "get").mockReturnValue("https://outside.example/?email=private@example.org");
+    navigation.pathname = "/catalog";
+    const ym = vi.fn(); window.ym = ym;
+    render(createElement(MetrikaTracker, { enabled: true, counterId: "12345" }));
+    expect(ym).toHaveBeenCalledWith(12345, "init", expect.objectContaining({ url: "/", referrer: "/", defer: true, sendTitle: false, webvisor: false, clickmap: false, trackLinks: false, trackHash: false, disableYtm: true }));
+    expect(ym).toHaveBeenCalledWith(12345, "hit", "/catalog", { title: "", referer: "/" });
+    expect(ym).toHaveBeenCalledWith(12345, "reachGoal", "catalog_view");
+    const view = render(createElement("div", {},
+      createElement("button", { "data-analytics-goal": "lead_open" }, createElement("span", {}, "private@example.org")),
+      createElement("a", { href: "mailto:private@example.org?subject=private", onClick: (event: { preventDefault: () => void }) => event.preventDefault() }, "Contact"),
+      createElement("a", { href: "/api/media/file/private.pdf?token=private", "data-analytics-goal": "file_download", onClick: (event: { preventDefault: () => void }) => event.preventDefault() }, "Private document"),
+      createElement("button", { "data-analytics-goal": "not_allowlisted" }, "Unknown"),
+      createElement("input", { defaultValue: "private@example.org" }),
+    ));
+    ym.mockClear();
+    fireEvent.click(view.getByText("private@example.org"));
+    fireEvent.click(view.getByText("Contact"));
+    fireEvent.click(view.getByText("Private document"));
+    fireEvent.click(view.getByText("Unknown"));
+    fireEvent.change(view.getByRole("textbox"), { target: { value: "phone" } });
+    expect(ym.mock.calls).toEqual([[12345, "reachGoal", "lead_open"], [12345, "reachGoal", "contact_click"], [12345, "reachGoal", "file_download"]]);
+    expect(document.querySelectorAll('[data-hk-metrika]')).toHaveLength(1);
+  });
+
+  it("deduplicates route rerenders and stops all goals when disabled for preview", () => {
+    navigation.pathname = "/catalog";
+    const ym = vi.fn(); window.ym = ym;
+    const view = render(createElement(MetrikaTracker, { enabled: true, counterId: "12345" }));
+    ym.mockClear();
+    view.rerender(createElement(MetrikaTracker, { enabled: true, counterId: "12345" }));
+    expect(ym).not.toHaveBeenCalled();
+    navigation.pathname = "/products/pump";
+    view.rerender(createElement(MetrikaTracker, { enabled: true, counterId: "12345" }));
+    expect(ym.mock.calls).toEqual([[12345, "hit", "/products/pump", { title: "", referer: "/catalog" }], [12345, "reachGoal", "product_view"]]);
+    view.rerender(createElement(MetrikaTracker, { enabled: false, counterId: "12345" }));
+    expect(ym).toHaveBeenCalledWith(12345, "destruct");
+    ym.mockClear();
+    trackGoal("lead_demo_completed"); trackGoal("model_interaction");
+    expect(ym).not.toHaveBeenCalled();
+  });
+
+  it("does not let an analytics script failure break user actions", () => {
+    window.ym = vi.fn(() => { throw new Error("SDK unavailable"); });
+    expect(() => render(createElement(MetrikaTracker, { enabled: true, counterId: "12345" }))).not.toThrow();
+    setAnalyticsCounter(12345);
+    expect(() => trackGoal("lead_demo_completed")).not.toThrow();
   });
 });

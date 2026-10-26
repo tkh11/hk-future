@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { contacts } from "@/lib/contacts";
+import { getContactsContent } from "@/content/cms-adapter";
 import { publicPath } from "@/lib/public-path";
 
 const columns = [
@@ -30,7 +30,8 @@ const columns = [
   },
 ];
 
-export default function Footer() {
+export default async function Footer() {
+  const contacts = await getContactsContent();
   return (
     <footer data-header-theme="light" className="site-footer">
       <div className="site-footer__inner">
@@ -70,8 +71,7 @@ export default function Footer() {
               </li>
               <li>
                 <p className="site-footer__address">
-                  141214, Московская область, г. Пушкино, пос. Зверосовхоза, ул. Соболиная, д. 11,
-                  стр. 1, оф. 1-19
+                  {contacts.address}
                 </p>
               </li>
             </ul>

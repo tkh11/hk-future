@@ -37,7 +37,9 @@ export interface ModelDescriptionsBlock extends BaseBlock {
 export interface CtaBlock extends BaseBlock {
   blockType: "cta"; heading: string; text?: string | null; actions: CmsAction[];
 }
-export type CmsPageBlock = HeroBlock | TextBlock | CategoriesBlock | ImageTextBlock | PromoBannerBlock | ModelDescriptionsBlock | CtaBlock;
+export const siteSectionKeys = ['home-banner', 'about-company', 'engineering-solutions', 'dc-hero', 'dc-intro', 'dc-system', 'dc-products', 'fire-hero', 'fire-intro', 'fire-system', 'fire-products'] as const;
+export interface SiteSectionBlock extends BaseBlock { blockType: "siteSection"; section: typeof siteSectionKeys[number] }
+export type CmsPageBlock = SiteSectionBlock | HeroBlock | TextBlock | CategoriesBlock | ImageTextBlock | PromoBannerBlock | ModelDescriptionsBlock | CtaBlock;
 
 export function safeContentHref(value: unknown): string | undefined {
   if (typeof value !== "string" || !value || /[\s\\\u0000-\u001f]/u.test(value)) return undefined;

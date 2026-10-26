@@ -17,7 +17,7 @@ export interface Contacts {
 }
 export interface ProductDescription<Id extends string = string> {
   id: Id; label: string; title: string; text: string;
-  image: string; alt: string; detail?: string; badge?: string;
+  image: string; alt: string; detail?: string; badge?: string; href?: string;
 }
 export interface FireStation {
   id: "fpa" | "fpv"; name: string; application: string; description: string;

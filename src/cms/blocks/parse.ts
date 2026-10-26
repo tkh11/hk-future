@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { safeContentHref, type CmsPageBlock } from "./types";
+import { safeContentHref, siteSectionKeys, type CmsPageBlock } from "./types";
 
 const shortText = z.string().max(160);
 const optionalText = z.string().max(12000).nullish();
@@ -12,6 +12,7 @@ const common = { id: z.string().nullish(), blockName: z.string().max(160).nullis
 const action = z.object({ id: z.string().nullish(), label: z.string().min(1).max(80), href });
 const actions = z.array(action).max(2).nullish();
 const blockSchema = z.discriminatedUnion("blockType", [
+  z.object({ ...common, blockType: z.literal("siteSection"), section: z.enum(siteSectionKeys) }),
   z.object({ ...common, blockType: z.literal("hero"), heading: shortText, description: z.string().max(600).nullish(), image: media, actions }),
   z.object({ ...common, blockType: z.literal("text"), heading: shortText.nullish(), text: z.string().max(12000) }),
   z.object({ ...common, blockType: z.literal("categories"), heading: shortText.nullish(), items: z.array(z.object({ id: z.string().nullish(), title: shortText, href, image: media })).max(12) }),

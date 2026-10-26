@@ -147,7 +147,7 @@ function HeaderSearch({
   );
 }
 
-export default function Header() {
+export default function Header({ links = navLinks }: { links?: NavLink[] }) {
   const pathname = usePathname();
   const contactsCurrent = pathname === "/contacts" || pathname.startsWith("/contacts/");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -224,12 +224,12 @@ export default function Header() {
           </Link>
 
           <nav className="site-header__nav" aria-label="Навигация">
-            {navLinks.map((item) => (
+            {links.map((item) => (
               <Link key={item.label} href={item.href} className="site-header__link">
                 {item.label}
               </Link>
             ))}
-            <button type="button" className="site-header__request" onClick={openLead}>
+            <button type="button" data-analytics-goal="lead_open" className="site-header__request" onClick={openLead}>
               Оставить заявку
             </button>
             <div className="site-header__aside">
@@ -276,7 +276,7 @@ export default function Header() {
           inert={!menuOpen}
         >
           <MenuSearch onNavigate={() => setMenuOpen(false)} />
-          {navLinks.map((item, index) => (
+          {links.map((item, index) => (
             <Link
               key={item.label}
               href={item.href}
@@ -287,7 +287,7 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
-          <button type="button" className="site-header__mobile-request" onClick={openLead}>
+          <button type="button" data-analytics-goal="lead_open" className="site-header__mobile-request" onClick={openLead}>
             Оставить заявку
           </button>
           {rightLinks.map((item, index) => (
@@ -295,7 +295,7 @@ export default function Header() {
               key={item.label}
               href={item.href}
               className="site-header__mobile-link"
-              style={{ "--nav-index": navLinks.length + index } as CSSProperties}
+              style={{ "--nav-index": links.length + index } as CSSProperties}
               aria-current={item.href === "/contacts" && contactsCurrent ? "page" : undefined}
               onClick={() => setMenuOpen(false)}
             >

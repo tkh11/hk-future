@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withPayload } from '@payloadcms/next/withPayload';
 
 // GitHub Pages is served from /hk-future. Local `next dev` and Vercel builds
 // leave this unset, so they keep the site at the domain root.
@@ -25,4 +26,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default githubPages ? nextConfig : withPayload(nextConfig);

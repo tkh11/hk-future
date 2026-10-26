@@ -1,0 +1,31 @@
+import { buildConfig } from 'payload';
+import { postgresAdapter } from '@payloadcms/db-postgres';
+import { s3Storage } from '@payloadcms/storage-s3';
+import { ru } from '@payloadcms/translations/languages/ru';
+import sharp from 'sharp';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { cmsEnvironment } from './src/cms/env';
+import { collections, globals } from './src/cms/collections';
+import { disabledEmailAdapter } from './src/cms/email';
+
+const root = path.dirname(fileURLToPath(import.meta.url));
+const env = cmsEnvironment();
+export default buildConfig({
+  secret: env.secret, serverURL: env.serverURL,
+  email: disabledEmailAdapter,
+  admin: { user: 'users', importMap: { baseDir: root }, components: { beforeDashboard: ['@/cms/components/AdminDashboard#default'] } },
+  i18n: { supportedLanguages: { ru }, fallbackLanguage: 'ru' },
+  csrf: [env.serverURL], cors: [env.serverURL],
+  graphQL: { disable: true },
+  upload: { limits: { fileSize: 32 * 1024 * 1024 }, abortOnLimit: true },
+  db: postgresAdapter({ pool: { connectionString: env.databaseURL, max: 10 }, push: false, migrationDir: path.join(root, 'src/cms/migrations') }),
+  sharp, collections, globals,
+  typescript: { outputFile: path.join(root, 'src/cms/payload-types.ts') },
+  plugins: [s3Storage({ enabled: !!process.env.S3_BUCKET, alwaysInsertFields: true,
+    bucket: process.env.S3_BUCKET || 'disabled', acl: 'private', signedDownloads: false,
+    collections: { media: { prefix: process.env.S3_PREFIX || 'heisskraft' } },
+    config: { endpoint: process.env.S3_ENDPOINT, region: process.env.S3_REGION || 'ru-1', forcePathStyle: true,
+      credentials: { accessKeyId: process.env.S3_ACCESS_KEY_ID || '', secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '' } },
+  })],
+});

@@ -7,6 +7,8 @@ import CatalogImportPanel from "@/cms/components/CatalogImportPanel";
 import CmsBlocks from "@/cms/blocks/CmsBlocks";
 import { parsePublicBlocks } from "@/cms/blocks/parse";
 
+vi.mock("server-only", () => ({}));
+
 const preview = {
   id: "batch-1", status: "preview", issues: [], rows: [{ row: 2, action: "review", data: { sku: "SKU-1", title: "Труба" }, differences: [
     { field: "title", before: "Старое название", after: "Труба" },
@@ -66,6 +68,21 @@ describe("catalog import review UI", () => {
 });
 
 describe("CMS server-rendered blocks", () => {
+  it.each([
+    { model: "data-centers", element: "pipes" },
+    { model: "fire-suppression", element: "station" },
+  ])("renders the edited model heading, destination and external product image for $model", ({ model, element }) => {
+    const blocks = parsePublicBlocks([{ blockType: "modelDescriptions", model, heading: "Редакторский заголовок", items: [
+      { element, title: "Выбранный товар", text: "Описание товара из CMS", href: "/catalog/pipelines", image: { url: "https://media.example.test/product.jpg", alt: "Фото товара" } },
+    ] }]);
+    const html = renderToStaticMarkup(createElement(CmsBlocks, { blocks }));
+    expect(html).toContain("Редакторский заголовок");
+    expect(html).toContain("Описание товара из CMS");
+    expect(html).toContain('href="/catalog/pipelines"');
+    expect(html).toContain('src="https://media.example.test/product.jpg"');
+    expect(html).not.toContain("url=https%3A%2F%2Fmedia.example.test");
+  });
+
   it("keeps text and working links in initial HTML and escapes editor markup", () => {
     const blocks = parsePublicBlocks([
       { blockType: "text", heading: "Трубопроводы", text: "<script>alert(1)</script>\n\nОписание системы" },

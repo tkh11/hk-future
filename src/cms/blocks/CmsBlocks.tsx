@@ -1,4 +1,11 @@
 import Link from "next/link";
+import DeferredBlock from "@/components/ui/DeferredBlock";
+import ParkBanner from "@/sections/home/ParkBanner";
+import DataCenterHero from "@/sections/data-centers/DataCenterHero";
+import FireHero from "@/sections/fire-suppression/FireHero";
+import CoolingExplorer from "@/sections/data-centers/CoolingExplorer";
+import FireExplorer from "@/sections/fire-suppression/FireExplorer";
+import { coolingProducts, fireProducts } from "@/content/solutions";
 import Image from "next/image";
 import RevealBlock from "@/components/ui/RevealBlock";
 import MediaPlaceholder from "@/components/ui/MediaPlaceholder";
@@ -28,6 +35,13 @@ function Media({ image, eager = false }: { image?: MediaReference; eager?: boole
 
 function Block({ block }: { block: CmsPageBlock }) {
   switch (block.blockType) {
+    case "siteSection": {
+      if (block.section === 'home-banner') return <ParkBanner />;
+      if (block.section === 'dc-hero') return <DataCenterHero />;
+      if (block.section === 'fire-hero') return <FireHero />;
+      const kind = block.section === 'about-company' ? 'hero' : block.section === 'engineering-solutions' ? 'solutions' : block.section;
+      return <DeferredBlock kind={kind} />;
+    }
     case "hero": return <section className={`${styles.section} ${styles.hero} ${styles.split}`} data-header-theme="light"><div className={styles.copy}><h1>{block.heading}</h1><Paragraphs text={block.description} /><Actions actions={block.actions} /></div><Media image={block.image} eager /></section>;
     case "text": return <section className={styles.section}><div className={styles.reading}>{block.heading && <h2>{block.heading}</h2>}<Paragraphs text={block.text} /></div></section>;
     case "imageText": {
@@ -41,13 +55,24 @@ function Block({ block }: { block: CmsPageBlock }) {
       return <li key={item.id ?? index}><SolutionCard href={href}><div className={solutionStyles.media}>{media?.url ? <Image unoptimized className={solutionStyles.image} src={media.url} width={media.width ?? 1024} height={media.height ?? 1024} alt={media.alt ?? ""} loading="lazy" /> : <MediaPlaceholder />}</div><h3 className={solutionStyles.title}>{item.title}</h3></SolutionCard></li>;
     })}</ul></section>;
     case "promoBanner": return <section className={styles.section}><CmsPromoBanner href={safeContentHref(block.href)} sheen={block.sheen}><Media image={block.image} /></CmsPromoBanner></section>;
-    case "modelDescriptions": return <section className={styles.section} aria-label={block.heading ?? "Элементы системы"}>{block.heading && <h2>{block.heading}</h2>}<div className={styles.descriptionGrid}>{block.items.map(item => <article key={item.element} className={styles.description} data-model-element={item.element}><Media image={item.image} /><h3>{item.title}</h3><Paragraphs text={item.text} />{item.href && <Actions actions={[{ label: "В каталог", href: item.href }]} />}</article>)}</div></section>;
+    case "modelDescriptions": {
+      const override = <T extends { id: string; title: string; label: string; text: string; image: string; alt: string }>(item: T): T => {
+        const description = block.items.find(entry => entry.element === item.id);
+        if (!description) return item;
+        const image = populatedMedia(description.image);
+        return { ...item, title: description.title, label: description.title, text: description.text,
+          image: image?.url || item.image, alt: image?.alt || description.title, href: safeContentHref(description.href) };
+      };
+      return block.model === "data-centers"
+        ? <CoolingExplorer heading={block.heading || undefined} items={coolingProducts.map(override)} />
+        : <FireExplorer heading={block.heading || undefined} items={fireProducts.map(override)} />;
+    }
     case "cta": return <section className={`${styles.section} ${styles.cta}`}><h2>{block.heading}</h2><div className={styles.reading}><Paragraphs text={block.text} /></div><Actions actions={block.actions} /></section>;
   }
 }
 
 export default function CmsBlocks({ blocks }: { blocks: CmsPageBlock[] }) {
-  return blocks.filter(block => !block.hidden).map((block, index) => block.blockType === "hero"
+  return blocks.filter(block => !block.hidden).map((block, index) => (block.blockType === "hero" || block.blockType === "siteSection")
     ? <Block key={block.id ?? index} block={block} />
     : <RevealBlock key={block.id ?? index} kind="content"><Block block={block} /></RevealBlock>);
 }

@@ -137,7 +137,7 @@ export async function parseCatalogImport(file: { name: string; bytes: Uint8Array
       const value = data[name]
       if ((!value && name === 'sku') || (value && (value.length > 100 || /[\x00-\x1F\x7F]/.test(value)))) addIssue(name, `Неправильное значение ${name}.`)
     }
-    if (!KEY.test(data.slug)) addIssue('slug', 'Slug должен содержать латинские строчные буквы, цифры, дефис или подчёркивание.')
+    if (data.slug.length > 150 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(data.slug)) addIssue('slug', 'Slug должен содержать строчные латинские буквы и цифры, разделённые одиночными дефисами.')
     if (!data.title || data.title.length > 200) addIssue('title', 'Название обязательно, максимум 200 символов.')
     for (const name of ['category', 'series'] as const) if (!PATH.test(data[name]) || data[name].includes('//') || data[name].endsWith('/')) addIssue(name, `Укажите стабильный slug или путь для ${name}.`)
     values.forEach((value, column) => {

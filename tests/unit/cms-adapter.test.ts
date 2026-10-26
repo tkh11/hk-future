@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({ enabled: false, find: vi.fn(), findGlobal: vi.fn(), getCMS: vi.fn(), preview: vi.fn() }));
 vi.mock("server-only", () => ({}));
+vi.mock("next/server", () => ({ connection: vi.fn().mockResolvedValue(undefined) }));
 vi.mock("@/cms/env", () => ({ cmsEnabled: () => mocks.enabled }));
 vi.mock("@/cms/client", () => ({ getCMS: mocks.getCMS }));
 vi.mock("@/cms/preview", () => ({ getPreviewUser: mocks.preview }));

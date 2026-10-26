@@ -1,5 +1,5 @@
 import type { Block, Field } from "payload";
-import { safeContentHref } from "./types";
+import { safeContentHref, siteSectionKeys } from "./types";
 export type { CmsPageBlock, CmsMedia, MediaReference, CmsAction } from "./types";
 export { parsePublicBlocks } from "./parse";
 
@@ -11,7 +11,9 @@ const href = (required = true): Field => ({ name: "href", type: "text", label: "
 const actions = (required = false): Field => ({ name: "actions", type: "array", label: "Кнопки", maxRows: 2, minRows: required ? 1 : 0, required, fields: [{ name: "label", label: "Название", type: "text", required: true, maxLength: 80 }, href()] });
 const wrap = (slug: string, singular: string, fields: Field[]): Block => ({ slug, labels: { singular, plural: singular }, fields: [hidden, ...fields] });
 
+const sectionLabels = ['Главный баннер', 'О компании', 'Инженерные решения', 'ЦОД: заглавный баннер', 'ЦОД: информация', 'ЦОД: модель', 'ЦОД: решения', 'Пожаротушение: заглавный баннер', 'Пожаротушение: информация', 'Пожаротушение: модель', 'Пожаротушение: решения'];
 export const pageBlocks: Block[] = [
+  wrap("siteSection", "Готовый раздел сайта", [{ name: "section", label: "Раздел", type: "select", required: true, options: siteSectionKeys.map((value, index) => ({ value, label: sectionLabels[index] })), admin: { description: "Сохраняет существующий дизайн, видео и модели. Можно менять порядок, скрывать или заменять обычными блоками." } }]),
   wrap("hero", "Заглавный баннер", [heading(), { name: "description", type: "textarea", label: "Краткий текст", maxLength: 600 }, image, actions()]),
   wrap("text", "Текстовый блок", [heading(false), text]),
   wrap("categories", "Карточки разделов", [heading(false), { name: "items", type: "array", label: "Разделы", required: true, minRows: 1, maxRows: 12, fields: [{ name: "title", type: "text", label: "Название", required: true, maxLength: 120 }, href(), image] }]),

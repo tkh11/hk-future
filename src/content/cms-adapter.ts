@@ -1,6 +1,8 @@
 import "server-only";
 
 import { cache } from "react";
+import type { Metadata } from "next";
+import { connection } from "next/server";
 import { z } from "zod";
 import { cmsEnabled } from "@/cms/env";
 import { getCMS } from "@/cms/client";
@@ -11,6 +13,8 @@ import { contacts } from "./contacts";
 import * as pageCopy from "./solution-pages";
 import { coolingProducts, fireProducts, fireStations } from "./solutions";
 import type { CatalogNode } from "@/lib/catalog";
+import { solutionSchema, type SolutionContent } from "./cms-schemas";
+export { solutionSchema, type SolutionContent } from "./cms-schemas";
 
 // DTO schemas deliberately strip unknown fields. Never pass Payload documents,
 // internal IDs, auth metadata or uploaded-file internals into client components.
@@ -88,27 +92,6 @@ export const contactsSchema = z.object({
   messengers: z.array(z.object({ name: text, href: httpURL, icon: assetURL })),
 });
 
-const productDescription = z.object({
-  id: text, label: text, title: text, text, image: assetURL, alt: text,
-  detail: text.optional(), badge: assetURL.optional(),
-});
-const stringObject = <T extends Record<string, string>>(sample: T) => z.object(Object.fromEntries(Object.keys(sample).map((key) => [key, text])) as { [K in keyof T]: z.ZodString });
-const propertyRows = z.array(z.tuple([text, text]));
-export const solutionSchema = z.object({
-  dcHero: stringObject(pageCopy.dcHero), fireHero: stringObject(pageCopy.fireHero),
-  dcIntro: stringObject(pageCopy.dcIntro), fireIntro: stringObject(pageCopy.fireIntro),
-  dcProducts: z.object({
-    heading: text, headingAccent: text, description: text, pipeTitle: text, pipeDescription: text,
-    pumpTitle: text, pumpTitleSecondLine: text, pumpDescription: text, projectNote: text,
-    ctaTitle: text, ctaTitleSecondLine: text, pipeProperties: propertyRows, pumpProperties: propertyRows,
-  }),
-  firePageProducts: stringObject(pageCopy.firePageProducts),
-  coolingProducts: z.array(productDescription.extend({ id: z.enum(["pipes", "pumps", "valves"]) })),
-  fireProducts: z.array(productDescription.extend({ id: z.enum(["station", "pipework", "sprinkler", "hydrants", "flange"]) })),
-  fireStations: z.array(z.object({ id: z.enum(["fpa", "fpv"]), name: text, application: text, description: text })),
-});
-export type SolutionContent = z.infer<typeof solutionSchema>;
-
 const attribute = z.object({
   key: text, label: text, valueType: z.enum(["text", "number", "boolean"]),
   textValue: text.nullish(), numberValue: z.number().nullish(), booleanValue: z.boolean().nullish(), unit: text.nullish(),
@@ -143,6 +126,7 @@ export type PublicProduct = ReturnType<typeof mapProduct>;
 // a shared persistent cache. The Local API bypasses access checks by default,
 // so every request below explicitly enables them.
 const requestContext = cache(async () => {
+  await connection();
   // Read the request boundary first; a CMS-enabled build must not open a DB
   // connection before Next has marked this render as request-time.
   const user = await getPreviewUser();
@@ -223,10 +207,34 @@ export async function getProductContent(productSlug: string) {
 export async function getCMSPage(path: string) {
   if (!cmsEnabled()) return null;
   const [document] = await findAll("pages", { where: { path: { equals: path } } });
-  if (!document) return null;
+  if (!document) {
+    const payload = await getCMS();
+    const [existing, aliases] = await Promise.all([
+      // Read existence only; private page content never leaves this boundary.
+      payload.count({ collection: 'pages', where: { path: { equals: path } }, overrideAccess: true }),
+      payload.find({ collection: 'redirects', where: { from: { equals: path } }, limit: 1, depth: 0, overrideAccess: false }),
+    ]);
+    if (aliases.docs.length) await redirectOldCMSPath(path);
+    // Missing published targets and explicitly unpublished pages must not revive
+    // the legacy composition at a URL previously managed by the CMS.
+    if (existing.totalDocs || aliases.docs.length) { const { notFound } = await import('next/navigation'); notFound(); }
+    return null;
+  }
   const row = z.object({ path: relativePath, title: text, blocks: z.unknown() }).parse(document);
   const { parsePublicBlocks } = await import("@/cms/blocks/parse");
   return { path: row.path, title: row.title, blocks: parsePublicBlocks(row.blocks) };
+}
+
+const initialPageTitles: Record<string, string> = {
+  '/': 'Главная', '/solutions/data-centers': 'Системы охлаждения ЦОД',
+  '/solutions/fire-suppression': 'Системы пожаротушения',
+};
+
+/** Keep initial page metadata while honoring subsequent CMS title edits. */
+export async function getCMSPageMetadata(path: string, fallback: Metadata): Promise<Metadata> {
+  const page = await getCMSPage(path);
+  if (!page || page.title === initialPageTitles[path]) return fallback;
+  return { ...fallback, title: `${page.title} — HEISSKRAFT` };
 }
 
 /** A sitemap never inherits an authenticated preview session. */
@@ -245,4 +253,47 @@ export async function getPublishedCMSPaths(): Promise<string[]> {
     ...publishedArticles.map(mapArticle).map((article) => `/articles/${article.slug}`),
     ...pages.map((document) => z.object({ path: relativePath }).parse(document).path),
   ];
+}
+
+const defaultNavigation = [
+  { href: '/catalog', label: 'Каталог' }, { href: '/articles', label: 'База знаний' },
+  { href: '/designers', label: 'Проектировщикам' }, { href: '/catalog', label: 'Подбор оборудования' },
+];
+export const getNavigationContent = cache(async () => {
+  if (!cmsEnabled()) return defaultNavigation;
+  const { payload, user } = await requestContext();
+  const result = await payload.findGlobal({ slug: 'navigation', overrideAccess: false, user: user ?? undefined });
+  return result.createdAt ? z.array(z.object({ label: text, href: relativePath })).parse(result.items ?? []) : defaultNavigation;
+});
+export const getSiteSettingsContent = cache(async () => {
+  if (!cmsEnabled()) return { title: 'HEISSKRAFT', description: 'HEISSKRAFT' };
+  const { payload, user } = await requestContext();
+  const result = await payload.findGlobal({ slug: 'site-settings', overrideAccess: false, user: user ?? undefined });
+  return { title: result.title || 'HEISSKRAFT', description: result.description || 'HEISSKRAFT' };
+});
+
+export async function redirectOldCMSPath(path: string) {
+  if (!cmsEnabled()) return;
+  const { resolvePublishedRedirect } = await import('@/cms/redirects');
+  const target = await resolvePublishedRedirect(await getCMS(), path);
+  if (target) {
+    const { permanentRedirect } = await import('next/navigation');
+    permanentRedirect(target);
+  }
+}
+
+/** Omit unpublished pages and old CMS page URLs from the legacy baseline. */
+export async function filterPublicCMSPaths(paths: string[]): Promise<string[]> {
+  if (!cmsEnabled()) return paths;
+  const payload = await getCMS();
+  const [managed, aliases] = await Promise.all([
+    payload.find({ collection: 'pages', depth: 0, pagination: false, limit: 10000, overrideAccess: true, select: { path: true, _status: true } }),
+    payload.find({ collection: 'redirects', depth: 0, pagination: false, overrideAccess: false, select: { from: true } }),
+  ]);
+  const unpublished = new Set(managed.docs.filter(page => page._status !== 'published').map(page => page.path));
+  const published = new Set(managed.docs.filter(page => page._status === 'published').map(page => page.path));
+  // Category/product/article URLs come from public queries already. An unrelated
+  // manual redirect must not remove a live system route from the sitemap.
+  const oldPages = new Set(aliases.docs.map(alias => alias.from).filter(path => !/^\/(?:admin|api|catalog|products|articles)(?:\/|$)/.test(path)));
+  return paths.filter(path => !unpublished.has(path) && (!oldPages.has(path) || published.has(path)));
 }

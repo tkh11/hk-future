@@ -1,4 +1,5 @@
 "use client";
+import { trackGoal } from "@/cms/analytics/goals";
 
 import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import Link from "next/link";
@@ -152,6 +153,7 @@ export default function LeadDialog({ onClose }: { onClose: () => void }) {
     // Retain the existing local confirmation; submission transport is not connected yet.
     setCompleted(STEPS.map(() => true));
     setSent(true);
+    trackGoal("lead_demo_completed");
   }
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {

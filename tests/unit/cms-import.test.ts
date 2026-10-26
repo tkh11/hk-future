@@ -111,6 +111,13 @@ describe('catalog CSV/XLSX parsing', () => {
     expect(parsed.issues.map(issue => issue.code)).toEqual(expect.arrayContaining(['invalid-header', 'invalid-value', 'duplicate-identity']))
   })
 
+  it('uses the same product slug rules as the CMS schema', async () => {
+    for (const slug of ['under_score', 'double--dash', 'trailing-', 'UPPER', 'a'.repeat(151)]) {
+      const parsed = await parse(`${headers}\n${row.replace('pipe-1', slug)}`)
+      expect(parsed.issues).toEqual(expect.arrayContaining([expect.objectContaining({ field: 'slug', code: 'invalid-value' })]))
+    }
+  })
+
   it('rejects invalid encoding, CSV quoting, oversized files and unsupported files', async () => {
     await expect(parseCatalogImport({ name: 'bad.csv', bytes: Buffer.from([0xff]) })).rejects.toMatchObject({ code: 'csv-encoding' })
     await expect(parse(`${headers}\n"unclosed`)).rejects.toMatchObject({ code: 'invalid-csv' })

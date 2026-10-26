@@ -1,0 +1,61 @@
+/* Loaded only by the Payload route layout. Public-site selectors are never targeted. */
+html[data-theme]:has(.hk-admin-brand) {
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-serif: Arial, Helvetica, sans-serif;
+  --theme-bg: #fafafa;
+  --theme-text: #252525;
+  --theme-input-bg: #fff;
+  --style-radius-s: 6px;
+  --style-radius-m: 10px;
+  --style-radius-l: 16px;
+  --accessibility-outline: 2px solid #d71920;
+}
+.hk-admin-brand { display: inline-flex; align-items: flex-start; flex-direction: column; gap: 11px; }
+.hk-admin-brand img { width: 100%; max-width: 260px; height: auto; filter: brightness(0); }
+.hk-admin-brand > span { color: #737373; font-size: 12px; line-height: 1.4; font-weight: 400; letter-spacing: .02em; }
+.hk-admin-icon { display: block; width: 43px; height: auto; }
+.template-minimal:has(.hk-admin-brand) .login__brand { margin-bottom: 32px; }
+.hk-admin-nav { background: #fff; border-color: #e8e8e8; }
+.hk-admin-nav .nav__scroll { padding-top: calc(var(--app-header-height) + 12px); padding-bottom: 28px; }
+.hk-admin-nav-brand { display: block; width: 100%; margin-bottom: 25px; text-decoration: none; }
+.hk-admin-nav-brand .hk-admin-brand { width: 100%; }
+.hk-admin-nav-brand img { max-width: 195px; }
+.hk-admin-nav .nav__wrap { gap: 3px; }
+.hk-admin-nav-link { display: block; width: 100%; padding: 9px 12px; border-radius: 8px; color: #3c3c3c; font-size: 14px; line-height: 1.35; text-decoration: none; transition: background-color 130ms ease, color 130ms ease; }
+.hk-admin-nav-link:hover { background: #f5f5f6; }
+.hk-admin-nav-link[aria-current="page"] { color: #bb131b; background: #fff0f1; font-weight: 600; }
+.hk-admin-nav-group { width: 100%; margin-block: 15px 3px; }
+.hk-admin-nav-group h2 { margin: 0 0 5px; padding-inline: 12px; font-size: 12px; line-height: 1.5; color: #747474; font-weight: 500; }
+.hk-admin-nav-footer { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid #e8e8e8; padding: 18px 12px 0; margin-top: 25px; color: #646464; font-size: 13px; }
+.hk-admin-nav-footer a { text-decoration: none; }
+.hk-admin-nav-footer a:hover { color: #c8161d; text-decoration: underline; }
+.hk-admin-nav-footer .nav__log-out { width: 32px; height: 32px; display: grid; place-items: center; }
+.hk-admin-nav a:focus-visible, .hk-admin-nav button:focus-visible { outline: 2px solid #d71920; outline-offset: 3px; }
+.template-default:has(.hk-admin-nav) .app-header { background: #fff; }
+.template-default:has(.hk-admin-nav) .btn--style-primary,
+.template-minimal:has(.hk-admin-brand) .btn--style-primary { background: #d71920; color: #fff; border-color: #d71920; border-radius: 9px; }
+.template-default:has(.hk-admin-nav) .btn--style-primary:hover:not(:disabled),
+.template-minimal:has(.hk-admin-brand) .btn--style-primary:hover:not(:disabled) { background: #bb131b; border-color: #bb131b; }
+.template-default:has(.hk-admin-nav) .btn--style-secondary { border-radius: 9px; }
+.template-default:has(.hk-admin-nav) .field-label { font-weight: 550; line-height: 1.5; }
+.template-default:has(.hk-admin-nav) .field-description { color: #666; line-height: 1.6; }
+.template-default:has(.hk-admin-nav) .tabs-field__tab-button { min-height: 44px; }
+.template-default:has(.hk-admin-nav) .tabs-field__tab-button--active { color: #c8161d; }
+.template-default:has(.hk-admin-nav) .collapsible { border-radius: 12px; }
+@media (max-width: 768px) {
+  .hk-admin-nav .nav__mobile-close { margin-inline-start: var(--gutter-h); min-height: 44px; min-width: 44px; }
+  .hk-admin-nav-link { min-height: 44px; display: flex; align-items: center; font-size: 15px; }
+  .hk-admin-nav .nav__scroll { padding-top: calc(var(--app-header-height) + 8px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hk-admin-nav-link { transition: none; }
+  .template-default:has(.hk-admin-nav) *, .template-minimal:has(.hk-admin-brand) * { scroll-behavior: auto; }
+}
+/* Retry feedback may take more than one line; keep all controls inside the bar. */
+.template-default:has(.hk-admin-nav) .doc-controls__wrapper { height: auto; min-height: var(--doc-controls-height); }
+@media (max-width: 768px) {
+  .template-default:has(.hk-admin-nav) .doc-controls__controls-wrapper { height: auto; min-height: var(--doc-controls-height); padding: 12px 16px; align-items: flex-start; }
+  .template-default:has(.hk-admin-nav) .doc-controls__controls { flex: 1; min-width: 0; flex-wrap: wrap; overflow: visible; padding-left: 0; gap: 8px; }
+  .template-default:has(.hk-admin-nav) .doc-controls__controls::after { display: none; }
+  .template-default:has(.hk-admin-nav) .doc-controls__controls > [role=status] { flex-basis: 100%; }
+}

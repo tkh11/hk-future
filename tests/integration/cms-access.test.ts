@@ -171,6 +171,16 @@ describe("Payload permissions against an isolated migrated PostgreSQL database",
     assert.ok(user.resetPasswordToken == null);
   });
 
+  it("lock ownership stays visible by ID without exposing another employee account", async () => {
+    const lock = await payload.create({ collection: 'payload-locked-documents', overrideAccess: false, user: editor, data: {
+      document: { relationTo: 'categories', value: draft.id }, user: { relationTo: 'users', value: editor.id },
+    } });
+    const viewed = await payload.findByID({ collection: 'payload-locked-documents', id: lock.id, depth: 1, user: publisher, overrideAccess: false });
+    assert.equal(viewed.user.value, editor.id);
+    await assert.rejects(payload.findByID({ collection: 'users', id: editor.id, user: publisher, overrideAccess: false }));
+    await payload.delete({ collection: 'payload-locked-documents', id: lock.id, user: editor, overrideAccess: false });
+  });
+
   it("analyst can read allowed aggregates but cannot edit content or users", async () => {
     const count = await payload.count({ collection: "categories", user: analyst, overrideAccess: false });
     assert.ok(count.totalDocs > 0);

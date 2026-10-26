@@ -27,7 +27,7 @@
     "cms:test": "node scripts/cms/test-access.mjs && node scripts/cms/test-import.mjs && node scripts/cms/test-paths.mjs",
     "cms:backup": "node scripts/cms/backup.mjs",
     "cms:restore-check": "node scripts/cms/restore-check.mjs",
-    "test:cms:e2e": "playwright test --config playwright.cms.config.ts"
+    "test:cms:e2e": "node scripts/cms/test-admin.mjs"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.92.0",

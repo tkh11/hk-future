@@ -72,7 +72,7 @@ E2E_EXPORT=true E2E_BASE_PATH=/hk-future npm run test:e2e
 ```sh
 npm run cms:test
 CMS_ENABLED=true CMS_SERVER_URL=http://localhost:3100 NEXT_PUBLIC_SITE_URL=http://localhost:3100 npm run build:production
-CMS_ENABLED=true CMS_SERVER_URL=http://localhost:3100 NEXT_PUBLIC_SITE_URL=http://localhost:3100 npm run start:production
+PLAYWRIGHT_CHANNEL=chrome npm run test:cms:e2e
 ```
 
 Интеграционные CMS-проверки создают отдельные временные базы на локальном
@@ -80,12 +80,16 @@ PostgreSQL; рабочую базу они не используют как те
 пользователь с правом создавать временные базы. Запускайте тяжёлые сборки и
 браузерные проверки последовательно.
 
-Когда CMS production-сервер уже запущен на `http://localhost:3100`, в другом
-терминале выполните `CMS_ENABLED=true CMS_SERVER_URL=http://localhost:3100 npm run test:cms:e2e`.
-Запустите сам сервер с тем же `CMS_SERVER_URL`. Этот профиль проверяет CMS
-через временные записи на локальном сервере и удаляет их после сценариев;
-обычный `test:e2e` исключает CMS-сценарии. Профиль CMS не сохраняет traces,
-скриншоты или видео с авторизацией.
+`test:cms:e2e` сам создаёт временную БД `hk_test_admin_*`, применяет миграции,
+загружает исходный контент и создаёт одноразовые учётные записи. Он запускает
+свой production-сервер на свободном порту 3100, использует отдельную временную
+папку загрузок и удаляет их после проверки. Рабочая БД и её файлы не меняются.
+Не запускайте другой сервер на 3100 перед этой командой. PostgreSQL-пользователю
+нужно право создавать тестовые базы. Прямой запуск Playwright CMS без маркера
+изолированной среды отклоняется. Обычный `test:e2e` исключает CMS-сценарии.
+Traces, видео и автоматические снимки ошибок выключены. Для иллюстраций
+инструкции можно явно задать `CMS_E2E_CAPTURE=true`: выбранные экраны без формы
+входа сохранятся в приватную `.local/qa` (не публикуются в CI).
 
 Для установленного Google Chrome: `PLAYWRIGHT_CHANNEL=chrome npm run test:e2e`. Playwright сам поднимает production-сервер на порту 3100 и проверяет desktop 1440×900 и mobile 390×844. Обычные проверки запускаются с reduced motion; отдельные видео-сценарии включают движение. Отчёт — `playwright-report/index.html`, ошибки и traces — `test-results/`. Проверки WebGL в headless подтверждают функциональность, но не FPS пользовательского устройства.
 

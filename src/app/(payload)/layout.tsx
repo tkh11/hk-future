@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { cmsEnabled } from '@/cms/env';
 import { importMap } from './admin/importMap';
 import '@payloadcms/next/css';
+import '@/cms/components/admin.css';
 
 const serverFunction: ServerFunctionClient = async (args) => {
   'use server';

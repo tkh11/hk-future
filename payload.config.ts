@@ -8,13 +8,19 @@ import { fileURLToPath } from 'node:url';
 import { cmsEnvironment } from './src/cms/env';
 import { collections, globals } from './src/cms/collections';
 import { disabledEmailAdapter } from './src/cms/email';
+import { configurePrivateLockOwners } from './src/cms/lock-privacy';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const env = cmsEnvironment();
 export default buildConfig({
   secret: env.secret, serverURL: env.serverURL,
   email: disabledEmailAdapter,
-  admin: { user: 'users', importMap: { baseDir: root }, components: { beforeDashboard: ['@/cms/components/AdminDashboard#default'] } },
+  onInit: configurePrivateLockOwners,
+  admin: { user: 'users', theme: 'light', importMap: { baseDir: root }, components: {
+    Nav: '@/cms/components/AdminNav#default',
+    graphics: { Logo: '@/cms/components/AdminBrand#AdminLogo', Icon: '@/cms/components/AdminBrand#AdminIcon' },
+    views: { dashboard: { Component: '@/cms/components/AdminDashboard#default' } },
+  } },
   i18n: { supportedLanguages: { ru }, fallbackLanguage: 'ru' },
   csrf: [env.serverURL], cors: [env.serverURL],
   graphQL: { disable: true },

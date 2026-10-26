@@ -121,33 +121,8 @@ jobs:
       - run: npm run cms:test
       - run: npm run build:production
       - run: npx playwright install --with-deps chromium
-      - name: Verify CMS production API and editor workflows
-        shell: bash
-        env:
-          CMS_E2E_URL: http://localhost:3100
-        run: |
-          cms_log="$RUNNER_TEMP/heisskraft-cms-server.log"
-          NEXT_BUILD_DIR=.next-production node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3100 > "$cms_log" 2>&1 &
-          server_pid=$!
-          cleanup() {
-            kill "$server_pid" >/dev/null 2>&1 || true
-            wait "$server_pid" >/dev/null 2>&1 || true
-            rm -f "$cms_log"
-          }
-          trap cleanup EXIT
-          node --input-type=module <<'NODE'
-          const deadline = Date.now() + 60000;
-          let ready = false;
-          while (Date.now() < deadline) {
-            try {
-              const response = await fetch('http://localhost:3100/admin/login', { signal: AbortSignal.timeout(2000) });
-              if (response.ok) { ready = true; break; }
-            } catch { /* The server is still starting. */ }
-            await new Promise(resolve => setTimeout(resolve, 1000));
-          }
-          if (!ready) throw new Error('The local CMS production server did not become ready.');
-          NODE
-          npm run test:cms:e2e
+      - name: Verify CMS production API and editor workflows in a disposable database
+        run: npm run test:cms:e2e
       - name: Install matching PostgreSQL 17 client
         shell: bash
         run: |

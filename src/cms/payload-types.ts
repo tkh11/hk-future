@@ -177,6 +177,9 @@ export interface Category {
   id: number;
   sourceKey?: string | null;
   title: string;
+  /**
+   * Предлагается по названию для новой записи. Изменение адреса существующей записи создаёт перенаправление, где оно поддерживается.
+   */
   slug: string;
   description?: string | null;
   parent?: (number | null) | Category;
@@ -218,6 +221,9 @@ export interface Media {
 export interface ProductSery {
   id: number;
   title: string;
+  /**
+   * Предлагается по названию для новой записи. Изменение адреса существующей записи создаёт перенаправление, где оно поддерживается.
+   */
   slug: string;
   description?: string | null;
   category: number | Category;
@@ -233,18 +239,38 @@ export interface ProductSery {
 export interface Product {
   id: number;
   title: string;
-  slug: string;
+  /**
+   * Укажите артикул производителя. Он не меняется автоматически.
+   */
   sku: string;
-  externalId?: string | null;
   description?: string | null;
+  /**
+   * Выберите раздел каталога, в котором появится товар.
+   */
   category: number | Category;
+  /**
+   * Необязательно. Серия должна относиться к выбранной категории.
+   */
   series?: (number | null) | ProductSery;
+  /**
+   * Предлагается по названию для новой записи. Изменение адреса существующей записи создаёт перенаправление, где оно поддерживается.
+   */
+  slug: string;
+  /**
+   * Заполняется при интеграции. Не меняйте без согласования с ответственным за обмен данными.
+   */
+  externalId?: string | null;
+  /**
+   * Выберите фотографию товара. Чтобы заменить файл, загрузите новую запись: опубликованное изображение останется доступным.
+   */
   image?: (number | null) | Media;
-  documents?: (number | Media)[] | null;
   attributes?:
     | {
-        key: string;
         label: string;
+        /**
+         * Постоянный код без пробелов, например pressure. Не повторяйте коды в одном товаре.
+         */
+        key: string;
         valueType: 'text' | 'number' | 'boolean';
         textValue?: string | null;
         numberValue?: number | null;
@@ -253,6 +279,10 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Инструкции, сертификаты и другие документы. Файлы публикуются отдельно от товара.
+   */
+  documents?: (number | Media)[] | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -410,6 +440,9 @@ export interface Article {
   id: number;
   sourceKey?: string | null;
   title: string;
+  /**
+   * Предлагается по названию для новой записи. Изменение адреса существующей записи создаёт перенаправление, где оно поддерживается.
+   */
   slug: string;
   content: {
     title?: string | null;
@@ -655,19 +688,18 @@ export interface ProductSeriesSelect<T extends boolean = true> {
  */
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   sku?: T;
-  externalId?: T;
   description?: T;
   category?: T;
   series?: T;
+  slug?: T;
+  externalId?: T;
   image?: T;
-  documents?: T;
   attributes?:
     | T
     | {
-        key?: T;
         label?: T;
+        key?: T;
         valueType?: T;
         textValue?: T;
         numberValue?: T;
@@ -675,6 +707,7 @@ export interface ProductsSelect<T extends boolean = true> {
         unit?: T;
         id?: T;
       };
+  documents?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -945,6 +978,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Изменения применятся сразу после сохранения. Предыдущие значения доступны в истории версий.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contacts".
  */
@@ -975,6 +1010,8 @@ export interface Contact {
   createdAt?: string | null;
 }
 /**
+ * Изменения применятся сразу после сохранения. Предыдущие значения доступны в истории версий.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "solution-content".
  */
@@ -993,6 +1030,8 @@ export interface SolutionContent {
   createdAt?: string | null;
 }
 /**
+ * Изменения применятся сразу после сохранения. Предыдущие значения доступны в истории версий.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation".
  */
@@ -1009,6 +1048,8 @@ export interface Navigation {
   createdAt?: string | null;
 }
 /**
+ * Изменения применятся сразу после сохранения. Предыдущие значения доступны в истории версий.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */

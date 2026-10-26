@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import RevealBlock from "@/components/ui/RevealBlock";
 import MediaPlaceholder from "@/components/ui/MediaPlaceholder";
 import ViewportImage from "@/components/ui/ViewportImage";
@@ -22,7 +23,7 @@ function Media({ image, eager = false }: { image?: MediaReference; eager?: boole
   const media = populatedMedia(image);
   if (!media?.url) return <div className={`${styles.media} ${styles.placeholder}`}><MediaPlaceholder /></div>;
   const props = { src: media.url, width: media.width ?? 1200, height: media.height ?? 800, alt: media.alt ?? "", sizes: "(max-width: 767px) 100vw, 1280px" };
-  return <div className={styles.media}>{eager ? <img src={media.url} width={props.width} height={props.height} sizes={props.sizes} loading="eager" fetchPriority="high" alt={props.alt} /> : <ViewportImage {...props} />}</div>;
+  return <div className={styles.media}>{eager ? <Image unoptimized src={media.url} width={props.width} height={props.height} sizes={props.sizes} loading="eager" fetchPriority="high" alt={props.alt} /> : <ViewportImage {...props} />}</div>;
 }
 
 function Block({ block }: { block: CmsPageBlock }) {
@@ -37,7 +38,7 @@ function Block({ block }: { block: CmsPageBlock }) {
       const href = safeContentHref(item.href);
       if (!href) return null;
       const media = populatedMedia(item.image);
-      return <li key={item.id ?? index}><SolutionCard href={href}><div className={solutionStyles.media}>{media?.url ? <img className={solutionStyles.image} src={media.url} width={media.width ?? 1024} height={media.height ?? 1024} alt={media.alt ?? ""} loading="lazy" /> : <MediaPlaceholder />}</div><h3 className={solutionStyles.title}>{item.title}</h3></SolutionCard></li>;
+      return <li key={item.id ?? index}><SolutionCard href={href}><div className={solutionStyles.media}>{media?.url ? <Image unoptimized className={solutionStyles.image} src={media.url} width={media.width ?? 1024} height={media.height ?? 1024} alt={media.alt ?? ""} loading="lazy" /> : <MediaPlaceholder />}</div><h3 className={solutionStyles.title}>{item.title}</h3></SolutionCard></li>;
     })}</ul></section>;
     case "promoBanner": return <section className={styles.section}><CmsPromoBanner href={safeContentHref(block.href)} sheen={block.sheen}><Media image={block.image} /></CmsPromoBanner></section>;
     case "modelDescriptions": return <section className={styles.section} aria-label={block.heading ?? "Элементы системы"}>{block.heading && <h2>{block.heading}</h2>}<div className={styles.descriptionGrid}>{block.items.map(item => <article key={item.element} className={styles.description} data-model-element={item.element}><Media image={item.image} /><h3>{item.title}</h3><Paragraphs text={item.text} />{item.href && <Actions actions={[{ label: "В каталог", href: item.href }]} />}</article>)}</div></section>;

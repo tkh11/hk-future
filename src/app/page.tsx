@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import DeferredBlock from "@/components/ui/DeferredBlock";
+import { getCMSPage } from "@/content/cms-adapter";
+import CmsBlocks from "@/cms/blocks/CmsBlocks";
 import ParkBanner from "@/sections/home/ParkBanner";
 
 export const metadata: Metadata = {
@@ -8,7 +10,9 @@ export const metadata: Metadata = {
     "HEISSKRAFT — российский производитель полимерных труб, фитингов, насосного оборудования и арматуры.",
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const page = await getCMSPage("/");
+  if (page) return <main><CmsBlocks blocks={page.blocks} /></main>;
   return (
     <main>
       <ParkBanner />

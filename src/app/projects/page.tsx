@@ -1,3 +1,4 @@
+import CMSPageOverride from "@/components/cms/CMSPageOverride";
 import type { Metadata } from "next";
 import PageStub from "@/components/layout/PageStub";
 
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
     "Объекты и инженерные системы, реализованные на продукции HEISSKRAFT.",
 };
 
-export default function ProjectsPage() {
+function ProjectsPage() {
   return (
     <main>
       <PageStub
@@ -16,4 +17,8 @@ export default function ProjectsPage() {
       />
     </main>
   );
+}
+
+export default function CMSAwarePage() {
+  return <CMSPageOverride path="/projects"><ProjectsPage /></CMSPageOverride>;
 }

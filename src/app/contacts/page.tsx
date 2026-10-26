@@ -1,6 +1,8 @@
+import CMSPageOverride from "@/components/cms/CMSPageOverride";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { contacts, contactRouteUrl, contactMapUrl } from "@/lib/contacts";
+import { getContactsContent } from "@/content/cms-adapter";
+import type { Contacts } from "@/content/types";
 import { publicPath } from "@/lib/public-path";
 import ContactsMap from "@/sections/contacts/ContactsMap";
 import QuietLeadButton from "@/sections/contacts/QuietLeadButton";
@@ -20,7 +22,7 @@ function ContactIcon({ type }: { type: "phone" | "service" | "pin" | "message" }
   </svg>;
 }
 
-function MessengerLinks() {
+function MessengerLinks({ contacts }: { contacts: Contacts }) {
   return <div className={styles.messengerLinks}>
     {contacts.messengers.map(item => <a key={item.name} href={item.href} target="_blank" rel="noopener noreferrer" className={`${styles.messengerLink} ${item.name === "MAX" ? styles.messengerMax : styles.messengerWechat}`}>
       <Image src={publicPath(item.icon)} alt="" width={36} height={36} unoptimized className={styles.messengerIcon} />
@@ -29,7 +31,7 @@ function MessengerLinks() {
   </div>;
 }
 
-function AddressLines() {
+function AddressLines({ contacts }: { contacts: Contacts }) {
   return <address className={styles.address}>
     <span className={styles.region}>{contacts.region}</span>
     <span>{contacts.locality}</span>
@@ -37,7 +39,7 @@ function AddressLines() {
   </address>;
 }
 
-function Hours() {
+function Hours({ contacts }: { contacts: Contacts }) {
   return <div className={styles.hours}>
     <h3>Режим работы</h3>
     <dl>
@@ -47,18 +49,22 @@ function Hours() {
   </div>;
 }
 
-function RouteLink() {
-  return <a href={contactRouteUrl} target="_blank" rel="noopener noreferrer" className={`home-hero__link ${styles.routeButton}`}>Построить маршрут</a>;
+function RouteLink({ href }: { href: string }) {
+  return <a href={href} target="_blank" rel="noopener noreferrer" className={`home-hero__link ${styles.routeButton}`}>Построить маршрут</a>;
 }
 
-function ServiceNote() {
+function ServiceNote({ contacts }: { contacts: Contacts }) {
   return <p className={styles.extensions}>
     Добавочные {contacts.serviceExtensions} относятся к сервисному центру. Номер тот же:{" "}
     <a href={contacts.phoneHref}>{contacts.phone}</a>
   </p>;
 }
 
-export default function ContactsPage() {
+async function ContactsPage() {
+  const contacts = await getContactsContent();
+  const destination = encodeURIComponent(`${contacts.locality}, ${contacts.street}`);
+  const contactMapUrl = `https://yandex.ru/maps/?text=${destination}`;
+  const contactRouteUrl = `https://yandex.ru/maps/?rtext=~${destination}&rtt=auto`;
   return (
     <main className={styles.page} data-header-theme="light">
       <div className={styles.split}>
@@ -81,7 +87,7 @@ export default function ContactsPage() {
             </section>
             <section id="service" className={styles.channel} aria-labelledby="service-title">
               <h2 id="service-title"><ContactIcon type="service" />Сервисный центр</h2>
-              <ServiceNote />
+              <ServiceNote contacts={contacts} />
               <a className={styles.email} href={`mailto:${contacts.serviceEmail}`}>
                 <span className={styles.role}>Сервис</span>
                 {contacts.serviceEmail}
@@ -90,13 +96,13 @@ export default function ContactsPage() {
           </div>
           <section className={styles.messengers} aria-labelledby="messengers-title">
             <h2 id="messengers-title"><ContactIcon type="message" />Мессенджеры</h2>
-            <MessengerLinks />
+            <MessengerLinks contacts={contacts} />
           </section>
           <div className={styles.visit}>
             <h2 id="location-title"><ContactIcon type="pin" />Как нас найти</h2>
-            <AddressLines />
-            <Hours />
-            <RouteLink />
+            <AddressLines contacts={contacts} />
+            <Hours contacts={contacts} />
+            <RouteLink href={contactRouteUrl} />
           </div>
         </div>
         <div className={styles.mapColumn}>
@@ -105,4 +111,8 @@ export default function ContactsPage() {
       </div>
     </main>
   );
+}
+
+export default function CMSAwarePage() {
+  return <CMSPageOverride path="/contacts"><ContactsPage /></CMSPageOverride>;
 }

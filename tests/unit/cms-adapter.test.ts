@@ -1,0 +1,96 @@
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const mocks = vi.hoisted(() => ({ enabled: false, find: vi.fn(), findGlobal: vi.fn(), getCMS: vi.fn(), preview: vi.fn() }));
+vi.mock("server-only", () => ({}));
+vi.mock("@/cms/env", () => ({ cmsEnabled: () => mocks.enabled }));
+vi.mock("@/cms/client", () => ({ getCMS: mocks.getCMS }));
+vi.mock("@/cms/preview", () => ({ getPreviewUser: mocks.preview }));
+
+import { contactsSchema, getCatalogContent, getContactsContent, getPublishedCMSPaths, mapArticle, mapCategoryTree, mapProduct, solutionSchema } from "@/content/cms-adapter";
+import { catalog } from "@/content/catalog";
+import { contacts } from "@/content/contacts";
+import { articles } from "@/content/articles";
+import * as pages from "@/content/solution-pages";
+import { coolingProducts, fireProducts, fireStations } from "@/content/solutions";
+
+const category = (id: number, slug: string, parent: number | null = null, path = slug) => ({ id, slug, title: slug, parent, path, art: "pipes", sortOrder: id });
+
+beforeEach(() => {
+  mocks.enabled = false;
+  vi.clearAllMocks();
+  mocks.getCMS.mockResolvedValue({ find: mocks.find, findGlobal: mocks.findGlobal });
+  mocks.preview.mockResolvedValue(null);
+});
+
+describe("public CMS content boundary", () => {
+  it("keeps the existing local content available without initializing Payload", async () => {
+    expect(await getCatalogContent()).toEqual(catalog);
+    expect(await getContactsContent()).toEqual(contacts);
+    expect(mocks.getCMS).not.toHaveBeenCalled();
+  });
+
+  it("strips internal fields and hides children whose parent is not publicly available", () => {
+    const tree = mapCategoryTree([
+      { ...category(1, "pipelines"), email: "secret@example.com", salt: "hidden" },
+      category(2, "therm", 1, "pipelines/therm"),
+      category(3, "secret-child", 99, "private/secret-child"),
+      category(4, "bad-path", 1, "bad-path"),
+    ]);
+    expect(tree).toEqual([{ slug: "pipelines", title: "pipelines", art: "pipes", children: [{ slug: "therm", title: "therm", art: "pipes" }] }]);
+  });
+
+  it("does not hang or publish malformed cyclic category structures", () => {
+    expect(mapCategoryTree([category(1, "one", 2, "two/one"), category(2, "two", 1, "one/two")])).toEqual([]);
+  });
+
+  it("serializes false and zero characteristics and only exposes populated safe documents", () => {
+    const product = mapProduct({
+      slug: "pipe", sku: "0001", title: "Труба", externalId: "erp-secret", createdBy: { email: "secret@example.com" },
+      category: { path: "pipelines/therm", title: "Therm", secret: "private" },
+      image: { url: "javascript:alert(1)" },
+      documents: [22, { url: "/api/media/file/test.pdf", filename: "test.pdf", privateKey: "hidden" }, { url: "javascript:alert(1)" }],
+      attributes: [
+        { key: "zero", label: "Температура", valueType: "number", numberValue: 0, unit: "°C" },
+        { key: "no", label: "Армирование", valueType: "boolean", booleanValue: false },
+      ],
+    });
+    expect(product.image).toBeNull();
+    expect(product.attributes.map((entry) => entry.value)).toEqual(["0", "Нет"]);
+    expect(product.documents).toEqual([{ url: "/api/media/file/test.pdf", title: "test.pdf" }]);
+    expect(JSON.stringify(product)).not.toMatch(/erp-secret|privateKey|secret@example/);
+  });
+
+  it("accepts all original solution and article content without copy changes", () => {
+    expect(solutionSchema.parse({ ...pages, coolingProducts, fireProducts, fireStations })).toEqual({ ...pages, coolingProducts, fireProducts, fireStations });
+    for (const article of articles) expect(mapArticle({ slug: article.slug, title: article.title, content: article })).toEqual(article);
+  });
+
+  it("rejects active URL schemes and untrusted map embedding in CMS contacts", () => {
+    expect(contactsSchema.safeParse({ ...contacts, messengers: [{ name: "bad", href: "javascript:alert(1)", icon: "/icon.png" }] }).success).toBe(false);
+    expect(contactsSchema.safeParse({ ...contacts, mapEmbed: "https://evil.example/map-widget/v1/" }).success).toBe(false);
+  });
+
+  it("paginates with access checks and never falls back to local content after a CMS failure", async () => {
+    mocks.enabled = true;
+    mocks.find.mockResolvedValueOnce({ docs: [category(1, "pipelines")], hasNextPage: true }).mockResolvedValueOnce({ docs: [category(2, "therm", 1, "pipelines/therm")], hasNextPage: false });
+    const tree = await getCatalogContent();
+    expect(tree[0].children?.[0].slug).toBe("therm");
+    expect(mocks.find).toHaveBeenNthCalledWith(1, expect.objectContaining({ overrideAccess: false, user: undefined, draft: false, page: 1, where: { and: [{ _status: { equals: "published" } }] } }));
+    expect(mocks.find).toHaveBeenNthCalledWith(2, expect.objectContaining({ page: 2, overrideAccess: false }));
+    mocks.find.mockRejectedValueOnce(new Error("Database unavailable"));
+    await expect(getCatalogContent()).rejects.toThrow("Database unavailable");
+  });
+
+  it("allows a verified preview reader while keeping sitemap queries strictly anonymous", async () => {
+    mocks.enabled = true;
+    const user = { id: 8, role: "editor" };
+    mocks.preview.mockResolvedValue(user);
+    mocks.find.mockResolvedValue({ docs: [], hasNextPage: false });
+    await getCatalogContent();
+    expect(mocks.find).toHaveBeenLastCalledWith(expect.objectContaining({ overrideAccess: false, user, draft: true }));
+    mocks.find.mockClear();
+    await getPublishedCMSPaths();
+    expect(mocks.find).toHaveBeenCalledTimes(4);
+    for (const [query] of mocks.find.mock.calls) expect(query).toEqual(expect.objectContaining({ overrideAccess: false, user: undefined, draft: false, where: { and: [{ _status: { equals: "published" } }] } }));
+  });
+});

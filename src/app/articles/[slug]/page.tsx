@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { articles, getArticle, articleUrl } from "@/lib/articles";
+import { articles, articleUrl } from "@/lib/articles";
+import { getArticleContent, getArticlesContent } from "@/content/cms-adapter";
+import { cmsEnabled } from "@/cms/env";
 import styles from "@/sections/articles/Articles.module.css";
 
 type Props = { params: Promise<{ slug: string }> };
-export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return articles.map(({ slug }) => ({ slug }));
+  return (cmsEnabled() ? [] : articles).map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const article = getArticle((await params).slug);
+  const article = await getArticleContent((await params).slug);
   if (!article) notFound();
   const canonical = articleUrl(`/articles/${article.slug}`);
   return {
@@ -24,9 +25,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArticlePage({ params }: Props) {
-  const article = getArticle((await params).slug);
+  const article = await getArticleContent((await params).slug);
   if (!article) notFound();
-  const related = article.related.map(getArticle).filter((item) => item !== undefined);
+  const allArticles = await getArticlesContent();
+  const related = article.related.flatMap((slug) => allArticles.filter((item) => item.slug === slug));
   const schema = {
     "@context": "https://schema.org", "@type": "Article",
     headline: article.title, description: article.description, inLanguage: "ru",

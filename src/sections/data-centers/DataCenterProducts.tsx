@@ -1,4 +1,4 @@
-import { dcProducts } from "@/content/solution-pages";
+import { getSolutionsContent } from "@/content/cms-adapter";
 import Image from "next/image";
 import Link from "next/link";
 import { publicPath } from "@/lib/public-path";
@@ -15,7 +15,8 @@ function ProductDetails({ label, rows }: { label: string; rows: [string, string]
   );
 }
 
-export default function DataCenterProducts() {
+export default async function DataCenterProducts() {
+  const { dcProducts } = await getSolutionsContent();
   return (
     <section className={styles.products} aria-labelledby="dc-products-title">
       <div className={styles.sectionHeading}>

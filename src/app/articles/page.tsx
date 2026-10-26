@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ArticleLibrary from "@/sections/articles/ArticleLibrary";
-import { articles, articleUrl } from "@/lib/articles";
+import { articleUrl } from "@/lib/articles";
+import { getArticlesContent } from "@/content/cms-adapter";
 import styles from "@/sections/articles/Articles.module.css";
 
 const canonical = articleUrl("/articles");
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
   ...(canonical ? { alternates: { canonical } } : {}),
 };
 
-export default function ArticlesPage() {
+export default async function ArticlesPage() {
+  const articles = await getArticlesContent();
   const summaries = articles.map(({ slug, title, description, category, readingMinutes }) => ({ slug, title, description, category, readingMinutes }));
   return (
     <main className={styles.page}>

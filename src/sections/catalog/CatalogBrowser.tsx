@@ -7,6 +7,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { catalogHref, searchCatalog, type CatalogEntry, type CatalogNode } from "@/lib/catalog";
 import { publicPath } from "@/lib/public-path";
 import CatalogCard from "./CatalogCard";
+import ProductGrid from "@/sections/products/ProductGrid";
+import type { PublicProductSummary } from "@/content/cms-adapter";
 import CatalogFloatingNav from "./CatalogFloatingNav";
 import styles from "./Catalog.module.css";
 
@@ -24,8 +26,8 @@ function QuerySync({ onQuery }: { onQuery: Dispatch<SetStateAction<string>> }) {
   return null;
 }
 
-export default function CatalogBrowser({ path, current, nodes, searchEntries }: {
-  path: string[]; current: CatalogEntry | null; nodes: CatalogNode[]; searchEntries: CatalogEntry[];
+export default function CatalogBrowser({ path, current, nodes, searchEntries, products = [] }: {
+  path: string[]; current: CatalogEntry | null; nodes: CatalogNode[]; searchEntries: CatalogEntry[]; products?: PublicProductSummary[];
 }) {
   const [query, setQuery] = useState("");
   const router = useRouter();
@@ -33,6 +35,12 @@ export default function CatalogBrowser({ path, current, nodes, searchEntries }: 
   const covers = path.length === 0 && !searching;
   const entries: CatalogEntry[] = searching ? searchCatalog(searchEntries, query) : nodes.map(node => ({ node, path: [...path, node.slug], trail: [...(current?.trail ?? []), node] }));
   const selector = path[0] === "pipelines" ? { href: "/selection/pipelines", label: "Подбор трубопровода" } : path[0] === "pumps" ? { href: "/selection/pumps", label: "Подбор насосов" } : null;
+
+  const words = query.trim().toLocaleLowerCase("ru").split(/\s+/).filter(Boolean);
+  const visibleProducts = searching ? products.filter((product) => {
+    const searchable = `${product.title} ${product.sku} ${product.category?.title ?? ""} ${product.series?.title ?? ""}`.toLocaleLowerCase("ru");
+    return words.every((word) => searchable.includes(word));
+  }) : products.filter((product) => product.category?.path === path.join("/"));
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -55,7 +63,7 @@ export default function CatalogBrowser({ path, current, nodes, searchEntries }: 
     </div>}
     {entries.length > 0 ? <ul className={`${styles.grid}${covers ? ` ${styles.coverGrid}` : ""}`} aria-label={searching ? "Результаты поиска разделов" : "Разделы каталога"}>
       {entries.map(entry => <CatalogCard key={catalogHref(entry.path)} entry={entry} showParent={searching} cover={covers} />)}
-    </ul> : searching ? <div className={styles.empty}>
+    </ul> : visibleProducts.length ? null : searching ? <div className={styles.empty}>
       <div className={styles.emptyCopy}><h2>Разделы не найдены</h2><p>Попробуйте другое название системы или тип оборудования.</p><button type="button" className="home-hero__link home-hero__link--secondary" onClick={clearSearch}>Сбросить поиск</button></div>
     </div> : <div className={`${styles.empty} deferred-block__content is-ready`}>
       <div className={styles.emptyArtwork}>{current?.node.image ? <img src={publicPath(current.node.image)} alt="" width={1024} height={768} className={styles.photo} /> : <CatalogArtwork kind={current?.node.art ?? "auxiliary"} />}</div>
@@ -63,5 +71,6 @@ export default function CatalogBrowser({ path, current, nodes, searchEntries }: 
         {selector && <Link href={selector.href} className="home-hero__link home-hero__link--secondary">{selector.label}</Link>}
       </div>
     </div>}
+    <ProductGrid products={visibleProducts} />
   </>;
 }

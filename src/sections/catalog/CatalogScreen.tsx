@@ -1,18 +1,19 @@
-import { catalog } from "@/content/catalog";
+import { getCatalogContent, getProductSummariesContent } from "@/content/cms-adapter";
 import { getCatalogEntry, getCatalogEntries } from "@/lib/catalog";
 import CatalogBrowser from "./CatalogBrowser";
 import styles from "./Catalog.module.css";
 
-export default function CatalogScreen({ path = [] }: { path?: string[] }) {
+export default async function CatalogScreen({ path = [] }: { path?: string[] }) {
+  const [catalog, products] = await Promise.all([getCatalogContent(), getProductSummariesContent()]);
   const entry = getCatalogEntry(catalog, path);
   const title = entry?.node.title ?? "Каталог";
   if (!entry) return <main className={styles.landing} aria-label="Каталог продукции Heisskraft" data-header-theme="light">
     <div className={styles.landingContent}>
-      <CatalogBrowser key={path.join("/")} path={path} current={entry} nodes={catalog} searchEntries={getCatalogEntries(catalog)} />
+      <CatalogBrowser key={path.join("/")} path={path} current={entry} nodes={catalog} searchEntries={getCatalogEntries(catalog)} products={products} />
     </div>
   </main>;
   return <main className={styles.page} data-header-theme="light" data-catalog-section={path[0]}>
     <h1 className={styles.srOnly}>{title}</h1>
-    <CatalogBrowser key={path.join("/")} path={path} current={entry} nodes={entry.node.children ?? []} searchEntries={getCatalogEntries(catalog)} />
+    <CatalogBrowser key={path.join("/")} path={path} current={entry} nodes={entry.node.children ?? []} searchEntries={getCatalogEntries(catalog)} products={products} />
   </main>;
 }

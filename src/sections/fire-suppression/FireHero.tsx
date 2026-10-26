@@ -1,4 +1,4 @@
-import { fireHero } from "@/content/solution-pages";
+import { getSolutionsContent } from "@/content/cms-adapter";
 import shared from "../data-centers/DataCenters.module.css";
 import styles from "./FireSuppression.module.css";
 
@@ -15,7 +15,8 @@ function Sprinkler({ x, y, delay }: { x: number; y: number; delay: string }) {
   </g>;
 }
 
-export default function FireHero() {
+export default async function FireHero() {
+  const { fireHero } = await getSolutionsContent();
   return <section className={shared.hero} data-header-theme="light" aria-labelledby="fire-title">
     <div className={shared.heroInner}>
       <div className={shared.heroCopy}>

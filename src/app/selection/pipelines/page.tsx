@@ -1,3 +1,4 @@
+import CMSPageOverride from "@/components/cms/CMSPageOverride";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,6 +6,10 @@ export const metadata: Metadata = {
   description: "Подбор трубопроводной системы HEISSKRAFT.",
 };
 
-export default function PipelineSelectionPage() {
+function PipelineSelectionPage() {
   return <main><section data-header-theme="light" className="page-stub"><div className="page-stub__inner"><h1 className="page-stub__title">Подбор трубопровода</h1></div></section></main>;
+}
+
+export default function CMSAwarePage() {
+  return <CMSPageOverride path="/selection/pipelines"><PipelineSelectionPage /></CMSPageOverride>;
 }

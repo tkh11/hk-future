@@ -1,3 +1,4 @@
+import CMSPageOverride from "@/components/cms/CMSPageOverride";
 import type { Metadata } from "next";
 import PageStub from "@/components/layout/PageStub";
 
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
     "Подход HEISSKRAFT к производству, подбору материалов и гарантии на инженерные системы.",
 };
 
-export default function WarrantyPage() {
+function WarrantyPage() {
   return (
     <main>
       <PageStub
@@ -16,4 +17,8 @@ export default function WarrantyPage() {
       />
     </main>
   );
+}
+
+export default function CMSAwarePage() {
+  return <CMSPageOverride path="/warranty"><WarrantyPage /></CMSPageOverride>;
 }

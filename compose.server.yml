@@ -1,0 +1,26 @@
+# Run only on a prepared host with HTTPS and the access gateway described in docs.
+# PostgreSQL and private S3 are managed separately; this file does not provision them.
+# Both images must be built with NEXT_PUBLIC_SITE_URL equal to this environment's
+# CMS_SERVER_URL in .local/server.env. Runtime environment cannot change that build value.
+name: heisskraft-cms-server
+
+services:
+  app:
+    image: ${CMS_IMAGE:?Set CMS_IMAGE to the approved runtime image digest}
+    env_file: .local/server.env
+    environment:
+      NODE_ENV: production
+      CMS_ENABLED: 'true'
+    ports:
+      - '127.0.0.1:3100:3100'
+    init: true
+    restart: unless-stopped
+
+  operations:
+    profiles: [operations]
+    image: ${CMS_OPERATIONS_IMAGE:?Set CMS_OPERATIONS_IMAGE to the matching operations image digest}
+    env_file: .local/server.env
+    environment:
+      NODE_ENV: production
+      CMS_ENABLED: 'true'
+    init: true

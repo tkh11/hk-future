@@ -1,0 +1,66 @@
+name: heisskraft-cms-local
+
+x-cms-environment: &cms-environment
+  CMS_ENABLED: 'true'
+  CMS_SERVER_URL: &cms-local-origin http://localhost:3200
+  NEXT_PUBLIC_SITE_URL: *cms-local-origin
+  DATABASE_URL: postgresql://heisskraft:${POSTGRES_PASSWORD:?Run node scripts/cms/compose-init.mjs first}@postgres:5432/heisskraft
+  PAYLOAD_SECRET: ${PAYLOAD_SECRET:?Run node scripts/cms/compose-init.mjs first}
+  METRIKA_ENABLED: 'false'
+
+services:
+  postgres:
+    image: postgres:17.11-bookworm
+    environment:
+      POSTGRES_USER: heisskraft
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run node scripts/cms/compose-init.mjs first}
+      POSTGRES_DB: heisskraft
+    ports:
+      - '127.0.0.1:55433:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U heisskraft -d heisskraft']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      target: runtime
+      args:
+        NEXT_PUBLIC_SITE_URL: *cms-local-origin
+    environment: *cms-environment
+    ports:
+      - '127.0.0.1:3200:3100'
+    volumes:
+      - uploads:/app/.local/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+    init: true
+    restart: unless-stopped
+
+  operations:
+    profiles: [operations]
+    build:
+      context: .
+      target: operations
+      args:
+        NEXT_PUBLIC_SITE_URL: *cms-local-origin
+    environment:
+      <<: *cms-environment
+      CMS_BOOTSTRAP_EMAIL: ${CMS_BOOTSTRAP_EMAIL:?Run node scripts/cms/compose-init.mjs first}
+      CMS_BOOTSTRAP_PASSWORD: ${CMS_BOOTSTRAP_PASSWORD:?Run node scripts/cms/compose-init.mjs first}
+    volumes:
+      - uploads:/app/.local/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+    init: true
+
+volumes:
+  postgres-data:
+  uploads:

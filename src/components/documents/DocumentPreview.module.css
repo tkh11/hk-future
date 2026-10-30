@@ -1,0 +1,27 @@
+.dialog { position: fixed; inset: 0; width: min(1180px, calc(100vw - 48px)); max-width: none; height: min(1000px, calc(100dvh - 48px)); max-height: none; margin: auto; padding: 0; border: 0; border-radius: var(--hk-radius-panel); background: #fff; color: var(--hk-ink); box-shadow: var(--hk-shadow-dialog); overflow: visible; }
+.dialog[open] { animation: dialogIn .3s var(--hk-ease); }
+.dialog::backdrop { background: rgb(0 0 0 / 48%); backdrop-filter: blur(5px); }
+.previewPanel { display: flex; flex-direction: column; width: 100%; height: 100%; overflow: hidden; border-radius: inherit; }
+.previewHeader { display: flex; flex: none; align-items: center; gap: 20px; padding: 20px 24px; }
+.previewTitle { flex: 1; min-width: 0; }
+.previewTitle h2 { font: 600 20px/1.3 var(--hk-font-display); overflow-wrap: anywhere; }
+.previewTitle p { margin-top: 6px; font-size: 13px; color: var(--hk-text-secondary); }
+.download { flex: none; padding: 12px 22px; border-radius: var(--hk-radius-field); color: #fff; background: var(--hk-red); font-size: 15px; text-decoration: none; white-space: nowrap; }
+.download:hover { background: var(--hk-red-strong); }
+.close { display: grid; place-items: center; flex: none; width: 44px; height: 44px; border: 0; border-radius: var(--hk-radius-circle); background: var(--hk-surface-muted); color: var(--hk-ink); cursor: pointer; }
+.viewer { flex: 1; min-height: 0; position: relative; background: var(--hk-surface-muted); }
+.viewer iframe { display: block; position: relative; width: 100%; height: 100%; border: 0; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--hk-text-secondary); }
+.previewFooter { display: flex; justify-content: space-between; gap: 16px; flex: none; padding: 14px 24px; font-size: 13px; color: var(--hk-text-secondary); }
+.previewFooter a { color: var(--hk-ink); text-underline-offset: 3px; }
+@keyframes dialogIn { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
+@media (max-width: 767px) {
+  .dialog { width: calc(100vw - 16px); height: calc(100dvh - 24px); border-radius: var(--hk-radius-card-mobile); }
+  .previewHeader { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 16px; }
+  .previewTitle h2 { font-size: 17px; }
+  .close { grid-column: 2; grid-row: 1; }
+  .download { justify-self: start; grid-column: 1 / -1; }
+  .previewFooter { padding: 12px 16px; }
+  .previewFooter > span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .dialog[open] { animation: none; } }

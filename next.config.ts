@@ -26,4 +26,24 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default githubPages ? nextConfig : withPayload(nextConfig);
+const config = githubPages ? nextConfig : withPayload(nextConfig);
+const payloadHeaders = config.headers;
+
+if (!githubPages && payloadHeaders) {
+  // Payload needs theme negotiation in Admin. Making it critical on public
+  // pages causes Chrome to repeat the first request and its server-side work.
+  config.headers = async () => (await payloadHeaders()).flatMap(rule => {
+    if (rule.source !== "/:path*") return [rule];
+    const criticalHeaders = rule.headers.filter(header =>
+      header.key.toLowerCase() === "critical-ch"
+      && header.value === "Sec-CH-Prefers-Color-Scheme",
+    );
+    if (!criticalHeaders.length) return [rule];
+    return [
+      { ...rule, headers: rule.headers.filter(header => !criticalHeaders.includes(header)) },
+      { ...rule, source: "/admin/:path*", headers: criticalHeaders },
+    ];
+  });
+}
+
+export default config;

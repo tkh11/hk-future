@@ -1,0 +1,12 @@
+.block { display: flex; flex-direction: column; gap: 12px; max-width: 960px; margin-bottom: 36px; }
+.tasks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; }
+.task {
+  display: flex; align-items: baseline; gap: 12px; height: 100%; padding: 14px 16px;
+  border: 1px solid var(--s-border); border-radius: var(--s-radius-m); background: var(--s-surface);
+  transition: border-color var(--s-fast) var(--s-ease);
+}
+.task:hover { border-color: var(--s-control); }
+.taskCount { min-width: 3ch; font: 600 22px/1 var(--s-font-display); font-variant-numeric: tabular-nums; }
+.task[data-tone='warning'] .taskCount { color: var(--s-warning); }
+.task[data-tone='danger'] .taskCount { color: var(--s-accent-text); }
+.done { font-size: 13px; color: var(--s-tertiary); }

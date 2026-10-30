@@ -12,7 +12,7 @@ function prepareRoutes(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     if (!entry.isDirectory()) continue;
     const path = join(directory, entry.name);
-    if (entry.name === '(payload)' || entry.name === '[...pagePath]' || entry.name === 'products') {
+    if (entry.name === '(payload)' || entry.name === '(studio)' || entry.name === '[...pagePath]' || entry.name === 'products' || path.endsWith('/docs/file')) {
       rmSync(path, { recursive: true, force: true });
       continue;
     }
@@ -52,7 +52,7 @@ try {
   if (result.error || result.status !== 0) throw new Error(`Static build failed (${result.status ?? result.error?.code ?? 'unknown'})`);
   const exported = join(stage, 'out');
   if (!existsSync(join(exported, 'index.html'))) throw new Error('Static build did not emit the homepage.');
-  for (const route of ['admin', 'api', 'products']) {
+  for (const route of ['admin', 'api', 'studio', 'products']) {
     if (existsSync(join(exported, route))) throw new Error(`CMS-only route leaked into frozen export: ${route}`);
   }
   rmSync(join(source, 'out'), { recursive: true, force: true });

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import LeadButton from "@/components/ui/LeadButton";
 
 export default function PageStub({
   title,
@@ -13,9 +13,7 @@ export default function PageStub({
         <p className="page-stub__eyebrow">Раздел в разработке</p>
         <h1 className="page-stub__title">{title}</h1>
         <p className="page-stub__note">{note}</p>
-        <Link href="/catalog" className="page-stub__cta">
-          Оставить заявку
-        </Link>
+        <LeadButton className="page-stub__cta" />
       </div>
     </section>
   );

@@ -32,8 +32,8 @@ export default function EditorStatus() {
 }
 
 export function ProductReview() {
-  const fields = useFormFields(([state]) => ({ title: state.title?.value, sku: state.sku?.value, slug: state.slug?.value, category: state.category?.value, image: state.image?.value }));
-  const required = [{ label: 'Название', value: fields.title }, { label: 'Артикул', value: fields.sku }, { label: 'Адрес', value: fields.slug }, { label: 'Категория', value: fields.category }];
+  const fields = useFormFields(([state]) => ({ title: state.title?.value, sku: state.sku?.value, kind: state.productKind?.value, slug: state.slug?.value, category: state.category?.value, image: state.image?.value }));
+  const required = [{ label: 'Название', value: fields.title }, ...(!fields.kind || fields.kind === 'single' ? [{ label: 'Артикул', value: fields.sku }] : []), { label: 'Адрес', value: fields.slug }, { label: 'Категория', value: fields.category }];
   return <section className={styles.review} aria-label="Проверка товара">
     <h3>Перед публикацией</h3>
     <ul>{required.map(item => <li key={item.label}>{item.label}: {item.value ? 'заполнено' : 'нужно заполнить'}</li>)}<li>Изображение: {fields.image ? 'выбрано' : 'пока не добавлено'}</li></ul>

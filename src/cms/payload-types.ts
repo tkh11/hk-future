@@ -71,6 +71,8 @@ export interface Config {
     categories: Category;
     'product-series': ProductSery;
     products: Product;
+    'product-variants': ProductVariant;
+    'catalog-documents': CatalogDocument;
     pages: Page;
     articles: Article;
     media: Media;
@@ -81,12 +83,18 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    products: {
+      variants: 'product-variants';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'product-series': ProductSeriesSelect<false> | ProductSeriesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    'product-variants': ProductVariantsSelect<false> | ProductVariantsSelect<true>;
+    'catalog-documents': CatalogDocumentsSelect<false> | CatalogDocumentsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -201,6 +209,15 @@ export interface Media {
   id: number;
   title?: string | null;
   alt: string;
+  externalId?: string | null;
+  legacyIds?:
+    | {
+        value?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  sourceActive?: boolean | null;
+  sha256?: string | null;
   prefix?: string | null;
   _objectKey?: string | null;
   updatedAt: string;
@@ -240,14 +257,39 @@ export interface Product {
   id: number;
   title: string;
   /**
-   * Укажите артикул производителя. Он не меняется автоматически.
-   */
-  sku: string;
-  description?: string | null;
-  /**
    * Выберите раздел каталога, в котором появится товар.
    */
   category: number | Category;
+  additionalCategories?: (number | Category)[] | null;
+  productKind?: ('single' | 'family' | 'request') | null;
+  profile?:
+    | (
+        | 'pipe'
+        | 'fitting'
+        | 'valve'
+        | 'manifold'
+        | 'mounting'
+        | 'pump'
+        | 'station'
+        | 'motor'
+        | 'tank'
+        | 'automation'
+        | 'cable'
+        | 'tool'
+        | 'compensator'
+        | 'mixer'
+        | 'accessory'
+      )
+    | null;
+  /**
+   * Укажите артикул производителя. Он не меняется автоматически.
+   */
+  sku?: string | null;
+  /**
+   * Строка под названием на странице товара. Если поле пустое, показывается первое предложение описания.
+   */
+  summary?: string | null;
+  description?: string | null;
   /**
    * Необязательно. Серия должна относиться к выбранной категории.
    */
@@ -260,10 +302,25 @@ export interface Product {
    * Заполняется при интеграции. Не меняйте без согласования с ответственным за обмен данными.
    */
   externalId?: string | null;
+  sortOrder?: number | null;
+  variants?: {
+    docs?: (number | ProductVariant)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   /**
    * Выберите фотографию товара. Чтобы заменить файл, загрузите новую запись: опубликованное изображение останется доступным.
    */
   image?: (number | null) | Media;
+  gallery?:
+    | {
+        file: number | Media;
+        role?: ('main' | 'preview' | 'gallery' | 'technical') | null;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  characteristics?: string | null;
   attributes?:
     | {
         label: string;
@@ -283,6 +340,176 @@ export interface Product {
    * Инструкции, сертификаты и другие документы. Файлы публикуются отдельно от товара.
    */
   documents?: (number | Media)[] | null;
+  catalogDocuments?:
+    | {
+        /**
+         * Выберите из общей библиотеки. Замена файла в документе применяется ко всем связанным товарам.
+         */
+        document: number | CatalogDocument;
+        visible?: boolean | null;
+        legacyLinkIds?:
+          | {
+              value?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Сохранённые видео, внешние ссылки и сканы со старого сайта. Только для работы в CMS — на странице товара не показываются. PDF добавляйте через «Документы каталога» выше.
+   */
+  resources?:
+    | {
+        label?: string | null;
+        file?: (number | null) | Media;
+        url?: string | null;
+        section?: string | null;
+        visible?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  documentsText?: string | null;
+  videoText?: string | null;
+  reviewState?: ('ready' | 'review' | 'blocked') | null;
+  reviewNotes?: string | null;
+  legacyIds?:
+    | {
+        value?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  sourceActive?: boolean | null;
+  sourceSlug?: string | null;
+  titleEn?: string | null;
+  descriptionEn?: string | null;
+  characteristicsEn?: string | null;
+  documentsTextEn?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-variants".
+ */
+export interface ProductVariant {
+  id: number;
+  title: string;
+  product?: (number | null) | Product;
+  sku?: string | null;
+  profile?:
+    | (
+        | 'pipe'
+        | 'fitting'
+        | 'valve'
+        | 'manifold'
+        | 'mounting'
+        | 'pump'
+        | 'station'
+        | 'motor'
+        | 'tank'
+        | 'automation'
+        | 'cable'
+        | 'tool'
+        | 'compensator'
+        | 'mixer'
+        | 'accessory'
+      )
+    | null;
+  size?: string | null;
+  connection?: string | null;
+  color?: ('green' | 'purple' | 'black' | 'red' | 'blue' | 'azure') | null;
+  sortOrder?: number | null;
+  specs?: {
+    dn?: number | null;
+    pn?: number | null;
+    sdr?: number | null;
+    outerDiameterMm?: number | null;
+    wallThicknessMm?: number | null;
+    powerKw?: number | null;
+    phases?: number | null;
+    voltageV?: number | null;
+    maxTemperatureC?: number | null;
+    prechargeBar?: number | null;
+    dimensionAMm?: number | null;
+    dimensionBMm?: number | null;
+    netWeightKg?: number | null;
+    coreCount?: number | null;
+    crossSectionMm2?: number | null;
+    coilLengthM?: number | null;
+    maxFlowM3h?: number | null;
+    maxHeadM?: number | null;
+    tankVolumeL?: number | null;
+  };
+  gallery?:
+    | {
+        file: number | Media;
+        role?: ('main' | 'preview' | 'gallery' | 'technical') | null;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  packaging?: {
+    weightValue?: number | null;
+    weightUnit?: string | null;
+    weightNote?: string | null;
+    amountValue?: number | null;
+    amountUnit?: string | null;
+    amountNote?: string | null;
+    volumeValue?: number | null;
+    volumeUnit?: string | null;
+    volumeNote?: string | null;
+    unitsVerified?: boolean | null;
+  };
+  reviewState?: ('ready' | 'review' | 'blocked') | null;
+  reviewNotes?: string | null;
+  externalId?: string | null;
+  legacyIds?:
+    | {
+        value?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  sourceActive?: boolean | null;
+  sourceSlug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "catalog-documents".
+ */
+export interface CatalogDocument {
+  id: number;
+  title: string;
+  kind?: string | null;
+  description?: string | null;
+  /**
+   * Для новой редакции загрузите и опубликуйте файл, выберите его здесь и опубликуйте документ. Все связанные товары получат новую редакцию.
+   */
+  file?: (number | null) | Media;
+  cover?: (number | null) | Media;
+  reviewState?: ('ready' | 'review' | 'blocked') | null;
+  reviewNotes?: string | null;
+  externalId?: string | null;
+  legacyIds?:
+    | {
+        value?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  sourceActive?: boolean | null;
+  legacyLabels?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -562,6 +789,14 @@ export interface PayloadLockedDocument {
         value: number | Product;
       } | null)
     | ({
+        relationTo: 'product-variants';
+        value: number | ProductVariant;
+      } | null)
+    | ({
+        relationTo: 'catalog-documents';
+        value: number | CatalogDocument;
+      } | null)
+    | ({
         relationTo: 'pages';
         value: number | Page;
       } | null)
@@ -688,13 +923,28 @@ export interface ProductSeriesSelect<T extends boolean = true> {
  */
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
-  sku?: T;
-  description?: T;
   category?: T;
+  additionalCategories?: T;
+  productKind?: T;
+  profile?: T;
+  sku?: T;
+  summary?: T;
+  description?: T;
   series?: T;
   slug?: T;
   externalId?: T;
+  sortOrder?: T;
+  variants?: T;
   image?: T;
+  gallery?:
+    | T
+    | {
+        file?: T;
+        role?: T;
+        caption?: T;
+        id?: T;
+      };
+  characteristics?: T;
   attributes?:
     | T
     | {
@@ -708,6 +958,143 @@ export interface ProductsSelect<T extends boolean = true> {
         id?: T;
       };
   documents?: T;
+  catalogDocuments?:
+    | T
+    | {
+        document?: T;
+        visible?: T;
+        legacyLinkIds?:
+          | T
+          | {
+              value?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  resources?:
+    | T
+    | {
+        label?: T;
+        file?: T;
+        url?: T;
+        section?: T;
+        visible?: T;
+        id?: T;
+      };
+  documentsText?: T;
+  videoText?: T;
+  reviewState?: T;
+  reviewNotes?: T;
+  legacyIds?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  sourceActive?: T;
+  sourceSlug?: T;
+  titleEn?: T;
+  descriptionEn?: T;
+  characteristicsEn?: T;
+  documentsTextEn?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-variants_select".
+ */
+export interface ProductVariantsSelect<T extends boolean = true> {
+  title?: T;
+  product?: T;
+  sku?: T;
+  profile?: T;
+  size?: T;
+  connection?: T;
+  color?: T;
+  sortOrder?: T;
+  specs?:
+    | T
+    | {
+        dn?: T;
+        pn?: T;
+        sdr?: T;
+        outerDiameterMm?: T;
+        wallThicknessMm?: T;
+        powerKw?: T;
+        phases?: T;
+        voltageV?: T;
+        maxTemperatureC?: T;
+        prechargeBar?: T;
+        dimensionAMm?: T;
+        dimensionBMm?: T;
+        netWeightKg?: T;
+        coreCount?: T;
+        crossSectionMm2?: T;
+        coilLengthM?: T;
+        maxFlowM3h?: T;
+        maxHeadM?: T;
+        tankVolumeL?: T;
+      };
+  gallery?:
+    | T
+    | {
+        file?: T;
+        role?: T;
+        caption?: T;
+        id?: T;
+      };
+  packaging?:
+    | T
+    | {
+        weightValue?: T;
+        weightUnit?: T;
+        weightNote?: T;
+        amountValue?: T;
+        amountUnit?: T;
+        amountNote?: T;
+        volumeValue?: T;
+        volumeUnit?: T;
+        volumeNote?: T;
+        unitsVerified?: T;
+      };
+  reviewState?: T;
+  reviewNotes?: T;
+  externalId?: T;
+  legacyIds?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  sourceActive?: T;
+  sourceSlug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "catalog-documents_select".
+ */
+export interface CatalogDocumentsSelect<T extends boolean = true> {
+  title?: T;
+  kind?: T;
+  description?: T;
+  file?: T;
+  cover?: T;
+  reviewState?: T;
+  reviewNotes?: T;
+  externalId?: T;
+  legacyIds?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  sourceActive?: T;
+  legacyLabels?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -901,6 +1288,15 @@ export interface ArticlesSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   title?: T;
   alt?: T;
+  externalId?: T;
+  legacyIds?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  sourceActive?: T;
+  sha256?: T;
   prefix?: T;
   _objectKey?: T;
   updatedAt?: T;

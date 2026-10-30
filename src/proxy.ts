@@ -26,4 +26,4 @@ export function proxy(request: NextRequest) {
   if (publicMediaRead && pathname.toLowerCase().endsWith('.pdf')) response.headers.set('Content-Disposition', 'attachment');
   return response;
 }
-export const config = { matcher: ['/admin/:path*', '/api/:path*'] };
+export const config = { matcher: ['/admin/:path*', '/api/:path*', '/studio', '/studio/:path*'] };

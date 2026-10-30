@@ -38,9 +38,9 @@ export default function CatalogBrowser({ path, current, nodes, searchEntries, pr
 
   const words = query.trim().toLocaleLowerCase("ru").split(/\s+/).filter(Boolean);
   const visibleProducts = searching ? products.filter((product) => {
-    const searchable = `${product.title} ${product.sku} ${product.category?.title ?? ""} ${product.series?.title ?? ""}`.toLocaleLowerCase("ru");
+    const searchable = `${product.title} ${product.sku} ${product.searchKeywords??''} ${product.category?.title ?? ""} ${product.series?.title ?? ""}`.toLocaleLowerCase("ru");
     return words.every((word) => searchable.includes(word));
-  }) : products.filter((product) => product.category?.path === path.join("/"));
+  }) : products.filter((product) => product.category?.path === path.join("/") || product.additionalCategories?.some(c=>c.path===path.join('/')));
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

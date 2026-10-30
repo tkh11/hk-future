@@ -10,7 +10,8 @@ export default function ProductGrid({ products }: { products: PublicProductSumma
     <ul className={styles.grid}>{products.map((product) => <li key={product.slug}>
       <Link className={styles.card} href={`/products/${product.slug}`}>
         <div className={styles.image}><Image unoptimized src={publicPath(product.image?.url ?? "/brand/small-black-logo.svg")} alt={product.image?.alt ?? ""} loading="lazy" width={480} height={360} /></div>
-        <h2>{product.title}</h2><p>Артикул: {product.sku}</p>
+        <h2>{product.title}</h2><p>{product.sku?`Артикул: ${product.sku}`:'Изготовление по запросу'}</p>
+        {Boolean(product.variantCount)&&<p>Вариантов: {product.variantCount}<br />Артикулы: {product.articleSummary}</p>}
       </Link>
     </li>)}</ul>
   </section>;

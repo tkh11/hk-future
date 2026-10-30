@@ -13,6 +13,10 @@ import { contacts } from "./contacts";
 import * as pageCopy from "./solution-pages";
 import { coolingProducts, fireProducts, fireStations } from "./solutions";
 import type { CatalogNode } from "@/lib/catalog";
+import { catalogHref, getCatalogEntries } from "@/lib/catalog";
+import type { SiteSearchEntry } from "@/lib/site-search";
+import { searchPages } from "./search-pages";
+import { mapLibraryDocuments } from './documents';
 import { solutionSchema, type SolutionContent } from "./cms-schemas";
 export { solutionSchema, type SolutionContent } from "./cms-schemas";
 
@@ -25,7 +29,8 @@ const httpURL = z.string().url().refine((value) => /^https?:\/\//.test(value));
 const assetURL = z.union([relativePath, httpURL]);
 const relationID = z.union([z.string(), z.number()]);
 const art = z.enum(["pipes", "layers", "pump", "circulation", "borehole", "drainage", "station", "automation", "auxiliary"]);
-const media = z.object({ url: assetURL, alt: text.nullish(), filename: text.nullish() });
+const media = z.object({ url: assetURL, alt: text.nullish(), filename: text.nullish(),
+  id: relationID.optional(), _status: text.optional(), mimeType: text.nullish(), filesize: z.number().nullish() });
 const populatedMedia = media.nullish().catch(undefined);
 
 const categoryDocument = z.object({
@@ -97,7 +102,11 @@ const attribute = z.object({
   textValue: text.nullish(), numberValue: z.number().nullish(), booleanValue: z.boolean().nullish(), unit: text.nullish(),
 });
 const productDocument = z.object({
-  slug, sku: text, title: text, description: text.nullish(), image: populatedMedia,
+  id: relationID.optional(), slug, sku: text.nullish(), title: text, description: text.nullish(), image: populatedMedia,
+  productKind: z.enum(['single','family','request']).nullish(), characteristics:text.nullish(), summary:text.nullish(),
+  additionalCategories:z.array(z.object({path:text,title:text})).nullish().catch(undefined),
+  gallery:z.array(z.object({file:populatedMedia,role:text.nullish(),caption:text.nullish()})).nullish(),
+  catalogDocuments:z.array(z.object({visible:z.boolean().nullish(),document:z.object({id:relationID.optional(),_status:text.optional(),title:text,kind:text.nullish(),file:populatedMedia,cover:populatedMedia}).nullish().catch(undefined)})).nullish(),
   category: z.object({ path: text, title: text }).nullish().catch(undefined),
   series: z.object({ slug, title: text }).nullish().catch(undefined),
   attributes: z.array(attribute).nullish(), documents: z.array(z.unknown()).nullish(),
@@ -105,7 +114,12 @@ const productDocument = z.object({
 export function mapProduct(document: unknown) {
   const row = productDocument.parse(document);
   return {
-    slug: row.slug, sku: row.sku, title: row.title, description: row.description ?? "",
+    slug: row.slug, sku: row.sku ?? '', title: row.title, description: row.description ?? "",
+    productKind:row.productKind??'single', characteristics:row.characteristics??'',summary:row.summary??'',
+    variants:[] as import('./catalog-presenter').CatalogVariant[], articleSummary:'', variantCount:0,
+    previewDocuments: mapLibraryDocuments((row.catalogDocuments ?? []).filter(item => item.visible !== false).map(item => item.document)),
+    additionalCategories:row.additionalCategories??[],
+    gallery:(row.gallery??[]).flatMap(x=>x.file?[{url:x.file.url,alt:x.caption||x.file.alt||row.title,role:x.role||'gallery'}]:[]),
     image: row.image ? { url: row.image.url, alt: row.image.alt ?? row.title } : null,
     category: row.category ? { title: row.category.title, path: row.category.path } : null,
     series: row.series ? { slug: row.series.slug, title: row.series.title } : null,
@@ -114,10 +128,10 @@ export function mapProduct(document: unknown) {
       if (raw == null) return [];
       return [{ key: entry.key, label: entry.label, value: typeof raw === "boolean" ? (raw ? "Да" : "Нет") : String(raw), unit: entry.unit ?? "" }];
     }),
-    documents: (row.documents ?? []).flatMap((value) => {
+    documents: [...(row.documents ?? []).flatMap((value) => {
       const parsed = media.safeParse(value);
       return parsed.success ? [{ url: parsed.data.url, title: parsed.data.alt || parsed.data.filename || "Документ" }] : [];
-    }),
+    }),...(row.catalogDocuments??[]).filter(x=>x.visible!==false).flatMap(x=>x.document?.file?[{url:x.document.file.url,title:x.document.title}]:[])].filter((d,i,all)=>all.findIndex(x=>x.url===d.url)===i),
   };
 }
 export type PublicProduct = ReturnType<typeof mapProduct>;
@@ -141,13 +155,18 @@ async function findAll(collection: "categories" | "articles" | "products" | "pag
   let page = 1;
   let hasNextPage = true;
   while (hasNextPage) {
-    const result = await payload.find({
-      collection, depth: 1, limit: 200, page,
+    const args = {
+      depth: collection === 'products' && !options.summary ? 2 : 1, limit: 200, page,
       overrideAccess: false, user: user ?? undefined, draft: Boolean(user),
       where: { and: [...(user ? [] : [publishedOnly]), ...(options.where ? [options.where] : [])] },
-      sort: collection === "categories" ? "sortOrder" : "createdAt",
-      ...(options.summary ? { select: { slug: true, sku: true, title: true, image: true, category: true, series: true } as const } : {}),
-    });
+      sort: collection === "categories" || collection === "products" ? "sortOrder" : "createdAt",
+      ...(options.summary ? { select: { slug: true, sku: true, title: true, image: true, category: true, series: true, productKind:true,additionalCategories:true } as const } : {}),
+    };
+    // Fetch variants explicitly below; expanding reverse joins here would load
+    // dozens of unnecessary rows for every card and header search result.
+    const result = collection === 'products'
+      ? await payload.find({...args,collection:'products',joins:false,...(!options.summary ? { select: { resources: false } as const } : {})})
+      : await payload.find({...args,collection});
     rows.push(...result.docs);
     hasNextPage = result.hasNextPage;
     page += 1;
@@ -163,6 +182,42 @@ export const getCatalogContent = cache(async (): Promise<CatalogNode[]> => {
 export const getArticlesContent = cache(async () => {
   if (!cmsEnabled()) return articles;
   return (await findAll("articles")).map(mapArticle);
+});
+
+/** The global search always uses published content, including in preview mode. */
+export const getSiteSearchContent = cache(async (): Promise<SiteSearchEntry[]> => {
+  const enabled = cmsEnabled();
+  const [categoryRows, productRows, articleRows, pageRows, allowedPages] = enabled
+    ? await Promise.all([
+      findAll("categories", { publicOnly: true }),
+      findAll("products", { publicOnly: true, summary: true }),
+      findAll("articles", { publicOnly: true }),
+      findAll("pages", { publicOnly: true }),
+      filterPublicCMSPaths(searchPages.map(page => page.href)),
+    ]) : [[], [], [], [], searchPages.map(page => page.href)];
+  const categories = getCatalogEntries(enabled ? mapCategoryTree(categoryRows) : catalog);
+  const categoryPaths = new Set(categories.map(entry => entry.path.join("/")));
+  const pages = new Map(searchPages.filter(page => allowedPages.includes(page.href)).map(page => [page.href, page]));
+  const productSearch=await enrichVariantSummaries(productRows,productSummaries(productRows),true);
+  for (const document of pageRows) {
+    const page = z.object({ path: relativePath, title: text }).parse(document);
+    if (page.path === "/") continue;
+    pages.set(page.path, { ...pages.get(page.path), href: page.path, title: page.title, description: pages.get(page.path)?.description ?? "", kind: "Страница" });
+  }
+  return [
+    ...categories.map(({ node, path, trail }): SiteSearchEntry => ({
+      href: catalogHref(path), title: node.title, description: node.description?.slice(0, 220) ?? trail.slice(0, -1).map(item => item.title).join(" · "),
+      kind: "Раздел каталога", image: node.image, keywords: trail.map(item => item.title).join(" "),
+    })),
+    ...productSearch.filter(product => product.category && categoryPaths.has(product.category.path)).map((product): SiteSearchEntry => ({
+      href: `/products/${product.slug}`, title: product.title, description: [product.sku||product.articleSummary, product.category?.title].filter(Boolean).join(" · "),
+      kind: "Продукт", image: product.image?.url, keywords: [product.sku, product.searchKeywords, product.series?.title, product.category?.title].filter(Boolean).join(" "),
+    })),
+    ...(enabled ? articleRows.map(mapArticle) : articles).map((article): SiteSearchEntry => ({
+      href: `/articles/${article.slug}`, title: article.title, description: article.description.slice(0, 220), kind: "Статья", keywords: article.category,
+    })),
+    ...pages.values(),
+  ];
 });
 export async function getArticleContent(articleSlug: string) {
   return (await getArticlesContent()).find((article) => article.slug === articleSlug);
@@ -182,10 +237,29 @@ export const getSolutionsContent = cache(async (): Promise<SolutionContent> => {
   return solutionSchema.parse(result.content);
 });
 
-export type PublicProductSummary = Pick<PublicProduct, "slug" | "sku" | "title" | "image" | "category" | "series">;
-function productSummary(document: unknown): PublicProductSummary {
-  const { slug, sku, title, image, category, series } = mapProduct(document);
-  return { slug, sku, title, image, category, series };
+export type PublicProductSummary = Pick<PublicProduct, "slug" | "sku" | "title" | "image" | "category" | "series"> & {
+  additionalCategories?:{path:string;title:string}[]; articleSummary?:string;variantCount?:number;searchKeywords?:string;
+};
+const productSummaryDocument = productDocument.pick({ slug: true, sku: true, title: true, image: true, category: true, series: true })
+  .extend({ productKind:z.enum(['single','family','request']).nullish(),additionalCategories:z.array(z.object({path:text,title:text})).nullish().catch(undefined),title: text.refine(value => value.trim().length > 0) })
+  .refine(row=>row.productKind==='family'||row.productKind==='request'||Boolean(row.sku?.trim()),{path:['sku'],message:'Артикул не заполнен'});
+function productSummaries(documents: unknown[]): PublicProductSummary[] {
+  return documents.flatMap(document => {
+    const result = productSummaryDocument.safeParse(document);
+    // Autosaved drafts can lack even a title or slug. Keep them in the CMS,
+    // but never create broken links or fail the entire catalog/search page.
+    if (!result.success) {
+      console.warn('[CMS] Incomplete product omitted from listings:', result.error.issues.map(issue => issue.path.join('.')).join(', '));
+      return [];
+    }
+    const row = result.data;
+    return [{
+      slug: row.slug, sku: row.sku??'', title: row.title,
+      image: row.image ? { url: row.image.url, alt: row.image.alt ?? row.title } : null,
+      category: row.category ?? null, series: row.series ?? null,
+      additionalCategories:row.additionalCategories??[],
+    }];
+  });
 }
 async function visibleCategoryPaths() {
   const { getCatalogEntries } = await import("@/lib/catalog");
@@ -194,15 +268,35 @@ async function visibleCategoryPaths() {
 export const getProductSummariesContent = cache(async (): Promise<PublicProductSummary[]> => {
   if (!cmsEnabled()) return [];
   const visible = await visibleCategoryPaths();
-  return (await findAll("products", { summary: true })).map(productSummary).filter((product) => product.category && visible.has(product.category.path));
+  const rows=await findAll("products", { summary: true });
+  return (await enrichVariantSummaries(rows,productSummaries(rows))).filter((product) => product.category && visible.has(product.category.path));
 });
-export async function getProductContent(productSlug: string) {
+
+async function enrichVariantSummaries(rows:unknown[], summaries:PublicProductSummary[], publicOnly=false):Promise<PublicProductSummary[]> {
+  const families=rows.flatMap(row=>{const parsed=z.object({id:relationID,slug:text,productKind:z.enum(['family','request'])}).safeParse(row);return parsed.success?[parsed.data]:[];});
+  if(!families.length)return summaries;
+  const {payload,user}=publicOnly?{payload:await getCMS(),user:null}:await requestContext();
+  const variants=await payload.find({collection:'product-variants',where:{product:{in:families.map(p=>p.id)}},pagination:false,depth:0,overrideAccess:false,user:user??undefined,draft:Boolean(user),select:{sku:true,product:true}});
+  const groups=new Map<string,string[]>();
+  for(const v of variants.docs){const id=typeof v.product==='object'?v.product?.id:v.product;if(!v.sku||id==null)continue;const key=String(id);groups.set(key,[...(groups.get(key)||[]),v.sku]);}
+  const {articleSummary}=await import('./catalog-presenter');
+  return summaries.map(p=>{const family=families.find(f=>f.slug===p.slug);if(!family)return p;const skus=groups.get(String(family.id))||[];return {...p,articleSummary:articleSummary(skus),variantCount:skus.length,searchKeywords:skus.join(' ')};});
+}
+// Metadata and the page request the same product during one render. Share the
+// result within that request without caching published/preview data across users.
+export const getProductContent = cache(async (productSlug: string) => {
   if (!cmsEnabled()) return undefined;
   const [document] = await findAll("products", { where: { slug: { equals: productSlug } } });
   if (!document) return undefined;
   const product = mapProduct(document);
+  const {payload,user}=await requestContext();
+  const id=z.object({id:relationID}).parse(document).id;
+  const rows=await payload.find({collection:'product-variants',where:{product:{equals:id}},pagination:false,depth:1,sort:'sortOrder',overrideAccess:false,user:user??undefined,draft:Boolean(user),select:{title:true,sku:true,size:true,connection:true,color:true,specs:true,gallery:true}});
+  const {mapCatalogVariant,articleSummary}=await import('./catalog-presenter');
+  product.variants=rows.docs.map(mapCatalogVariant).filter((v):v is NonNullable<typeof v>=>v!==null);
+  product.variantCount=product.variants.length;product.articleSummary=articleSummary(product.variants.map(v=>v.sku));
   return product.category && (await visibleCategoryPaths()).has(product.category.path) ? product : undefined;
-}
+});
 
 export async function getCMSPage(path: string) {
   if (!cmsEnabled()) return null;
@@ -249,7 +343,7 @@ export async function getPublishedCMSPaths(): Promise<string[]> {
   const allowed = new Set(categoryPaths);
   return [
     ...categoryPaths.map((path) => `/catalog/${path}`),
-    ...products.map(productSummary).filter((product) => product.category && allowed.has(product.category.path)).map((product) => `/products/${product.slug}`),
+    ...productSummaries(products).filter((product) => product.category && allowed.has(product.category.path)).map((product) => `/products/${product.slug}`),
     ...publishedArticles.map(mapArticle).map((article) => `/articles/${article.slug}`),
     ...pages.map((document) => z.object({ path: relativePath }).parse(document).path),
   ];

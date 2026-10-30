@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { redirectOldCMSPath, getProductContent } from "@/content/cms-adapter";
+import { redirectOldCMSPath, getProductContent, getCatalogContent } from "@/content/cms-adapter";
+import { getCatalogEntry } from '@/lib/catalog';
 import ProductScreen from "@/sections/products/ProductScreen";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -22,5 +23,7 @@ export default async function ProductPage({ params }: Props) {
     await redirectOldCMSPath(`/products/${slug}`);
     notFound();
   }
-  return <ProductScreen product={product} />;
+  const path = product.category?.path.split('/') ?? [];
+  const trail = getCatalogEntry(await getCatalogContent(), path)?.trail.map(({ slug, title, art }) => ({ slug, title, art })) ?? [];
+  return <ProductScreen key={product.slug} product={product} path={path} trail={trail} />;
 }

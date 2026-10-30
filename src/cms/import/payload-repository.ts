@@ -27,7 +27,7 @@ function relationID(value: unknown): RecordID {
 
 function normalizeProduct(document: Product): ExistingImportProduct {
   return {
-    id: document.id, updatedAt: importProductRevision(document), sku: document.sku, slug: document.slug,
+    id: document.id, updatedAt: importProductRevision(document), sku: document.sku ?? '', slug: document.slug,
     title: document.title, description: document.description || '', category: relationID(document.category), series: relationID(document.series),
     ...(document.externalId ? { externalId: document.externalId } : {}),
     attributes: (document.attributes || []).map(attribute => {

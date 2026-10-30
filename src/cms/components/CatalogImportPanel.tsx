@@ -27,7 +27,7 @@ async function readResponse<T>(response: Response): Promise<T> {
   return body as T;
 }
 
-export default function CatalogImportPanel() {
+export default function CatalogImportPanel({ standalone = false }: { standalone?: boolean }) {
   const id = useId();
   const [file, setFile] = useState<File>();
   const [batch, setBatch] = useState<ImportBatch>();
@@ -69,9 +69,11 @@ export default function CatalogImportPanel() {
     finally { requestPending.current = false; setBusy(false); }
   }
 
-  return <section className={styles.panel} aria-labelledby={`${id}-title`}>
-    <h2 id={`${id}-title`}>Импорт каталога</h2>
-    <p>Загрузите CSV или XLSX, проверьте изменения и подтвердите импорт. Новые товары создаются как черновики. Существующие значения сохраняются, пока вы явно не выберете поля для замены.</p>
+  return <section className={styles.panel} aria-labelledby={standalone ? undefined : `${id}-title`} aria-label={standalone ? "Файл каталога" : undefined}>
+    {!standalone && <>
+      <h2 id={`${id}-title`}>Импорт каталога</h2>
+      <p>Загрузите CSV или XLSX, проверьте изменения и подтвердите импорт. Новые товары создаются как черновики. Существующие значения сохраняются, пока вы явно не выберете поля для замены.</p>
+    </>}
     <div className={styles.form}>
       <label htmlFor={`${id}-file`}>Файл каталога, до 5 МБ<input id={`${id}-file`} type="file" accept=".csv,.xlsx" disabled={busy} onChange={event => { setFile(event.currentTarget.files?.[0]); setBatch(undefined); setResult(undefined); setError(""); setOverwrites({}); }} /></label>
       <div><button className={styles.button} type="button" disabled={!file || busy} onClick={() => void preview()}>{busy && !batch ? "Проверяем файл…" : "Предварительный просмотр"}</button></div>

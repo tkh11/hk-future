@@ -3,7 +3,7 @@ import { connection } from "next/server";
 import { getPreviewUser } from "@/cms/preview";
 import { cmsEnabled } from "@/cms/env";
 import localFont from "next/font/local";
-import { getNavigationContent, getSiteSettingsContent } from "@/content/cms-adapter";
+import { getNavigationContent, getSiteSettingsContent, getSiteSearchContent } from "@/content/cms-adapter";
 import MetrikaTracker from "@/cms/analytics/MetrikaTracker";
 import Header from "@/components/layout/Header";
 import DeferredBlock from "@/components/ui/DeferredBlock";
@@ -49,7 +49,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   if (cmsEnabled()) await connection();
-  const navigation = await getNavigationContent();
+  const [navigation, searchEntries] = await Promise.all([getNavigationContent(), getSiteSearchContent()]);
   const preview = cmsEnabled() ? await getPreviewUser() : null;
   return (
     <html lang="ru" className={`${sfProDisplay.variable} ${sfProText.variable}`}>
@@ -57,7 +57,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <HeaderThemeProvider defaultTheme="dark">
           <SmoothScroll />
           <MetrikaTracker enabled={process.env.METRIKA_ENABLED === "true" && !preview} counterId={process.env.METRIKA_COUNTER_ID} />
-          <Header links={navigation} />
+          <Header links={navigation} searchEntries={searchEntries} />
           {children}
           <DeferredBlock kind="footer" />
         </HeaderThemeProvider>

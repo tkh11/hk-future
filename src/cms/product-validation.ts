@@ -42,6 +42,7 @@ export const validateProduct: CollectionBeforeValidateHook = async ({ data, orig
   const publishing = document._status === 'published';
   const parsed = (publishing ? productAttributesSchema : draftProductAttributesSchema).safeParse(document.attributes ?? []);
   const errors = parsed.success ? [] : parsed.error.issues.map(issue => ({ path: ['attributes', ...issue.path].join('.'), message: issue.message }));
+  if (publishing && (!document.productKind || document.productKind === 'single') && !document.sku?.trim()) errors.push({path:'sku',message:'Укажите артикул товара.'});
   const seriesID = relationID(document.series);
   const categoryID = relationID(document.category);
   if (seriesID !== null) {

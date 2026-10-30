@@ -1,11 +1,6 @@
-"use client";
-
+import LeadButton from "@/components/ui/LeadButton";
 import styles from "./Contacts.module.css";
 
 export default function QuietLeadButton() {
-  return (
-    <button type="button" data-analytics-goal="lead_open" className={styles.lead} onClick={() => window.dispatchEvent(new Event("hk-open-lead"))}>
-      Оставить заявку
-    </button>
-  );
+  return <LeadButton className={styles.lead} />;
 }

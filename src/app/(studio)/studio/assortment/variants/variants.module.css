@@ -1,0 +1,9 @@
+.scope { display: flex; align-items: center; gap: 8px; margin: -8px 0 14px; color: var(--s-secondary); }
+.scope a:first-of-type { color: var(--s-text); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--s-control); }
+.clear { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; color: var(--s-tertiary); }
+.clear:hover { background: var(--s-hover); color: var(--s-text); }
+.tip { margin: -4px 0 10px; font-size: 12px; color: var(--s-tertiary); }
+.title { display: block; max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.parent { color: var(--s-secondary); }
+.parent:hover { color: var(--s-text); text-decoration: underline; text-underline-offset: 3px; }
+.unverified { color: var(--s-warning); }

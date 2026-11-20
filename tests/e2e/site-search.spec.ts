@@ -50,7 +50,9 @@ test('searches site pages as well as catalog sections and clears stale previews'
 test('keeps the chosen preview visible while the destination loads', async ({ page }, testInfo) => {
   let release: () => void = () => {};
   const responseGate = new Promise<void>(resolve => { release = resolve; });
-  await page.route('**/contacts*', async route => {
+  // Hold every request for the destination, including static export segment files
+  // (/contacts/__next.*.txt) that Link prefetches as soon as the result is visible.
+  await page.route(url => /\/contacts(?:\/|$)/.test(url.pathname), async route => {
     await responseGate;
     await route.continue();
   });

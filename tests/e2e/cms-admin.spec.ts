@@ -31,8 +31,8 @@ test.describe('Studio employee workflow', () => {
     await cms.create('categories', { title: `Категория ${suffix}`, slug: suffix, art: 'pipes', _status: 'published' }, publisherActor, false);
     await page.context().addCookies(cms.cookies(editorActor));
     await page.goto('/studio/assortment/new');
-    await expect(page.getByLabel('Название')).toBeEditable();
-    await page.getByLabel('Название').fill(`Насос ${suffix}`);
+    await expect(page.getByLabel('Название', { exact: true })).toBeEditable();
+    await page.getByLabel('Название', { exact: true }).fill(`Насос ${suffix}`);
     await page.getByLabel('Раздел каталога').selectOption({ label: `Категория ${suffix}` });
     await page.getByRole('radio', { name: 'Один артикул', exact: true }).check();
     const slug = page.getByLabel('Адрес на сайте');
@@ -43,19 +43,22 @@ test.describe('Studio employee workflow', () => {
     const id = Number(page.url().split('/').at(-1));
     cms.track('products', id);
     await captureGuide(page, 'product', isMobile);
-    await page.getByLabel('Артикул').fill(`SKU-${suffix}`);
-    await page.getByLabel('Описание', { exact: true }).fill('Описание сохраняется при переходе между разделами.');
-    await page.getByRole('navigation', { name: 'Разделы карточки' }).getByRole('link', { name: 'Документы' }).click();
-    await page.getByRole('navigation', { name: 'Разделы карточки' }).getByRole('link', { name: 'Основное' }).click();
-    await expect(page.getByLabel('Название')).toHaveValue(`Насос ${suffix}`);
-    await expect(page.getByLabel('Артикул')).toHaveValue(`SKU-${suffix}`);
+    await page.getByLabel('Артикул', { exact: true }).fill(`SKU-${suffix}`);
+    await page.getByRole('textbox', { name: 'Описание', exact: true }).fill('Описание сохраняется при переходе между разделами.');
+    // The section list is hidden on narrow screens.
+    if (!isMobile) {
+      await page.getByRole('navigation', { name: 'Разделы карточки' }).getByRole('link', { name: 'Документы' }).click();
+      await page.getByRole('navigation', { name: 'Разделы карточки' }).getByRole('link', { name: 'Информация для карточки' }).click();
+    }
+    await expect(page.getByLabel('Название', { exact: true })).toHaveValue(`Насос ${suffix}`);
+    await expect(page.getByLabel('Артикул', { exact: true })).toHaveValue(`SKU-${suffix}`);
     await expect.poll(async () => {
       const saved = await cms.find('products', id, editorActor, true);
       return { slug: saved.slug as string, sku: saved.sku as string };
     }).toEqual({ slug: `custom-${suffix}`, sku: `SKU-${suffix}` });
     await page.reload();
-    await expect(page.getByLabel('Артикул')).toHaveValue(`SKU-${suffix}`);
-    await page.getByLabel('Название').fill(`Новое название ${suffix}`);
+    await expect(page.getByLabel('Артикул', { exact: true })).toHaveValue(`SKU-${suffix}`);
+    await page.getByLabel('Название', { exact: true }).fill(`Новое название ${suffix}`);
     await expect.poll(async () => (await cms.find('products', id, editorActor, true)).title).toBe(`Новое название ${suffix}`);
     const renamed = await cms.find('products', id, editorActor, true);
     expect(renamed.slug).toBe(`custom-${suffix}`);
@@ -115,7 +118,7 @@ test.describe('Studio employee workflow', () => {
         await route.fulfill({ status: 503, contentType: 'text/plain', body: 'Тестовый отказ загрузки.' });
       } else await route.continue();
     });
-    const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j3ioAAAAASUVORK5CYII=', 'base64');
+    const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==', 'base64');
     await page.locator('input[type=file]').setInputFiles({ name: `${suffix}.png`, mimeType: 'image/png', buffer: png });
     await expect.poll(() => rejected).toBe(true);
     await expect(page.getByRole('status')).toBeVisible();
@@ -128,7 +131,7 @@ test.describe('Studio employee workflow', () => {
     const { editorActor, suffix } = cms;
     await page.context().addCookies(cms.cookies(editorActor));
     await page.goto('/studio/media');
-    const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j3ioAAAAASUVORK5CYII=', 'base64');
+    const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==', 'base64');
     await page.locator('input[type=file]').setInputFiles({ name: `${suffix}.png`, mimeType: 'image/png', buffer: png });
     await expect(page.getByRole('status').filter({ hasText: 'Загружено' })).toBeVisible();
     const files = await cms.payload.find({ collection: 'media', user: editorActor.user, overrideAccess: false, draft: true, where: { filename: { contains: suffix } }, limit: 1 });
@@ -145,7 +148,7 @@ test.describe('Studio employee workflow', () => {
     const doc = await cms.create('products', { title: suffix, slug: suffix, sku: suffix, category: category.id, productKind: 'single', _status: 'draft' });
     await page.context().addCookies(cms.cookies(editorActor));
     await page.goto(`/studio/assortment/${doc.id}`);
-    await expect(page.getByLabel('Название')).toBeEditable();
+    await expect(page.getByLabel('Название', { exact: true })).toBeEditable();
     await expect.poll(async () => (await cms.payload.find({
       collection: 'payload-locked-documents',
       where: { and: [{ 'document.relationTo': { equals: 'products' } }, { 'document.value': { equals: doc.id } }] },
@@ -158,8 +161,8 @@ test.describe('Studio employee workflow', () => {
       const otherPage = await otherContext.newPage();
       await otherPage.goto(`/studio/assortment/${doc.id}`);
       await expect(otherPage.getByRole('status').filter({ hasText: 'Карточку редактирует' })).toBeVisible();
-      await expect(otherPage.locator('fieldset').first()).toBeDisabled();
-      await expect(page.getByLabel('Название')).toBeEditable();
+      await expect(otherPage.getByLabel('Название', { exact: true })).toBeDisabled();
+      await expect(page.getByLabel('Название', { exact: true })).toBeEditable();
     } finally {
       await otherContext.close();
     }

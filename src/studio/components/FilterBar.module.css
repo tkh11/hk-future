@@ -1,0 +1,25 @@
+.bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.bar[aria-busy='true'] + * { opacity: 0.7; transition: opacity var(--s-fast) var(--s-ease); }
+.search {
+  display: flex; align-items: center; gap: 8px; flex: 1 1 280px; max-width: 380px; height: 32px; padding: 0 10px;
+  border: 1px solid var(--s-control); border-radius: var(--s-radius-s); background: var(--s-surface); color: var(--s-tertiary);
+}
+.search:focus-within { outline: 2px solid var(--s-accent-text); outline-offset: 1px; }
+.search svg { width: 16px; height: 16px; flex: none; }
+.search input { flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; color: var(--s-text); font-size: 13px; }
+.search input:focus { outline: none; }
+.search input::placeholder { color: var(--s-tertiary); }
+
+.select { position: relative; display: inline-flex; }
+.select select {
+  appearance: none; height: 28px; padding: 0 28px 0 10px; border: 1px solid var(--s-border); border-radius: 999px;
+  background: transparent; color: var(--s-secondary); font-size: 13px; cursor: pointer; max-width: 220px; text-overflow: ellipsis;
+}
+.select::after {
+  content: ''; position: absolute; right: 11px; top: 50%; width: 6px; height: 6px; margin-top: -5px; pointer-events: none;
+  border-right: 1.5px solid var(--s-tertiary); border-bottom: 1.5px solid var(--s-tertiary); rotate: 45deg;
+}
+.select select:hover { border-color: var(--s-control); color: var(--s-text); }
+.select[data-active='true'] select { border-color: var(--s-accent); background: var(--s-accent-soft); color: var(--s-text); }
+.select option { background: var(--s-raised); color: var(--s-text); }
+.status { font-size: 12px; color: var(--s-tertiary); min-width: 1px; }

@@ -12,9 +12,10 @@ type Props = {
   onQuery: (query: string) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   onClear: () => void;
+  currentItem?: { title: string; href: string };
 };
 
-export default function CatalogFloatingNav({ path, trail, query, onQuery, onSubmit, onClear }: Props) {
+export default function CatalogFloatingNav({ path, trail, query, onQuery, onSubmit, onClear, currentItem }: Props) {
   const [open, setOpen] = useState(Boolean(query));
   const input = useRef<HTMLInputElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
@@ -29,6 +30,7 @@ export default function CatalogFloatingNav({ path, trail, query, onQuery, onSubm
   const items = [
     { title: "Каталог", href: "/catalog" },
     ...trail.map((node, index) => ({ title: node.title, href: catalogHref(path.slice(0, index + 1)) })),
+    ...(currentItem ? [currentItem] : []),
   ];
   const parent = items[items.length - 2];
 

@@ -1,0 +1,45 @@
+.page { max-width: calc(var(--site-content-width) + 48px); margin: 0 auto; padding: calc(var(--site-header-height) + 64px) 24px 96px; color: var(--hk-ink); }
+.heading { margin-bottom: 40px; }
+.heading h1 { font: 600 var(--hk-type-hero)/1.1 var(--hk-font-display); letter-spacing: -.025em; }
+.heading p { margin-top: 20px; font-size: var(--hk-type-lead); color: var(--hk-text-secondary); }
+.toolbar { display: flex; gap: 24px; align-items: center; justify-content: space-between; margin-bottom: 40px; }
+.search { display: flex; align-items: center; gap: 12px; width: min(100%, 560px); border: 1px solid var(--hk-border); border-radius: var(--hk-radius-field); padding: 14px 18px; }
+.search svg { flex: none; color: var(--hk-text-secondary); }
+.search input { width: 100%; min-width: 0; padding: 0; border: 0; outline: 0; background: transparent; color: var(--hk-ink); font: inherit; }
+.search:focus-within { outline: 2px solid var(--hk-ink); outline-offset: 3px; }
+.count { font-size: 14px; color: var(--hk-text-secondary); white-space: nowrap; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px 28px; list-style: none; padding: 0; margin: 0; }
+.grid li { min-width: 0; animation: appear .45s var(--hk-ease) both; }
+.card { display: flex; flex-direction: column; align-items: stretch; text-align: left; width: 100%; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.cover { position: relative; display: grid; place-items: center; padding: 16px; aspect-ratio: 3 / 4; overflow: hidden; border: 1px solid var(--hk-hairline); border-radius: var(--hk-radius-card); background: var(--hk-surface-muted); transition: border-color .25s, box-shadow .3s, transform .35s var(--hk-ease); }
+.cover > img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; filter: drop-shadow(0 3px 5px rgb(0 0 0 / 10%)); }
+.coverAction { position: absolute; inset: auto 12px 12px; padding: 10px; text-align: center; font-size: 14px; color: var(--hk-ink); background: rgb(255 255 255 / 94%); border-radius: var(--hk-radius-utility); opacity: 0; transform: translateY(10px); transition: opacity .25s, transform .3s var(--hk-ease); }
+.cardTitle { margin-top: 18px; font: 500 18px/1.4 var(--hk-font-text); overflow-wrap: anywhere; transition: color .2s; }
+.meta { margin-top: 8px; font-size: 13px; color: var(--hk-text-secondary); }
+.coverFallback { display: flex; flex-direction: column; align-items: center; gap: 24px; color: var(--hk-text-secondary); }
+.coverFallback img { opacity: .3; }
+.card:focus-visible, .more:focus-visible, .download:focus-visible, .close:focus-visible { outline: 2px solid var(--hk-ink); outline-offset: 5px; border-radius: var(--hk-radius-utility); }
+.card:focus-visible .coverAction { opacity: 1; transform: none; }
+@media (hover: hover) {
+  .card:hover .cover { border-color: var(--hk-red); transform: translateY(-4px); box-shadow: var(--hk-shadow-card-hover); }
+  .card:hover .cardTitle { color: var(--hk-red); }
+  .card:hover .coverAction { opacity: 1; transform: none; }
+}
+.moreRow { display: flex; justify-content: center; margin-top: 48px; }
+.more { padding: 12px 26px; border: 1px solid var(--hk-border); border-radius: var(--hk-radius-field); background: #fff; color: var(--hk-ink); font: inherit; cursor: pointer; }
+.more:hover { border-color: var(--hk-red); color: var(--hk-red); }
+.empty { padding: 64px 0; text-align: center; }
+.empty h2 { font: 600 var(--hk-type-product)/1.2 var(--hk-font-display); }
+.empty p { margin: 16px 0 24px; color: var(--hk-text-secondary); }
+@keyframes appear { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (max-width: 1023px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 20px; } }
+@media (max-width: 767px) {
+  .page { padding: calc(var(--site-header-height) + 40px) 16px 64px; }
+  .heading { margin-bottom: 28px; }
+  .toolbar { flex-wrap: wrap; gap: 16px; margin-bottom: 28px; }
+  .search { width: 100%; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 16px; }
+  .cover { padding: 10px; border-radius: var(--hk-radius-card-mobile); }
+  .cardTitle { margin-top: 12px; font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) { .grid li { animation: none; } .cover, .coverAction { transition: none; } }

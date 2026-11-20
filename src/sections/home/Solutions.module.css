@@ -114,6 +114,8 @@
     inset: -55% -45%;
     pointer-events: none;
     background: radial-gradient(ellipse at 40% 35%, #fff 0%, rgb(255 255 255 / 70%) 24%, rgb(116 122 132 / 22%) 46%, rgb(255 255 255 / 0%) 68%);
+    /* Fade every edge before the reflected layer rotates into the card. */
+    mask-image: radial-gradient(ellipse closest-side, #000 55%, transparent 100%);
     opacity: 0;
     transform: translate3d(0, 0, 0) rotate(-25deg);
     transition: transform .6s cubic-bezier(.22, 1, .36, 1), opacity .45s ease;

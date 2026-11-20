@@ -1,6 +1,7 @@
 "use client";
 import type { ProductDescription } from "@/content/types";
 import Image from "next/image";
+import Link from "next/link";
 import { publicPath } from "@/lib/public-path";
 import { useModelDescription } from "@/lib/use-model-description";
 import { createRetryableModel } from "@/components/models/createRetryableModel";
@@ -16,11 +17,11 @@ const ChillingViewer = createRetryableModel(() => import("./ChillingViewer"), {
 });
 
 
-export default function CoolingExplorer({ items }: { items: ProductDescription<NonNullable<Selection>>[] }) {
+export default function CoolingExplorer({ items, heading = "Системы охлаждения ЦОД" }: { items: ProductDescription<NonNullable<Selection>>[]; heading?: string }) {
   const { selection, menu, selectFromModel, clear, toggle } = useModelDescription<NonNullable<Selection>>();
 
   return <section id="cooling-system" className={styles.section} aria-labelledby="cooling-system-title" data-header-theme="light">
-    <div className={styles.heading}><h2 id="cooling-system-title">Системы охлаждения ЦОД</h2><p>Наведите на элемент системы или выберите его, чтобы узнать больше.</p></div>
+    <div className={styles.heading}><h2 id="cooling-system-title">{heading}</h2><p>Наведите на элемент системы или выберите его, чтобы узнать больше.</p></div>
     <div className={styles.layout}>
       <div className={styles.visual}>
         <ViewportMount fallback={<div className={styles.viewer}><div className={styles.loading} role="status"><span />Загрузка системы охлаждения</div></div>}><ChillingViewer selection={selection} onSelect={selectFromModel} /></ViewportMount>
@@ -43,13 +44,14 @@ export default function CoolingExplorer({ items }: { items: ProductDescription<N
               <div className={styles.disclosureClip}>
                 <div className={styles.productContent}>
                   <div className={styles.productImage}>
-                    <Image src={publicPath(item.image)} width={1024} height={1024} sizes="(max-width: 767px) 80vw, 240px" alt={item.alt} />
+                    <Image unoptimized={item.image.includes("/api/media/") || /^https?:/.test(item.image)} src={publicPath(item.image)} width={1024} height={1024} sizes="(max-width: 767px) 80vw, 240px" alt={item.alt} />
                   </div>
                   <div className={styles.productCopy}>
                     <h3>{item.title}</h3>
-                    {item.badge && <Image className={styles.temperatureBadge} src={publicPath(item.badge)} width={300} height={98} alt="Диапазон рабочих температур: от −40 до +95 градусов Цельсия" />}
+                    {item.badge && <Image unoptimized={item.badge.includes("/api/media/") || /^https?:/.test(item.badge)} className={styles.temperatureBadge} src={publicPath(item.badge)} width={300} height={98} alt="Диапазон рабочих температур: от −40 до +95 градусов Цельсия" />}
                     {item.detail && <p className={styles.detail}>{item.detail}</p>}
                     <p>{item.text}</p>
+                    {item.href && <Link href={item.href} className="home-hero__link" aria-label={`${item.label} — перейти в каталог`}>В каталог</Link>}
                   </div>
                 </div>
               </div>

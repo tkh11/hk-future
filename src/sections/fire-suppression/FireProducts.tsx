@@ -1,12 +1,12 @@
-import { firePageProducts } from "@/content/solution-pages";
-import { fireStations } from "@/content/solutions";
+import { getSolutionsContent } from "@/content/cms-adapter";
 import Link from "next/link";
 import FireOffBanner, { HKBoostBanner } from "./FireOffBanner";
 import FireStations from "./FireStations";
 import shared from "../data-centers/DataCenters.module.css";
 import styles from "./FireSuppression.module.css";
 
-export default function FireProducts() {
+export default async function FireProducts() {
+  const { firePageProducts, fireStations } = await getSolutionsContent();
   return <section className={shared.products} aria-label="Решения HEISSKRAFT для пожаротушения">
     <FireOffBanner />
     <div className={styles.pipeSummary}>

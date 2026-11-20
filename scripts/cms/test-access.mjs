@@ -1,0 +1,29 @@
+import { randomBytes } from 'node:crypto';
+import { existsSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import path from 'node:path';
+import { Pool } from 'pg';
+
+// Reuse only connection credentials; never test against the configured database.
+if (existsSync('.env.local')) process.loadEnvFile('.env.local');
+const connection = process.env.CMS_TEST_DATABASE_URL || process.env.DATABASE_URL;
+if (!connection) throw new Error('Configure a local PostgreSQL connection first.');
+const url = new URL(connection);
+if (!['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname)) throw new Error('Permission integration tests only run against a local PostgreSQL server.');
+url.pathname = `/hk_test_access_${randomBytes(8).toString('hex')}`;
+const pinnedNode = path.resolve('node_modules/node/bin/node');
+const node = existsSync(pinnedNode) ? pinnedNode : process.execPath;
+try {
+  const result = spawnSync(node, ['--import', 'tsx', '--test', '--test-force-exit', '--test-concurrency=1', 'tests/integration/cms-access.test.ts'], {
+    stdio: 'inherit', env: { ...process.env, CMS_TEST_DATABASE_URL: url.toString(), NODE_ENV: 'test' },
+  });
+  if (result.error) throw result.error;
+  process.exitCode = result.status ?? 1;
+} finally {
+  const databaseName = url.pathname.slice(1);
+  if (!/^hk_test_access_[a-z0-9]{16}$/u.test(databaseName)) throw new Error('Refusing unsafe test database cleanup.');
+  url.pathname = '/postgres';
+  const pool = new Pool({ connectionString: url.toString(), max: 1 });
+  try { await pool.query(`DROP DATABASE IF EXISTS "${databaseName}" WITH (FORCE)`); }
+  finally { await pool.end(); }
+}

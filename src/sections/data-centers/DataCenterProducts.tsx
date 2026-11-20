@@ -1,4 +1,4 @@
-import { dcProducts } from "@/content/solution-pages";
+import { getSolutionsContent } from "@/content/cms-adapter";
 import Image from "next/image";
 import Link from "next/link";
 import { publicPath } from "@/lib/public-path";
@@ -15,7 +15,8 @@ function ProductDetails({ label, rows }: { label: string; rows: [string, string]
   );
 }
 
-export default function DataCenterProducts() {
+export default async function DataCenterProducts() {
+  const { dcProducts } = await getSolutionsContent();
   return (
     <section className={styles.products} aria-labelledby="dc-products-title">
       <div className={styles.sectionHeading}>
@@ -47,7 +48,6 @@ export default function DataCenterProducts() {
           <ProductDetails label="Параметры подбора насосов" rows={dcProducts.pumpProperties} />
           <div className={styles.productActions}>
             <Link href="/catalog" className="home-hero__link">Насосы в каталоге</Link>
-            <Link href="/selection/pumps" className="home-hero__link home-hero__link--secondary">Подбор насосов</Link>
           </div>
         </div>
       </article>

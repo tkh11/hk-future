@@ -1,10 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import SiteSearch from "@/components/layout/SiteSearch";
 import LeadDialog from "@/components/layout/LeadDialog";
+import { LEAD_REQUEST_EVENT, leadRequestDetails } from '@/lib/lead-request';
 
 const HeaderLogo = dynamic(() => import("@/components/layout/HeaderLogo"), {
   ssr: false,
@@ -20,139 +22,19 @@ const navLinks: NavLink[] = [
   { href: "/catalog", label: "Каталог" },
   { href: "/articles", label: "База знаний" },
   { href: "/designers", label: "Проектировщикам" },
-  { href: "/catalog", label: "Подбор оборудования" },
+  { href: "/selection", label: "Подбор оборудования" },
 ];
 
 const rightLinks: NavLink[] = [{ href: "/contacts", label: "Контакты" }];
 
-function SearchIcon() {
-  return (
-    <svg
-      className="site-header__search-icon"
-      width="15"
-      height="15"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      fill="none"
-    >
-      <circle cx="11" cy="11" r="6.25" stroke="currentColor" strokeWidth="1.75" />
-      <path d="M16.2 16.2L20.5 20.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function MenuSearch({ onNavigate }: { onNavigate: () => void }) {
-  const router = useRouter();
-  const [query, setQuery] = useState("");
-
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const value = query.trim();
-    router.push(value ? `/catalog?q=${encodeURIComponent(value)}` : "/catalog");
-    onNavigate();
-  }
-
-  return (
-    <form className="site-header__menu-search" role="search" onSubmit={onSubmit}>
-      <SearchIcon />
-      <input
-        className="site-header__menu-search-input"
-        type="search"
-        name="q"
-        value={query}
-        placeholder="Поиск"
-        aria-label="Поиск"
-        onChange={(event) => setQuery(event.target.value)}
-      />
-    </form>
-  );
-}
-
-function HeaderSearch({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
-  const router = useRouter();
-  const formRef = useRef<HTMLFormElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    inputRef.current?.focus();
-
-    function onPointerDown(event: PointerEvent) {
-      if (!formRef.current?.contains(event.target as Node)) {
-        onOpenChange(false);
-      }
-    }
-
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        onOpenChange(false);
-      }
-    }
-
-    document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [open, onOpenChange]);
-
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const value = query.trim();
-    router.push(value ? `/catalog?q=${encodeURIComponent(value)}` : "/catalog");
-    onOpenChange(false);
-  }
-
-  return (
-    <form
-      ref={formRef}
-      className={`site-header__search${open ? " is-open" : ""}`}
-      role="search"
-      onSubmit={onSubmit}
-    >
-      <input
-        ref={inputRef}
-        className="site-header__search-input"
-        type="search"
-        name="q"
-        value={query}
-        placeholder="Поиск"
-        aria-label="Поиск"
-        aria-hidden={!open}
-        tabIndex={open ? 0 : -1}
-        onChange={(event) => setQuery(event.target.value)}
-      />
-      <button
-        type="button"
-        className="site-header__search-toggle"
-        aria-label={open ? "Закрыть поиск" : "Поиск"}
-        aria-expanded={open}
-        onClick={() => onOpenChange(!open)}
-      >
-        <SearchIcon />
-      </button>
-    </form>
-  );
-}
-
-export default function Header() {
+export default function Header({ links = navLinks }: { links?: NavLink[] }) {
   const pathname = usePathname();
   const contactsCurrent = pathname === "/contacts" || pathname.startsWith("/contacts/");
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [leadOpen, setLeadOpen] = useState(false);
+  const [leadDetails, setLeadDetails] = useState('');
   const closeLead = useCallback(() => setLeadOpen(false), []);
   const onSearchOpenChange = useCallback((open: boolean) => {
     setSearchOpen(open);
@@ -167,6 +49,7 @@ export default function Header() {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape" && !leadOpen) {
         setMenuOpen(false);
+        if (menuOpen) menuToggleRef.current?.focus();
       }
     }
 
@@ -191,19 +74,20 @@ export default function Header() {
     return () => media.removeEventListener("change", onChange);
   }, []);
 
-  function openLead() {
+  function openLead(details = '') {
+    setLeadDetails(details);
     setMenuOpen(false);
     setSearchOpen(false);
     setLeadOpen(true);
   }
 
   useEffect(() => {
-    function onOpenLead() {
-      openLead();
+    function onOpenLead(event: Event) {
+      openLead(leadRequestDetails(event instanceof CustomEvent ? event.detail : undefined));
     }
 
-    window.addEventListener("hk-open-lead", onOpenLead);
-    return () => window.removeEventListener("hk-open-lead", onOpenLead);
+    window.addEventListener(LEAD_REQUEST_EVENT, onOpenLead);
+    return () => window.removeEventListener(LEAD_REQUEST_EVENT, onOpenLead);
   }, []);
 
   return (
@@ -223,13 +107,13 @@ export default function Header() {
             <HeaderLogo />
           </Link>
 
-          <nav className="site-header__nav" aria-label="Навигация">
-            {navLinks.map((item) => (
+          <nav className="site-header__nav" aria-label="Навигация" aria-hidden={searchOpen} inert={searchOpen}>
+            {links.map((item) => (
               <Link key={item.label} href={item.href} className="site-header__link">
                 {item.label}
               </Link>
             ))}
-            <button type="button" className="site-header__request" onClick={openLead}>
+            <button type="button" data-analytics-goal="lead_open" className="site-header__request" onClick={() => openLead()}>
               Оставить заявку
             </button>
             <div className="site-header__aside">
@@ -247,10 +131,11 @@ export default function Header() {
           </nav>
 
           <div className="site-header__tools">
-            <HeaderSearch open={searchOpen} onOpenChange={onSearchOpenChange} />
+            <SiteSearch open={searchOpen} onOpenChange={onSearchOpenChange} />
             <button
               type="button"
               className="site-header__burger"
+              ref={menuToggleRef}
               aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
@@ -275,8 +160,8 @@ export default function Header() {
           aria-hidden={!menuOpen}
           inert={!menuOpen}
         >
-          <MenuSearch onNavigate={() => setMenuOpen(false)} />
-          {navLinks.map((item, index) => (
+          <SiteSearch mobile open={menuOpen} onOpenChange={setMenuOpen} />
+          {links.map((item, index) => (
             <Link
               key={item.label}
               href={item.href}
@@ -287,7 +172,7 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
-          <button type="button" className="site-header__mobile-request" onClick={openLead}>
+          <button type="button" data-analytics-goal="lead_open" className="site-header__mobile-request" onClick={() => openLead()}>
             Оставить заявку
           </button>
           {rightLinks.map((item, index) => (
@@ -295,7 +180,7 @@ export default function Header() {
               key={item.label}
               href={item.href}
               className="site-header__mobile-link"
-              style={{ "--nav-index": navLinks.length + index } as CSSProperties}
+              style={{ "--nav-index": links.length + index } as CSSProperties}
               aria-current={item.href === "/contacts" && contactsCurrent ? "page" : undefined}
               onClick={() => setMenuOpen(false)}
             >
@@ -304,7 +189,7 @@ export default function Header() {
           ))}
         </nav>
       </header>
-      {leadOpen ? <LeadDialog onClose={closeLead} /> : null}
+      {leadOpen ? <LeadDialog onClose={closeLead} initialDetails={leadDetails} /> : null}
     </>
   );
 }

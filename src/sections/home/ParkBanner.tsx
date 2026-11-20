@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { preload } from "react-dom";
 import { publicPath } from "@/lib/public-path";
 
@@ -10,17 +11,23 @@ const slides = [
     title: "Инженерные системы будущего",
     description: "Комплексные инженерные решения для общественных пространств и объектов любого масштаба.",
     label: "Инженерные системы будущего",
+    video: "hero-opening",
+    alt: "Архитектурная анимация: изогнутый белый фасад",
   },
   {
     title: "Создаём среду для жизни",
     description: "Собственное производство и полный цикл поставки оборудования для инженерных систем.",
     label: "Среда для жизни",
+    video: "gali",
+    alt: "Стадион парка Галицкого за водной гладью",
   },
   {
     title: "Инженерия для городской среды",
     description: "Надёжные системы для парков, стадионов и общественных объектов.",
     note: "Оборудование HEISSKRAFT в парке Галицкого",
     label: "Городская среда",
+    video: "galits",
+    alt: "Аэросъёмка парка со стадионом и круговыми дорожками",
   },
 ];
 
@@ -44,6 +51,9 @@ export default function ParkBanner() {
   const progressRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const elapsedRef = useRef(0);
   const [selection, setSelection] = useState({ index: 0, cycle: 0 });
+  // Updated synchronously on selection so queued events cannot select an old slide.
+  const selectionRef = useRef(selection);
+  const [ready, setReady] = useState(() => slides.map(() => false));
   const [inView, setInView] = useState(false);
   const [loadVideo, setLoadVideo] = useState(false);
   const [requested, setRequested] = useState([true, false, false]);
@@ -51,6 +61,7 @@ export default function ParkBanner() {
   const pageVisible = useSyncExternalStore(subscribeVisibility, () => document.visibilityState === "visible", () => false);
   const reducedMotion = useSyncExternalStore(subscribeReducedMotion, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => true);
   const activeSlide = selection.index;
+  const activeRequested = requested[activeSlide];
   const running = inView && pageVisible && !reducedMotion;
   const slide = slides[activeSlide];
 
@@ -66,16 +77,29 @@ export default function ParkBanner() {
   const selectSlide = useCallback((index: number) => {
     setRequested(current => current[index] ? current : current.map((value, i) => value || i === index));
     elapsedRef.current = 0;
-    videoRefs.current.forEach(video => {
+    const next = { index, cycle: selectionRef.current.cycle + 1 };
+    selectionRef.current = next;
+    setReady(current => current.map((value, i) => i === index ? false : value));
+    videoRefs.current.forEach((video, slideIndex) => {
       if (!video) return;
       video.pause();
-      video.currentTime = 0;
+      // Keep the outgoing frame throughout the fade. Rewind only the incoming video.
+      if (slideIndex === index) {
+        if (video.readyState > 0) video.currentTime = 0;
+        if (video.error) video.load();
+      }
     });
+    setFailed(current => current.map((value, i) => i === index ? false : value));
     progressRefs.current.forEach((fill, slideIndex) => {
       if (fill) fill.style.transform = `scaleX(${slideIndex < index ? 1 : 0})`;
     });
-    setSelection(previous => ({ index, cycle: previous.cycle + 1 }));
+    setSelection(next);
   }, []);
+
+  const finishSlide = useCallback((index: number, video: HTMLVideoElement) => {
+    if (selectionRef.current.index !== index || !video.ended || !running || document.hidden) return;
+    selectSlide((index + 1) % slides.length);
+  }, [running, selectSlide]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -97,12 +121,13 @@ export default function ParkBanner() {
     let preparedNext = false;
 
     function updateProgress(now: number) {
+      if (selectionRef.current !== selection) return;
       if (document.visibilityState === "hidden") {
         previousTime = now;
         frame = requestAnimationFrame(updateProgress);
         return;
       }
-      elapsedRef.current += now - previousTime;
+      elapsedRef.current += Math.min(now - previousTime, 250);
       previousTime = now;
       const video = videoRefs.current[activeSlide];
       const progress = timedSlide
@@ -116,8 +141,9 @@ export default function ParkBanner() {
         const next = (activeSlide + 1) % slides.length;
         setRequested(current => current[next] ? current : current.map((value, i) => value || i === next));
       }
-      const fill = progressRefs.current[activeSlide];
-      if (fill) fill.style.transform = `scaleX(${progress})`;
+      progressRefs.current.forEach((fill, index) => {
+        if (fill) fill.style.transform = `scaleX(${index < activeSlide ? 1 : index === activeSlide ? progress : 0})`;
+      });
       if (timedSlide && progress >= 1) {
         selectSlide((activeSlide + 1) % slides.length);
         return;
@@ -130,65 +156,68 @@ export default function ParkBanner() {
   }, [selection, activeSlide, running, failed, selectSlide]);
 
   useEffect(() => {
+    const video = videoRefs.current[activeSlide];
+    if (!video || !running || !loadVideo || !activeRequested) return;
     let cancelled = false;
-    videoRefs.current.forEach((video, index) => {
-      if (!video) return;
-      const active = index === activeSlide && running && !failed[index];
-      if (!active) {
-        video.pause();
-        if (index !== activeSlide) video.currentTime = 0;
-        return;
-      }
-      void video.play().catch(() => { if (!cancelled) markFailed(index); });
-    });
-    return () => { cancelled = true; };
-  }, [selection, activeSlide, running, loadVideo, requested, failed, markFailed]);
+    if (video.ended) {
+      // The browser may finish a clip just as the tab becomes hidden.
+      finishSlide(activeSlide, video);
+    } else if (!video.error) {
+      void video.play().catch((error: unknown) => {
+        if (cancelled || selectionRef.current !== selection || document.hidden) return;
+        // pause(), a source change and backgrounding can all interrupt play().
+        // These are not broken media and must not permanently disable playback.
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        markFailed(activeSlide);
+      });
+    }
+    return () => { cancelled = true; video.pause(); };
+  }, [selection, activeSlide, running, loadVideo, activeRequested, markFailed, finishSlide]);
 
   return (
     <section ref={sectionRef} data-header-theme="light" className="park-banner" aria-label="Решения HEISSKRAFT" aria-roledescription="карусель">
       <div className="park-banner__scene" data-slide={activeSlide + 1} data-playing={running}>
-        <div className={`park-banner__slide park-banner__slide--park${activeSlide === 0 ? " is-active" : ""}`} aria-hidden={activeSlide !== 0}>
-          <video
-            ref={element => { videoRefs.current[0] = element; }}
-            className="park-banner__video"
-            src={loadVideo && !reducedMotion && requested[0] ? publicPath("/videos/home/hero-opening.mp4") : undefined}
-            poster={publicPath("/images/home/hero-opening-poster.jpg")}
-            preload="auto"
-            muted
-            playsInline
-            aria-label="Архитектурная анимация: изогнутый белый фасад"
-            onEnded={() => selectSlide(1)}
-            onError={() => markFailed(0)}
-          />
-        </div>
-        <div className={`park-banner__slide park-banner__slide--video${activeSlide === 1 ? " is-active" : ""}`} aria-hidden={activeSlide !== 1}>
-          <video
-            ref={element => { videoRefs.current[1] = element; }}
-            className="park-banner__video"
-            src={loadVideo && !reducedMotion && requested[1] ? publicPath("/videos/home/gali.mp4") : undefined}
-            poster={requested[1] ? publicPath("/images/home/gali-poster.jpg") : undefined}
-            preload="auto"
-            muted
-            playsInline
-            aria-label="Стадион парка Галицкого за водной гладью"
-            onEnded={() => selectSlide(2)}
-            onError={() => markFailed(1)}
-          />
-        </div>
-        <div className={`park-banner__slide park-banner__slide--video${activeSlide === 2 ? " is-active" : ""}`} aria-hidden={activeSlide !== 2}>
-          <video
-            ref={element => { videoRefs.current[2] = element; }}
-            className="park-banner__video"
-            src={loadVideo && !reducedMotion && requested[2] ? publicPath("/videos/home/galits.mp4") : undefined}
-            poster={requested[2] ? publicPath("/images/home/galits-poster.jpg") : undefined}
-            preload="auto"
-            muted
-            playsInline
-            aria-label="Аэросъёмка парка со стадионом и круговыми дорожками"
-            onEnded={() => selectSlide(0)}
-            onError={() => markFailed(2)}
-          />
-        </div>
+        {slides.map((item, index) => (
+          <div key={item.video} className={`park-banner__slide park-banner__slide--${index === 0 ? "park" : "video"}${activeSlide === index ? " is-active" : ""}`} aria-hidden={activeSlide !== index}>
+            {requested[index] && <Image
+              className="park-banner__video park-banner__poster"
+              src={publicPath(`/images/home/${item.video}-poster.jpg`)}
+              alt=""
+              width={1920}
+              height={1080}
+              unoptimized
+              loading="eager"
+              aria-hidden="true"
+            />}
+            <video
+              ref={element => { videoRefs.current[index] = element; }}
+              className="park-banner__video"
+              data-ready={ready[index] && (activeSlide !== index || running) && !failed[index]}
+              src={loadVideo && !reducedMotion && requested[index] ? publicPath(`/videos/home/${item.video}.mp4`) : undefined}
+              poster={requested[index] ? publicPath(`/images/home/${item.video}-poster.jpg`) : undefined}
+              preload="auto"
+              muted
+              playsInline
+              aria-label={item.alt}
+              onPlaying={event => {
+                if (selectionRef.current.index !== index || !running || document.hidden) {
+                  event.currentTarget.pause();
+                  return;
+                }
+                if (event.currentTarget.readyState >= 2) {
+                  setReady(current => current[index] ? current : current.map((value, i) => value || i === index));
+                  setFailed(current => current[index] ? current.map((value, i) => i === index ? false : value) : current);
+                }
+              }}
+              onPause={() => {
+                if (selectionRef.current.index === index) setReady(current => current.map((value, i) => i === index ? false : value));
+              }}
+              onWaiting={() => setReady(current => current.map((value, i) => i === index ? false : value))}
+              onEnded={event => finishSlide(index, event.currentTarget)}
+              onError={() => markFailed(index)}
+            />
+          </div>
+        ))}
         <div className="park-banner__copy">
           <h1 className="park-banner__title">{slide.title}</h1>
           <p className="park-banner__description">{slide.description}</p>

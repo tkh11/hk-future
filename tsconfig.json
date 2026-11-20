@@ -25,6 +25,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@payload-config": [
+        "./payload.config.ts"
       ]
     }
   },
@@ -36,11 +39,26 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     ".next-production/types/**/*.ts",
-    ".next-production/dev/types/**/*.ts"
+    ".next-production/dev/types/**/*.ts",
+    ".next-critical-ch/types/**/*.ts",
+    ".next-critical-ch/dev/types/**/*.ts",
+    ".next-critical-dev/types/**/*.ts",
+    ".next-critical-dev/dev/types/**/*.ts",
+    ".next-critical-baseline/types/**/*.ts",
+    ".next-critical-baseline/dev/types/**/*.ts",
+    ".next-admin-redesign/types/**/*.ts",
+    ".next-admin-redesign/dev/types/**/*.ts",
+    ".next-hk_test_admin_df0eeb05f8926745/types/**/*.ts",
+    ".next-hk_test_admin_df0eeb05f8926745/dev/types/**/*.ts",
+    ".next-hk_test_admin_948c9ef1223b1e5a/types/**/*.ts",
+    ".next-hk_test_admin_948c9ef1223b1e5a/dev/types/**/*.ts",
+    ".next-hk_test_admin_aca542d1f3ec8c49/types/**/*.ts",
+    ".next-hk_test_admin_aca542d1f3ec8c49/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     ".next-production",
-    ".next-export"
+    ".next-export",
+    ".local"
   ]
 }

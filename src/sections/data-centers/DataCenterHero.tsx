@@ -1,4 +1,4 @@
-import { dcHero } from "@/content/solution-pages";
+import { getSolutionsContent } from "@/content/cms-adapter";
 import styles from "./DataCenters.module.css";
 
 type Point = readonly [number, number, number];
@@ -78,7 +78,8 @@ function ServerHall() {
   );
 }
 
-export default function DataCenterHero() {
+export default async function DataCenterHero() {
+  const { dcHero } = await getSolutionsContent();
   return <section className={styles.hero} data-header-theme="light">
     <div className={styles.heroInner}>
       <div className={styles.heroCopy}>

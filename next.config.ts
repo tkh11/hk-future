@@ -1,12 +1,20 @@
+import { networkInterfaces } from "node:os";
 import type { NextConfig } from "next";
+import { withPayload } from '@payloadcms/next/withPayload';
 
 // GitHub Pages is served from /hk-future. Local `next dev` and Vercel builds
 // leave this unset, so they keep the site at the domain root.
 const githubPages = process.env.GITHUB_PAGES === "true";
 const basePath = "/hk-future";
 
+// Office dev server: allow its name and its LAN IPv4 addresses, so the site also works when opened by IP.
+const lanAddresses = Object.values(networkInterfaces()).flat()
+  .filter(address => address && address.family === "IPv4" && !address.internal)
+  .map(address => address!.address);
+
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  allowedDevOrigins: process.env.CMS_SERVER_URL ? [new URL(process.env.CMS_SERVER_URL).hostname, ...lanAddresses] : [],
   ...(process.env.NEXT_BUILD_DIR ? { distDir: process.env.NEXT_BUILD_DIR } : {}),
   ...(githubPages
     ? {
@@ -25,4 +33,18 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const config = githubPages ? nextConfig : withPayload(nextConfig);
+const payloadHeaders = config.headers;
+
+if (!githubPages && payloadHeaders) {
+  // Critical-CH on every path made Chrome replay the first document request.
+  config.headers = async () => (await payloadHeaders()).map(rule => {
+    if (rule.source !== "/:path*") return rule;
+    return {
+      ...rule,
+      headers: rule.headers.filter(header => header.key.toLowerCase() !== "critical-ch"),
+    };
+  });
+}
+
+export default config;

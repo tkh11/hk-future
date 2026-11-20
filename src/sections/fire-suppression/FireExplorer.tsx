@@ -1,4 +1,5 @@
 "use client";
+import { trackGoal } from "@/cms/analytics/goals";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -18,7 +19,7 @@ const FireOffViewer = createRetryableModel(() => import("./FireOffViewer"), {
   loading: () => <div className={styles.viewer}><div className={styles.loading} role="status"><span />Загрузка системы FireOff</div></div>,
   fallback: retry => <div className={fireStyles.viewer}><ModelFailure onRetry={retry} /></div>,
 });
-export default function FireExplorer({ items }: { items: ProductDescription<NonNullable<FireSelection>>[] }) {
+export default function FireExplorer({ items, heading = "FireOff. Система в деталях." }: { items: ProductDescription<NonNullable<FireSelection>>[]; heading?: string }) {
   const [selection, setSelection] = useState<FireSelection>(null);
   const visual = useRef<HTMLDivElement>(null);
   const screen = useRef<HTMLDivElement>(null);
@@ -33,6 +34,7 @@ export default function FireExplorer({ items }: { items: ProductDescription<NonN
   }, []);
   function select(next: FireSelection) {
     setSelection(next);
+    if (next) trackGoal("model_interaction");
     const bounds = visual.current?.getBoundingClientRect();
     if (!bounds) return;
     const top = (document.querySelector(".site-header")?.getBoundingClientRect().bottom ?? 44) + 12;
@@ -42,7 +44,7 @@ export default function FireExplorer({ items }: { items: ProductDescription<NonN
     }
   }
   return <section id="fireoff-system" className={styles.section} aria-labelledby="fireoff-system-title" data-header-theme="light">
-    <div className={styles.heading}><h2 id="fireoff-system-title">FireOff. Система в деталях.</h2><p>Выберите элемент — камера плавно перейдёт от общего вида паркинга к нужному узлу.</p></div>
+    <div className={styles.heading}><h2 id="fireoff-system-title">{heading}</h2><p>Выберите элемент — камера плавно перейдёт от общего вида паркинга к нужному узлу.</p></div>
     <div className={styles.layout}>
       <div ref={visual} className={styles.visual} onKeyDown={event => { if (event.key === "Escape") select(null); }}>
         <div ref={screen} className={fireStyles.screen}>
@@ -57,9 +59,9 @@ export default function FireExplorer({ items }: { items: ProductDescription<NonN
                 </button>
                 <div id={`fireoff-detail-${item.id}`} className={fireStyles.disclosure} role="region" aria-labelledby={`fireoff-toggle-${item.id}`} aria-hidden={!expanded} inert={!expanded}>
                   <div className={fireStyles.disclosureClip}><div className={fireStyles.productContent}>
-                    <div className={`${fireStyles.productImage} ${item.image.endsWith('.svg') ? fireStyles.placeholder : ""}`}><Image src={publicPath(item.image)} width={1024} height={1024} sizes="(max-width: 767px) 260px, 240px" alt={item.alt} /></div>
+                    <div className={`${fireStyles.productImage} ${item.image.endsWith('.svg') ? fireStyles.placeholder : ""}`}><Image unoptimized={item.image.includes("/api/media/") || /^https?:/.test(item.image)} src={publicPath(item.image)} width={1024} height={1024} sizes="(max-width: 767px) 260px, 240px" alt={item.alt} /></div>
                     <h3>{item.title}</h3><p>{item.text}</p>
-                    <Link href="/catalog" className={`home-hero__link ${fireStyles.catalogLink}`} aria-label={`${item.label} — перейти в каталог`}>В каталог</Link>
+                    <Link href={item.href || "/catalog"} className={`home-hero__link ${fireStyles.catalogLink}`} aria-label={`${item.label} — перейти в каталог`}>В каталог</Link>
                   </div></div>
                 </div>
               </article>;

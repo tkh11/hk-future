@@ -18,8 +18,8 @@ test("hero keeps manual slides, timeline progress and automatic end transition",
   await expect(carousel.getByRole("heading", { level: 1 })).toHaveText("Создаём среду для жизни");
   await expect(carousel.getByRole("button", { name: "Слайд 2: Среда для жизни" })).toHaveAttribute("aria-pressed", "true");
   await expect.poll(() => carousel.locator("video").nth(1).evaluate((video: HTMLVideoElement) => video.readyState), { timeout: 60_000 }).toBeGreaterThanOrEqual(2);
-  // Exercise the actual media event without waiting through the entire video.
-  await carousel.locator("video").nth(1).dispatchEvent("ended");
+  // Let the browser emit a genuine ended event, including its ended flag.
+  await carousel.locator("video").nth(1).evaluate((video: HTMLVideoElement) => { video.currentTime = video.duration - 0.15; });
   await expect(carousel.getByRole("heading", { level: 1 })).toHaveText("Инженерия для городской среды");
   await carousel.getByRole("button", { name: "Слайд 1: Инженерные системы будущего" }).click();
   await expect(carousel.getByRole("heading", { level: 1 })).toHaveText("Инженерные системы будущего");

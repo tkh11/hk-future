@@ -137,6 +137,15 @@
   flex: 1 1 auto;
   height: 100%;
   min-width: 0;
+  opacity: 1;
+  transition: opacity 280ms ease, visibility 0s linear;
+}
+
+.site-header__nav[inert] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 280ms ease, visibility 0s linear 280ms;
 }
 
 .site-header__aside {
@@ -189,12 +198,14 @@
 }
 
 .site-header__search {
+  position: relative;
+  flex: 0 0 auto;
+  align-self: center;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   width: 44px;
   height: 44px;
-  overflow: hidden;
   border-radius: var(--hk-radius-utility);
   background: transparent;
   transition:
@@ -203,7 +214,8 @@
 }
 
 .site-header__search.is-open {
-  width: min(240px, calc(100vw - 148px));
+  width: min(168px, calc(100vw - 148px));
+  height: 32px;
   background: rgba(0, 0, 0, 0.06);
 }
 
@@ -215,22 +227,24 @@
 }
 
 .site-header__search-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 15px;
   width: 44px;
-  height: 100%;
+  height: 44px;
   color: rgba(0, 0, 0, 0.8);
   transition: color 0.3s cubic-bezier(0, 0, 0.2, 1);
-  flex-basis: 44px;
 }
 
 .site-header__search-input {
   flex: 1 1 auto;
   min-width: 0;
   height: 100%;
-  padding: 0 8px 0 10px;
+  padding: 0 44px 0 10px;
   border: 0;
   background: transparent;
   color: var(--hk-ink);
@@ -353,15 +367,18 @@
 }
 
 .site-header__menu-search {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 48px;
+  position: relative;
+  width: min(100%, 320px);
   margin: 4px 0 8px;
-  padding: 0 12px;
   border-radius: var(--hk-radius-utility);
-  background: rgba(0, 0, 0, 0.06);
   color: rgba(0, 0, 0, 0.8);
+}
+
+.site-header__menu-search > div:first-child {
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  background: rgba(0, 0, 0, 0.06);
 }
 
 .site-header__menu-search-input {
@@ -450,8 +467,13 @@
     display: flex;
   }
 
+  .site-header__tools {
+    width: 44px;
+    justify-content: flex-end;
+  }
+
   .site-header__search {
-    position: static;
+    position: relative;
     top: auto;
     right: auto;
     width: 44px;
@@ -460,11 +482,10 @@
   }
 
   .site-header__search.is-open {
-    width: 220px;
+    width: 168px;
   }
 
   .site-header__search-toggle {
-    flex-basis: 44px;
     width: 44px;
     justify-content: center;
   }
@@ -479,12 +500,11 @@
 @media (min-width: 834px) and (max-width: 1099px) {
   .site-header__link { padding-inline: 4px; }
   .site-header__request { margin-inline: 0; padding-inline: 4px; }
-  .site-header__bar:has(.site-header__search.is-open) .site-header__nav {
-    visibility: hidden;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .site-header__nav,
+  .site-header__nav[inert],
   .site-header__panel,
   .site-header__burger-icon span,
   .site-header__search,
@@ -1899,7 +1919,7 @@ html.preloader-done .hero.is-idle .hero__hint {
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.42);
+  color: var(--hk-text-secondary);
 }
 
 .page-stub__title {
@@ -2087,6 +2107,9 @@ html:not(.preloader-done):has(.site-preloader) .site-header {
 }
 
 .park-banner__slide.is-active { opacity: 1; }
+
+/* Keep a real image beneath the video; native posters can disappear after a seek. */
+.park-banner__slide video[data-ready="false"] { opacity: 0; }
 
 .park-banner__slide--park {
   inset: 0;
@@ -2890,7 +2913,8 @@ html:not(.preloader-done):has(.site-preloader) .site-header {
 @media (prefers-reduced-motion: reduce) {
   .deferred-block__content.is-ready, .block-skeleton::after { animation: none; }
 }
-.site-header__menu-search:focus-within { outline: 2px solid var(--hk-red); outline-offset: 2px; }
+.site-header__menu-search > div:first-child:focus-within,
+.site-header__search.is-open:has(input:focus-visible) { background-color: rgba(0, 0, 0, 0.085); }
 .home-hero__link:active, .home-tile__link:active, .category-split__link:active { background: var(--hk-red-strong); }
 .home-hero__link--secondary:active, .home-tile__link--secondary:active, .category-split__link--secondary:active { background: transparent; color: var(--hk-red-strong); box-shadow: inset 0 0 0 1px var(--hk-red-strong); }
 .park-banner__button.home-hero__link:active { background: var(--hk-canvas); color: var(--hk-red-strong); }

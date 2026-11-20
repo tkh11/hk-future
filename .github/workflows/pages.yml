@@ -29,6 +29,8 @@ jobs:
       - run: npm run audit:dependencies
 
   production:
+    env:
+      CMS_ENABLED: 'false'
     needs: quality
     runs-on: ubuntu-latest
     steps:
@@ -49,6 +51,8 @@ jobs:
           path: test-results/
 
   export:
+    env:
+      CMS_ENABLED: 'false'
     needs: quality
     runs-on: ubuntu-latest
     steps:
@@ -76,9 +80,72 @@ jobs:
         with:
           path: out/
 
+  cms-integration:
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:17.11-bookworm
+        env:
+          POSTGRES_USER: heisskraft
+          POSTGRES_PASSWORD: ci-disposable-only
+          POSTGRES_DB: heisskraft_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U heisskraft -d heisskraft_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      CMS_ENABLED: 'true'
+      CMS_SERVER_URL: http://localhost:3100
+      NEXT_PUBLIC_SITE_URL: http://localhost:3100
+      DATABASE_URL: postgresql://heisskraft:ci-disposable-only@127.0.0.1:5432/heisskraft_ci
+      PAYLOAD_SECRET: ci-isolated-payload-secret-not-used-outside-this-job
+      CMS_BOOTSTRAP_EMAIL: admin@heisskraft.test
+      CMS_BOOTSTRAP_PASSWORD: ci-disposable-administrator-password
+      METRIKA_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm install --global npm@11.19.0
+      - run: npm ci
+      - run: npm run cms:migrate
+      - run: node --import tsx scripts/cms/bootstrap.ts
+      - run: node --import tsx scripts/cms/seed.ts
+      - run: npm run cms:test
+      - run: npm run build:production
+      - run: npx playwright install --with-deps chromium
+      - name: Verify CMS production API and editor workflows in a disposable database
+        run: npm run test:cms:e2e
+      - name: Install matching PostgreSQL 17 client
+        shell: bash
+        run: |
+          sudo install -d /usr/share/postgresql-common/pgdg
+          sudo curl -fsSL --proto '=https' https://www.postgresql.org/media/keys/ACCC4CF8.asc -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc
+          . /etc/os-release
+          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt ${VERSION_CODENAME}-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y postgresql-client-17
+      - name: Verify private backup and disposable restore
+        shell: bash
+        env:
+          PG_BIN: /usr/lib/postgresql/17/bin
+        run: |
+          mkdir -p .local/uploads
+          printf 'CMS backup fixture\n' > .local/uploads/restore-fixture.txt
+          CMS_WRITES_PAUSED=true node scripts/cms/backup.mjs
+          CMS_RESTORE_DATABASE_URL=postgresql://heisskraft:ci-disposable-only@127.0.0.1:5432/heisskraft_restore_ci node scripts/cms/restore-check.mjs
+      # CMS authentication reports, server logs and backups stay private to this job.
+
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [quality, production, export]
+    needs: [quality, production, export, cms-integration]
     runs-on: ubuntu-latest
     permissions:
       pages: write

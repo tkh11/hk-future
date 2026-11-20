@@ -1,0 +1,102 @@
+.shell { display: grid; grid-template-columns: 232px minmax(0, 1fr); min-height: 100dvh; }
+:global(html[data-studio-sidebar='collapsed']) .shell { grid-template-columns: 72px minmax(0, 1fr); }
+:global(html[data-studio-sidebar-ready]) .shell { transition: grid-template-columns 200ms var(--s-ease); }
+.skip { position: absolute; left: 12px; top: -48px; z-index: 10; padding: 8px 12px; border-radius: var(--s-radius-s); background: var(--s-raised); }
+.skip:focus { top: 12px; }
+
+.sidebar {
+  position: sticky; top: 0; height: 100dvh; display: flex; flex-direction: column; gap: 16px; min-width: 0;
+  padding: 18px 12px 14px; background: var(--s-sidebar); border-right: 1px solid var(--s-border);
+  overflow-x: hidden; overflow-y: auto;
+}
+.brandBlock { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.brand { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding: 2px 8px 4px; }
+.logos { display: grid; min-width: 0; }
+.logos img { grid-area: 1 / 1; height: auto; }
+.brandFull { width: 132px; }
+.brandMark { width: 36px; opacity: 0; }
+.sidebar :global([data-sidebar-text]) {
+  max-width: 11rem; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+.brand :global([data-sidebar-text]) { font-size: 12px; color: var(--s-tertiary); }
+.collapse {
+  display: flex; align-items: center; width: 100%; min-height: 32px; padding: 0 8px;
+  border: 0; border-radius: var(--s-radius-s); background: none; color: var(--s-tertiary); cursor: pointer;
+}
+.collapse:hover { background: var(--s-hover); color: var(--s-text); }
+
+:global(html[data-studio-sidebar='collapsed']) .brandFull { opacity: 0; }
+:global(html[data-studio-sidebar='collapsed']) .brandMark { opacity: 1; }
+:global(html[data-studio-sidebar='collapsed']) .sidebar :global([data-sidebar-text]) { max-width: 0; opacity: 0; }
+:global(html[data-studio-sidebar='collapsed']) .collapse .icon { rotate: 180deg; }
+:global(html[data-studio-sidebar='collapsed']) .sectionLabel {
+  max-height: 0; min-height: 0; margin: 0; padding-block: 0; opacity: 0; pointer-events: none;
+}
+:global(html[data-studio-sidebar-ready]) .brandFull,
+:global(html[data-studio-sidebar-ready]) .brandMark,
+:global(html[data-studio-sidebar-ready]) .sidebar :global([data-sidebar-text]),
+:global(html[data-studio-sidebar-ready]) .collapse .icon,
+:global(html[data-studio-sidebar-ready]) .sectionLabel {
+  transition: opacity 160ms var(--s-ease), max-width 200ms var(--s-ease), max-height 200ms var(--s-ease), rotate 200ms var(--s-ease), padding 200ms var(--s-ease);
+}
+
+.nav { display: flex; flex-direction: column; gap: 14px; }
+.section { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.sectionLink, .sectionLabel, .itemLink {
+  display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 32px; padding: 0 8px; border-radius: var(--s-radius-s);
+  color: var(--s-secondary); transition: background-color var(--s-fast) var(--s-ease), color var(--s-fast) var(--s-ease);
+}
+.sectionLabel { max-height: 32px; overflow: hidden; color: var(--s-text); font-weight: 600; }
+.sectionLink { color: var(--s-text); font-weight: 600; }
+.sectionLink[data-wrap] :global([data-sidebar-text]) { white-space: normal; }
+.sectionLink:hover, .itemLink:hover { background: var(--s-hover); color: var(--s-text); }
+.sectionLink[aria-current='page'], .itemLink[aria-current='page'] {
+  background: var(--s-surface); color: var(--s-text); box-shadow: inset 2px 0 0 var(--s-accent);
+}
+.icon { flex: none; color: var(--s-tertiary); }
+.external { margin-inline-start: auto; color: var(--s-tertiary); }
+.items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+
+.footer { margin-top: auto; display: flex; flex-direction: column; gap: 2px; padding-top: 12px; border-top: 1px solid var(--s-border); font-size: 13px; }
+.footer .user { overflow: hidden; }
+.footer a, .logout {
+  display: flex; align-items: center; gap: 10px; width: 100%; min-height: 32px; padding: 0 8px;
+  border: 0; border-radius: var(--s-radius-s); background: none; color: var(--s-secondary); text-align: start; cursor: pointer;
+}
+.footer a:hover, .logout:hover { background: var(--s-hover); color: var(--s-text); }
+
+.main { min-width: 0; padding: 28px 32px 48px; }
+
+@media (max-width: 900px) {
+  .shell,
+  :global(html[data-studio-sidebar='collapsed']) .shell { grid-template-columns: minmax(0, 1fr); transition: none; }
+  .sidebar { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--s-border); }
+  .collapse { display: none; }
+  :global(html[data-studio-sidebar='collapsed']) .brandFull { opacity: 1; }
+  :global(html[data-studio-sidebar='collapsed']) .brandMark { opacity: 0; }
+  :global(html[data-studio-sidebar='collapsed']) .sidebar :global([data-sidebar-text]) { max-width: 11rem; opacity: 1; }
+  :global(html[data-studio-sidebar='collapsed']) .sectionLabel {
+    max-height: 32px; min-height: 32px; padding-block: 0; opacity: 1; pointer-events: auto;
+  }
+  .main { padding: 20px 16px 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(html[data-studio-sidebar-ready]) .shell,
+  :global(html[data-studio-sidebar-ready]) .brandFull,
+  :global(html[data-studio-sidebar-ready]) .brandMark,
+  :global(html[data-studio-sidebar-ready]) .sidebar :global([data-sidebar-text]),
+  :global(html[data-studio-sidebar-ready]) .collapse .icon,
+  :global(html[data-studio-sidebar-ready]) .sectionLabel { transition: none; }
+}
+
+.groupToggle { display: flex; align-items: center; gap: 10px; min-height: 32px; width: 100%; padding: 0 8px; text-align: start; border: 0; border-radius: var(--s-radius-s); background: none; color: var(--s-text); font: inherit; font-weight: 600; cursor: pointer; }
+.groupToggle:hover { background: var(--s-hover); }
+.disclosure { margin-left: auto; width: 14px; rotate: 180deg; }
+.groupToggle[aria-expanded="true"] .disclosure { rotate: -90deg; }
+.collapse .icon { display: none; }
+@media (min-width: 901px) {
+  :global(html[data-studio-sidebar='collapsed']) .collapse .icon { display: block; }
+  :global(html[data-studio-sidebar='collapsed']) .disclosure { display: none; }
+}
+.sidebar .itemLink :global([data-sidebar-text]) { white-space: normal; }

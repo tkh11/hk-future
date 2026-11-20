@@ -1,0 +1,3 @@
+.image, .missing { display: block; width: 36px; height: 36px; border-radius: 6px; }
+.image { object-fit: contain; background: #fff; }
+.missing { border: 1px dashed var(--s-control); }

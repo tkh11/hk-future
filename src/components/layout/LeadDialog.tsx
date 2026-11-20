@@ -1,4 +1,5 @@
 "use client";
+import { trackGoal } from "@/cms/analytics/goals";
 
 import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import Link from "next/link";
@@ -9,7 +10,7 @@ import styles from "./LeadDialog.module.css";
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled])';
 const STEPS = ["Укажите ваше ФИО", "Укажите ваш номер телефона", "Укажите ваш e-mail", "Укажите ваш город", "Детали обращения", "Прикрепите файл (при необходимости)", "Согласие на обработку персональных данных"];
 
-export default function LeadDialog({ onClose }: { onClose: () => void }) {
+export default function LeadDialog({ onClose, initialDetails = "" }: { onClose: () => void; initialDetails?: string }) {
   const id = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -152,6 +153,7 @@ export default function LeadDialog({ onClose }: { onClose: () => void }) {
     // Retain the existing local confirmation; submission transport is not connected yet.
     setCompleted(STEPS.map(() => true));
     setSent(true);
+    trackGoal("lead_demo_completed");
   }
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -188,7 +190,7 @@ export default function LeadDialog({ onClose }: { onClose: () => void }) {
             {index === 1 && <LeadPhoneField id={`${id}-1`} invalid={error?.step === 1} describedBy={error?.step === 1 ? `${id}-error` : undefined} onChange={value => { setPhone(value); fieldChanged(); }} />}
             {index === 2 && <input id={`${id}-2`} className={styles.input} name="email" type="email" autoComplete="email" placeholder="info@heisskraft.ru" required {...fieldProps(2)} onChange={fieldChanged} />}
             {index === 3 && <input id={`${id}-3`} className={styles.input} name="city" autoComplete="address-level2" placeholder="Москва" required {...fieldProps(3)} onChange={fieldChanged} />}
-            {index === 4 && <textarea id={`${id}-4`} className={`${styles.input} ${styles.textarea}`} name="details" rows={4} placeholder="укажите детали вашего обращения" required {...fieldProps(4)} onChange={fieldChanged} />}
+            {index === 4 && <textarea id={`${id}-4`} className={`${styles.input} ${styles.textarea}`} name="details" rows={4} defaultValue={initialDetails} placeholder="укажите детали вашего обращения" required {...fieldProps(4)} onChange={fieldChanged} />}
             {index === 5 && <>
               <label className={styles.file}>
                 <input id={`${id}-5`} className={styles.fileInput} name="file" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.webp,.zip" {...fieldProps(5)} onChange={event => { setFileName(event.target.files?.[0]?.name ?? ""); fieldChanged(); }} />

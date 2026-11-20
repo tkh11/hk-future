@@ -1,4 +1,4 @@
-import { coolingProducts, fireProducts } from "@/content/solutions";
+import { getSolutionsContent } from "@/content/cms-adapter";
 import Footer from "@/components/layout/Footer";
 import HomeHero from "@/sections/home/HomeHero";
 import Solutions from "@/sections/home/Solutions";
@@ -17,10 +17,10 @@ const blocks = {
   solutions: Solutions,
   footer: Footer,
   "dc-intro": DataCenterIntro,
-  "dc-system": () => <CoolingExplorer items={coolingProducts} />,
+  "dc-system": async () => <CoolingExplorer items={(await getSolutionsContent()).coolingProducts} />,
   "dc-products": DataCenterProducts,
   "fire-intro": FireIntro,
-  "fire-system": () => <FireExplorer items={fireProducts} />,
+  "fire-system": async () => <FireExplorer items={(await getSolutionsContent()).fireProducts} />,
   "fire-products": FireProducts,
 };
 

@@ -1,7 +1,8 @@
-import { dcIntro } from "@/content/solution-pages";
+import { getSolutionsContent } from "@/content/cms-adapter";
 import styles from "./DataCenters.module.css";
 
-export default function DataCenterIntro() {
+export default async function DataCenterIntro() {
+  const { dcIntro } = await getSolutionsContent();
   return <section className={styles.intro} aria-labelledby="dc-intro-title">
     <div className={styles.introHeading}>
       <h2 id="dc-intro-title">{dcIntro.heading}<br /><span>{dcIntro.headingAccent}</span></h2>

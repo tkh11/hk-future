@@ -68,7 +68,7 @@
 .messengerLinks { display: flex; flex-wrap: nowrap; gap: 12px; }
 .messengerLink { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 16px 8px 10px; border: 1px solid transparent; border-radius: var(--hk-radius-field); font-size: var(--hk-type-body); line-height: 1.3; transition: background-color .28s var(--hk-ease), border-color .28s var(--hk-ease); }
 .messengerWechat { background: #07C160; color: #fff; border-color: #07C160; }
-.messengerWechat:hover { background: #06a854; border-color: #06a854; }
+.messengerWechat:hover { background: #06a854; border-color: #06a854; color: #fff; }
 .messengerMax { background: #1d1d1f; color: #fff; border-color: #1d1d1f; }
 .messengerMax:hover { background: #000; border-color: #000; }
 .messengerMax .messengerIcon { filter: brightness(0) invert(1); }

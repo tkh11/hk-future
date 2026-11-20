@@ -1,8 +1,9 @@
-import { fireIntro } from "@/content/solution-pages";
+import { getSolutionsContent } from "@/content/cms-adapter";
 import shared from "../data-centers/DataCenters.module.css";
 import styles from "./FireSuppression.module.css";
 
-export default function FireIntro() {
+export default async function FireIntro() {
+  const { fireIntro } = await getSolutionsContent();
   return <section className={shared.intro} aria-labelledby="fire-intro-title">
     <div className={shared.introHeading}>
       <h2 id="fire-intro-title">{fireIntro.heading}<br /><span>{fireIntro.headingAccent}</span></h2>

@@ -1,0 +1,27 @@
+/* Floats over the end of the table, so selecting a row never moves the rows. */
+.dock { position: sticky; bottom: 16px; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 12px; pointer-events: none; }
+.dock > * { pointer-events: auto; }
+.bulk {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; width: min(100%, 860px); padding: 8px 10px 8px 16px;
+  border: 1px solid var(--s-control); border-radius: var(--s-radius-m); background: var(--s-raised); box-shadow: 0 12px 32px rgb(0 0 0 / 40%);
+}
+.count { font-weight: 600; margin-inline-end: 4px; font-variant-numeric: tabular-nums; }
+.message { padding: 6px 12px; border-radius: var(--s-radius-s); background: var(--s-raised); font-size: 13px; color: var(--s-secondary); }
+.message:empty { display: none; }
+.missing { color: var(--s-warning); }
+.countLink { color: var(--s-text); text-decoration: underline; text-decoration-color: var(--s-control); text-underline-offset: 3px; }
+.countLink:hover { text-decoration-color: currentColor; }
+
+.overlay { position: fixed; inset: 0; background: rgb(0 0 0 / 55%); }
+.dialog {
+  position: fixed; top: 50%; left: 50%; translate: -50% -50%; width: min(460px, calc(100vw - 32px)); padding: 20px;
+  background: var(--s-raised); border: 1px solid var(--s-border); border-radius: var(--s-radius-m); box-shadow: 0 24px 60px rgb(0 0 0 / 45%);
+}
+.dialogTitle { font-size: 17px; font-weight: 600; }
+.dialogText { margin: 6px 0 16px; color: var(--s-secondary); font-size: 13px; }
+.field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--s-secondary); }
+.field select {
+  height: 36px; padding: 0 10px; border: 1px solid var(--s-control); border-radius: var(--s-radius-s);
+  background: var(--s-surface); color: var(--s-text);
+}
+.dialogActions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }

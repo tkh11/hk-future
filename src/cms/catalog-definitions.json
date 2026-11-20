@@ -1,0 +1,270 @@
+{
+  "profiles": [
+    {
+      "value": "pipe",
+      "label": "Трубы"
+    },
+    {
+      "value": "fitting",
+      "label": "Фитинги"
+    },
+    {
+      "value": "valve",
+      "label": "Арматура и фильтры"
+    },
+    {
+      "value": "manifold",
+      "label": "Коллекторы"
+    },
+    {
+      "value": "mounting",
+      "label": "Крепёж"
+    },
+    {
+      "value": "pump",
+      "label": "Насосы"
+    },
+    {
+      "value": "station",
+      "label": "Насосные станции"
+    },
+    {
+      "value": "motor",
+      "label": "Электродвигатели"
+    },
+    {
+      "value": "tank",
+      "label": "Мембранные баки"
+    },
+    {
+      "value": "automation",
+      "label": "Автоматика"
+    },
+    {
+      "value": "cable",
+      "label": "Кабели"
+    },
+    {
+      "value": "tool",
+      "label": "Инструменты"
+    },
+    {
+      "value": "compensator",
+      "label": "Компенсаторы"
+    },
+    {
+      "value": "mixer",
+      "label": "Мешалки"
+    },
+    {
+      "value": "accessory",
+      "label": "Принадлежности"
+    }
+  ],
+  "fields": [
+    {
+      "key": "dn",
+      "label": "Условный проход DN",
+      "unit": "",
+      "profiles": [
+        "pipe",
+        "fitting",
+        "valve",
+        "manifold",
+        "pump",
+        "station",
+        "accessory",
+        "compensator",
+        "mounting"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "pn",
+      "label": "Номинальное давление PN",
+      "unit": "",
+      "profiles": [
+        "pipe",
+        "fitting",
+        "valve",
+        "manifold",
+        "tank",
+        "compensator",
+        "accessory",
+        "pump",
+        "station"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "sdr",
+      "label": "SDR",
+      "unit": "",
+      "profiles": [
+        "pipe",
+        "fitting"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "outerDiameterMm",
+      "label": "Наружный диаметр",
+      "unit": "мм",
+      "profiles": [
+        "pipe"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "wallThicknessMm",
+      "label": "Толщина стенки",
+      "unit": "мм",
+      "profiles": [
+        "pipe"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "powerKw",
+      "label": "Мощность",
+      "unit": "кВт",
+      "profiles": [
+        "pump",
+        "station",
+        "motor",
+        "automation",
+        "mixer"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "phases",
+      "label": "Число фаз",
+      "unit": "",
+      "profiles": [
+        "pump",
+        "station",
+        "motor",
+        "automation",
+        "mixer"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "voltageV",
+      "label": "Напряжение",
+      "unit": "В",
+      "profiles": [
+        "pump",
+        "station",
+        "motor",
+        "automation",
+        "mixer"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "maxTemperatureC",
+      "label": "Максимальная температура",
+      "unit": "°C",
+      "profiles": [
+        "tank",
+        "pipe",
+        "valve"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "prechargeBar",
+      "label": "Предварительное давление",
+      "unit": "бар",
+      "profiles": [
+        "tank"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "dimensionAMm",
+      "label": "Размер A по чертежу",
+      "unit": "мм",
+      "profiles": [
+        "tank"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "dimensionBMm",
+      "label": "Размер B по чертежу",
+      "unit": "мм",
+      "profiles": [
+        "tank"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "netWeightKg",
+      "label": "Масса изделия",
+      "unit": "кг",
+      "profiles": [
+        "tank"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "coreCount",
+      "label": "Число жил",
+      "unit": "",
+      "profiles": [
+        "cable"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "crossSectionMm2",
+      "label": "Сечение жилы",
+      "unit": "мм²",
+      "profiles": [
+        "cable"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "coilLengthM",
+      "label": "Длина бухты",
+      "unit": "м",
+      "profiles": [
+        "cable"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "maxFlowM3h",
+      "label": "Максимальный расход",
+      "unit": "м³/ч",
+      "profiles": [
+        "pump",
+        "station"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "maxHeadM",
+      "label": "Максимальный напор",
+      "unit": "м",
+      "profiles": [
+        "pump",
+        "station"
+      ],
+      "type": "number"
+    },
+    {
+      "key": "tankVolumeL",
+      "label": "Объём бака",
+      "unit": "л",
+      "profiles": [
+        "tank"
+      ],
+      "type": "number"
+    }
+  ]
+}

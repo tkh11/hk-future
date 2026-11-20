@@ -55,6 +55,10 @@
 /* Keeps the banner the same size as a title-and-illustration card. */
 .bannerSizer { display: block; width: calc(100% - 52px); margin: 102px 26px 26px; aspect-ratio: 4 / 3; visibility: hidden; }
 .bannerPhoto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+/* Keep composited image and gradient layers inside rounded edges during tilt. */
+.bannerPhoto, .bannerCopy, .bannerCard .bannerNote { border-radius: inherit; }
+.bannerCard[data-section="pumps"] { background: #212121; }
+.bannerCard[data-section="pumps"] .bannerPhoto { object-fit: contain; }
 .bannerCard .skeleton { position: absolute; inset: 0; min-height: 0; border-radius: 0; }
 .bannerCopy { position: absolute; z-index: 4; inset: 0 0 auto; padding: 26px 26px 56px; background: linear-gradient(180deg, rgb(0 0 0 / 46%) 0%, rgb(0 0 0 / 12%) 62%, transparent 100%); }
 .bannerCopy h2 { min-height: 0; color: #fff; }
@@ -114,7 +118,8 @@
   .toolbar { align-items: stretch; flex-direction: column; gap: 14px; margin-bottom: 22px; }
   .search { width: 100%; min-height: 48px; }
   .grid { grid-template-columns: 1fr; gap: 18px; }
-  .page[data-catalog-section="pipelines"] .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .page[data-catalog-section="pipelines"] .grid,
+  .page[data-catalog-section="pumps"] .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .cardLink { border-radius: var(--hk-radius-card-mobile); }
   .card { padding: 24px; border-radius: var(--hk-radius-card-mobile); }
   .bannerCard { padding: 0; }
@@ -197,6 +202,7 @@
   .landingContent .coverGrid { display: grid; }
 }
 .coverVideo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+video.coverVideo[data-ready="false"] { opacity: 0; }
 
 /* A soft surface reflection follows the existing tilt, including over video. */
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {

@@ -40,7 +40,6 @@ export default function FireStations({ stations }: { stations: FireStation[] }) 
       </div>
       <div className={shared.productActions}>
         <Link href="/catalog" className="home-hero__link">Станции в каталоге</Link>
-        <Link href="/selection/pumps" className="home-hero__link home-hero__link--secondary">Подбор насосов</Link>
       </div>
     </div>
   </article>;

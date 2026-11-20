@@ -1,4 +1,5 @@
 "use client";
+import { trackGoal } from "@/cms/analytics/goals";
 import { useEffect, useRef, useState } from "react";
 import { scrollPageTo } from "./page-scroll";
 
@@ -40,6 +41,7 @@ export function useModelDescription<T extends string>() {
   function selectFromModel(next: T | null) {
     if (!next) return;
     setSelection(next);
+    trackGoal("model_interaction");
     // A new request also reveals an already-selected item after scrolling back to the model.
     setRevealRequest({ id: next });
   }
@@ -77,6 +79,6 @@ export function useModelDescription<T extends string>() {
   return {
     selection, menu, selectFromModel,
     clear() { setSelection(null); setRevealRequest(null); },
-    toggle(id: T) { setRevealRequest(null); setSelection(current => current === id ? null : id); },
+    toggle(id: T) { if (selection !== id) trackGoal("model_interaction"); setRevealRequest(null); setSelection(current => current === id ? null : id); },
   };
 }

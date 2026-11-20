@@ -156,31 +156,15 @@ describe('published URLs with real Payload / PostgreSQL versions', { concurrency
     assert.deepEqual(saved.content, content)
   })
 
-  it('checks product series ownership and validates full draft attributes when publishing', async () => {
+  it('lets editors save a single-SKU product as a draft without SKU but publishes it only with one', async () => {
     const own = await category('validated-products')
-    const another = await category('different-products')
-    const series = await cms.create({ collection: 'product-series', user: publisher, overrideAccess: false, data: { title: 'Series', slug: 'validated-series', category: own.id, _status: 'published' } })
-    await assert.rejects(cms.create({ collection: 'products', user: publisher, overrideAccess: false, data: {
-      title: 'Wrong series', slug: 'wrong-series', sku: 'wrong-series', category: another.id, series: series.id, _status: 'published',
-    } }))
     const draft = await cms.create({ collection: 'products', user: editor, overrideAccess: false, draft: true, data: {
-      title: 'Typed attributes', slug: 'typed-attributes', sku: 'typed-attributes', category: own.id, series: series.id, _status: 'draft',
-      attributes: [{ key: 'pressure', label: 'Давление', valueType: 'number', numberValue: null, unit: 'МПа' }],
+      title: 'Draft without SKU', slug: 'draft-without-sku', category: own.id, productKind: 'single', _status: 'draft',
     } })
     await assert.rejects(cms.update({ collection: 'products', id: draft.id, user: publisher, overrideAccess: false, data: { _status: 'published' } }))
     assert.equal((await cms.find({ collection: 'products', where: { id: { equals: draft.id } }, overrideAccess: false })).docs.length, 0)
-    await cms.update({ collection: 'products', id: draft.id, user: publisher, overrideAccess: false, data: { _status: 'published', attributes: [
-      { key: 'pressure', label: 'Давление', valueType: 'number', numberValue: 0, unit: 'МПа' },
-      { key: 'inline', label: 'Ин-лайн', valueType: 'boolean', booleanValue: false },
-    ] } })
-    const published = await cms.findByID({ collection: 'products', id: draft.id, overrideAccess: false })
-    assert.equal(published.attributes?.[0].numberValue, 0)
-    assert.equal(published.attributes?.[1].booleanValue, false)
-    await assert.rejects(cms.update({ collection: 'products', id: draft.id, user: publisher, overrideAccess: false, data: { category: another.id } }))
-    await assert.rejects(cms.update({ collection: 'products', id: draft.id, user: publisher, overrideAccess: false, data: { attributes: [
-      { key: 'same', label: 'A', valueType: 'text', textValue: 'A' },
-      { key: 'same', label: 'B', valueType: 'text', textValue: 'B' },
-    ] } }))
+    await cms.update({ collection: 'products', id: draft.id, user: publisher, overrideAccess: false, data: { sku: 'draft-without-sku', _status: 'published' } })
+    assert.equal((await cms.findByID({ collection: 'products', id: draft.id, overrideAccess: false })).sku, 'draft-without-sku')
   })
 
   it('replays the real seed without recreating renamed records or overwriting drafts and empty navigation', async () => {

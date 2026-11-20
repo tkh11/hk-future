@@ -55,6 +55,10 @@
 /* Keeps the banner the same size as a title-and-illustration card. */
 .bannerSizer { display: block; width: calc(100% - 52px); margin: 102px 26px 26px; aspect-ratio: 4 / 3; visibility: hidden; }
 .bannerPhoto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+/* Keep composited image and gradient layers inside rounded edges during tilt. */
+.bannerPhoto, .bannerCopy, .bannerCard .bannerNote { border-radius: inherit; }
+.bannerCard[data-section="pumps"] { background: #212121; }
+.bannerCard[data-section="pumps"] .bannerPhoto { object-fit: contain; }
 .bannerCard .skeleton { position: absolute; inset: 0; min-height: 0; border-radius: 0; }
 .bannerCopy { position: absolute; z-index: 4; inset: 0 0 auto; padding: 26px 26px 56px; background: linear-gradient(180deg, rgb(0 0 0 / 46%) 0%, rgb(0 0 0 / 12%) 62%, transparent 100%); }
 .bannerCopy h2 { min-height: 0; color: #fff; }

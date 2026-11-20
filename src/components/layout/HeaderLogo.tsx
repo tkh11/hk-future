@@ -41,7 +41,10 @@ export default function HeaderLogo() {
     let timer: ReturnType<typeof setTimeout> | undefined;
     let paintFrame = 0;
     let lastHeight = 0;
+    let lastPixelRatio = 0;
     let widthReadPending = false;
+    // Preserve fine lettering at 1× too, without changing the CSS logo size.
+    const drawingPixelRatio = () => Math.max(2, window.devicePixelRatio || 1);
     // The canvas is small and read only during the short reveal. A CPU-backed
     // context avoids GPU readbacks when measuring the rendered, transparent mark.
     const context = canvas.getContext("2d", { willReadFrequently: true });
@@ -94,21 +97,25 @@ export default function HeaderLogo() {
     };
 
     const layoutSurface = () => {
+      if (disposed) return;
       const height = slot.getBoundingClientRect().height;
-      if (!height || height === lastHeight) return;
+      const pixelRatio = drawingPixelRatio();
+      if (!height || (height === lastHeight && pixelRatio === lastPixelRatio)) return;
       lastHeight = height;
+      lastPixelRatio = pixelRatio;
       const scale = height / LOCKUP.height;
       canvas.style.width = `${ART_WIDTH * scale}px`;
       canvas.style.height = `${ART_HEIGHT * scale}px`;
       canvas.style.left = `${-LOCKUP.x * scale}px`;
       canvas.style.top = `${-LOCKUP.y * scale}px`;
       if (loaded) {
-        rive.resizeDrawingSurfaceToCanvas();
+        rive.resizeDrawingSurfaceToCanvas(pixelRatio);
         queueWidthSync();
       }
     };
 
     const updatePlayback = () => {
+      if (!document.hidden) layoutSurface();
       if (disposed || !painted || complete) return;
       if (motion.matches) {
         cancelDelay();
@@ -155,7 +162,7 @@ export default function HeaderLogo() {
           return;
         }
         loaded = true;
-        rive.resizeDrawingSurfaceToCanvas();
+        rive.resizeDrawingSurfaceToCanvas(drawingPixelRatio());
         rive.scrub(ANIMATION, motion.matches ? LAST_FRAME_SECONDS : 0);
         // Let Rive draw and the browser present the initial frame before timing.
         paintFrame = requestAnimationFrame(() => {
@@ -181,6 +188,19 @@ export default function HeaderLogo() {
     layoutSurface();
     const resize = new ResizeObserver(layoutSurface);
     resize.observe(slot);
+    // Zoom and moving between displays can change DPR without resizing the slot.
+    // Re-arm the query at each change so subsequent display changes are tracked.
+    let resolution: MediaQueryList;
+    const watchResolution = () => {
+      resolution?.removeEventListener("change", watchResolution);
+      resolution = window.matchMedia(`(resolution: ${window.devicePixelRatio || 1}dppx)`);
+      resolution.addEventListener("change", watchResolution);
+      layoutSurface();
+    };
+    watchResolution();
+    window.addEventListener("resize", layoutSurface);
+    window.addEventListener("pageshow", layoutSurface);
+    window.addEventListener("focus", layoutSurface);
     const intersection = new IntersectionObserver(entries => {
       visible = entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= 0.5);
       updatePlayback();
@@ -194,6 +214,10 @@ export default function HeaderLogo() {
       cancelDelay();
       cancelAnimationFrame(paintFrame);
       resize.disconnect();
+      resolution.removeEventListener("change", watchResolution);
+      window.removeEventListener("resize", layoutSurface);
+      window.removeEventListener("pageshow", layoutSurface);
+      window.removeEventListener("focus", layoutSurface);
       intersection.disconnect();
       document.removeEventListener("visibilitychange", updatePlayback);
       motion.removeEventListener("change", updatePlayback);

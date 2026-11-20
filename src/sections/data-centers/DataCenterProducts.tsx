@@ -48,7 +48,6 @@ export default async function DataCenterProducts() {
           <ProductDetails label="Параметры подбора насосов" rows={dcProducts.pumpProperties} />
           <div className={styles.productActions}>
             <Link href="/catalog" className="home-hero__link">Насосы в каталоге</Link>
-            <Link href="/selection/pumps" className="home-hero__link home-hero__link--secondary">Подбор насосов</Link>
           </div>
         </div>
       </article>

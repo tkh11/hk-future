@@ -36,9 +36,8 @@ function reference(key: string, items: ImportReference[], field: string): Import
   return matches[0]
 }
 
-function referencesHash(refs: { categories: ImportReference[]; series: ImportReference[] }): string {
-  const sort = (items: ImportReference[]) => [...items].sort((left, right) => left.key.localeCompare(right.key, 'en'))
-  return hash({ categories: sort(refs.categories), series: sort(refs.series) })
+function referencesHash(refs: { categories: ImportReference[] }): string {
+  return hash({ categories: [...refs.categories].sort((left, right) => left.key.localeCompare(right.key, 'en')) })
 }
 
 function previewHash(batch: Pick<ImportBatch, 'sourceHash' | 'rows' | 'issues' | 'referenceHash'>): string {
@@ -53,7 +52,7 @@ export async function createImportPreview(
 ): Promise<ImportBatch> {
   return repository.transaction(async transaction => {
     await transaction.lockCatalog()
-    const referenceKeys = { categories: unique(parsed.rows.map(row => row.category)), series: unique(parsed.rows.map(row => row.series)) }
+    const referenceKeys = { categories: unique(parsed.rows.map(row => row.category)) }
     const refs = await transaction.resolveReferences(referenceKeys)
     const products = await transaction.findProducts(lookup(parsed.rows))
     const issues: ImportIssue[] = [...parsed.issues]
@@ -61,20 +60,17 @@ export async function createImportPreview(
     for (const row of parsed.rows) {
       try {
         const category = reference(row.category, refs.categories, 'category')
-        const series = reference(row.series, refs.series, 'series')
-        if (!sameID(series.category, category.id)) throw new CatalogImportError('series-category', `Серия ${row.series} не принадлежит категории ${row.category}.`)
         const existing = matchingProduct(row, products)
-        const slugOwner = products.find(product => product.slug === row.slug && !sameID(product.id, existing?.id))
-        if (slugOwner) throw new CatalogImportError('slug-conflict', `Slug ${row.slug} уже занят другим товаром.`)
+        const family = products.find(product => product.slug === row.slug)
+        if (family && existing && !sameID(family.id, existing.id)) throw new CatalogImportError('slug-conflict', `Slug ${row.slug} уже занят другим товаром.`)
         const data: ImportProductData = {
           sku: row.sku, ...(row.externalId ? { externalId: row.externalId } : {}), slug: row.slug,
-          title: row.title, description: row.description, category: category.id, series: series.id,
-          attributes: structuredClone(row.attributes),
+          title: row.title, description: row.description, category: category.id,
         }
         const differences = existing ? IMPORT_FIELDS.filter(field => !equals(existing[field], data[field])).map(field => ({ field, before: structuredClone(existing[field]), after: structuredClone(data[field]) })) : []
         rows.push({
           row: row.row, action: !existing ? 'create' : differences.length ? 'review' : 'unchanged', data, differences,
-          ...(existing ? { productId: existing.id, expectedUpdatedAt: existing.updatedAt } : {}),
+          ...(existing ? { productId: existing.id, expectedUpdatedAt: existing.updatedAt } : family ? { productId: family.id } : {}),
         })
       } catch (error) {
         if (!(error instanceof CatalogImportError)) throw error
@@ -111,8 +107,6 @@ export async function applyImportPreview(repository: CatalogImportRepository, re
     for (const [rowKey, fields] of Object.entries(overwrites)) {
       const row = batch.rows.find(item => String(item.row) === rowKey)
       if (!row || row.action !== 'review' || !Array.isArray(fields) || new Set(fields).size !== fields.length || fields.some(field => !row.differences.some(difference => difference.field === field))) throw new CatalogImportError('invalid-overwrite', 'Можно подтверждать только изменения из сохранённого предпросмотра.')
-      const relationshipChanges = row.differences.filter(difference => difference.field === 'category' || difference.field === 'series').map(difference => difference.field)
-      if (fields.some(field => relationshipChanges.includes(field)) && relationshipChanges.some(field => !fields.includes(field))) throw new CatalogImportError('invalid-overwrite', 'Изменение категории и связанной серии нужно подтвердить вместе.')
     }
     const refs = await transaction.resolveReferences(batch.referenceKeys)
     if (referencesHash(refs) !== batch.referenceHash) throw new CatalogImportError('stale-preview', 'Структура каталога изменилась. Создайте новый предпросмотр.')
@@ -120,13 +114,24 @@ export async function applyImportPreview(repository: CatalogImportRepository, re
     // Check the whole batch before its first write. The repository also performs CAS on every update.
     for (const row of batch.rows) {
       const existing = matchingProduct(row.data, products)
-      if (row.action === 'create' ? Boolean(existing) : !existing || !sameID(row.productId, existing.id) || row.expectedUpdatedAt !== existing.updatedAt) throw new CatalogImportError('stale-preview', `Товар ${row.data.sku} изменился. Создайте новый предпросмотр.`)
-      if (products.some(product => product.slug === row.data.slug && !sameID(product.id, row.productId))) throw new CatalogImportError('stale-preview', `Slug ${row.data.slug} теперь занят. Создайте новый предпросмотр.`)
+      if (row.action === 'create') {
+        if (existing) throw new CatalogImportError('stale-preview', `Товар ${row.data.sku} изменился. Создайте новый предпросмотр.`)
+        const family = products.find(product => product.slug === row.data.slug)
+        if (family && !sameID(family.id, row.productId)) throw new CatalogImportError('stale-preview', `Slug ${row.data.slug} теперь занят. Создайте новый предпросмотр.`)
+      } else if (!existing || !sameID(row.productId, existing.id) || row.expectedUpdatedAt !== existing.updatedAt) {
+        throw new CatalogImportError('stale-preview', `Товар ${row.data.sku} изменился. Создайте новый предпросмотр.`)
+      }
     }
     const result: ImportApplyResult = { batchId: batch.id, created: 0, updated: 0, unchanged: 0, preserved: 0 }
+    const createdBySlug = new Map<string, RecordID>()
     for (const row of batch.rows) {
       if (row.action === 'create') {
-        await transaction.createDraftProduct(structuredClone(row.data))
+        const family = createdBySlug.get(row.data.slug) ?? row.productId
+        if (family) await transaction.createDraftVariant(family, structuredClone(row.data))
+        else {
+          const id = await transaction.createDraftProduct(structuredClone(row.data))
+          createdBySlug.set(row.data.slug, id)
+        }
         result.created++
       } else if (row.action === 'unchanged') result.unchanged++
       else {

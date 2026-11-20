@@ -1,7 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
 import { solutionSchema } from '../../src/content/cms-schemas';
-import { productAttributesSchema, draftProductAttributesSchema } from '../../src/cms/product-validation';
 import * as copy from '../../src/content/solution-pages';
 import { coolingProducts, fireProducts, fireStations } from '../../src/content/solutions';
 
@@ -40,31 +39,5 @@ describe('solution content validation', () => {
       unsafe.coolingProducts[0].image = image;
       expect(solutionSchema.safeParse(unsafe).success, image).toBe(false);
     }
-  });
-});
-
-describe('typed product attributes', () => {
-  it('accepts actual zero and false values and optional unit strings', () => {
-    expect(productAttributesSchema.safeParse([
-      { key: 'pressure', label: 'Давление', valueType: 'number', numberValue: 0, unit: 'МПа' },
-      { key: 'inline', label: 'Ин-лайн', valueType: 'boolean', booleanValue: false },
-      { key: 'material', label: 'Материал', valueType: 'text', textValue: 'PP-RCT' },
-    ]).success).toBe(true);
-  });
-
-  it('rejects duplicate keys, absent selected values, wrong types, and unsafe or oversized units', () => {
-    const base = { key: 'diameter', label: 'Диаметр', valueType: 'number', numberValue: 25, unit: 'мм' };
-    expect(productAttributesSchema.safeParse([base, base]).success).toBe(false);
-    for (const row of [
-      { ...base, numberValue: null }, { ...base, numberValue: '25' }, { ...base, numberValue: Infinity },
-      { ...base, valueType: 'boolean', booleanValue: 'false' }, { ...base, valueType: 'text', textValue: '' },
-      { ...base, unit: 25 }, { ...base, unit: 'x'.repeat(33) }, { ...base, unit: '<script>alert(1)</script>' },
-    ]) expect(productAttributesSchema.safeParse([row]).success).toBe(false);
-  });
-
-  it('permits incomplete autosaved rows but cannot publish them', () => {
-    const incomplete = [{ key: 'pressure', label: '', valueType: 'number', numberValue: null }, {}];
-    expect(draftProductAttributesSchema.safeParse(incomplete).success).toBe(true);
-    expect(productAttributesSchema.safeParse(incomplete).success).toBe(false);
   });
 });

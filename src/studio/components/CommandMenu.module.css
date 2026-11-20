@@ -1,11 +1,15 @@
 .trigger {
-  display: flex; align-items: center; gap: 8px; width: 100%; height: 34px; padding: 0 8px 0 10px;
+  display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; height: 32px; padding: 0 8px;
   border: 1px solid var(--s-border); border-radius: var(--s-radius-s); background: var(--s-surface);
   color: var(--s-secondary); cursor: pointer; transition: border-color var(--s-fast) var(--s-ease);
 }
 .trigger:hover { border-color: var(--s-control); }
-.trigger svg { width: 16px; height: 16px; flex: none; }
-.trigger span { flex: 1; text-align: start; }
+.trigger svg { width: 18px; height: 18px; flex: none; }
+.trigger span { flex: 1; min-width: 0; text-align: start; }
+:global(html[data-studio-sidebar='collapsed']) .kbd { padding: 0; border-width: 0; }
+@media (max-width: 900px) {
+  :global(html[data-studio-sidebar='collapsed']) .kbd { padding: 3px 5px; border-width: 1px; }
+}
 .kbd { font: 500 11px/1 var(--s-font); color: var(--s-tertiary); padding: 3px 5px; border: 1px solid var(--s-border); border-radius: 5px; }
 
 .overlay { position: fixed; inset: 0; background: rgb(0 0 0 / 55%); }

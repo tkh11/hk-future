@@ -1,13 +1,11 @@
 import { createHash } from 'node:crypto'
 import { IMPORT_LIMITS } from './limits'
-import { CatalogImportError, type ImportAttribute, type ImportIssue, type ImportProductRow, type ParsedCatalogImport } from './types'
+import { CatalogImportError, type ImportIssue, type ImportProductRow, type ParsedCatalogImport } from './types'
 import { inspectXlsxArchive } from './xlsx-guard'
 
-const BASE_HEADERS = new Set(['sku', 'externalId', 'slug', 'title', 'description', 'category', 'series'])
-const REQUIRED_HEADERS = ['sku', 'slug', 'title', 'category', 'series']
-const KEY = /^[a-z0-9][a-z0-9_-]{0,99}$/
+const BASE_HEADERS = new Set(['sku', 'externalId', 'slug', 'title', 'description', 'category'])
+const REQUIRED_HEADERS = ['sku', 'slug', 'title', 'category']
 const PATH = /^[a-z0-9][a-z0-9_/-]{0,199}$/
-type AttributeColumn = Pick<ImportAttribute, 'key' | 'label' | 'valueType' | 'unit'>
 
 function invalid(code: string, message: string): never {
   throw new CatalogImportError(code, message)
@@ -100,25 +98,15 @@ export async function parseCatalogImport(file: { name: string; bytes: Uint8Array
   else invalid('file-type', 'Поддерживаются только CSV (UTF-8) и XLSX.')
   const issues: ImportIssue[] = []
   const headers = cells[0]?.map(value => value.trim()) || []
-  const attributeColumns = new Map<number, AttributeColumn>()
-  const attributeKeys = new Set<string>()
   for (const name of REQUIRED_HEADERS) {
     if (!headers.includes(name)) issues.push({ code: 'missing-header', message: `Отсутствует колонка ${name}.`, field: name, row: 1 })
   }
   const seenHeaders = new Set<string>()
-  headers.forEach((name, index) => {
+  headers.forEach(name => {
     if (seenHeaders.has(name)) issues.push({ code: 'duplicate-header', message: `Повтор колонки ${name}.`, field: name, row: 1 })
     seenHeaders.add(name)
-    if (BASE_HEADERS.has(name)) return
-    const [prefix, key, valueType, unit, label, ...extra] = name.split(':')
-    if (prefix !== 'attr' || !KEY.test(key || '') || !['text', 'number', 'boolean'].includes(valueType) || extra.length || (unit?.length || 0) > 32 || (label?.length || 0) > 100 || attributeKeys.has(key)) {
-      issues.push({ code: 'invalid-header', message: `Неизвестная или неправильная колонка ${name}.`, field: name, row: 1 })
-      return
-    }
-    attributeKeys.add(key)
-    attributeColumns.set(index, { key, valueType: valueType as AttributeColumn['valueType'], label: label || key, ...(unit ? { unit } : {}) })
+    if (!BASE_HEADERS.has(name)) issues.push({ code: 'invalid-header', message: `Неизвестная колонка ${name}.`, field: name, row: 1 })
   })
-  if (attributeColumns.size > IMPORT_LIMITS.attributes) issues.push({ code: 'attribute-limit', message: 'Максимум 20 характеристик.' })
   const rows: ImportProductRow[] = []
   const unique = { sku: new Set<string>(), externalId: new Set<string>(), slug: new Set<string>() }
   for (let index = 1; index < cells.length; index++) {
@@ -130,7 +118,7 @@ export async function parseCatalogImport(file: { name: string; bytes: Uint8Array
     const get = (name: string) => (values[headers.indexOf(name)] || '').trim()
     const data: ImportProductRow = {
       row: rowNumber, sku: get('sku'), slug: get('slug'), title: get('title'), description: get('description'),
-      category: get('category'), series: get('series'), attributes: [],
+      category: get('category'),
       ...(get('externalId') ? { externalId: get('externalId') } : {}),
     }
     for (const name of ['sku', 'externalId'] as const) {
@@ -139,27 +127,17 @@ export async function parseCatalogImport(file: { name: string; bytes: Uint8Array
     }
     if (data.slug.length > 150 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(data.slug)) addIssue('slug', 'Slug должен содержать строчные латинские буквы и цифры, разделённые одиночными дефисами.')
     if (!data.title || data.title.length > 200) addIssue('title', 'Название обязательно, максимум 200 символов.')
-    for (const name of ['category', 'series'] as const) if (!PATH.test(data[name]) || data[name].includes('//') || data[name].endsWith('/')) addIssue(name, `Укажите стабильный slug или путь для ${name}.`)
+    if (!PATH.test(data.category) || data.category.includes('//') || data.category.endsWith('/')) addIssue('category', 'Укажите стабильный slug или путь для category.')
     values.forEach((value, column) => {
       if (/^\s*=/.test(value)) addIssue(headers[column] || '', 'Формулы не принимаются. Вставьте рассчитанное значение.', 'formula')
-      const attribute = attributeColumns.get(column)
-      if (!attribute || !value.trim()) return
-      const normalized = value.trim()
-      if (attribute.valueType === 'number') {
-        const numeric = normalized.replace(',', '.')
-        if (!/^-?\d+(?:\.\d+)?$/.test(numeric) || !Number.isFinite(Number(numeric))) addIssue(headers[column], 'Характеристика должна быть конечным числом без единицы измерения в значении.')
-        else data.attributes.push({ ...attribute, numberValue: Number(numeric) })
-      } else if (attribute.valueType === 'boolean') {
-        if (!['true', 'false', '1', '0', 'да', 'нет'].includes(normalized.toLowerCase())) addIssue(headers[column], 'Используйте true/false, 1/0 или да/нет.')
-        else data.attributes.push({ ...attribute, booleanValue: ['true', '1', 'да'].includes(normalized.toLowerCase()) })
-      } else data.attributes.push({ ...attribute, textValue: normalized })
     })
-    for (const name of ['sku', 'externalId', 'slug'] as const) {
+    for (const name of ['sku', 'externalId'] as const) {
       const value = data[name]
       if (!value) continue
       if (unique[name].has(value)) addIssue(name, `Повтор ${name}: ${value}.`, 'duplicate-identity')
       unique[name].add(value)
     }
+    if (data.slug) unique.slug.add(data.slug)
     rows.push(data)
   }
   if (!rows.length) issues.push({ code: 'empty-file', message: 'Нет строк товаров для импорта.' })

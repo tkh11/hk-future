@@ -44,21 +44,20 @@ describe("public CMS content boundary", () => {
     expect(mapCategoryTree([category(1, "one", 2, "two/one"), category(2, "two", 1, "one/two")])).toEqual([]);
   });
 
-  it("serializes false and zero characteristics and only exposes populated safe documents", () => {
+  it("takes the cover from the gallery and drops unsafe or private data", () => {
     const product = mapProduct({
       slug: "pipe", sku: "0001", title: "Труба", externalId: "erp-secret", createdBy: { email: "secret@example.com" },
       resources: [{ label: 'Архивное видео', url: 'https://example.test/archive-video', visible: true }],
       category: { path: "pipelines/therm", title: "Therm", secret: "private" },
-      image: { url: "javascript:alert(1)" },
-      documents: [22, { url: "/api/media/file/test.pdf", filename: "test.pdf", privateKey: "hidden" }, { url: "javascript:alert(1)" }],
-      attributes: [
-        { key: "zero", label: "Температура", valueType: "number", numberValue: 0, unit: "°C" },
-        { key: "no", label: "Армирование", valueType: "boolean", booleanValue: false },
+      gallery: [
+        { file: { url: "javascript:alert(1)" }, role: "main" },
+        { file: { url: "/api/media/file/side.png", alt: "Сбоку", privateKey: "hidden" }, role: "gallery" },
+        { file: { url: "/api/media/file/drawing.png", alt: "Чертёж" }, role: "technical" },
       ],
     });
-    expect(product.image).toBeNull();
-    expect(product.attributes.map((entry) => entry.value)).toEqual(["0", "Нет"]);
-    expect(product.documents).toEqual([{ url: "/api/media/file/test.pdf", title: "test.pdf" }]);
+    expect(product.image).toEqual({ url: "/api/media/file/side.png", alt: "Сбоку" });
+    expect(product.gallery.map(item => item.role)).toEqual(["gallery", "technical"]);
+    expect(mapProduct({ slug: "p", title: "T", gallery: [{ file: { url: "/a.png" }, role: "gallery" }, { file: { url: "/b.png" }, role: "main" }] }).image?.url).toBe("/b.png");
     expect(JSON.stringify(product)).not.toMatch(/erp-secret|privateKey|secret@example/);
     expect(product).not.toHaveProperty('resources');
     expect(JSON.stringify(product)).not.toContain('archive-video');

@@ -9,21 +9,13 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllEnvs());
 
 describe('Payload client hints', () => {
-  it.each(['/', '/catalog', '/catalog/pipelines/therm', '/api/products', '/administrator', '/admin-preview'])('%s does not require a client-hint retry', async path => {
+  it.each(['/', '/catalog', '/catalog/pipelines/therm', '/api/products', '/administrator', '/admin-preview', '/admin', '/admin/login', '/studio', '/studio/login'])('%s does not require a client-hint retry', async path => {
     const { default: nextConfig } = await import('../../next.config');
     const response = await unstable_getResponseFromNextConfig({ url: `https://example.test${path}`, nextConfig });
     expect(response.headers.has('critical-ch')).toBe(false);
     expect(response.headers.get('accept-ch')).toBe('Sec-CH-Prefers-Color-Scheme');
     expect(response.headers.get('vary')).toBe('Sec-CH-Prefers-Color-Scheme');
     expect(response.headers.get('x-powered-by')).toBe('Next.js, Payload');
-  });
-
-  it.each(['/admin', '/admin/', '/admin/login', '/admin/collections/products/1'])('%s retains Payload theme negotiation', async path => {
-    const { default: nextConfig } = await import('../../next.config');
-    const response = await unstable_getResponseFromNextConfig({ url: `https://example.test${path}`, nextConfig });
-    expect(response.headers.get('critical-ch')).toBe('Sec-CH-Prefers-Color-Scheme');
-    expect(response.headers.get('accept-ch')).toBe('Sec-CH-Prefers-Color-Scheme');
-    expect(response.headers.get('vary')).toBe('Sec-CH-Prefers-Color-Scheme');
     expect(nextConfig.serverExternalPackages).toContain('graphql');
   });
 

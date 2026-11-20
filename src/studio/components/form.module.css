@@ -1,0 +1,32 @@
+.form { display: grid; gap: 16px; }
+.section { display: grid; gap: 16px; padding: 20px; border: 1px solid var(--s-border); border-radius: var(--s-radius-m); background: var(--s-surface); }
+.section > h2 { margin-bottom: -4px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.label { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; color: var(--s-secondary); font-size: 13px; font-weight: 500; }
+.hint { color: var(--s-tertiary); font-size: 12px; font-weight: 400; }
+.input, .select, .textarea {
+  width: 100%; min-height: 36px; padding: 7px 10px; border: 1px solid var(--s-control); border-radius: var(--s-radius-s);
+  background: var(--s-bg); color: var(--s-text); font-size: 14px;
+  transition: border-color var(--s-fast) var(--s-ease);
+}
+.input:hover, .select:hover, .textarea:hover { border-color: var(--s-tertiary); }
+.input:focus-visible, .select:focus-visible, .textarea:focus-visible { outline: 2px solid var(--s-accent-text); outline-offset: 0; border-color: transparent; }
+.input[aria-invalid='true'], .select[aria-invalid='true'], .textarea[aria-invalid='true'] { border-color: var(--s-accent-text); }
+.input:read-only, .textarea:read-only { color: var(--s-secondary); }
+.input:disabled, .select:disabled, .textarea:disabled { opacity: 0.6; }
+.textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+.mono { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; }
+.check { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
+.check input { width: 16px; height: 16px; margin: 0; accent-color: var(--s-accent); }
+.error { color: var(--s-accent-text); font-size: 13px; }
+.ok { color: var(--s-success); font-size: 13px; }
+.alert { padding: 10px 12px; border-radius: var(--s-radius-s); background: var(--s-accent-soft); color: var(--s-text); font-size: 13px; }
+.notice { padding: 10px 12px; border-radius: var(--s-radius-s); background: var(--s-warning-bg); color: var(--s-text); font-size: 13px; }
+.actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.segmented { display: inline-flex; flex-wrap: wrap; gap: 2px; padding: 3px; border-radius: 10px; background: var(--s-bg); }
+.segmented label { position: relative; }
+.segmented input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.segmented span { display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 7px; color: var(--s-secondary); font-size: 13px; font-weight: 500; }
+.segmented input:checked + span { background: var(--s-hover); color: var(--s-text); }
+.segmented input:focus-visible + span { outline: 2px solid var(--s-accent-text); }

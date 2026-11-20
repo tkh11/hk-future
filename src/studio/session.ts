@@ -5,6 +5,7 @@ import { notFound, redirect } from 'next/navigation';
 import { canEdit, canPublish, isAdmin } from '@/cms/access';
 import { getCMS } from '@/cms/client';
 import { cmsEnabled } from '@/cms/env';
+import { safeNext } from './routes';
 
 export const getStudioSession = cache(async () => {
   const payload = await getCMS();
@@ -12,14 +13,29 @@ export const getStudioSession = cache(async () => {
   return { payload, user };
 });
 
-/** Every page, action and route handler calls this; the layout check alone does not protect server actions. */
-export async function requireEditor() {
-  if (!cmsEnabled()) notFound();
-  const { payload, user } = await getStudioSession();
-  if (!user) redirect('/admin/login?redirect=%2Fstudio');
-  // Analysts keep their read-only dashboard in the classic administration.
-  if (!canEdit(user)) redirect('/admin');
-  return { payload, user, can: { publish: canPublish(user), admin: isAdmin(user) } };
+async function loginRedirect(): Promise<never> {
+  const path = (await headers()).get('x-studio-path');
+  redirect(`/studio/login${path && safeNext(path) !== '/studio' ? `?next=${encodeURIComponent(path)}` : ''}`);
 }
 
-export type StudioSession = Awaited<ReturnType<typeof requireEditor>>;
+/** Every page, action and route handler calls one of these; the layout check alone does not protect server actions. */
+export async function requireStaff() {
+  if (!cmsEnabled()) notFound();
+  const { payload, user } = await getStudioSession();
+  if (!user) return loginRedirect();
+  return { payload, user, can: { edit: canEdit(user), publish: canPublish(user), admin: isAdmin(user) } };
+}
+
+export async function requireEditor() {
+  const session = await requireStaff();
+  if (!session.can.edit) redirect('/studio');
+  return session;
+}
+
+export async function requireAdmin() {
+  const session = await requireStaff();
+  if (!session.can.admin) redirect('/studio');
+  return session;
+}
+
+export type StudioSession = Awaited<ReturnType<typeof requireStaff>>;

@@ -13,14 +13,21 @@ export function mapCatalogVariant(value:unknown) {
   const v=result.data;
   return {id:String(v.id),title:v.title,sku:v.sku,size:v.size||'',connection:v.connection||'',color:colors[v.color||'']||'',
     images:(v.gallery||[]).flatMap(r=>r.file?[{url:r.file.url,label:r.caption||(r.role==='technical'?'Чертёж':'Фото')}]:[]),
-    specs:definitions.fields.flatMap(f=>{const n=v.specs?.[f.key];return n==null?[]:[{key:f.key,label:f.label,value:n,display:numberFormat.format(n),unit:f.unit}];})};
+    specs:catalogSpecs(v.specs)};
+}
+
+export function catalogSpecs(specs?: Record<string, number | null | undefined> | null) {
+  return definitions.fields.flatMap(field => {
+    const value = specs?.[field.key];
+    return value == null ? [] : [{ key: field.key, label: field.label, unit: field.unit, value, display: numberFormat.format(value) }];
+  });
 }
 export type CatalogVariant = NonNullable<ReturnType<typeof mapCatalogVariant>>;
 export function articleSummary(skus:string[]) {
   const values=[...new Set(skus.filter(s=>s&&s.toLowerCase()!=='по запросу'))].sort((a,b)=>a.localeCompare(b,'ru',{numeric:true}));
   return values.length===0?'':values.length===1?values[0]:`${values[0]} … ${values[values.length-1]}`;
 }
-export function variantRanges(variants:CatalogVariant[]) {
+export function variantRanges(variants:Pick<CatalogVariant, 'specs'>[]) {
   return definitions.fields.flatMap(f=>{
     const values=variants.flatMap(v=>v.specs.filter(s=>s.key===f.key).map(s=>s.value));if(!values.length)return [];
     const low=Math.min(...values),high=Math.max(...values);

@@ -4,7 +4,7 @@ import { sql, type PostgresAdapter } from '@payloadcms/db-postgres'
 import { canEdit } from '../access'
 import type { Product } from '../payload-types'
 import {
-  CatalogImportError, type CatalogImportRepository, type ExistingImportProduct, type ImportAttribute,
+  CatalogImportError, type CatalogImportRepository, type ExistingImportProduct,
   type ImportBatch, type ImportProductData, type ImportTransaction, type RecordID,
 } from './types'
 
@@ -25,19 +25,11 @@ function relationID(value: unknown): RecordID {
   return ''
 }
 
-function normalizeProduct(document: Product): ExistingImportProduct {
+function normalizeProduct(document: Product, sku = document.sku ?? ''): ExistingImportProduct {
   return {
-    id: document.id, updatedAt: importProductRevision(document), sku: document.sku ?? '', slug: document.slug,
-    title: document.title, description: document.description || '', category: relationID(document.category), series: relationID(document.series),
+    id: document.id, updatedAt: importProductRevision(document), sku, slug: document.slug,
+    title: document.title, description: document.description || '', category: relationID(document.category),
     ...(document.externalId ? { externalId: document.externalId } : {}),
-    attributes: (document.attributes || []).map(attribute => {
-      const result: ImportAttribute = { key: attribute.key, label: attribute.label, valueType: attribute.valueType }
-      if (attribute.unit) result.unit = attribute.unit
-      if (attribute.valueType === 'text' && attribute.textValue != null) result.textValue = attribute.textValue
-      if (attribute.valueType === 'number' && attribute.numberValue != null) result.numberValue = attribute.numberValue
-      if (attribute.valueType === 'boolean' && attribute.booleanValue != null) result.booleanValue = attribute.booleanValue
-      return result
-    }),
   }
 }
 
@@ -51,7 +43,6 @@ function writableProduct(data: Partial<ImportProductData>) {
   return {
     ...data,
     ...(data.category === undefined ? {} : { category: numericID(data.category) }),
-    ...(data.series === undefined ? {} : { series: numericID(data.series) }),
     _status: 'draft' as const,
   }
 }
@@ -100,7 +91,7 @@ export function createPayloadImportRepository(payload: Payload, user: TypedUser)
             await database.execute(sql`SELECT pg_advisory_xact_lock(812712, 1)`)
             // Draft writes INSERT into the versions table, so locking only products rows is insufficient.
             // These locks permit readers and exclude concurrent editor/REST draft writes until commit.
-            const names = ['categories', '_categories_v', 'product_series', '_product_series_v', 'products', '_products_v', 'import_batches']
+            const names = ['categories', '_categories_v', 'products', '_products_v', 'product_variants', '_product_variants_v', 'import_batches']
             await database.execute(sql`LOCK TABLE ${sql.join(names.map(table), sql`, `)} IN SHARE ROW EXCLUSIVE MODE`)
           },
           async findProducts(keys) {
@@ -110,18 +101,27 @@ export function createPayloadImportRepository(payload: Payload, user: TypedUser)
               ...(keys.externalIds.length ? [{ externalId: { in: keys.externalIds } }] : []),
               ...(keys.slugs.length ? [{ slug: { in: keys.slugs } }] : []),
             ]
+            const variants = keys.skus.length
+              ? await payload.find({ ...options, collection: 'product-variants', draft: true, where: { sku: { in: keys.skus } }, pagination: false, limit: 3000, select: { sku: true, product: true } })
+              : { docs: [] as { sku?: string | null; product?: number | { id: number } | null }[] }
+            const parentIds = [...new Set(variants.docs.flatMap(item => {
+              const id = relationID(item.product)
+              return id === '' ? [] : [id]
+            }))]
+            if (parentIds.length) clauses.push({ id: { in: parentIds } })
             if (!clauses.length) return []
             const result = await payload.find({ ...options, collection: 'products', draft: true, where: { or: clauses }, pagination: false, limit: 3000 })
-            return result.docs.map(normalizeProduct)
+            const skuByParent = new Map(variants.docs.flatMap(item => {
+              const id = relationID(item.product)
+              return id === '' || !item.sku ? [] : [[id, item.sku]] as [RecordID, string][]
+            }))
+            return result.docs.map(document => normalizeProduct(document, skuByParent.get(document.id) || document.sku || ''))
           },
           async resolveReferences(keys) {
             check()
             const categories = keys.categories.length ? await payload.find({ ...options, collection: 'categories', draft: true, pagination: false, limit: 2000, where: { or: [{ path: { in: keys.categories } }, { slug: { in: keys.categories } }] } }) : { docs: [] }
-            check()
-            const series = keys.series.length ? await payload.find({ ...options, collection: 'product-series', draft: true, pagination: false, limit: 1000, where: { slug: { in: keys.series } } }) : { docs: [] }
             return {
               categories: keys.categories.flatMap(key => categories.docs.filter(item => item.path === key || item.slug === key).map(item => ({ key, id: item.id }))),
-              series: series.docs.map(item => ({ key: item.slug, id: item.id, category: relationID(item.category) })),
             }
           },
           async saveBatch(batch) {
@@ -139,8 +139,24 @@ export function createPayloadImportRepository(payload: Payload, user: TypedUser)
           },
           async createDraftProduct(data) {
             check()
-            const product = await payload.create({ ...options, collection: 'products', draft: true, data: writableProduct(data) as Product })
+            const { sku, ...fields } = data
+            const product = await payload.create({
+              ...options, collection: 'products', draft: true,
+              data: { ...writableProduct(fields as ImportProductData), productKind: 'family' } as Product,
+            })
+            await payload.create({
+              ...options, collection: 'product-variants', draft: true,
+              data: { title: data.title, sku, product: product.id, reviewState: 'ready', _status: 'draft' },
+            })
             return product.id
+          },
+          async createDraftVariant(productId, data) {
+            check()
+            const variant = await payload.create({
+              ...options, collection: 'product-variants', draft: true,
+              data: { title: data.title, sku: data.sku, product: numericID(productId), reviewState: 'ready', _status: 'draft' },
+            })
+            return variant.id
           },
           async updateDraftProduct(id, revision, patch) {
             check()

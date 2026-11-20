@@ -69,10 +69,11 @@ export interface Config {
   collections: {
     users: User;
     categories: Category;
-    'product-series': ProductSery;
     products: Product;
     'product-variants': ProductVariant;
     'catalog-documents': CatalogDocument;
+    'pump-selection-groups': PumpSelectionGroup;
+    'pump-selection-records': PumpSelectionRecord;
     pages: Page;
     articles: Article;
     media: Media;
@@ -91,10 +92,11 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    'product-series': ProductSeriesSelect<false> | ProductSeriesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     'product-variants': ProductVariantsSelect<false> | ProductVariantsSelect<true>;
     'catalog-documents': CatalogDocumentsSelect<false> | CatalogDocumentsSelect<true>;
+    'pump-selection-groups': PumpSelectionGroupsSelect<false> | PumpSelectionGroupsSelect<true>;
+    'pump-selection-records': PumpSelectionRecordsSelect<false> | PumpSelectionRecordsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -185,9 +187,6 @@ export interface Category {
   id: number;
   sourceKey?: string | null;
   title: string;
-  /**
-   * Предлагается по названию для новой записи. Изменение адреса существующей записи создаёт перенаправление, где оно поддерживается.
-   */
   slug: string;
   description?: string | null;
   parent?: (number | null) | Category;
@@ -230,24 +229,34 @@ export interface Media {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product-series".
- */
-export interface ProductSery {
-  id: number;
-  title: string;
-  /**
-   * Предлагается по названию для новой записи. Изменение адреса существующей записи создаёт перенаправление, где оно поддерживается.
-   */
-  slug: string;
-  description?: string | null;
-  category: number | Category;
-  image?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumb?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    wide?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -256,9 +265,6 @@ export interface ProductSery {
 export interface Product {
   id: number;
   title: string;
-  /**
-   * Выберите раздел каталога, в котором появится товар.
-   */
   category: number | Category;
   additionalCategories?: (number | Category)[] | null;
   productKind?: ('single' | 'family' | 'request') | null;
@@ -281,26 +287,10 @@ export interface Product {
         | 'accessory'
       )
     | null;
-  /**
-   * Укажите артикул производителя. Он не меняется автоматически.
-   */
   sku?: string | null;
-  /**
-   * Строка под названием на странице товара. Если поле пустое, показывается первое предложение описания.
-   */
   summary?: string | null;
   description?: string | null;
-  /**
-   * Необязательно. Серия должна относиться к выбранной категории.
-   */
-  series?: (number | null) | ProductSery;
-  /**
-   * Предлагается по названию для новой записи. Изменение адреса существующей записи создаёт перенаправление, где оно поддерживается.
-   */
   slug: string;
-  /**
-   * Заполняется при интеграции. Не меняйте без согласования с ответственным за обмен данными.
-   */
   externalId?: string | null;
   sortOrder?: number | null;
   variants?: {
@@ -308,43 +298,17 @@ export interface Product {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
-  /**
-   * Выберите фотографию товара. Чтобы заменить файл, загрузите новую запись: опубликованное изображение останется доступным.
-   */
-  image?: (number | null) | Media;
   gallery?:
     | {
         file: number | Media;
-        role?: ('main' | 'preview' | 'gallery' | 'technical') | null;
+        role?: ('main' | 'gallery' | 'technical') | null;
         caption?: string | null;
         id?: string | null;
       }[]
     | null;
   characteristics?: string | null;
-  attributes?:
-    | {
-        label: string;
-        /**
-         * Постоянный код без пробелов, например pressure. Не повторяйте коды в одном товаре.
-         */
-        key: string;
-        valueType: 'text' | 'number' | 'boolean';
-        textValue?: string | null;
-        numberValue?: number | null;
-        booleanValue?: boolean | null;
-        unit?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Инструкции, сертификаты и другие документы. Файлы публикуются отдельно от товара.
-   */
-  documents?: (number | Media)[] | null;
   catalogDocuments?:
     | {
-        /**
-         * Выберите из общей библиотеки. Замена файла в документе применяется ко всем связанным товарам.
-         */
         document: number | CatalogDocument;
         visible?: boolean | null;
         legacyLinkIds?:
@@ -356,9 +320,6 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  /**
-   * Сохранённые видео, внешние ссылки и сканы со старого сайта. Только для работы в CMS — на странице товара не показываются. PDF добавляйте через «Документы каталога» выше.
-   */
   resources?:
     | {
         label?: string | null;
@@ -371,6 +332,7 @@ export interface Product {
     | null;
   documentsText?: string | null;
   videoText?: string | null;
+  publicationRequested?: boolean | null;
   reviewState?: ('ready' | 'review' | 'blocked') | null;
   reviewNotes?: string | null;
   legacyIds?:
@@ -445,7 +407,7 @@ export interface ProductVariant {
   gallery?:
     | {
         file: number | Media;
-        role?: ('main' | 'preview' | 'gallery' | 'technical') | null;
+        role?: ('main' | 'gallery' | 'technical') | null;
         caption?: string | null;
         id?: string | null;
       }[]
@@ -486,9 +448,6 @@ export interface CatalogDocument {
   title: string;
   kind?: string | null;
   description?: string | null;
-  /**
-   * Для новой редакции загрузите и опубликуйте файл, выберите его здесь и опубликуйте документ. Все связанные товары получат новую редакцию.
-   */
   file?: (number | null) | Media;
   cover?: (number | null) | Media;
   reviewState?: ('ready' | 'review' | 'blocked') | null;
@@ -516,6 +475,141 @@ export interface CatalogDocument {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pump-selection-groups".
+ */
+export interface PumpSelectionGroup {
+  id: number;
+  title: string;
+  slug: string;
+  parent?: (number | null) | PumpSelectionGroup;
+  sharedCharacteristics?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  sharedCharacteristicsDraft?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pump-selection-records".
+ */
+export interface PumpSelectionRecord {
+  id: number;
+  sku: string;
+  title: string;
+  group: number | PumpSelectionGroup;
+  connectionSize?: string | null;
+  systemTypes?:
+    ('heating' | 'waterSupply' | 'cooling' | 'airConditioning' | 'sewerage' | 'drainage' | 'wellWaterSupply')[] | null;
+  pumpSelection?: {
+    modelName?: string | null;
+    description?: string | null;
+    fluid?: string | null;
+    impellerType?: string | null;
+    sealType?: string | null;
+    wettedMaterial?: string | null;
+    impellerMaterial?: string | null;
+    shaftMaterial?: string | null;
+    sealMaterial?: string | null;
+    installation?: string | null;
+    maxOperatingPressure?: string | null;
+    inletConnection?: string | null;
+    outletConnection?: string | null;
+    motorName?: string | null;
+    motorCode?: string | null;
+    motorType?: string | null;
+    protectionClass?: string | null;
+    insulationClass?: string | null;
+    sourceNotes?: string | null;
+    temperatureMinC?: number | null;
+    temperatureMaxC?: number | null;
+    flowMinM3h?: number | null;
+    flowMaxM3h?: number | null;
+    headAtMinFlowM?: number | null;
+    headAtMaxFlowM?: number | null;
+    impellerCount?: number | null;
+    motorPoles?: number | null;
+    volumeM3?: number | null;
+    photo?: (number | null) | Media;
+    drawing?: (number | null) | Media;
+    sourcePdf?: (number | null) | Media;
+    fluidLimits?:
+      | {
+          kind: 'ethyleneGlycol' | 'propyleneGlycol';
+          temperatureMinC: number;
+          temperatureMaxC: number;
+          concentrationMinPct: number;
+          concentrationMaxPct: number;
+          id?: string | null;
+        }[]
+      | null;
+    performancePoints?:
+      | {
+          flow: number;
+          efficiency?: number | null;
+          powerP2?: number | null;
+          npsh?: number | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  characteristicOverrides?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  specs?: {
+    powerKw?: number | null;
+    voltageV?: number | null;
+    voltageDeltaV?: string | null;
+    voltageStarV?: string | null;
+    phases?: number | null;
+    netWeightKg?: number | null;
+  };
+  curve?: {
+    speedRpm?: number | null;
+    frequencyHz?: number | null;
+    nominalCurrentA?: number | null;
+    hydraulicsOnly?: boolean | null;
+    points?:
+      | {
+          flow: number;
+          head: number;
+          id?: string | null;
+        }[]
+      | null;
+    sourceDocument?: (number | null) | CatalogDocument;
+    sourcePage?: number | null;
+    workbook?: {
+      filename?: string | null;
+      sheet?: string | null;
+      sha256?: string | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
@@ -527,9 +621,6 @@ export interface Page {
     | (
         | {
             hidden?: boolean | null;
-            /**
-             * Сохраняет существующий дизайн, видео и модели. Можно менять порядок, скрывать или заменять обычными блоками.
-             */
             section:
               | 'home-banner'
               | 'about-company'
@@ -565,9 +656,6 @@ export interface Page {
         | {
             hidden?: boolean | null;
             heading?: string | null;
-            /**
-             * Обычный текст. Пустая строка отделяет абзацы; HTML и скрипты не исполняются.
-             */
             text: string;
             id?: string | null;
             blockName?: string | null;
@@ -589,9 +677,6 @@ export interface Page {
         | {
             hidden?: boolean | null;
             heading: string;
-            /**
-             * Обычный текст. Пустая строка отделяет абзацы; HTML и скрипты не исполняются.
-             */
             text: string;
             image?: (number | null) | Media;
             imageSide?: ('left' | 'right') | null;
@@ -620,14 +705,8 @@ export interface Page {
             heading?: string | null;
             model: 'data-centers' | 'fire-suppression';
             items: {
-              /**
-               * Привязка к существующему элементу; положение, камера и геометрия модели не редактируются.
-               */
               element: 'pipes' | 'pumps' | 'valves' | 'station' | 'pipework' | 'sprinkler' | 'hydrants' | 'flange';
               title: string;
-              /**
-               * Обычный текст. Пустая строка отделяет абзацы; HTML и скрипты не исполняются.
-               */
               text: string;
               image?: (number | null) | Media;
               href?: string | null;
@@ -640,9 +719,6 @@ export interface Page {
         | {
             hidden?: boolean | null;
             heading: string;
-            /**
-             * Обычный текст. Пустая строка отделяет абзацы; HTML и скрипты не исполняются.
-             */
             text?: string | null;
             actions: {
               label: string;
@@ -667,9 +743,6 @@ export interface Article {
   id: number;
   sourceKey?: string | null;
   title: string;
-  /**
-   * Предлагается по названию для новой записи. Изменение адреса существующей записи создаёт перенаправление, где оно поддерживается.
-   */
   slug: string;
   content: {
     title?: string | null;
@@ -704,9 +777,6 @@ export interface Article {
     query?: string | null;
     wordstat?: number | null;
     seed?: string | null;
-    /**
-     * Публикация на сайте управляется отдельным статусом документа.
-     */
     status?: string | null;
     language: string;
     wordstatSource?: string | null;
@@ -781,10 +851,6 @@ export interface PayloadLockedDocument {
         value: number | Category;
       } | null)
     | ({
-        relationTo: 'product-series';
-        value: number | ProductSery;
-      } | null)
-    | ({
         relationTo: 'products';
         value: number | Product;
       } | null)
@@ -795,6 +861,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'catalog-documents';
         value: number | CatalogDocument;
+      } | null)
+    | ({
+        relationTo: 'pump-selection-groups';
+        value: number | PumpSelectionGroup;
+      } | null)
+    | ({
+        relationTo: 'pump-selection-records';
+        value: number | PumpSelectionRecord;
       } | null)
     | ({
         relationTo: 'pages';
@@ -905,20 +979,6 @@ export interface CategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product-series_select".
- */
-export interface ProductSeriesSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  description?: T;
-  category?: T;
-  image?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
@@ -930,12 +990,10 @@ export interface ProductsSelect<T extends boolean = true> {
   sku?: T;
   summary?: T;
   description?: T;
-  series?: T;
   slug?: T;
   externalId?: T;
   sortOrder?: T;
   variants?: T;
-  image?: T;
   gallery?:
     | T
     | {
@@ -945,19 +1003,6 @@ export interface ProductsSelect<T extends boolean = true> {
         id?: T;
       };
   characteristics?: T;
-  attributes?:
-    | T
-    | {
-        label?: T;
-        key?: T;
-        valueType?: T;
-        textValue?: T;
-        numberValue?: T;
-        booleanValue?: T;
-        unit?: T;
-        id?: T;
-      };
-  documents?: T;
   catalogDocuments?:
     | T
     | {
@@ -983,6 +1028,7 @@ export interface ProductsSelect<T extends boolean = true> {
       };
   documentsText?: T;
   videoText?: T;
+  publicationRequested?: T;
   reviewState?: T;
   reviewNotes?: T;
   legacyIds?:
@@ -1095,6 +1141,122 @@ export interface CatalogDocumentsSelect<T extends boolean = true> {
       };
   sourceActive?: T;
   legacyLabels?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pump-selection-groups_select".
+ */
+export interface PumpSelectionGroupsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  parent?: T;
+  sharedCharacteristics?: T;
+  sharedCharacteristicsDraft?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pump-selection-records_select".
+ */
+export interface PumpSelectionRecordsSelect<T extends boolean = true> {
+  sku?: T;
+  title?: T;
+  group?: T;
+  connectionSize?: T;
+  systemTypes?: T;
+  pumpSelection?:
+    | T
+    | {
+        modelName?: T;
+        description?: T;
+        fluid?: T;
+        impellerType?: T;
+        sealType?: T;
+        wettedMaterial?: T;
+        impellerMaterial?: T;
+        shaftMaterial?: T;
+        sealMaterial?: T;
+        installation?: T;
+        maxOperatingPressure?: T;
+        inletConnection?: T;
+        outletConnection?: T;
+        motorName?: T;
+        motorCode?: T;
+        motorType?: T;
+        protectionClass?: T;
+        insulationClass?: T;
+        sourceNotes?: T;
+        temperatureMinC?: T;
+        temperatureMaxC?: T;
+        flowMinM3h?: T;
+        flowMaxM3h?: T;
+        headAtMinFlowM?: T;
+        headAtMaxFlowM?: T;
+        impellerCount?: T;
+        motorPoles?: T;
+        volumeM3?: T;
+        photo?: T;
+        drawing?: T;
+        sourcePdf?: T;
+        fluidLimits?:
+          | T
+          | {
+              kind?: T;
+              temperatureMinC?: T;
+              temperatureMaxC?: T;
+              concentrationMinPct?: T;
+              concentrationMaxPct?: T;
+              id?: T;
+            };
+        performancePoints?:
+          | T
+          | {
+              flow?: T;
+              efficiency?: T;
+              powerP2?: T;
+              npsh?: T;
+              id?: T;
+            };
+      };
+  characteristicOverrides?: T;
+  specs?:
+    | T
+    | {
+        powerKw?: T;
+        voltageV?: T;
+        voltageDeltaV?: T;
+        voltageStarV?: T;
+        phases?: T;
+        netWeightKg?: T;
+      };
+  curve?:
+    | T
+    | {
+        speedRpm?: T;
+        frequencyHz?: T;
+        nominalCurrentA?: T;
+        hydraulicsOnly?: T;
+        points?:
+          | T
+          | {
+              flow?: T;
+              head?: T;
+              id?: T;
+            };
+        sourceDocument?: T;
+        sourcePage?: T;
+        workbook?:
+          | T
+          | {
+              filename?: T;
+              sheet?: T;
+              sha256?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1309,6 +1471,42 @@ export interface MediaSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumb?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        wide?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1374,8 +1572,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * Изменения применятся сразу после сохранения. Предыдущие значения доступны в истории версий.
- *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contacts".
  */
@@ -1406,8 +1602,6 @@ export interface Contact {
   createdAt?: string | null;
 }
 /**
- * Изменения применятся сразу после сохранения. Предыдущие значения доступны в истории версий.
- *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "solution-content".
  */
@@ -1426,8 +1620,6 @@ export interface SolutionContent {
   createdAt?: string | null;
 }
 /**
- * Изменения применятся сразу после сохранения. Предыдущие значения доступны в истории версий.
- *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation".
  */
@@ -1444,8 +1636,6 @@ export interface Navigation {
   createdAt?: string | null;
 }
 /**
- * Изменения применятся сразу после сохранения. Предыдущие значения доступны в истории версий.
- *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */

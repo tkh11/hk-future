@@ -16,6 +16,8 @@ import type { CatalogNode } from "@/lib/catalog";
 import { catalogHref, getCatalogEntries } from "@/lib/catalog";
 import type { SiteSearchEntry } from "@/lib/site-search";
 import { searchPages } from "./search-pages";
+import { mapCatalogVariant, catalogSpecs, variantRanges } from './catalog-presenter';
+import type { Where } from 'payload';
 import { mapLibraryDocuments } from './documents';
 import { solutionSchema, type SolutionContent } from "./cms-schemas";
 export { solutionSchema, type SolutionContent } from "./cms-schemas";
@@ -97,44 +99,38 @@ export const contactsSchema = z.object({
   messengers: z.array(z.object({ name: text, href: httpURL, icon: assetURL })),
 });
 
-const attribute = z.object({
-  key: text, label: text, valueType: z.enum(["text", "number", "boolean"]),
-  textValue: text.nullish(), numberValue: z.number().nullish(), booleanValue: z.boolean().nullish(), unit: text.nullish(),
-});
 const productDocument = z.object({
-  id: relationID.optional(), slug, sku: text.nullish(), title: text, description: text.nullish(), image: populatedMedia,
-  productKind: z.enum(['single','family','request']).nullish(), characteristics:text.nullish(), summary:text.nullish(),
+  id: relationID.optional(), slug, sku: text.nullish(), title: text, description: text.nullish(),
+  profile: text.nullish(), productKind: z.enum(['single','family','request']).nullish(), characteristics:text.nullish(), summary:text.nullish(),
   additionalCategories:z.array(z.object({path:text,title:text})).nullish().catch(undefined),
   gallery:z.array(z.object({file:populatedMedia,role:text.nullish(),caption:text.nullish()})).nullish(),
   catalogDocuments:z.array(z.object({visible:z.boolean().nullish(),document:z.object({id:relationID.optional(),_status:text.optional(),title:text,kind:text.nullish(),file:populatedMedia,cover:populatedMedia}).nullish().catch(undefined)})).nullish(),
   category: z.object({ path: text, title: text }).nullish().catch(undefined),
-  series: z.object({ slug, title: text }).nullish().catch(undefined),
-  attributes: z.array(attribute).nullish(), documents: z.array(z.unknown()).nullish(),
 });
+type GalleryRow = { file?: { url: string; alt?: string | null } | null; role?: string | null; caption?: string | null };
+const galleryOf = (rows: GalleryRow[] | null | undefined, title: string) =>
+  (rows ?? []).flatMap(x => x.file ? [{ url: x.file.url, alt: x.caption || x.file.alt || title, role: x.role || 'gallery' }] : []);
+/** The main photo is the one marked «Основное фото», otherwise the first gallery item. */
+const coverOf = (gallery: { url: string; alt: string; role: string }[]) => {
+  const item = gallery.find(x => x.role === 'main') ?? gallery[0];
+  return item ? { url: item.url, alt: item.alt } : null;
+};
 export function mapProduct(document: unknown) {
   const row = productDocument.parse(document);
+  const gallery = galleryOf(row.gallery, row.title);
   return {
     slug: row.slug, sku: row.sku ?? '', title: row.title, description: row.description ?? "",
     productKind:row.productKind??'single', characteristics:row.characteristics??'',summary:row.summary??'',
-    variants:[] as import('./catalog-presenter').CatalogVariant[], articleSummary:'', variantCount:0,
+    profile: row.profile ?? '',
     previewDocuments: mapLibraryDocuments((row.catalogDocuments ?? []).filter(item => item.visible !== false).map(item => item.document)),
     additionalCategories:row.additionalCategories??[],
-    gallery:(row.gallery??[]).flatMap(x=>x.file?[{url:x.file.url,alt:x.caption||x.file.alt||row.title,role:x.role||'gallery'}]:[]),
-    image: row.image ? { url: row.image.url, alt: row.image.alt ?? row.title } : null,
+    gallery,
+    image: coverOf(gallery),
     category: row.category ? { title: row.category.title, path: row.category.path } : null,
-    series: row.series ? { slug: row.series.slug, title: row.series.title } : null,
-    attributes: (row.attributes ?? []).flatMap((entry) => {
-      const raw = entry.valueType === "number" ? entry.numberValue : entry.valueType === "boolean" ? entry.booleanValue : entry.textValue;
-      if (raw == null) return [];
-      return [{ key: entry.key, label: entry.label, value: typeof raw === "boolean" ? (raw ? "Да" : "Нет") : String(raw), unit: entry.unit ?? "" }];
-    }),
-    documents: [...(row.documents ?? []).flatMap((value) => {
-      const parsed = media.safeParse(value);
-      return parsed.success ? [{ url: parsed.data.url, title: parsed.data.alt || parsed.data.filename || "Документ" }] : [];
-    }),...(row.catalogDocuments??[]).filter(x=>x.visible!==false).flatMap(x=>x.document?.file?[{url:x.document.file.url,title:x.document.title}]:[])].filter((d,i,all)=>all.findIndex(x=>x.url===d.url)===i),
+    documents: (row.catalogDocuments??[]).filter(x=>x.visible!==false).flatMap(x=>x.document?.file?[{url:x.document.file.url,title:x.document.title}]:[]).filter((d,i,all)=>all.findIndex(x=>x.url===d.url)===i),
   };
 }
-export type PublicProduct = ReturnType<typeof mapProduct>;
+export type PublicProduct = NonNullable<Awaited<ReturnType<typeof getProductContent>>>;
 
 // React cache is request-scoped: no preview data or authenticated user may enter
 // a shared persistent cache. The Local API bypasses access checks by default,
@@ -160,7 +156,7 @@ async function findAll(collection: "categories" | "articles" | "products" | "pag
       overrideAccess: false, user: user ?? undefined, draft: Boolean(user),
       where: { and: [...(user ? [] : [publishedOnly]), ...(options.where ? [options.where] : [])] },
       sort: collection === "categories" || collection === "products" ? "sortOrder" : "createdAt",
-      ...(options.summary ? { select: { slug: true, sku: true, title: true, image: true, category: true, series: true, productKind:true,additionalCategories:true } as const } : {}),
+      ...(options.summary ? { select: { slug: true, sku: true, title: true, gallery: true, category: true, productKind:true,additionalCategories:true } as const } : {}),
     };
     // Fetch variants explicitly below; expanding reverse joins here would load
     // dozens of unnecessary rows for every card and header search result.
@@ -211,7 +207,7 @@ export const getSiteSearchContent = cache(async (): Promise<SiteSearchEntry[]> =
     })),
     ...productSearch.filter(product => product.category && categoryPaths.has(product.category.path)).map((product): SiteSearchEntry => ({
       href: `/products/${product.slug}`, title: product.title, description: [product.sku||product.articleSummary, product.category?.title].filter(Boolean).join(" · "),
-      kind: "Продукт", image: product.image?.url, keywords: [product.sku, product.searchKeywords, product.series?.title, product.category?.title].filter(Boolean).join(" "),
+      kind: "Продукт", image: product.image?.url, keywords: [product.sku, product.searchKeywords, product.category?.title].filter(Boolean).join(" "),
     })),
     ...(enabled ? articleRows.map(mapArticle) : articles).map((article): SiteSearchEntry => ({
       href: `/articles/${article.slug}`, title: article.title, description: article.description.slice(0, 220), kind: "Статья", keywords: article.category,
@@ -237,10 +233,10 @@ export const getSolutionsContent = cache(async (): Promise<SolutionContent> => {
   return solutionSchema.parse(result.content);
 });
 
-export type PublicProductSummary = Pick<PublicProduct, "slug" | "sku" | "title" | "image" | "category" | "series"> & {
+export type PublicProductSummary = Pick<PublicProduct, "slug" | "sku" | "title" | "image" | "category"> & {
   additionalCategories?:{path:string;title:string}[]; articleSummary?:string;variantCount?:number;searchKeywords?:string;
 };
-const productSummaryDocument = productDocument.pick({ slug: true, sku: true, title: true, image: true, category: true, series: true })
+const productSummaryDocument = productDocument.pick({ slug: true, sku: true, title: true, gallery: true, category: true })
   .extend({ productKind:z.enum(['single','family','request']).nullish(),additionalCategories:z.array(z.object({path:text,title:text})).nullish().catch(undefined),title: text.refine(value => value.trim().length > 0) })
   .refine(row=>row.productKind==='family'||row.productKind==='request'||Boolean(row.sku?.trim()),{path:['sku'],message:'Артикул не заполнен'});
 function productSummaries(documents: unknown[]): PublicProductSummary[] {
@@ -255,8 +251,8 @@ function productSummaries(documents: unknown[]): PublicProductSummary[] {
     const row = result.data;
     return [{
       slug: row.slug, sku: row.sku??'', title: row.title,
-      image: row.image ? { url: row.image.url, alt: row.image.alt ?? row.title } : null,
-      category: row.category ?? null, series: row.series ?? null,
+      image: coverOf(galleryOf(row.gallery, row.title)),
+      category: row.category ?? null,
       additionalCategories:row.additionalCategories??[],
     }];
   });
@@ -285,18 +281,51 @@ async function enrichVariantSummaries(rows:unknown[], summaries:PublicProductSum
 // Metadata and the page request the same product during one render. Share the
 // result within that request without caching published/preview data across users.
 export const getProductContent = cache(async (productSlug: string) => {
-  if (!cmsEnabled()) return undefined;
-  const [document] = await findAll("products", { where: { slug: { equals: productSlug } } });
-  if (!document) return undefined;
-  const product = mapProduct(document);
-  const {payload,user}=await requestContext();
-  const id=z.object({id:relationID}).parse(document).id;
-  const rows=await payload.find({collection:'product-variants',where:{product:{equals:id}},pagination:false,depth:1,sort:'sortOrder',overrideAccess:false,user:user??undefined,draft:Boolean(user),select:{title:true,sku:true,size:true,connection:true,color:true,specs:true,gallery:true}});
-  const {mapCatalogVariant,articleSummary}=await import('./catalog-presenter');
-  product.variants=rows.docs.map(mapCatalogVariant).filter((v):v is NonNullable<typeof v>=>v!==null);
-  product.variantCount=product.variants.length;product.articleSummary=articleSummary(product.variants.map(v=>v.sku));
-  return product.category && (await visibleCategoryPaths()).has(product.category.path) ? product : undefined;
+  const parent = await visibleProduct(productSlug);
+  if (!parent) return undefined;
+  const { payload, user } = await requestContext();
+  // Only size choices and numeric ranges are needed for the product overview.
+  // Full rows, including their media, are fetched when the visitor opens the table.
+  const overview = await payload.find({
+    collection: 'product-variants', where: variantWhere(parent.id), depth: 0, pagination: false,
+    overrideAccess: false, user: user ?? undefined, draft: Boolean(user), select: { size: true, specs: true },
+  });
+  return {
+    ...mapProduct(parent.row),
+    sizes: [...new Set(overview.docs.flatMap(row => row.size ? [row.size] : []))].sort((a,b) => a.localeCompare(b,'ru',{numeric:true})),
+    specifications: variantRanges(overview.docs.map(row => ({ specs: catalogSpecs(row.specs) }))),
+    variantCount: overview.docs.length,
+  };
 });
+
+async function visibleProduct(productSlug: string, summary = false) {
+  if (!cmsEnabled() || !slug.safeParse(productSlug).success) return undefined;
+  const [row] = await findAll('products', { where: { slug: { equals: productSlug } }, summary });
+  const parsed = z.object({ id: relationID, category: z.object({ path: text }) }).safeParse(row);
+  if (!parsed.success || !(await visibleCategoryPaths()).has(parsed.data.category.path)) return undefined;
+  return { id: parsed.data.id, row };
+}
+
+function variantWhere(productId: string | number): Where {
+  return { and: [{ product: { equals: productId } }, { sku: { exists: true } }, { title: { exists: true } }] };
+}
+
+export async function getNomenclaturePage(productSlug: string, page: number, limit: number, query: string, size: string) {
+  const parent = await visibleProduct(productSlug, true);
+  if (!parent) return null;
+  const { payload, user } = await requestContext();
+  const filters: Where[] = [variantWhere(parent.id)];
+  if (size) filters.push({ size: { equals: size } });
+  for (const term of query.split(/\s+/).filter(Boolean)) {
+    filters.push({ or: ['sku', 'title', 'size', 'connection'].map(key => ({ [key]: { contains: term } })) });
+  }
+  const result = await payload.find({
+    collection: 'product-variants', where: { and: filters }, limit, page, depth: 1, sort: ['sortOrder', 'id'],
+    user: user ?? undefined, draft: Boolean(user), overrideAccess: false,
+    select: { title:true, sku:true, size:true, connection:true, color:true, specs:true, gallery:true },
+  });
+  return { rows: result.docs.map(mapCatalogVariant).filter(row => row !== null), total: result.totalDocs, pages: result.totalPages };
+}
 
 export async function getCMSPage(path: string) {
   if (!cmsEnabled()) return null;
@@ -351,7 +380,7 @@ export async function getPublishedCMSPaths(): Promise<string[]> {
 
 const defaultNavigation = [
   { href: '/catalog', label: 'Каталог' }, { href: '/articles', label: 'База знаний' },
-  { href: '/designers', label: 'Проектировщикам' }, { href: '/catalog', label: 'Подбор оборудования' },
+  { href: '/designers', label: 'Проектировщикам' }, { href: '/selection', label: 'Подбор оборудования' },
 ];
 export const getNavigationContent = cache(async () => {
   if (!cmsEnabled()) return defaultNavigation;

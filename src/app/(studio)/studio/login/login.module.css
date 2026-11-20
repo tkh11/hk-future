@@ -1,0 +1,5 @@
+.page { display: grid; min-height: 100dvh; place-items: center; padding: 24px; }
+.card { display: grid; gap: 20px; width: min(100%, 360px); }
+.logo { width: 180px; height: auto; }
+.title { margin: 0; font-family: var(--studio-font-display), var(--studio-font-text), system-ui, sans-serif; font-size: 24px; font-weight: 600; }
+.note { margin: 0; color: var(--s-tertiary); font-size: 12px; }

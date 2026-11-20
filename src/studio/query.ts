@@ -1,4 +1,5 @@
 import type { Where } from 'payload';
+import { nomenclatureLimit, nomenclatureLimits } from '@/lib/nomenclature';
 import { z } from 'zod';
 import { profileValues, type PublishState } from './labels';
 
@@ -17,13 +18,16 @@ const common = {
 
 const productSchema = z.object({
   ...common,
+  limit: z.coerce.number().refine(value => nomenclatureLimits.includes(value)).catch(PAGE_SIZE),
   category: optional(z.coerce.number().int().positive()),
   attention: optional(z.enum(['any', 'review', 'blocked'])),
   missing: optional(z.enum(['photo', 'summary'])),
+  requested: optional(z.literal('1')),
   sort: z.enum(['-updatedAt', 'updatedAt', 'title', '-title']).catch('-updatedAt'),
 });
 
 const variantSchema = z.object({
+  limit: z.string().optional().transform(nomenclatureLimit),
   ...common,
   product: optional(z.coerce.number().int().positive()),
   attention: optional(z.enum(['any', 'review', 'blocked'])),
@@ -60,8 +64,9 @@ export function productWhere(params: ProductParams, { skuProductIds = [], liveId
   if (params.profile) and.push({ profile: { equals: params.profile } });
   if (params.status) and.push(liveWhere(liveIds));
   if (params.attention) and.push(attentionWhere(params.attention));
-  if (params.missing === 'photo') and.push({ image: { exists: false } });
+  if (params.missing === 'photo') and.push({ 'gallery.file': { exists: false } });
   if (params.missing === 'summary') and.push({ or: [{ summary: { exists: false } }, { summary: { equals: '' } }] });
+  if (params.requested) and.push({ publicationRequested: { equals: true } });
   return and.length ? { and } : {};
 }
 

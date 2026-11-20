@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
-import { suggestSlug, updateContentAtPath } from '../../src/cms/admin-form-utils';
+import { suggestSlug, updateContentAtPath } from '../../src/studio/form-utils';
 import { solutionSchema } from '../../src/content/cms-schemas';
 import * as copy from '../../src/content/solution-pages';
 import { coolingProducts, fireProducts, fireStations } from '../../src/content/solutions';

@@ -1,7 +1,5 @@
 import Link from 'next/link';
 import { numberFormat } from '../labels';
-import { classic } from '../routes';
-import { ExternalIcon } from './icons';
 import ui from './ui.module.css';
 
 type Totals = { products: number; variants: number; categories: number };
@@ -15,17 +13,16 @@ export default function AssortmentHeader({ current, totals, exportHref }: { curr
           Товары <span className={ui.count}>{numberFormat.format(totals.products)}</span>
         </Link>
         <Link href="/studio/assortment/variants" className={ui.tab} aria-current={current === 'variants' ? 'page' : undefined}>
-          Варианты <span className={ui.count}>{numberFormat.format(totals.variants)}</span>
+          Номенклатура <span className={ui.count}>{numberFormat.format(totals.variants)}</span>
         </Link>
-        <a href={classic('/collections/categories')} className={ui.tab} title="Откроется в классической админке">
+        <Link href="/studio/assortment/categories" className={ui.tab}>
           Категории <span className={ui.count}>{totals.categories}</span>
-          <ExternalIcon />
-        </a>
+        </Link>
       </nav>
       <span className={ui.spacer} />
       {exportHref ? <a href={exportHref} className={`${ui.button} ${ui.ghost}`}>Экспорт XLSX</a> : null}
-      <a href={classic('/import')} className={ui.button}>Импорт</a>
-      <a href={classic('/collections/products/create')} className={`${ui.button} ${ui.primary}`}>Новый товар</a>
+      <Link href="/studio/assortment/import" className={ui.button}>Импорт</Link>
+      <Link href="/studio/assortment/new" className={`${ui.button} ${ui.primary}`}>Новый товар</Link>
     </header>
   );
 }

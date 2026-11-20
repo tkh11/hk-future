@@ -8,6 +8,7 @@ const basePath = "/hk-future";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  allowedDevOrigins: process.env.CMS_SERVER_URL ? [new URL(process.env.CMS_SERVER_URL).hostname] : [],
   ...(process.env.NEXT_BUILD_DIR ? { distDir: process.env.NEXT_BUILD_DIR } : {}),
   ...(githubPages
     ? {
@@ -30,19 +31,13 @@ const config = githubPages ? nextConfig : withPayload(nextConfig);
 const payloadHeaders = config.headers;
 
 if (!githubPages && payloadHeaders) {
-  // Payload needs theme negotiation in Admin. Making it critical on public
-  // pages causes Chrome to repeat the first request and its server-side work.
-  config.headers = async () => (await payloadHeaders()).flatMap(rule => {
-    if (rule.source !== "/:path*") return [rule];
-    const criticalHeaders = rule.headers.filter(header =>
-      header.key.toLowerCase() === "critical-ch"
-      && header.value === "Sec-CH-Prefers-Color-Scheme",
-    );
-    if (!criticalHeaders.length) return [rule];
-    return [
-      { ...rule, headers: rule.headers.filter(header => !criticalHeaders.includes(header)) },
-      { ...rule, source: "/admin/:path*", headers: criticalHeaders },
-    ];
+  // Critical-CH on every path made Chrome replay the first document request.
+  config.headers = async () => (await payloadHeaders()).map(rule => {
+    if (rule.source !== "/:path*") return rule;
+    return {
+      ...rule,
+      headers: rule.headers.filter(header => header.key.toLowerCase() !== "critical-ch"),
+    };
   });
 }
 

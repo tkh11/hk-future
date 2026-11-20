@@ -112,6 +112,7 @@ export default function ProductsTable({ rows, categories, sorts }: { rows: Produ
         </Dialog.Root>
         <button type="button" className={ui.button} disabled={pending} onClick={() => run({ type: 'review', ids: chosen, state: 'review' })}>Отметить для проверки</button>
         <button type="button" className={ui.button} disabled={pending} onClick={() => run({ type: 'review', ids: chosen, state: 'ready' })}>Проверено</button>
+        <button type="button" className={ui.button} disabled={pending} onClick={() => run({ type: 'publish-request', ids: chosen, requested: true })}>Отправить на публикацию</button>
         <a className={ui.button} href={`/studio/export?ids=${chosen.join(',')}`}>Экспорт XLSX</a>
         <span className={ui.spacer} />
         <button type="button" className={`${ui.button} ${ui.ghost}`} onClick={() => setSelected(new Set())}>Снять выбор</button>
@@ -138,7 +139,7 @@ export default function ProductsTable({ rows, categories, sorts }: { rows: Produ
               <th aria-sort={ariaSort(sorts.title)}><SortLink label="Товар" state={sorts.title} /></th>
               <th>Раздел</th>
               <th>Тип</th>
-              <th className={ui.end}>Варианты</th>
+              <th className={ui.end}>Номенклатура</th>
               <th className={ui.end}>Документы</th>
               <th>Публикация</th>
               <th>Внимание</th>

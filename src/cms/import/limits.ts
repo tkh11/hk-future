@@ -7,5 +7,4 @@ export const IMPORT_LIMITS = Object.freeze({
   rows: 1000,
   columns: 80,
   cellCharacters: 8000,
-  attributes: 20,
 })

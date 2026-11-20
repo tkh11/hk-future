@@ -3,8 +3,8 @@ import type { PublicProduct } from '@/content/cms-adapter';
 import type { CatalogNode } from '@/lib/catalog';
 import { publicPath } from '@/lib/public-path';
 import { productInquiry } from '@/lib/lead-request';
-import { productTagline } from '@/content/product-presentation';
-import { variantRanges } from '@/content/catalog-presenter';
+import Link from 'next/link';
+import ProductText from './ProductText';
 import LeadButton from '@/components/ui/LeadButton';
 import ProductBreadcrumbs from './ProductBreadcrumbs';
 import ProductDocuments from './ProductDocuments';
@@ -13,27 +13,26 @@ import VariantTable from './VariantTable';
 import styles from './Products.module.css';
 
 export default function ProductScreen({ product, path, trail }: { product: PublicProduct; path: string[]; trail: CatalogNode[] }) {
-  const specifications = product.attributes.length ? product.attributes : variantRanges(product.variants);
-  const tagline = productTagline(product);
-  const primaryMedia = product.gallery.find(item => item.role === 'main') ?? product.image;
+  const specifications = product.specifications;
+  const primaryMedia = product.image;
   const source = publicPath(primaryMedia?.url ?? '/brand/small-black-logo.svg');
   const tabs: ProductTab[] = [
     { id: 'description', label: 'Описание', content: product.description
-      ? <div className={styles.description}>{product.description}</div>
+      ? <ProductText text={product.description} />
       : <p className={styles.emptyPanel}>Описание пока не добавлено.</p> },
     { id: 'specifications', label: 'Характеристики', content: <>
-      {product.characteristics && <div className={styles.description}>{product.characteristics}</div>}
+      {product.characteristics && <ProductText text={product.characteristics} specifications />}
       {!!specifications.length && <>
-        {!product.attributes.length && <p className={styles.rangeNote}>Диапазоны по опубликованным вариантам. Точные параметры каждого исполнения — во вкладке «Варианты».</p>}
+        <p className={styles.rangeNote}>Диапазоны по опубликованным позициям. Точные параметры каждого исполнения — во вкладке «Номенклатура».</p>
         <div className={styles.tableFrame}><table><tbody>{specifications.map(attribute => <tr key={attribute.key}>
           <th scope="row">{attribute.label}</th><td>{attribute.value}{attribute.unit ? ` ${attribute.unit}` : ''}</td>
         </tr>)}</tbody></table></div>
       </>}
       {!product.characteristics && !specifications.length && <p className={styles.emptyPanel}>Характеристики пока не добавлены.</p>}
     </> },
-    { id: 'variants', label: 'Варианты', content: product.variants.length
-      ? <VariantTable variants={product.variants} />
-      : <p className={styles.emptyPanel}>{product.sku ? `Артикул товара: ${product.sku}.` : 'Для этого товара отдельные варианты не указаны.'}</p> },
+    { id: 'variants', label: 'Номенклатура', content: product.variantCount
+      ? <VariantTable slug={product.slug} sizes={product.sizes} columns={specifications} />
+      : <p className={styles.emptyPanel}>{product.sku ? `Артикул товара: ${product.sku}.` : 'Для этого товара номенклатура пока не указана.'}</p> },
     { id: 'gallery', label: 'Фотографии и чертежи', content: product.gallery.length
       ? <div className={styles.gallery}>{product.gallery.map((item, index) => <figure key={`${item.url}-${index}`}>
         {/\.mp4(?:[?#]|$)/i.test(item.url)
@@ -54,13 +53,13 @@ export default function ProductScreen({ product, path, trail }: { product: Publi
             ? <video src={source} controls playsInline preload="metadata" aria-label={product.title} />
             : <Image unoptimized loading="eager" src={source} alt={primaryMedia?.alt ?? product.title} width={800} height={800} />}
         </div>
-        <div className={styles.copy}>
-          <h1>{product.title}</h1>
-          {tagline && <p className={styles.tagline}>{tagline}</p>}
-          <LeadButton className="home-hero__link" label="Запросить предложение" details={productInquiry(product)} />
-        </div>
+        <h1>{product.title}</h1>
       </div>
       <ProductTabs tabs={tabs} />
+      <div className={styles.actions}>
+        <LeadButton className="home-hero__link" label="Запросить предложение" details={productInquiry(product)} />
+        {product.profile === 'pump' && <Link className={`home-hero__link home-hero__link--secondary ${styles.selectionLink}`} href="/selection/pumps">Подбор оборудования</Link>}
+      </div>
     </article>
   </main>;
 }

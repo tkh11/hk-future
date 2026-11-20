@@ -4,7 +4,6 @@ import { isAdmin } from './access';
 /** Private, stable identity for initial content; URLs remain freely editable. */
 export const seedSourceKey: Field = {
   name: 'sourceKey', type: 'text', unique: true, index: true, maxLength: 300,
-  admin: { hidden: true },
   access: {
     read: () => false,
     create: ({ req }) => req.context.trustedMigration === true && isAdmin(req.user),

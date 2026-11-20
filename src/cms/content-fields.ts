@@ -14,8 +14,8 @@ const url = (name: string, label: string, local = false): Field => ({
 
 /** A typed group preserves the existing public Article.content shape. */
 export const articleContentFields: Field[] = [
-  { name: 'title', type: 'text', admin: { hidden: true } },
-  { name: 'slug', type: 'text', admin: { hidden: true } },
+  { name: 'title', type: 'text' },
+  { name: 'slug', type: 'text' },
   text('category', 'Тема статьи', 120),
   paragraph('description', 'Описание для поиска', 1200),
   paragraph('lead', 'Вступление'),
@@ -31,11 +31,11 @@ export const articleContentFields: Field[] = [
   url('catalogHref', 'Ссылка на раздел каталога', true),
   url('selectionHref', 'Ссылка на подбор оборудования', true),
   { name: 'date', label: 'Дата материала', type: 'text', required: true, maxLength: 10, validate: (value: unknown) => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) || 'Дата в формате ГГГГ-ММ-ДД.' },
-  { type: 'collapsible', label: 'Редакционные данные', admin: { initCollapsed: true }, fields: [
+  { type: 'collapsible', label: 'Редакционные данные', fields: [
     { ...text('query', 'Поисковый запрос', 500, false), defaultValue: '' },
     { name: 'wordstat', label: 'Частота запроса', type: 'number', min: 0, defaultValue: 0 },
     { ...text('seed', 'Исходная тема', 1000, false), defaultValue: '' },
-    { ...text('status', 'Редакционная отметка', 120, false), defaultValue: 'draft', admin: { description: 'Публикация на сайте управляется отдельным статусом документа.' } },
+    { ...text('status', 'Редакционная отметка', 120, false), defaultValue: 'draft' },
     { ...text('language', 'Язык', 10), defaultValue: 'ru' },
     { ...text('wordstatSource', 'Источник частоты запроса', 2000, false), defaultValue: '' },
   ] },

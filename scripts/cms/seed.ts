@@ -42,7 +42,7 @@ for (const page of initialPages) {
 const navigation = await payload.findGlobal({ slug: 'navigation', overrideAccess: true });
 if (!navigation.createdAt) await payload.updateGlobal({ slug: 'navigation', user: admin, overrideAccess: false, data: { items: [
   { href: '/catalog', label: 'Каталог' }, { href: '/articles', label: 'База знаний' },
-  { href: '/designers', label: 'Проектировщикам' }, { href: '/catalog', label: 'Подбор оборудования' },
+  { href: '/designers', label: 'Проектировщикам' }, { href: '/selection', label: 'Подбор оборудования' },
 ] } });
 console.log('Existing catalogue, articles, contacts and solution copy seeded. Existing CMS edits were preserved.');
 await payload.destroy();

@@ -13,18 +13,18 @@ test('product tabs keep variant filters, support the keyboard and expose the cat
   });
   await page.goto(productPath);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(productTitle);
-  await expect(page.getByText('Эластичность, благодаря которой можно легко менять угол поворота при монтаже.', { exact: true })).toBeVisible();
+  await expect(page.locator('article h1 + p')).toHaveCount(0);
   const trail = page.getByRole('navigation', { name: 'Путь по каталогу' });
   await expect(trail.locator('[aria-current="page"]')).toHaveText(productTitle);
   await expect(trail.getByRole('link', { name: 'Каталог', exact: true })).toHaveAttribute('href', '/catalog');
 
   const tabs = page.getByRole('tablist', { name: 'Информация о товаре' });
-  await expect(tabs.getByRole('tab')).toHaveText(['Описание', 'Характеристики', 'Варианты', 'Фотографии и чертежи', 'Документы']);
-  const variants = tabs.getByRole('tab', { name: 'Варианты', exact: true });
+  await expect(tabs.getByRole('tab')).toHaveText(['Описание', 'Характеристики', 'Номенклатура', 'Фотографии и чертежи', 'Документы']);
+  const variants = tabs.getByRole('tab', { name: 'Номенклатура', exact: true });
   await variants.click();
   const filter = page.getByRole('searchbox', { name: 'Артикул или исполнение' });
   await filter.fill('14524161');
-  await expect(page.getByRole('status').filter({ hasText: 'Показано' })).toContainText('Показано 1 из');
+  await expect(page.getByRole('tabpanel').getByRole('status')).toHaveText('1–1 из 1');
   await tabs.getByRole('tab', { name: 'Характеристики', exact: true }).click();
   await expect(page.getByRole('tabpanel')).toHaveCount(1);
   await variants.click();
@@ -100,4 +100,36 @@ test('request includes the selected product, allows editing and resets on a gene
     await page.getByRole('navigation', { name: 'Мобильная навигация' }).getByRole('button', { name: 'Оставить заявку' }).click();
   }
   await expect(dialog.locator('textarea[name="details"]')).toHaveValue('');
+});
+
+test('pump nomenclature is loaded on demand and paginated on the server', async ({ page }) => {
+  const calls: string[] = [];
+  page.on('request', request => {
+    if (new URL(request.url()).pathname.endsWith('/nomenclature')) calls.push(request.url());
+  });
+  await page.goto('/products/hip');
+  const article = page.locator('main article');
+  await expect(article.getByRole('link', { name: 'Подбор оборудования' })).toHaveAttribute('href', '/selection/pumps');
+  await expect(article.getByRole('heading', { name: 'Применение', exact: true })).toBeVisible();
+  const tabs = article.getByRole('tablist');
+  const box = await tabs.boundingBox();
+  expect(Math.abs(box!.x + box!.width / 2 - page.viewportSize()!.width / 2)).toBeLessThan(2);
+  expect(calls).toHaveLength(0);
+  await tabs.getByRole('tab', { name: 'Номенклатура' }).click();
+  const rows = article.locator('[role=tabpanel]:visible tbody tr');
+  await expect(rows).toHaveCount(10);
+  const first = await rows.first().locator('th').innerText();
+  const next = article.getByRole('button', { name: 'Вперёд' });
+  await next.click();
+  await expect(rows.first().locator('th')).not.toHaveText(first);
+  for (const limit of [20, 50, 100]) {
+    await article.getByLabel('Позиций на странице').selectOption(String(limit));
+    await expect(rows).toHaveCount(limit);
+    await expect(rows.first().locator('th')).toHaveText(first);
+  }
+  await next.click();
+  await expect(article.getByText('Страница 2 из 2')).toBeVisible();
+  await expect(next).toBeDisabled();
+  expect((await rows.count())).toBeGreaterThan(0);
+  expect((await rows.count())).toBeLessThan(100);
 });

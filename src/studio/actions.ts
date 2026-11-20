@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
+import { describeError } from './errors';
 import { productHref, variantHref } from './routes';
 import { requireEditor } from './session';
 
@@ -9,20 +10,13 @@ const ids = z.array(z.number().int().positive()).min(1).max(100);
 const bulkSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('category'), ids, category: z.number().int().positive() }),
   z.object({ type: z.literal('review'), ids, state: z.enum(['review', 'ready']) }),
+  z.object({ type: z.literal('publish-request'), ids, requested: z.boolean() }),
 ]);
 
 export type BulkInput = z.infer<typeof bulkSchema>;
 export type BulkResult = { ok: number; failed: { id: number; message: string }[] } | { error: string };
 
-function describe(error: unknown) {
-  const e = error as { name?: string; status?: number; message?: string; data?: { errors?: { message?: string }[] } };
-  if (e.name === 'Locked' || e.status === 423) return 'Карточку сейчас редактирует коллега.';
-  if (e.name === 'Forbidden' || e.status === 403) return e.message && /[а-я]/i.test(e.message) ? e.message : 'Недостаточно прав.';
-  const details = e.data?.errors?.flatMap(x => x.message ?? []).join(' ');
-  if (details) return details;
-  if (e.name === 'NotFound' || e.status === 404) return 'Карточка не найдена.';
-  return 'Не удалось сохранить.';
-}
+const describe = (error: unknown) => describeError(error).error;
 
 /** Saves into the latest draft: the public copy changes only after publication. */
 export async function bulkUpdateProducts(input: BulkInput): Promise<BulkResult> {
@@ -34,7 +28,7 @@ export async function bulkUpdateProducts(input: BulkInput): Promise<BulkResult> 
     const category = await s.payload.findByID({ collection: 'categories', id: change.category, depth: 0, select: { title: true }, disableErrors: true, overrideAccess: false, user: s.user });
     if (!category) return { error: 'Раздел не найден.' };
   }
-  const data = change.type === 'category' ? { category: change.category } : { reviewState: change.state };
+  const data = change.type === 'category' ? { category: change.category } : change.type === 'review' ? { reviewState: change.state } : { publicationRequested: change.requested };
   let ok = 0;
   const failed: { id: number; message: string }[] = [];
   // Sequential on purpose: each update runs hooks and version writes in its own transaction.
@@ -73,7 +67,7 @@ export async function searchCatalog(raw: string): Promise<SearchHit[]> {
     ...products.docs.map(p => ({ href: productHref(p.id), title: p.title, meta: p.sku ? `Товар · ${p.sku}` : 'Товар' })),
     ...variants.docs.map(v => {
       const parent = v.product && typeof v.product === 'object' ? v.product.title : null;
-      return { href: variantHref(v.id), title: v.sku ? `${v.sku} · ${v.title}` : v.title, meta: parent ? `Вариант · ${parent}` : 'Вариант' };
+      return { href: variantHref(v.id), title: v.sku ? `${v.sku} · ${v.title}` : v.title, meta: parent ? `Позиция · ${parent}` : 'Позиция' };
     }),
   ];
 }

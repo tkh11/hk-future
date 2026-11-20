@@ -45,7 +45,8 @@ try{
   assert.equal(parsed.length,children.docs.length);assert(variantRanges(parsed).some(s=>s.key==='outerDiameterMm'));
   assert(!JSON.stringify(parsed).includes('legacyIds'));
   const document=await payload.findByID({collection:'products',id:pipe.id,depth:2,overrideAccess:false});
-  assert(document.image&&typeof document.image==='object'&&document.image.url);
+  const cover=document.gallery?.[0]?.file;
+  assert(cover&&typeof cover==='object'&&cover.url);
   assert(document.catalogDocuments?.some(x=>x.document&&typeof x.document==='object'&&x.document.file&&typeof x.document.file==='object'&&x.document.file.url));
   report.checks.push('Pipe specifications and verified tank values preserved; public card has accessible image and PDF relationships');
   const source=JSON.parse(await readFile('/Users/boris/Documents/Codex/2026-10-15/https-heisskraft-ru-bitrix-admin-iblock/outputs/payload-catalog/data/products.json','utf8'));

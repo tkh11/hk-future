@@ -14,8 +14,7 @@ describe('catalog importer with real Payload / PostgreSQL transactions', { concu
   let user: TypedUser
   let other: TypedUser
   let categoryID: number
-  let seriesID: number
-  const csv = (sku: string, title = 'Тестовый товар') => `sku,slug,title,description,category,series\n${sku},${sku},${title},Описание,pipelines,therm`
+  const csv = (sku: string, title = 'Тестовый товар') => `sku,slug,title,description,category\n${sku},${sku},${title},Описание,pipelines`
   const parse = (sku: string, title?: string) => parseCatalogImport({ name: 'products.csv', bytes: Buffer.from(csv(sku, title)) })
   const repository = () => createPayloadImportRepository(cms, user)
 
@@ -48,8 +47,6 @@ describe('catalog importer with real Payload / PostgreSQL transactions', { concu
     other = { ...second, collection: 'users' }
     const category = await cms.create({ collection: 'categories', user, overrideAccess: false, draft: true, data: { title: 'Трубопроводы', slug: 'pipelines', art: 'pipes', _status: 'draft' } })
     categoryID = category.id
-    const series = await cms.create({ collection: 'product-series', user, overrideAccess: false, draft: true, data: { title: 'Therm', slug: 'therm', category: category.id, _status: 'draft' } })
-    seriesID = series.id
   })
 
   after(async () => {
@@ -99,7 +96,7 @@ describe('catalog importer with real Payload / PostgreSQL transactions', { concu
   it('saves changes to a published product as a private draft without changing the public copy', async () => {
     const publisher = await cms.create({ collection: 'users', overrideAccess: true, data: { email: 'publisher@test.invalid', password: randomBytes(24).toString('hex'), role: 'publisher' } })
     const original = await cms.create({ collection: 'products', user: publisher, overrideAccess: false, data: {
-      sku: 'published-product', slug: 'published-product', title: 'Публичное название', description: 'Описание', category: categoryID, series: seriesID, _status: 'published',
+      sku: 'published-product', slug: 'published-product', title: 'Публичное название', description: 'Описание', category: categoryID, _status: 'published',
     } })
     const preview = await createImportPreview(repository(), await parse('published-product', 'Название из импорта'), { actorId: user.id })
     await applyImportPreview(repository(), { batchId: preview.id, actorId: user.id, overwrites: { '2': ['title'] } })
@@ -114,7 +111,7 @@ describe('catalog importer with real Payload / PostgreSQL transactions', { concu
   it('rolls back earlier product writes and draft versions after an exception', async () => {
     await assert.rejects(repository().transaction(async transaction => {
       await transaction.lockCatalog()
-      await transaction.createDraftProduct({ sku: 'rollback-test', slug: 'rollback-test', title: 'Откат', description: '', category: categoryID, series: seriesID, attributes: [] })
+      await transaction.createDraftProduct({ sku: 'rollback-test', slug: 'rollback-test', title: 'Откат', description: '', category: categoryID })
       throw new Error('deliberate rollback')
     }), /deliberate rollback/)
     const result = await cms.find({ collection: 'products', user, overrideAccess: false, draft: true, where: { sku: { equals: 'rollback-test' } } })

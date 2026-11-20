@@ -1,15 +1,3 @@
-export type ImportValueType = 'text' | 'number' | 'boolean'
-
-export interface ImportAttribute {
-  key: string
-  label: string
-  valueType: ImportValueType
-  textValue?: string
-  numberValue?: number
-  booleanValue?: boolean
-  unit?: string
-}
-
 export interface ImportProductRow {
   /** Physical CSV / worksheet row, including the header. */
   row: number
@@ -19,8 +7,6 @@ export interface ImportProductRow {
   title: string
   description: string
   category: string
-  series: string
-  attributes: ImportAttribute[]
 }
 
 export interface ImportIssue {
@@ -38,7 +24,7 @@ export interface ParsedCatalogImport {
 }
 
 export type RecordID = string | number
-export const IMPORT_FIELDS = ['slug', 'title', 'description', 'category', 'series', 'attributes'] as const
+export const IMPORT_FIELDS = ['slug', 'title', 'description', 'category'] as const
 export type ImportField = (typeof IMPORT_FIELDS)[number]
 
 /** Only these fields can be written by this importer; media and publication are excluded. */
@@ -49,8 +35,6 @@ export interface ImportProductData {
   title: string
   description: string
   category: RecordID
-  series: RecordID
-  attributes: ImportAttribute[]
 }
 
 export interface ExistingImportProduct extends ImportProductData {
@@ -62,8 +46,6 @@ export interface ExistingImportProduct extends ImportProductData {
 export interface ImportReference {
   key: string
   id: RecordID
-  /** A series is always checked against its parent category. */
-  category?: RecordID
 }
 
 export interface ImportDifference {
@@ -100,7 +82,7 @@ export interface ImportBatch {
   rows: ImportPreviewRow[]
   issues: ImportIssue[]
   /** Used to detect taxonomy changes between preview and apply. */
-  referenceKeys: { categories: string[]; series: string[] }
+  referenceKeys: { categories: string[] }
   referenceHash: string
   result?: ImportApplyResult
 }
@@ -116,11 +98,13 @@ export interface ImportTransaction {
   /** Serializes catalog imports. Normal editor updates also need revision / row locking below. */
   lockCatalog(): Promise<void>
   findProducts(keys: ProductLookup): Promise<ExistingImportProduct[]>
-  resolveReferences(keys: ImportBatch['referenceKeys']): Promise<{ categories: ImportReference[]; series: ImportReference[] }>
+  resolveReferences(keys: ImportBatch['referenceKeys']): Promise<{ categories: ImportReference[] }>
   saveBatch(batch: ImportBatch): Promise<void>
   /** Lock the persisted batch until commit. Clients must never be allowed to edit its snapshot. */
   getBatchForUpdate(id: string): Promise<ImportBatch | null>
   createDraftProduct(data: ImportProductData): Promise<RecordID>
+  /** Adds a variant to an existing family created in this batch or already in the catalog. */
+  createDraftVariant(productId: RecordID, data: ImportProductData): Promise<RecordID>
   /** Atomic compare-and-set against the latest draft revision; false means concurrent edit. */
   updateDraftProduct(id: RecordID, expectedUpdatedAt: string, patch: Partial<Pick<ImportProductData, ImportField>>): Promise<boolean>
   markBatchApplied(id: string, result: ImportApplyResult): Promise<void>

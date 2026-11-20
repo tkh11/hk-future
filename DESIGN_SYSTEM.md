@@ -1142,13 +1142,16 @@ to the existing tilt, including on video covers; fade it out on pointer exit.
 Keep the whole card a keyboard-accessible link. Reduce to two columns on tablets
 and one on narrow screens. Disable decorative motion for touch and reduced motion.
 
-Pipeline system photo cards are the exception: keep two columns on mobile,
+Pipeline system and pump category photo cards are the exception: keep two columns on mobile,
 with readable portrait proportions and descriptions always visible. On desktop
 with a fine hover pointer, slide each description and its bottom gradient up
 from below the card on hover or keyboard focus, and retract them on exit.
 Keep this reveal clipped inside the rounded card without moving the grid or
 changing its existing tilt/reflection. Touch devices show the descriptions
 immediately; reduced motion removes the sliding transition.
+Pump category cards use the supplied white wireframe illustrations on a dark
+background, fitted without cropping. Keep each category description editable in
+Payload and mirrored in the local catalog content used without CMS.
 
 Reveal cards with the existing 650ms block entrance on first viewport entry.
 Mount their illustrations only on entry; show pale shimmer placeholders while

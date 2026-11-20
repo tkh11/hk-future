@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     { header: 'Артикул', key: 'sku', width: 16 },
     { header: 'Раздел', key: 'category', width: 28 },
     { header: 'Тип продукции', key: 'profile', width: 22 },
-    { header: 'Вариантов', key: 'variants', width: 11 },
+    { header: 'Позиций', key: 'variants', width: 11 },
     { header: 'Документов', key: 'docs', width: 12 },
     { header: 'Не хватает', key: 'missing', width: 30 },
     { header: 'Публикация', key: 'status', width: 15 },

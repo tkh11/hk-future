@@ -7,7 +7,7 @@ const columns = [
     title: "Покупателям",
     links: [
       { href: "/catalog", label: "Каталог" },
-      { href: "/catalog", label: "Подбор оборудования" },
+      { href: "/selection", label: "Подбор оборудования" },
       { href: "/articles", label: "База знаний" },
       { href: "/docs", label: "Документация" },
     ],

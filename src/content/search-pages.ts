@@ -11,6 +11,5 @@ export const searchPages: SiteSearchEntry[] = [
   { href: "/contacts", title: "Контакты", description: "Телефоны, электронная почта, адрес и время работы HEISSKRAFT.", kind: "Страница" },
   { href: "/projects", title: "Проекты", description: "Проекты HEISSKRAFT.", kind: "Страница" },
   { href: "/warranty", title: "Гарантия", description: "Гарантия на продукцию HEISSKRAFT.", kind: "Страница" },
-  { href: "/selection/pumps", title: "Подбор насосов", description: "Подбор насосного оборудования.", kind: "Страница" },
   { href: "/selection/pipelines", title: "Подбор трубопровода", description: "Подбор трубопроводной системы.", kind: "Страница" },
 ];

@@ -10,7 +10,7 @@ if (!existsSync(filename)) {
   const secret = randomBytes(48).toString('hex');
   const adminPassword = randomBytes(24).toString('base64url');
   writeFileSync(filename, `CMS_ENABLED=true\nCMS_SERVER_URL=http://localhost:3000\nDATABASE_URL=postgresql://heisskraft:${password}@127.0.0.1:5433/heisskraft\nPAYLOAD_SECRET=${secret}\nCMS_BOOTSTRAP_EMAIL=admin@heisskraft.local\nCMS_BOOTSTRAP_PASSWORD=${adminPassword}\n`, { mode: 0o600, flag: 'wx' });
-  writeFileSync('.local/admin-access.txt', `Локальная CMS: http://localhost:3000/admin\nEmail: admin@heisskraft.local\nПароль: ${adminPassword}\nТолько для разработки. Измените пароль после входа.\n`, { mode: 0o600 });
+  writeFileSync('.local/admin-access.txt', `Локальная CMS: http://localhost:3000/studio\nEmail: admin@heisskraft.local\nПароль: ${adminPassword}\nТолько для разработки. Измените пароль после входа.\n`, { mode: 0o600 });
 }
 const env = readFileSync(filename, 'utf8');
 const database = new URL(env.match(/^DATABASE_URL=(.+)$/m)?.[1] || '');

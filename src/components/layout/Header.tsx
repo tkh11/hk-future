@@ -23,7 +23,7 @@ const navLinks: NavLink[] = [
   { href: "/catalog", label: "Каталог" },
   { href: "/articles", label: "База знаний" },
   { href: "/designers", label: "Проектировщикам" },
-  { href: "/catalog", label: "Подбор оборудования" },
+  { href: "/selection", label: "Подбор оборудования" },
 ];
 
 const rightLinks: NavLink[] = [{ href: "/contacts", label: "Контакты" }];

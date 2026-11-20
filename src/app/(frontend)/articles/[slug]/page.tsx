@@ -37,6 +37,7 @@ export default async function ArticlePage({ params }: Props) {
     await redirectOldCMSPath(`/articles/${slug}`);
     notFound();
   }
+  const showSelectionLink = article.selectionHref.split(/[?#]/)[0].replace(/\/$/, "") !== "/selection/pumps";
   const allArticles = await getArticlesContent();
   const related = article.related.flatMap((slug) => allArticles.filter((item) => item.slug === slug));
   const schema = {
@@ -54,7 +55,7 @@ export default async function ArticlePage({ params }: Props) {
           <div className={styles.prose}>
             {article.sections.map((section, index) => <section id={`section-${index + 1}`} key={section.heading}><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</section>)}
             <section id="questions"><h2>Частые вопросы</h2>{article.faq.map((faq) => <details key={faq.question}><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}</section>
-            <section className={styles.product}><h2>Решения для вашего проекта</h2><p>Перейдите к подходящему разделу каталога HEISSKRAFT. Характеристики и совместимость конкретного изделия проверяйте по его технической документации.</p><div className={styles.actions}><Link href={article.catalogHref}>Каталог оборудования</Link><Link href={article.selectionHref}>{article.selectionHref.endsWith("pumps") ? "Подбор насосов" : "Подбор трубопровода"}</Link></div></section>
+            <section className={styles.product}><h2>Решения для вашего проекта</h2><p>Перейдите к подходящему разделу каталога HEISSKRAFT. Характеристики и совместимость конкретного изделия проверяйте по его технической документации.</p><div className={styles.actions}><Link href={article.catalogHref}>Каталог оборудования</Link>{showSelectionLink && <Link href={article.selectionHref}>Подбор трубопровода</Link>}</div></section>
             <details className={styles.sources}><summary>Источники и документация</summary><ul>{article.sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.title}</a></li>)}</ul></details>
           </div>
         </div>

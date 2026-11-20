@@ -5,14 +5,14 @@ import { parseProductParams, parseVariantParams, productWhere, publishState, sor
 describe('Studio URL params', () => {
   it('keeps valid filters and falls back on anything malformed', () => {
     expect(parseProductParams({ q: '  HIP 40 ', profile: 'pump', status: 'published', page: '3', category: '7', attention: 'any', missing: 'photo', sort: 'title' }))
-      .toEqual({ q: 'HIP 40', profile: 'pump', status: 'published', page: 3, category: 7, attention: 'any', missing: 'photo', sort: 'title' });
+      .toEqual({ q: 'HIP 40', profile: 'pump', status: 'published', page: 3, limit: 50, category: 7, attention: 'any', missing: 'photo', sort: 'title' });
     expect(parseProductParams({ q: '   ', profile: 'rocket', status: 'gone', page: '-2', category: 'x', missing: 'price', sort: 'drop table' }))
-      .toEqual({ page: 1, sort: '-updatedAt' });
+      .toEqual({ page: 1, limit: 50, sort: '-updatedAt' });
   });
 
   it('reads the first value of repeated params', () => {
-    expect(parseVariantParams({ product: ['12', '13'], unverified: '1' })).toEqual({ product: 12, unverified: '1', page: 1, sort: 'sku' });
-    expect(parseVariantParams({ unverified: 'yes' })).toEqual({ page: 1, sort: 'sku' });
+    expect(parseVariantParams({ product: ['12', '13'], unverified: '1' })).toEqual({ product: 12, unverified: '1', page: 1, limit: 10, sort: 'sku' });
+    expect(parseVariantParams({ unverified: 'yes' })).toEqual({ page: 1, limit: 10, sort: 'sku' });
   });
 });
 

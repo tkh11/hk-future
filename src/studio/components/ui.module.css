@@ -30,7 +30,7 @@
   border-radius: 999px; background: transparent; color: var(--s-secondary); font-size: 13px; white-space: nowrap; cursor: pointer;
 }
 .pill:hover { border-color: var(--s-control); color: var(--s-text); }
-.pill[aria-pressed='true'] { border-color: var(--s-accent); background: var(--s-accent-soft); color: var(--s-text); }
+.pill[aria-pressed='true'], .pill[aria-current='page'] { border-color: var(--s-accent); background: var(--s-accent-soft); color: var(--s-text); }
 
 /* Status badges */
 .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--s-secondary); white-space: nowrap; }
@@ -72,7 +72,7 @@
 .empty p + p { margin-top: 6px; color: var(--s-tertiary); }
 
 /* Footer */
-.pager { display: flex; align-items: center; gap: 12px; padding: 12px 4px 0; color: var(--s-tertiary); font-size: 13px; }
+.pager { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 4px 0; color: var(--s-tertiary); font-size: 13px; }
 .pager .spacer { flex: 1; }
 .pagerLinks { display: flex; gap: 6px; }
 .disabledLink { pointer-events: none; opacity: 0.45; }

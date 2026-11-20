@@ -4,21 +4,28 @@ import { useRouter } from 'next/navigation';
 import { Dialog } from 'radix-ui';
 import { useEffect, useId, useRef, useState, useSyncExternalStore, useTransition } from 'react';
 import { searchCatalog, type SearchHit } from '../actions';
-import { classic } from '../routes';
 import { SearchIcon } from './icons';
 import css from './CommandMenu.module.css';
 
 const destinations: SearchHit[] = [
   { title: 'Обзор', href: '/studio', meta: 'Раздел' },
   { title: 'Товары', href: '/studio/assortment', meta: 'Ассортимент' },
-  { title: 'Варианты', href: '/studio/assortment/variants', meta: 'Ассортимент' },
+  { title: 'Номенклатура', href: '/studio/assortment/variants', meta: 'Ассортимент' },
   { title: 'Требуют внимания', href: '/studio/assortment?attention=any', meta: 'Выборка товаров' },
   { title: 'Без фото', href: '/studio/assortment?missing=photo', meta: 'Выборка товаров' },
   { title: 'Без краткого описания', href: '/studio/assortment?missing=summary', meta: 'Выборка товаров' },
-  { title: 'Конфликты вариантов', href: '/studio/assortment/variants?attention=blocked', meta: 'Выборка вариантов' },
-  { title: 'Новый товар', href: classic('/collections/products/create'), meta: 'Классическая админка' },
-  { title: 'Импорт каталога', href: classic('/import'), meta: 'Классическая админка' },
-  { title: 'Медиатека', href: classic('/collections/media'), meta: 'Классическая админка' },
+  { title: 'Конфликты позиций', href: '/studio/assortment/variants?attention=blocked', meta: 'Выборка позиций' },
+  { title: 'Новый товар', href: '/studio/assortment/new', meta: 'Действие' },
+  { title: 'Категории', href: '/studio/assortment/categories', meta: 'Ассортимент' },
+  { title: 'Документы каталога', href: '/studio/assortment/documents', meta: 'Ассортимент' },
+  { title: 'Импорт каталога', href: '/studio/assortment/import', meta: 'Ассортимент' },
+  { title: 'Медиатека', href: '/studio/media', meta: 'Раздел' },
+  { title: 'Статьи', href: '/studio/site/articles', meta: 'Сайт' },
+  { title: 'Контакты', href: '/studio/site/contacts', meta: 'Сайт' },
+  { title: 'Меню', href: '/studio/site/navigation', meta: 'Сайт' },
+  { title: 'Пользователи', href: '/studio/settings/users', meta: 'Настройки' },
+  { title: 'Редиректы', href: '/studio/settings/redirects', meta: 'Настройки' },
+  { title: 'Мой профиль', href: '/studio/profile', meta: 'Учётная запись' },
 ];
 
 const noop = () => () => {};
@@ -97,14 +104,14 @@ export default function CommandMenu() {
     }
   }
 
-  const status = waiting ? 'Ищу…' : !term ? 'Название, адрес или артикул варианта.' : options.length ? `Найдено: ${options.length}` : 'Ничего не найдено.';
+  const status = waiting ? 'Ищу…' : !term ? 'Название, адрес или артикул позиции.' : options.length ? `Найдено: ${options.length}` : 'Ничего не найдено.';
 
   return (
     <Dialog.Root open={open} onOpenChange={changeOpen}>
       <Dialog.Trigger className={css.trigger}>
         <SearchIcon />
-        <span>Найти</span>
-        <kbd className={css.kbd} suppressHydrationWarning>{shortcut}</kbd>
+        <span data-sidebar-text>Найти</span>
+        <kbd className={css.kbd} data-sidebar-text suppressHydrationWarning>{shortcut}</kbd>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={css.overlay} />

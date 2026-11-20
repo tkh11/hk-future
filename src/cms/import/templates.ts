@@ -1,14 +1,14 @@
-export const IMPORT_TEMPLATE_HEADERS = ['sku', 'externalId', 'slug', 'title', 'description', 'category', 'series'] as const
+export const IMPORT_TEMPLATE_HEADERS = ['sku', 'externalId', 'slug', 'title', 'description', 'category'] as const
 
 /** Examples are deliberately labelled as samples and must not be seeded as real products. */
 export const IMPORT_TEMPLATES = {
   pipes: {
-    headers: [...IMPORT_TEMPLATE_HEADERS, 'attr:diameter:number:mm:Диаметр', 'attr:material:text::Материал'],
-    rows: [['SAMPLE-PIPE-001', 'sample-pipe-001', 'sample-pipe-001', 'Пример трубы — заменить', 'Учебная строка импорта', 'pipelines', 'heisskraft-therm', '25', 'PP-R']],
+    headers: [...IMPORT_TEMPLATE_HEADERS],
+    rows: [['SAMPLE-PIPE-001', 'sample-pipe-001', 'sample-pipe-001', 'Пример трубы — заменить', 'Учебная строка импорта', 'pipelines']],
   },
   pumps: {
-    headers: [...IMPORT_TEMPLATE_HEADERS, 'attr:power:number:kW:Мощность', 'attr:inline:boolean::Ин-лайн'],
-    rows: [['SAMPLE-PUMP-001', 'sample-pump-001', 'sample-pump-001', 'Пример насоса — заменить', 'Учебная строка импорта', 'pumps', 'circulation', '1.5', 'true']],
+    headers: [...IMPORT_TEMPLATE_HEADERS],
+    rows: [['SAMPLE-PUMP-001', 'sample-pump-001', 'sample-pump-001', 'Пример насоса — заменить', 'Учебная строка импорта', 'pumps']],
   },
 } as const
 

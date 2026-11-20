@@ -38,7 +38,7 @@ export default function CatalogCard({ entry, showParent = false, cover = false }
   }, []);
   return <li ref={root} className={visible ? "deferred-block__content is-ready" : undefined}>
     <Link href={catalogHref(path)} className={styles.cardLink} {...pointerHandlers}>
-      <div ref={surfaceRef} className={`${styles.card}${cover ? ` ${styles.coverCard}` : ""}${photoBanner ? ` ${styles.bannerCard}` : ""}`} data-tone={photoBanner ? node.tone : undefined}>
+      <div ref={surfaceRef} className={`${styles.card}${cover ? ` ${styles.coverCard}` : ""}${photoBanner ? ` ${styles.bannerCard}` : ""}`} data-tone={photoBanner ? node.tone : undefined} data-section={photoBanner ? path[0] : undefined}>
         {cover ? <>
           {visible && (node.image
             ? <img src={publicPath(node.image)} alt="" width={1024} height={1820} className={styles.coverVideo} />

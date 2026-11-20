@@ -1,0 +1,1829 @@
+{
+  "snapshotDate": "2026-11-10",
+  "purpose": "Development fixture from local Studio. Engineering review required.",
+  "catalog": {
+    "title": "Циркуляционные насосы ин-лайн — технический каталог HEISSKRAFT",
+    "sha256": "4bb017a762acae0e1aca98acde39d3e65bdd4e715bc7cfc1156fcd79fec6556c",
+    "printedPage": 14,
+    "pdfPage": 16
+  },
+  "counts": {
+    "models": 9,
+    "qhPoints": 49,
+    "performanceRows": 169
+  },
+  "variants": [
+    {
+      "sku": "77005422",
+      "variantStatus": "draft",
+      "reviewState": "review",
+      "specs": {
+        "dn": null,
+        "pn": null,
+        "sdr": null,
+        "outerDiameterMm": null,
+        "wallThicknessMm": null,
+        "powerKw": 0.25,
+        "phases": 3,
+        "voltageV": 380,
+        "maxTemperatureC": null,
+        "prechargeBar": null,
+        "dimensionAMm": null,
+        "dimensionBMm": null,
+        "netWeightKg": 11,
+        "coreCount": null,
+        "crossSectionMm2": null,
+        "coilLengthM": null,
+        "maxFlowM3h": null,
+        "maxHeadM": null,
+        "tankVolumeL": null
+      },
+      "report": {
+        "modelName": "HIP 32-6/2 R SSVF",
+        "description": "Насосы типа HIP — одноступенчатые центробежные насосы с соосным размещением патрубков («ин-лайн»), электродвигателем и торцевым уплотнением. Конструкция с «сухим» ротором делает их менее чувствительными к включениям в перекачиваемой среде по сравнению с насосами с «мокрым» ротором. Насосы сконструированы так, чтобы их можно было снять с трубопровода без разборки элементов системы.",
+        "fluid": "Вода",
+        "impellerType": "Закрытое",
+        "sealType": "Одинарное торцевое",
+        "wettedMaterial": "Чугун",
+        "impellerMaterial": "Нержавеющая сталь",
+        "shaftMaterial": "Нержавеющая сталь",
+        "sealMaterial": "Карбид кремния / карбид кремния / Viton",
+        "installation": "Поверхностная",
+        "motorName": "MGH 002.2.2",
+        "motorCode": "000000028",
+        "motorType": "MGH",
+        "protectionClass": "IP55",
+        "insulationClass": "F",
+        "temperatureMinC": 0,
+        "temperatureMaxC": 110,
+        "flowMinM3h": 4,
+        "flowMaxM3h": 9.4,
+        "headAtMinFlowM": 6.9,
+        "headAtMaxFlowM": 2.8,
+        "impellerCount": 1,
+        "motorPoles": 2,
+        "volumeM3": 0.007,
+        "performancePoints": [
+          {
+            "flow": 4,
+            "efficiency": 50.4,
+            "powerP2": 0.16,
+            "npsh": null
+          },
+          {
+            "flow": 4.5,
+            "efficiency": 52.2,
+            "powerP2": 0.17,
+            "npsh": null
+          },
+          {
+            "flow": 5,
+            "efficiency": 53.7,
+            "powerP2": 0.18,
+            "npsh": null
+          },
+          {
+            "flow": 5.5,
+            "efficiency": 54.7,
+            "powerP2": 0.19,
+            "npsh": null
+          },
+          {
+            "flow": 6,
+            "efficiency": 54.7,
+            "powerP2": 0.2,
+            "npsh": null
+          },
+          {
+            "flow": 6.5,
+            "efficiency": 53.7,
+            "powerP2": 0.21,
+            "npsh": null
+          },
+          {
+            "flow": 7,
+            "efficiency": 52.1,
+            "powerP2": 0.22,
+            "npsh": null
+          },
+          {
+            "flow": 7.5,
+            "efficiency": 49.9,
+            "powerP2": 0.23,
+            "npsh": null
+          },
+          {
+            "flow": 8,
+            "efficiency": 47.3,
+            "powerP2": 0.24,
+            "npsh": null
+          },
+          {
+            "flow": 8.5,
+            "efficiency": 44.1,
+            "powerP2": 0.25,
+            "npsh": null
+          },
+          {
+            "flow": 9,
+            "efficiency": 40.2,
+            "powerP2": 0.26,
+            "npsh": null
+          },
+          {
+            "flow": 9.4,
+            "efficiency": null,
+            "powerP2": 0.27,
+            "npsh": null
+          }
+        ]
+      },
+      "curve": {
+        "status": "draft",
+        "speedRpm": 2900,
+        "frequencyHz": 50,
+        "nominalCurrentA": 0.68,
+        "points": [
+          {
+            "flow": 0,
+            "head": 7.2
+          },
+          {
+            "flow": 2,
+            "head": 7.1
+          },
+          {
+            "flow": 3,
+            "head": 7
+          },
+          {
+            "flow": 4,
+            "head": 6.9
+          },
+          {
+            "flow": 5,
+            "head": 6.7
+          },
+          {
+            "flow": 6,
+            "head": 6
+          },
+          {
+            "flow": 7,
+            "head": 5.4
+          },
+          {
+            "flow": 8,
+            "head": 4.5
+          },
+          {
+            "flow": 9,
+            "head": 3.4
+          }
+        ],
+        "workbook": {
+          "filename": "Точки HIP.xlsx",
+          "sheet": "Лист1",
+          "sha256": "643d56bfcc874ab21ae3aa883554495cbaa0cc651cd5d56e447c24668d8743c4"
+        }
+      }
+    },
+    {
+      "sku": "77005423",
+      "variantStatus": "draft",
+      "reviewState": "review",
+      "specs": {
+        "dn": 32,
+        "pn": 16,
+        "sdr": null,
+        "outerDiameterMm": null,
+        "wallThicknessMm": null,
+        "powerKw": 0.37,
+        "phases": 3,
+        "voltageV": 380,
+        "maxTemperatureC": null,
+        "prechargeBar": null,
+        "dimensionAMm": null,
+        "dimensionBMm": null,
+        "netWeightKg": 20,
+        "coreCount": null,
+        "crossSectionMm2": null,
+        "coilLengthM": null,
+        "maxFlowM3h": null,
+        "maxHeadM": null,
+        "tankVolumeL": null
+      },
+      "report": {
+        "modelName": "HIP 32-10/2 SSVF",
+        "description": "Одноступенчатый центробежный насос с сухим ротором, соосными патрубками и торцевым уплотнением для систем водоснабжения, отопления, охлаждения и кондиционирования. Насосную часть с двигателем можно демонтировать без снятия корпуса с трубопровода.",
+        "fluid": "Вода",
+        "impellerType": "",
+        "sealType": "Одинарное разгруженное торцевое",
+        "wettedMaterial": "Чугун",
+        "impellerMaterial": "AISI 304",
+        "shaftMaterial": "2Cr13 (AISI 420L)",
+        "sealMaterial": "Карбид кремния / карбид кремния / Viton",
+        "installation": "Горизонтально или вертикально. Допускается установка на трубопроводе, если он выдерживает массу насоса; нагрузки трубопровода на корпус не допускаются.",
+        "motorName": "",
+        "motorCode": "",
+        "motorType": "Трёхфазный асинхронный, короткозамкнутый ротор",
+        "protectionClass": "IP55",
+        "insulationClass": "F",
+        "temperatureMinC": -15,
+        "temperatureMaxC": 115,
+        "flowMinM3h": 4,
+        "flowMaxM3h": 9.4,
+        "headAtMinFlowM": 10.6,
+        "headAtMaxFlowM": 6.4,
+        "impellerCount": 1,
+        "motorPoles": 2,
+        "volumeM3": null,
+        "performancePoints": [
+          {
+            "flow": 4,
+            "efficiency": 47.9,
+            "powerP2": 0.48,
+            "npsh": null
+          },
+          {
+            "flow": 4.5,
+            "efficiency": 49.7,
+            "powerP2": 0.49,
+            "npsh": null
+          },
+          {
+            "flow": 5,
+            "efficiency": 51.3,
+            "powerP2": 0.5,
+            "npsh": null
+          },
+          {
+            "flow": 5.5,
+            "efficiency": 52.8,
+            "powerP2": 0.51,
+            "npsh": null
+          },
+          {
+            "flow": 6,
+            "efficiency": 54,
+            "powerP2": 0.52,
+            "npsh": null
+          },
+          {
+            "flow": 6.5,
+            "efficiency": 54.9,
+            "powerP2": 0.53,
+            "npsh": null
+          },
+          {
+            "flow": 7,
+            "efficiency": 55.5,
+            "powerP2": 0.54,
+            "npsh": null
+          },
+          {
+            "flow": 7.5,
+            "efficiency": 55.2,
+            "powerP2": 0.55,
+            "npsh": null
+          },
+          {
+            "flow": 8,
+            "efficiency": 53.3,
+            "powerP2": 0.56,
+            "npsh": null
+          },
+          {
+            "flow": 8.5,
+            "efficiency": 49.3,
+            "powerP2": 0.58,
+            "npsh": null
+          },
+          {
+            "flow": 9,
+            "efficiency": 40.6,
+            "powerP2": 0.59,
+            "npsh": null
+          },
+          {
+            "flow": 9.4,
+            "efficiency": null,
+            "powerP2": 0.59,
+            "npsh": null
+          }
+        ]
+      },
+      "curve": {
+        "status": "draft",
+        "speedRpm": 2900,
+        "frequencyHz": 50,
+        "nominalCurrentA": 0.9,
+        "points": [
+          {
+            "flow": 0,
+            "head": 11
+          },
+          {
+            "flow": 4,
+            "head": 10.5
+          },
+          {
+            "flow": 8,
+            "head": 8
+          },
+          {
+            "flow": 9,
+            "head": 6
+          }
+        ],
+        "workbook": {
+          "filename": "Точки HIP.xlsx",
+          "sheet": "Лист1",
+          "sha256": "643d56bfcc874ab21ae3aa883554495cbaa0cc651cd5d56e447c24668d8743c4"
+        }
+      }
+    },
+    {
+      "sku": "77005403",
+      "variantStatus": "draft",
+      "reviewState": "review",
+      "specs": {
+        "dn": 32,
+        "pn": 16,
+        "sdr": null,
+        "outerDiameterMm": null,
+        "wallThicknessMm": null,
+        "powerKw": 0.75,
+        "phases": 3,
+        "voltageV": 380,
+        "maxTemperatureC": null,
+        "prechargeBar": null,
+        "dimensionAMm": null,
+        "dimensionBMm": null,
+        "netWeightKg": 33,
+        "coreCount": null,
+        "crossSectionMm2": null,
+        "coilLengthM": null,
+        "maxFlowM3h": null,
+        "maxHeadM": null,
+        "tankVolumeL": null
+      },
+      "report": {
+        "modelName": "HIP 32-14/2 SSVF",
+        "description": "Одноступенчатый центробежный насос с сухим ротором, соосными патрубками и торцевым уплотнением для систем водоснабжения, отопления, охлаждения и кондиционирования. Насосную часть с двигателем можно демонтировать без снятия корпуса с трубопровода.",
+        "fluid": "Вода",
+        "impellerType": "",
+        "sealType": "Одинарное разгруженное торцевое",
+        "wettedMaterial": "Чугун",
+        "impellerMaterial": "",
+        "shaftMaterial": "2Cr13 (AISI 420L)",
+        "sealMaterial": "Карбид кремния / карбид кремния / Viton",
+        "installation": "Горизонтально или вертикально. Допускается установка на трубопроводе, если он выдерживает массу насоса; нагрузки трубопровода на корпус не допускаются.",
+        "motorName": "",
+        "motorCode": "",
+        "motorType": "Трёхфазный асинхронный, короткозамкнутый ротор",
+        "protectionClass": "IP55",
+        "insulationClass": "F",
+        "temperatureMinC": -15,
+        "temperatureMaxC": 115,
+        "flowMinM3h": 4,
+        "flowMaxM3h": 12.5,
+        "headAtMinFlowM": 15.9,
+        "headAtMaxFlowM": 9.5,
+        "impellerCount": 1,
+        "motorPoles": 2,
+        "volumeM3": null,
+        "performancePoints": []
+      },
+      "curve": {
+        "status": "draft",
+        "speedRpm": 2900,
+        "frequencyHz": 50,
+        "nominalCurrentA": 1.83,
+        "points": [
+          {
+            "flow": 0,
+            "head": 16.3
+          },
+          {
+            "flow": 4,
+            "head": 16
+          },
+          {
+            "flow": 8,
+            "head": 14
+          },
+          {
+            "flow": 12.5,
+            "head": 9.5
+          }
+        ],
+        "workbook": {
+          "filename": "Точки HIP.xlsx",
+          "sheet": "Лист1",
+          "sha256": "643d56bfcc874ab21ae3aa883554495cbaa0cc651cd5d56e447c24668d8743c4"
+        }
+      }
+    },
+    {
+      "sku": "77015401",
+      "variantStatus": "draft",
+      "reviewState": "review",
+      "specs": {
+        "dn": 32,
+        "pn": 16,
+        "sdr": null,
+        "outerDiameterMm": null,
+        "wallThicknessMm": null,
+        "powerKw": 1.1,
+        "phases": 3,
+        "voltageV": 380,
+        "maxTemperatureC": null,
+        "prechargeBar": null,
+        "dimensionAMm": null,
+        "dimensionBMm": null,
+        "netWeightKg": 34,
+        "coreCount": null,
+        "crossSectionMm2": null,
+        "coilLengthM": null,
+        "maxFlowM3h": null,
+        "maxHeadM": null,
+        "tankVolumeL": null
+      },
+      "report": {
+        "modelName": "HIP 32-18/2 SSVF",
+        "description": "Одноступенчатый центробежный насос с сухим ротором, соосными патрубками и торцевым уплотнением для систем водоснабжения, отопления, охлаждения и кондиционирования. Насосную часть с двигателем можно демонтировать без снятия корпуса с трубопровода.",
+        "fluid": "Вода",
+        "impellerType": "",
+        "sealType": "Одинарное разгруженное торцевое",
+        "wettedMaterial": "Чугун",
+        "impellerMaterial": "",
+        "shaftMaterial": "2Cr13 (AISI 420L)",
+        "sealMaterial": "Карбид кремния / карбид кремния / Viton",
+        "installation": "Горизонтально или вертикально. Допускается установка на трубопроводе, если он выдерживает массу насоса; нагрузки трубопровода на корпус не допускаются.",
+        "motorName": "",
+        "motorCode": "",
+        "motorType": "Трёхфазный асинхронный, короткозамкнутый ротор",
+        "protectionClass": "IP55",
+        "insulationClass": "F",
+        "temperatureMinC": -15,
+        "temperatureMaxC": 115,
+        "flowMinM3h": 4,
+        "flowMaxM3h": 12.5,
+        "headAtMinFlowM": 18.8,
+        "headAtMaxFlowM": 16.4,
+        "impellerCount": 1,
+        "motorPoles": 2,
+        "volumeM3": null,
+        "performancePoints": [
+          {
+            "flow": 4,
+            "efficiency": 31.4,
+            "powerP2": 0.77,
+            "npsh": null
+          },
+          {
+            "flow": 4.5,
+            "efficiency": 33.4,
+            "powerP2": 0.79,
+            "npsh": null
+          },
+          {
+            "flow": 5,
+            "efficiency": 35.4,
+            "powerP2": 0.81,
+            "npsh": null
+          },
+          {
+            "flow": 5.5,
+            "efficiency": 37.4,
+            "powerP2": 0.83,
+            "npsh": null
+          },
+          {
+            "flow": 6,
+            "efficiency": 39.4,
+            "powerP2": 0.85,
+            "npsh": null
+          },
+          {
+            "flow": 6.5,
+            "efficiency": 41.3,
+            "powerP2": 0.87,
+            "npsh": null
+          },
+          {
+            "flow": 7,
+            "efficiency": 43.2,
+            "powerP2": 0.89,
+            "npsh": null
+          },
+          {
+            "flow": 7.5,
+            "efficiency": 45,
+            "powerP2": 0.91,
+            "npsh": null
+          },
+          {
+            "flow": 8,
+            "efficiency": 46.6,
+            "powerP2": 0.93,
+            "npsh": null
+          },
+          {
+            "flow": 8.5,
+            "efficiency": 48,
+            "powerP2": 0.95,
+            "npsh": null
+          },
+          {
+            "flow": 9,
+            "efficiency": 49.3,
+            "powerP2": 0.97,
+            "npsh": null
+          },
+          {
+            "flow": 9.5,
+            "efficiency": 50.4,
+            "powerP2": 0.99,
+            "npsh": null
+          },
+          {
+            "flow": 10,
+            "efficiency": 51.3,
+            "powerP2": 1.01,
+            "npsh": null
+          },
+          {
+            "flow": 10.5,
+            "efficiency": 52,
+            "powerP2": 1.03,
+            "npsh": null
+          },
+          {
+            "flow": 11,
+            "efficiency": 52.6,
+            "powerP2": 1.05,
+            "npsh": null
+          },
+          {
+            "flow": 11.5,
+            "efficiency": 53,
+            "powerP2": 1.07,
+            "npsh": null
+          },
+          {
+            "flow": 12,
+            "efficiency": 53.2,
+            "powerP2": 1.1,
+            "npsh": null
+          },
+          {
+            "flow": 12.5,
+            "efficiency": 53.3,
+            "powerP2": 1.11,
+            "npsh": null
+          }
+        ]
+      },
+      "curve": {
+        "status": "draft",
+        "speedRpm": 2900,
+        "frequencyHz": 50,
+        "nominalCurrentA": 2.61,
+        "points": [
+          {
+            "flow": 0,
+            "head": 19.5
+          },
+          {
+            "flow": 2,
+            "head": 19.5
+          },
+          {
+            "flow": 4,
+            "head": 19
+          },
+          {
+            "flow": 6,
+            "head": 18
+          },
+          {
+            "flow": 8,
+            "head": 17.5
+          },
+          {
+            "flow": 10,
+            "head": 16.5
+          },
+          {
+            "flow": 12,
+            "head": 16
+          }
+        ],
+        "workbook": {
+          "filename": "Точки HIP.xlsx",
+          "sheet": "Лист1",
+          "sha256": "643d56bfcc874ab21ae3aa883554495cbaa0cc651cd5d56e447c24668d8743c4"
+        }
+      }
+    },
+    {
+      "sku": "77015402",
+      "variantStatus": "draft",
+      "reviewState": "review",
+      "specs": {
+        "dn": 32,
+        "pn": 16,
+        "sdr": null,
+        "outerDiameterMm": null,
+        "wallThicknessMm": null,
+        "powerKw": 1.5,
+        "phases": 3,
+        "voltageV": 380,
+        "maxTemperatureC": null,
+        "prechargeBar": null,
+        "dimensionAMm": null,
+        "dimensionBMm": null,
+        "netWeightKg": 38,
+        "coreCount": null,
+        "crossSectionMm2": null,
+        "coilLengthM": null,
+        "maxFlowM3h": null,
+        "maxHeadM": null,
+        "tankVolumeL": null
+      },
+      "report": {
+        "modelName": "HIP 32-21/2 SSVF",
+        "description": "Одноступенчатый центробежный насос с сухим ротором, соосными патрубками и торцевым уплотнением для систем водоснабжения, отопления, охлаждения и кондиционирования. Насосную часть с двигателем можно демонтировать без снятия корпуса с трубопровода.",
+        "fluid": "Вода",
+        "impellerType": "",
+        "sealType": "Одинарное разгруженное торцевое",
+        "wettedMaterial": "Чугун",
+        "impellerMaterial": "",
+        "shaftMaterial": "2Cr13 (AISI 420L)",
+        "sealMaterial": "Карбид кремния / карбид кремния / Viton",
+        "installation": "Горизонтально или вертикально. Допускается установка на трубопроводе, если он выдерживает массу насоса; нагрузки трубопровода на корпус не допускаются.",
+        "motorName": "",
+        "motorCode": "",
+        "motorType": "Трёхфазный асинхронный, короткозамкнутый ротор",
+        "protectionClass": "IP55",
+        "insulationClass": "F",
+        "temperatureMinC": -15,
+        "temperatureMaxC": 115,
+        "flowMinM3h": 4,
+        "flowMaxM3h": 16,
+        "headAtMinFlowM": 23.6,
+        "headAtMaxFlowM": 19,
+        "impellerCount": 1,
+        "motorPoles": 2,
+        "volumeM3": null,
+        "performancePoints": [
+          {
+            "flow": 4,
+            "efficiency": 31.3,
+            "powerP2": 0.99,
+            "npsh": null
+          },
+          {
+            "flow": 4.5,
+            "efficiency": 33.3,
+            "powerP2": 1.02,
+            "npsh": null
+          },
+          {
+            "flow": 5,
+            "efficiency": 35.2,
+            "powerP2": 1.06,
+            "npsh": null
+          },
+          {
+            "flow": 5.5,
+            "efficiency": 37.2,
+            "powerP2": 1.1,
+            "npsh": null
+          },
+          {
+            "flow": 6,
+            "efficiency": 39.2,
+            "powerP2": 1.13,
+            "npsh": null
+          },
+          {
+            "flow": 6.5,
+            "efficiency": 41.3,
+            "powerP2": 1.16,
+            "npsh": null
+          },
+          {
+            "flow": 7,
+            "efficiency": 43.4,
+            "powerP2": 1.19,
+            "npsh": null
+          },
+          {
+            "flow": 7.5,
+            "efficiency": 45.3,
+            "powerP2": 1.22,
+            "npsh": null
+          },
+          {
+            "flow": 8,
+            "efficiency": 47.1,
+            "powerP2": 1.24,
+            "npsh": null
+          },
+          {
+            "flow": 8.5,
+            "efficiency": 48.6,
+            "powerP2": 1.27,
+            "npsh": null
+          },
+          {
+            "flow": 9,
+            "efficiency": 49.9,
+            "powerP2": 1.29,
+            "npsh": null
+          },
+          {
+            "flow": 9.5,
+            "efficiency": 51.1,
+            "powerP2": 1.31,
+            "npsh": null
+          },
+          {
+            "flow": 10,
+            "efficiency": 52,
+            "powerP2": 1.33,
+            "npsh": null
+          },
+          {
+            "flow": 10.5,
+            "efficiency": 52.9,
+            "powerP2": 1.35,
+            "npsh": null
+          },
+          {
+            "flow": 11,
+            "efficiency": 53.5,
+            "powerP2": 1.37,
+            "npsh": null
+          },
+          {
+            "flow": 11.5,
+            "efficiency": 54.1,
+            "powerP2": 1.38,
+            "npsh": null
+          },
+          {
+            "flow": 12,
+            "efficiency": 54.5,
+            "powerP2": 1.4,
+            "npsh": null
+          },
+          {
+            "flow": 12.5,
+            "efficiency": 54.7,
+            "powerP2": 1.42,
+            "npsh": null
+          },
+          {
+            "flow": 13,
+            "efficiency": 54.8,
+            "powerP2": 1.43,
+            "npsh": null
+          },
+          {
+            "flow": 13.5,
+            "efficiency": 54.8,
+            "powerP2": 1.45,
+            "npsh": null
+          },
+          {
+            "flow": 14,
+            "efficiency": 54.6,
+            "powerP2": 1.46,
+            "npsh": null
+          },
+          {
+            "flow": 14.5,
+            "efficiency": 54.4,
+            "powerP2": 1.48,
+            "npsh": null
+          },
+          {
+            "flow": 15,
+            "efficiency": 54,
+            "powerP2": 1.49,
+            "npsh": null
+          },
+          {
+            "flow": 15.5,
+            "efficiency": 53.6,
+            "powerP2": 1.5,
+            "npsh": null
+          },
+          {
+            "flow": 16,
+            "efficiency": 53.2,
+            "powerP2": 1.51,
+            "npsh": null
+          }
+        ]
+      },
+      "curve": {
+        "status": "draft",
+        "speedRpm": 2900,
+        "frequencyHz": 50,
+        "nominalCurrentA": 3.46,
+        "points": [
+          {
+            "flow": 0,
+            "head": 24.5
+          },
+          {
+            "flow": 4,
+            "head": 24.5
+          },
+          {
+            "flow": 8,
+            "head": 24
+          },
+          {
+            "flow": 12.5,
+            "head": 23
+          },
+          {
+            "flow": 16,
+            "head": 18
+          }
+        ],
+        "workbook": {
+          "filename": "Точки HIP.xlsx",
+          "sheet": "Лист1",
+          "sha256": "643d56bfcc874ab21ae3aa883554495cbaa0cc651cd5d56e447c24668d8743c4"
+        }
+      }
+    },
+    {
+      "sku": "77025403",
+      "variantStatus": "draft",
+      "reviewState": "review",
+      "specs": {
+        "dn": 32,
+        "pn": 16,
+        "sdr": null,
+        "outerDiameterMm": null,
+        "wallThicknessMm": null,
+        "powerKw": 2.2,
+        "phases": 3,
+        "voltageV": 380,
+        "maxTemperatureC": null,
+        "prechargeBar": null,
+        "dimensionAMm": null,
+        "dimensionBMm": null,
+        "netWeightKg": 42,
+        "coreCount": null,
+        "crossSectionMm2": null,
+        "coilLengthM": null,
+        "maxFlowM3h": null,
+        "maxHeadM": null,
+        "tankVolumeL": null
+      },
+      "report": {
+        "modelName": "HIP 32-25/2 SSVF",
+        "description": "Одноступенчатый центробежный насос с сухим ротором, соосными патрубками и торцевым уплотнением для систем водоснабжения, отопления, охлаждения и кондиционирования. Насосную часть с двигателем можно демонтировать без снятия корпуса с трубопровода.",
+        "fluid": "Вода",
+        "impellerType": "",
+        "sealType": "Одинарное разгруженное торцевое",
+        "wettedMaterial": "Чугун",
+        "impellerMaterial": "",
+        "shaftMaterial": "2Cr13 (AISI 420L)",
+        "sealMaterial": "Карбид кремния / карбид кремния / Viton",
+        "installation": "Горизонтально или вертикально. Допускается установка на трубопроводе, если он выдерживает массу насоса; нагрузки трубопровода на корпус не допускаются.",
+        "motorName": "",
+        "motorCode": "",
+        "motorType": "Трёхфазный асинхронный, короткозамкнутый ротор",
+        "protectionClass": "IP55",
+        "insulationClass": "F",
+        "temperatureMinC": -15,
+        "temperatureMaxC": 115,
+        "flowMinM3h": 4,
+        "flowMaxM3h": 16,
+        "headAtMinFlowM": 29.2,
+        "headAtMaxFlowM": 22.7,
+        "impellerCount": 1,
+        "motorPoles": 2,
+        "volumeM3": null,
+        "performancePoints": [
+          {
+            "flow": 4,
+            "efficiency": 31.6,
+            "powerP2": 1.28,
+            "npsh": null
+          },
+          {
+            "flow": 4.5,
+            "efficiency": 33.7,
+            "powerP2": 1.33,
+            "npsh": null
+          },
+          {
+            "flow": 5,
+            "efficiency": 35.7,
+            "powerP2": 1.38,
+            "npsh": null
+          },
+          {
+            "flow": 5.5,
+            "efficiency": 37.6,
+            "powerP2": 1.43,
+            "npsh": null
+          },
+          {
+            "flow": 6,
+            "efficiency": 39.4,
+            "powerP2": 1.48,
+            "npsh": null
+          },
+          {
+            "flow": 6.5,
+            "efficiency": 41.1,
+            "powerP2": 1.53,
+            "npsh": null
+          },
+          {
+            "flow": 7,
+            "efficiency": 42.7,
+            "powerP2": 1.58,
+            "npsh": null
+          },
+          {
+            "flow": 7.5,
+            "efficiency": 44.2,
+            "powerP2": 1.62,
+            "npsh": null
+          },
+          {
+            "flow": 8,
+            "efficiency": 45.5,
+            "powerP2": 1.66,
+            "npsh": null
+          },
+          {
+            "flow": 8.5,
+            "efficiency": 46.7,
+            "powerP2": 1.7,
+            "npsh": null
+          },
+          {
+            "flow": 9,
+            "efficiency": 47.8,
+            "powerP2": 1.74,
+            "npsh": null
+          },
+          {
+            "flow": 9.5,
+            "efficiency": 48.8,
+            "powerP2": 1.78,
+            "npsh": null
+          },
+          {
+            "flow": 10,
+            "efficiency": 49.8,
+            "powerP2": 1.82,
+            "npsh": null
+          },
+          {
+            "flow": 10.5,
+            "efficiency": 50.8,
+            "powerP2": 1.85,
+            "npsh": null
+          },
+          {
+            "flow": 11,
+            "efficiency": 51.8,
+            "powerP2": 1.88,
+            "npsh": null
+          },
+          {
+            "flow": 11.5,
+            "efficiency": 52.7,
+            "powerP2": 1.91,
+            "npsh": null
+          },
+          {
+            "flow": 12,
+            "efficiency": 53.6,
+            "powerP2": 1.94,
+            "npsh": null
+          },
+          {
+            "flow": 12.5,
+            "efficiency": 54.3,
+            "powerP2": 1.97,
+            "npsh": null
+          },
+          {
+            "flow": 13,
+            "efficiency": 55,
+            "powerP2": 1.99,
+            "npsh": null
+          },
+          {
+            "flow": 13.5,
+            "efficiency": 55.5,
+            "powerP2": 2.02,
+            "npsh": null
+          },
+          {
+            "flow": 14,
+            "efficiency": 56,
+            "powerP2": 2.04,
+            "npsh": null
+          },
+          {
+            "flow": 14.5,
+            "efficiency": 56.5,
+            "powerP2": 2.07,
+            "npsh": null
+          },
+          {
+            "flow": 15,
+            "efficiency": 56.8,
+            "powerP2": 2.09,
+            "npsh": null
+          },
+          {
+            "flow": 15.5,
+            "efficiency": 57.1,
+            "powerP2": 2.11,
+            "npsh": null
+          },
+          {
+            "flow": 16,
+            "efficiency": 57.3,
+            "powerP2": 2.14,
+            "npsh": null
+          }
+        ]
+      },
+      "curve": {
+        "status": "draft",
+        "speedRpm": 2900,
+        "frequencyHz": 50,
+        "nominalCurrentA": 4.85,
+        "points": [
+          {
+            "flow": 0,
+            "head": 29.5
+          },
+          {
+            "flow": 4,
+            "head": 29
+          },
+          {
+            "flow": 8,
+            "head": 28
+          },
+          {
+            "flow": 12.5,
+            "head": 25
+          },
+          {
+            "flow": 16,
+            "head": 23
+          }
+        ],
+        "workbook": {
+          "filename": "Точки HIP.xlsx",
+          "sheet": "Лист1",
+          "sha256": "643d56bfcc874ab21ae3aa883554495cbaa0cc651cd5d56e447c24668d8743c4"
+        }
+      }
+    },
+    {
+      "sku": "77035404",
+      "variantStatus": "draft",
+      "reviewState": "review",
+      "specs": {
+        "dn": 32,
+        "pn": 16,
+        "sdr": null,
+        "outerDiameterMm": null,
+        "wallThicknessMm": null,
+        "powerKw": 3,
+        "phases": 3,
+        "voltageV": 380,
+        "maxTemperatureC": null,
+        "prechargeBar": null,
+        "dimensionAMm": null,
+        "dimensionBMm": null,
+        "netWeightKg": 52,
+        "coreCount": null,
+        "crossSectionMm2": null,
+        "coilLengthM": null,
+        "maxFlowM3h": null,
+        "maxHeadM": null,
+        "tankVolumeL": null
+      },
+      "report": {
+        "modelName": "HIP 32-32/2 SSVF",
+        "description": "Одноступенчатый центробежный насос с сухим ротором, соосными патрубками и торцевым уплотнением для систем водоснабжения, отопления, охлаждения и кондиционирования. Насосную часть с двигателем можно демонтировать без снятия корпуса с трубопровода.",
+        "fluid": "Вода",
+        "impellerType": "",
+        "sealType": "Одинарное разгруженное торцевое",
+        "wettedMaterial": "Чугун",
+        "impellerMaterial": "",
+        "shaftMaterial": "2Cr13 (AISI 420L)",
+        "sealMaterial": "Карбид кремния / карбид кремния / Viton",
+        "installation": "Вертикально, на кронштейне или основании. Нагрузки трубопровода на корпус не допускаются.",
+        "motorName": "",
+        "motorCode": "",
+        "motorType": "Трёхфазный асинхронный, короткозамкнутый ротор",
+        "protectionClass": "IP55",
+        "insulationClass": "F",
+        "temperatureMinC": -15,
+        "temperatureMaxC": 115,
+        "flowMinM3h": 4,
+        "flowMaxM3h": 16,
+        "headAtMinFlowM": 34,
+        "headAtMaxFlowM": 28.4,
+        "impellerCount": 1,
+        "motorPoles": 2,
+        "volumeM3": null,
+        "performancePoints": [
+          {
+            "flow": 4,
+            "efficiency": null,
+            "powerP2": 1.68,
+            "npsh": null
+          },
+          {
+            "flow": 4.4,
+            "efficiency": 30.2,
+            "powerP2": null,
+            "npsh": null
+          },
+          {
+            "flow": 4.5,
+            "efficiency": 30.6,
+            "powerP2": 1.74,
+            "npsh": null
+          },
+          {
+            "flow": 5,
+            "efficiency": 33.1,
+            "powerP2": 1.81,
+            "npsh": null
+          },
+          {
+            "flow": 5.5,
+            "efficiency": 35.5,
+            "powerP2": 1.87,
+            "npsh": null
+          },
+          {
+            "flow": 6,
+            "efficiency": 37.8,
+            "powerP2": 1.93,
+            "npsh": null
+          },
+          {
+            "flow": 6.5,
+            "efficiency": 39.9,
+            "powerP2": 1.99,
+            "npsh": null
+          },
+          {
+            "flow": 7,
+            "efficiency": 41.9,
+            "powerP2": 2.04,
+            "npsh": null
+          },
+          {
+            "flow": 7.5,
+            "efficiency": 43.8,
+            "powerP2": 2.1,
+            "npsh": null
+          },
+          {
+            "flow": 8,
+            "efficiency": 45.5,
+            "powerP2": 2.16,
+            "npsh": null
+          },
+          {
+            "flow": 8.5,
+            "efficiency": 47,
+            "powerP2": 2.21,
+            "npsh": null
+          },
+          {
+            "flow": 9,
+            "efficiency": 48.5,
+            "powerP2": 2.27,
+            "npsh": null
+          },
+          {
+            "flow": 9.5,
+            "efficiency": 49.7,
+            "powerP2": 2.32,
+            "npsh": null
+          },
+          {
+            "flow": 10,
+            "efficiency": 50.9,
+            "powerP2": 2.37,
+            "npsh": null
+          },
+          {
+            "flow": 10.5,
+            "efficiency": 52,
+            "powerP2": 2.42,
+            "npsh": null
+          },
+          {
+            "flow": 11,
+            "efficiency": 52.9,
+            "powerP2": 2.47,
+            "npsh": null
+          },
+          {
+            "flow": 11.5,
+            "efficiency": 53.8,
+            "powerP2": 2.51,
+            "npsh": null
+          },
+          {
+            "flow": 12,
+            "efficiency": 54.5,
+            "powerP2": 2.55,
+            "npsh": null
+          },
+          {
+            "flow": 12.5,
+            "efficiency": 55.2,
+            "powerP2": 2.59,
+            "npsh": null
+          },
+          {
+            "flow": 13,
+            "efficiency": 55.7,
+            "powerP2": 2.63,
+            "npsh": null
+          },
+          {
+            "flow": 13.5,
+            "efficiency": 56.2,
+            "powerP2": 2.66,
+            "npsh": null
+          },
+          {
+            "flow": 14,
+            "efficiency": 56.6,
+            "powerP2": 2.7,
+            "npsh": null
+          },
+          {
+            "flow": 14.5,
+            "efficiency": 56.9,
+            "powerP2": 2.73,
+            "npsh": null
+          },
+          {
+            "flow": 15,
+            "efficiency": 57.2,
+            "powerP2": 2.76,
+            "npsh": null
+          },
+          {
+            "flow": 15.5,
+            "efficiency": 57.3,
+            "powerP2": 2.79,
+            "npsh": null
+          },
+          {
+            "flow": 15.9,
+            "efficiency": null,
+            "powerP2": 2.81,
+            "npsh": null
+          },
+          {
+            "flow": 16,
+            "efficiency": 57.4,
+            "powerP2": null,
+            "npsh": null
+          }
+        ]
+      },
+      "curve": {
+        "status": "draft",
+        "speedRpm": 2900,
+        "frequencyHz": 50,
+        "nominalCurrentA": 6.34,
+        "points": [
+          {
+            "flow": 0,
+            "head": 34.5
+          },
+          {
+            "flow": 4,
+            "head": 34
+          },
+          {
+            "flow": 8,
+            "head": 33
+          },
+          {
+            "flow": 12.5,
+            "head": 32
+          },
+          {
+            "flow": 16,
+            "head": 28
+          }
+        ],
+        "workbook": {
+          "filename": "Точки HIP.xlsx",
+          "sheet": "Лист1",
+          "sha256": "643d56bfcc874ab21ae3aa883554495cbaa0cc651cd5d56e447c24668d8743c4"
+        }
+      }
+    },
+    {
+      "sku": "77045424",
+      "variantStatus": "draft",
+      "reviewState": "review",
+      "specs": {
+        "dn": 32,
+        "pn": 16,
+        "sdr": null,
+        "outerDiameterMm": null,
+        "wallThicknessMm": null,
+        "powerKw": 4,
+        "phases": 3,
+        "voltageV": 380,
+        "maxTemperatureC": null,
+        "prechargeBar": null,
+        "dimensionAMm": null,
+        "dimensionBMm": null,
+        "netWeightKg": 65,
+        "coreCount": null,
+        "crossSectionMm2": null,
+        "coilLengthM": null,
+        "maxFlowM3h": null,
+        "maxHeadM": null,
+        "tankVolumeL": null
+      },
+      "report": {
+        "modelName": "HIP 32-38/2 SSVF",
+        "description": "Одноступенчатый центробежный насос с сухим ротором, соосными патрубками и торцевым уплотнением для систем водоснабжения, отопления, охлаждения и кондиционирования. Насосную часть с двигателем можно демонтировать без снятия корпуса с трубопровода.",
+        "fluid": "Вода",
+        "impellerType": "",
+        "sealType": "Одинарное разгруженное торцевое",
+        "wettedMaterial": "Чугун",
+        "impellerMaterial": "",
+        "shaftMaterial": "2Cr13 (AISI 420L)",
+        "sealMaterial": "Карбид кремния / карбид кремния / Viton",
+        "installation": "Вертикально, на кронштейне или основании. Нагрузки трубопровода на корпус не допускаются.",
+        "motorName": "",
+        "motorCode": "",
+        "motorType": "Трёхфазный асинхронный, короткозамкнутый ротор",
+        "protectionClass": "IP55",
+        "insulationClass": "F",
+        "temperatureMinC": -15,
+        "temperatureMaxC": 115,
+        "flowMinM3h": 4,
+        "flowMaxM3h": 16,
+        "headAtMinFlowM": 43.5,
+        "headAtMaxFlowM": 36.6,
+        "impellerCount": 1,
+        "motorPoles": 2,
+        "volumeM3": null,
+        "performancePoints": [
+          {
+            "flow": 4,
+            "efficiency": null,
+            "powerP2": 2.19,
+            "npsh": null
+          },
+          {
+            "flow": 4.5,
+            "efficiency": null,
+            "powerP2": 2.26,
+            "npsh": null
+          },
+          {
+            "flow": 5,
+            "efficiency": null,
+            "powerP2": 2.33,
+            "npsh": null
+          },
+          {
+            "flow": 5.5,
+            "efficiency": null,
+            "powerP2": 2.39,
+            "npsh": null
+          },
+          {
+            "flow": 6,
+            "efficiency": 30.1,
+            "powerP2": 2.45,
+            "npsh": null
+          },
+          {
+            "flow": 6.5,
+            "efficiency": 31.5,
+            "powerP2": 2.52,
+            "npsh": null
+          },
+          {
+            "flow": 7,
+            "efficiency": 33,
+            "powerP2": 2.58,
+            "npsh": null
+          },
+          {
+            "flow": 7.5,
+            "efficiency": 34.4,
+            "powerP2": 2.63,
+            "npsh": null
+          },
+          {
+            "flow": 8,
+            "efficiency": 35.8,
+            "powerP2": 2.69,
+            "npsh": null
+          },
+          {
+            "flow": 8.5,
+            "efficiency": 37.1,
+            "powerP2": 2.74,
+            "npsh": null
+          },
+          {
+            "flow": 9,
+            "efficiency": 38.3,
+            "powerP2": 2.8,
+            "npsh": null
+          },
+          {
+            "flow": 9.5,
+            "efficiency": 39.5,
+            "powerP2": 2.85,
+            "npsh": null
+          },
+          {
+            "flow": 10,
+            "efficiency": 40.5,
+            "powerP2": 2.89,
+            "npsh": null
+          },
+          {
+            "flow": 10.5,
+            "efficiency": 41.5,
+            "powerP2": 2.94,
+            "npsh": null
+          },
+          {
+            "flow": 11,
+            "efficiency": 42.4,
+            "powerP2": 2.99,
+            "npsh": null
+          },
+          {
+            "flow": 11.5,
+            "efficiency": 43.3,
+            "powerP2": 3.04,
+            "npsh": null
+          },
+          {
+            "flow": 12,
+            "efficiency": 44,
+            "powerP2": 3.09,
+            "npsh": null
+          },
+          {
+            "flow": 12.5,
+            "efficiency": 44.8,
+            "powerP2": 3.14,
+            "npsh": null
+          },
+          {
+            "flow": 13,
+            "efficiency": 45.4,
+            "powerP2": 3.2,
+            "npsh": null
+          },
+          {
+            "flow": 13.5,
+            "efficiency": 46.1,
+            "powerP2": 3.25,
+            "npsh": null
+          },
+          {
+            "flow": 14,
+            "efficiency": 46.7,
+            "powerP2": 3.31,
+            "npsh": null
+          },
+          {
+            "flow": 14.5,
+            "efficiency": 47.2,
+            "powerP2": 3.36,
+            "npsh": null
+          },
+          {
+            "flow": 15,
+            "efficiency": 47.8,
+            "powerP2": 3.41,
+            "npsh": null
+          },
+          {
+            "flow": 15.5,
+            "efficiency": 48.3,
+            "powerP2": 3.46,
+            "npsh": null
+          },
+          {
+            "flow": 16,
+            "efficiency": 48.7,
+            "powerP2": 3.5,
+            "npsh": null
+          }
+        ]
+      },
+      "curve": {
+        "status": "draft",
+        "speedRpm": 2900,
+        "frequencyHz": 50,
+        "nominalCurrentA": 8.2,
+        "points": [
+          {
+            "flow": 0,
+            "head": 44.5
+          },
+          {
+            "flow": 4,
+            "head": 43
+          },
+          {
+            "flow": 8,
+            "head": 41
+          },
+          {
+            "flow": 12.5,
+            "head": 38
+          },
+          {
+            "flow": 16,
+            "head": 36
+          }
+        ],
+        "workbook": {
+          "filename": "Точки HIP.xlsx",
+          "sheet": "Лист1",
+          "sha256": "643d56bfcc874ab21ae3aa883554495cbaa0cc651cd5d56e447c24668d8743c4"
+        }
+      }
+    },
+    {
+      "sku": "77055425",
+      "variantStatus": "draft",
+      "reviewState": "review",
+      "specs": {
+        "dn": 32,
+        "pn": 16,
+        "sdr": null,
+        "outerDiameterMm": null,
+        "wallThicknessMm": null,
+        "powerKw": 5.5,
+        "phases": 3,
+        "voltageV": 380,
+        "maxTemperatureC": null,
+        "prechargeBar": null,
+        "dimensionAMm": null,
+        "dimensionBMm": null,
+        "netWeightKg": 84,
+        "coreCount": null,
+        "crossSectionMm2": null,
+        "coilLengthM": null,
+        "maxFlowM3h": null,
+        "maxHeadM": null,
+        "tankVolumeL": null
+      },
+      "report": {
+        "modelName": "HIP 32-50/2 SSVF",
+        "description": "Одноступенчатый центробежный насос с сухим ротором, соосными патрубками и торцевым уплотнением для систем водоснабжения, отопления, охлаждения и кондиционирования. Насосную часть с двигателем можно демонтировать без снятия корпуса с трубопровода.",
+        "fluid": "Вода",
+        "impellerType": "",
+        "sealType": "Одинарное разгруженное торцевое",
+        "wettedMaterial": "Чугун",
+        "impellerMaterial": "",
+        "shaftMaterial": "2Cr13 (AISI 420L)",
+        "sealMaterial": "Карбид кремния / карбид кремния / Viton",
+        "installation": "Вертикально, на кронштейне или основании. Нагрузки трубопровода на корпус не допускаются.",
+        "motorName": "",
+        "motorCode": "",
+        "motorType": "Трёхфазный асинхронный, короткозамкнутый ротор",
+        "protectionClass": "IP55",
+        "insulationClass": "F",
+        "temperatureMinC": -15,
+        "temperatureMaxC": 115,
+        "flowMinM3h": 4,
+        "flowMaxM3h": 16,
+        "headAtMinFlowM": 54.2,
+        "headAtMaxFlowM": 47.4,
+        "impellerCount": 1,
+        "motorPoles": 2,
+        "volumeM3": null,
+        "performancePoints": [
+          {
+            "flow": 4,
+            "efficiency": null,
+            "powerP2": 2.92,
+            "npsh": null
+          },
+          {
+            "flow": 4.5,
+            "efficiency": null,
+            "powerP2": 3.01,
+            "npsh": null
+          },
+          {
+            "flow": 5,
+            "efficiency": null,
+            "powerP2": 3.1,
+            "npsh": null
+          },
+          {
+            "flow": 5.5,
+            "efficiency": null,
+            "powerP2": 3.2,
+            "npsh": null
+          },
+          {
+            "flow": 6,
+            "efficiency": 30.1,
+            "powerP2": 3.29,
+            "npsh": null
+          },
+          {
+            "flow": 6.5,
+            "efficiency": 31.6,
+            "powerP2": 3.39,
+            "npsh": null
+          },
+          {
+            "flow": 7,
+            "efficiency": 33.1,
+            "powerP2": 3.48,
+            "npsh": null
+          },
+          {
+            "flow": 7.5,
+            "efficiency": 34.6,
+            "powerP2": 3.57,
+            "npsh": null
+          },
+          {
+            "flow": 8,
+            "efficiency": 36,
+            "powerP2": 3.67,
+            "npsh": null
+          },
+          {
+            "flow": 8.5,
+            "efficiency": 37.3,
+            "powerP2": 3.76,
+            "npsh": null
+          },
+          {
+            "flow": 9,
+            "efficiency": 38.5,
+            "powerP2": 3.84,
+            "npsh": null
+          },
+          {
+            "flow": 9.5,
+            "efficiency": 39.6,
+            "powerP2": 3.93,
+            "npsh": null
+          },
+          {
+            "flow": 10,
+            "efficiency": 40.7,
+            "powerP2": 4.02,
+            "npsh": null
+          },
+          {
+            "flow": 10.5,
+            "efficiency": 41.6,
+            "powerP2": 4.1,
+            "npsh": null
+          },
+          {
+            "flow": 11,
+            "efficiency": 42.5,
+            "powerP2": 4.18,
+            "npsh": null
+          },
+          {
+            "flow": 11.5,
+            "efficiency": 43.3,
+            "powerP2": 4.26,
+            "npsh": null
+          },
+          {
+            "flow": 12,
+            "efficiency": 44.1,
+            "powerP2": 4.33,
+            "npsh": null
+          },
+          {
+            "flow": 12.5,
+            "efficiency": 44.8,
+            "powerP2": 4.4,
+            "npsh": null
+          },
+          {
+            "flow": 13,
+            "efficiency": 45.4,
+            "powerP2": 4.47,
+            "npsh": null
+          },
+          {
+            "flow": 13.5,
+            "efficiency": 46,
+            "powerP2": 4.54,
+            "npsh": null
+          },
+          {
+            "flow": 14,
+            "efficiency": 46.5,
+            "powerP2": 4.61,
+            "npsh": null
+          },
+          {
+            "flow": 14.5,
+            "efficiency": 47,
+            "powerP2": 4.67,
+            "npsh": null
+          },
+          {
+            "flow": 15,
+            "efficiency": 47.5,
+            "powerP2": 4.73,
+            "npsh": null
+          },
+          {
+            "flow": 15.5,
+            "efficiency": 47.9,
+            "powerP2": 4.79,
+            "npsh": null
+          },
+          {
+            "flow": 16,
+            "efficiency": 48.2,
+            "powerP2": 4.84,
+            "npsh": null
+          }
+        ]
+      },
+      "curve": {
+        "status": "draft",
+        "speedRpm": 2900,
+        "frequencyHz": 50,
+        "nominalCurrentA": 11.1,
+        "points": [
+          {
+            "flow": 0,
+            "head": 55
+          },
+          {
+            "flow": 4,
+            "head": 54
+          },
+          {
+            "flow": 8,
+            "head": 53
+          },
+          {
+            "flow": 12.5,
+            "head": 50
+          },
+          {
+            "flow": 16,
+            "head": 48
+          }
+        ],
+        "workbook": {
+          "filename": "Точки HIP.xlsx",
+          "sheet": "Лист1",
+          "sha256": "643d56bfcc874ab21ae3aa883554495cbaa0cc651cd5d56e447c24668d8743c4"
+        }
+      }
+    }
+  ]
+}

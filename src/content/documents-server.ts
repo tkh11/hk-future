@@ -1,5 +1,7 @@
 import 'server-only';
 
+import { createHash } from 'node:crypto';
+import { applyDocumentOrder, documentOrderKey } from './document-order';
 import { cache } from 'react';
 import { connection } from 'next/server';
 import { cmsEnabled } from '@/cms/env';
@@ -10,8 +12,8 @@ const select = { title: true, kind: true, file: true, cover: true, _status: true
 const populate = { media: { filename: true, mimeType: true, filesize: true, _status: true } } as const;
 
 // Public library and file endpoints never inherit an editor's preview session.
-export const getDocumentsContent = cache(async () => {
-  if (!cmsEnabled()) return [];
+export const getDocumentLibrary = cache(async () => {
+  if (!cmsEnabled()) return { documents: [], storedOrder: null, version: '' };
   await connection();
   const payload = await getCMS();
   const rows: unknown[] = [];
@@ -26,8 +28,14 @@ export const getDocumentsContent = cache(async () => {
     if (!result.hasNextPage) break;
     page += 1;
   }
-  return mapLibraryDocuments(rows);
+  const visible = mapLibraryDocuments(rows);
+  const storedOrder = visible.length > 1 ? await payload.kv.get<string[]>(documentOrderKey) : null;
+  const documents = applyDocumentOrder(visible, storedOrder);
+  const version = createHash('sha256').update(documents.map(doc => doc.id).join(',')).digest('hex');
+  return { documents, storedOrder, version };
 });
+
+export const getDocumentsContent = cache(async () => (await getDocumentLibrary()).documents);
 
 export const getPublicDocument = cache(async (id: string) => {
   if (!cmsEnabled() || !/^[1-9]\d{0,9}$/.test(id)) return null;

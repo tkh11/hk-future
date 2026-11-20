@@ -6,8 +6,8 @@ import { applyImportPreview, createImportPreview, parseCatalogImport, type Catal
 import { catalogImportCSVTemplate, catalogImportXLSXTemplate } from '../../src/cms/import/templates'
 import { inspectXlsxArchive } from '../../src/cms/import/xlsx-guard'
 
-const headers = 'sku,externalId,slug,title,description,category,series'
-const row = '0001,external-1,pipe-1,Труба 25,Описание,pipelines,therm'
+const headers = 'sku,externalId,slug,title,description,category'
+const row = '0001,external-1,pipe-1,Труба 25,Описание,pipelines'
 const parse = (csv = `${headers}\n${row}`) => parseCatalogImport({ name: 'products.csv', bytes: Buffer.from(csv) })
 
 /** ZIP fixture builder permits lying size headers to exercise pre-decompression defenses. */
@@ -42,7 +42,6 @@ class MemoryRepository implements CatalogImportRepository {
   products: ExistingImportProduct[] = []
   batches = new Map<string, ImportBatch>()
   categories = [{ key: 'pipelines', id: 'category-1' }, { key: 'pumps', id: 'category-2' }]
-  series = [{ key: 'therm', id: 'series-1', category: 'category-1' }, { key: 'circulation', id: 'series-2', category: 'category-2' }]
   failCAS = false
   nextID = 1
   revision = 1
@@ -52,13 +51,21 @@ class MemoryRepository implements CatalogImportRepository {
       return await run({
         lockCatalog: async () => {},
         findProducts: async keys => structuredClone(this.products.filter(item => keys.skus.includes(item.sku) || keys.slugs.includes(item.slug) || Boolean(item.externalId && keys.externalIds.includes(item.externalId)))),
-        resolveReferences: async keys => ({ categories: structuredClone(this.categories.filter(item => keys.categories.includes(item.key))), series: structuredClone(this.series.filter(item => keys.series.includes(item.key))) }),
+        resolveReferences: async keys => ({ categories: structuredClone(this.categories.filter(item => keys.categories.includes(item.key))) }),
         saveBatch: async batch => { this.batches.set(batch.id, structuredClone(batch)) },
         getBatchForUpdate: async id => structuredClone(this.batches.get(id) || null),
         createDraftProduct: async data => {
           if (this.products.some(item => item.sku === data.sku || item.slug === data.slug || data.externalId && item.externalId === data.externalId)) throw new Error('unique constraint')
           const id = this.nextID++
           this.products.push({ ...structuredClone(data), id, updatedAt: `revision-${this.revision++}` })
+          return id
+        },
+        createDraftVariant: async (productId, data) => {
+          const family = this.products.find(item => item.id === productId)
+          if (!family) throw new Error('missing family')
+          if (this.products.some(item => item.sku === data.sku)) throw new Error('unique constraint')
+          const id = this.nextID++
+          this.products.push({ ...structuredClone(data), id, slug: family.slug, category: family.category, updatedAt: `revision-${this.revision++}` })
           return id
         },
         updateDraftProduct: async (id, revision, patch) => {
@@ -88,12 +95,11 @@ async function seeded() {
 }
 
 describe('catalog CSV/XLSX parsing', () => {
-  it('preserves text SKUs, multiline CSV and typed attributes', async () => {
-    const parsed = await parse(`${headers},attr:diameter:number:mm:Диаметр,attr:inline:boolean::Ин-лайн\r\n0001,external-1,pipe-1,"Труба, 25","Первая строка\nВторая строка",pipelines,therm,25,да`)
+  it('preserves text SKUs and multiline CSV', async () => {
+    const parsed = await parse(`${headers}\r\n0001,external-1,pipe-1,"Труба, 25","Первая строка\nВторая строка",pipelines`)
     expect(parsed.issues).toEqual([])
     expect(parsed.rows[0].sku).toBe('0001')
     expect(parsed.rows[0].description).toContain('\n')
-    expect(parsed.rows[0].attributes).toEqual([{ key: 'diameter', label: 'Диаметр', valueType: 'number', unit: 'mm', numberValue: 25 }, { key: 'inline', label: 'Ин-лайн', valueType: 'boolean', booleanValue: true }])
   })
 
   for (const name of ['pipes', 'pumps'] as const) {
@@ -107,7 +113,7 @@ describe('catalog CSV/XLSX parsing', () => {
   }
 
   it('rejects duplicate keys, unknown headers and malformed values in preview', async () => {
-    const parsed = await parse(`${headers},attr:diameter:number:mm:Диаметр,arbitrary\n${row},NaN,x\n${row},25,y`)
+    const parsed = await parse(`${headers},series\n${row},x\n${row.replace('pipelines', 'bad//path')},y`)
     expect(parsed.issues.map(issue => issue.code)).toEqual(expect.arrayContaining(['invalid-header', 'invalid-value', 'duplicate-identity']))
   })
 
@@ -136,11 +142,10 @@ describe('catalog CSV/XLSX parsing', () => {
     expect(() => inspectXlsxArchive(zipFixture('xl/worksheets/sheet1.xml', Buffer.from('<worksheet><row r="999999999"/></worksheet>')))).toThrow('число строк')
   })
 
-  it('keeps attribute decimals and false values without interpreting cell text as code', async () => {
-    const parsed = await parse(`${headers};attr:power:number:kW:Мощность;attr:inline:boolean::Ин-лайн\n${row};1,5;false`.replaceAll(',', ';').replace('1;5', '1,5'))
+  it('reads semicolon-separated CSV saved by Excel', async () => {
+    const parsed = await parse(`${headers}\n${row}`.replaceAll(',', ';'))
     expect(parsed.issues).toEqual([])
-    expect(parsed.rows[0].attributes[0].numberValue).toBe(1.5)
-    expect(parsed.rows[0].attributes[1].booleanValue).toBe(false)
+    expect(parsed.rows[0].category).toBe('pipelines')
   })
 
   it('rejects XLSX formulas, external links, multiple sheets and numeric identifiers', async () => {
@@ -208,7 +213,7 @@ describe('persisted import preview and atomic apply', () => {
   it('rolls back earlier creations if atomic compare-and-set fails later in the batch', async () => {
     const repository = await seeded()
     repository.products[0].title = 'Manual'
-    const preview = await createImportPreview(repository, await parse(`${headers}\n0002,external-2,pipe-2,Second,Description,pipelines,therm\n${row}`), { actorId: 'editor' })
+    const preview = await createImportPreview(repository, await parse(`${headers}\n0002,external-2,pipe-2,Second,Description,pipelines\n${row}`), { actorId: 'editor' })
     repository.failCAS = true
     await expect(applyImportPreview(repository, { batchId: preview.id, actorId: 'editor', overwrites: { '3': ['title'] } })).rejects.toMatchObject({ code: 'stale-preview' })
     expect(repository.products).toHaveLength(1)
@@ -217,26 +222,35 @@ describe('persisted import preview and atomic apply', () => {
 
   it('never deletes records absent from the file', async () => {
     const repository = await seeded()
-    const preview = await createImportPreview(repository, await parse(`${headers}\n0002,external-2,pipe-2,Second,Description,pipelines,therm`), { actorId: 'editor' })
+    const preview = await createImportPreview(repository, await parse(`${headers}\n0002,external-2,pipe-2,Second,Description,pipelines`), { actorId: 'editor' })
     await applyImportPreview(repository, { batchId: preview.id, actorId: 'editor' })
     expect(repository.products.map(item => item.sku)).toEqual(['0001', '0002'])
   })
 
-  it('blocks duplicate identities, unknown references and cross-category series', async () => {
+  it('imports several SKUs with one slug as one family and extra variants', async () => {
+    const repository = new MemoryRepository()
+    const preview = await createImportPreview(repository, await parse(`${headers}\n${row}\n0002,external-2,pipe-1,Труба 32,Описание,pipelines`), { actorId: 'editor' })
+    expect(preview.issues).toEqual([])
+    const result = await applyImportPreview(repository, { batchId: preview.id, actorId: 'editor' })
+    expect(result.created).toBe(2)
+    expect(repository.products).toHaveLength(2)
+    expect(new Set(repository.products.map(item => item.slug))).toEqual(new Set(['pipe-1']))
+  })
+
+  it('blocks duplicate identities and unknown references', async () => {
     const repository = await seeded()
-    for (const changed of [row.replace('0001', '9999'), row.replace('therm', 'unknown'), row.replace('therm', 'circulation')]) {
+    for (const changed of [row.replace('0001', '9999'), row.replace('pipelines', 'unknown')]) {
       const preview = await createImportPreview(repository, await parse(`${headers}\n${changed}`), { actorId: 'editor' })
       expect(preview.issues.length).toBeGreaterThan(0)
       await expect(applyImportPreview(repository, { batchId: preview.id, actorId: 'editor' })).rejects.toMatchObject({ code: 'invalid-preview' })
     }
   })
 
-  it('requires relationship changes to be selected together', async () => {
+  it('moves a product to another category only when that change is selected', async () => {
     const repository = await seeded()
-    const preview = await createImportPreview(repository, await parse(`${headers}\n${row.replace('pipelines,therm', 'pumps,circulation')}`), { actorId: 'editor' })
-    await expect(applyImportPreview(repository, { batchId: preview.id, actorId: 'editor', overwrites: { '2': ['category'] } })).rejects.toMatchObject({ code: 'invalid-overwrite' })
-    await applyImportPreview(repository, { batchId: preview.id, actorId: 'editor', overwrites: { '2': ['category', 'series'] } })
-    expect(repository.products[0].series).toBe('series-2')
+    const preview = await createImportPreview(repository, await parse(`${headers}\n${row.replace('pipelines', 'pumps')}`), { actorId: 'editor' })
+    await applyImportPreview(repository, { batchId: preview.id, actorId: 'editor', overwrites: { '2': ['category'] } })
+    expect(repository.products[0].category).toBe('category-2')
   })
 
   it('rejects changed taxonomy, tampered snapshots, unknown overwrite fields and other actors', async () => {
@@ -245,7 +259,7 @@ describe('persisted import preview and atomic apply', () => {
     const preview = await createImportPreview(repository, await parse(), { actorId: 'editor' })
     await expect(applyImportPreview(repository, { batchId: preview.id, actorId: 'outsider' })).rejects.toMatchObject({ code: 'batch-not-found' })
     await expect(applyImportPreview(repository, { batchId: preview.id, actorId: 'editor', overwrites: { '2': ['description'] } })).rejects.toMatchObject({ code: 'invalid-overwrite' })
-    repository.series[0].id = 'replacement-series'
+    repository.categories[0].id = 'replacement-category'
     await expect(applyImportPreview(repository, { batchId: preview.id, actorId: 'editor' })).rejects.toMatchObject({ code: 'stale-preview' })
     repository.batches.get(preview.id)!.rows[0].data.title = 'Tampered'
     await expect(applyImportPreview(repository, { batchId: preview.id, actorId: 'editor' })).rejects.toMatchObject({ code: 'invalid-preview' })

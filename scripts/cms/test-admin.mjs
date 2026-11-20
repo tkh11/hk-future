@@ -81,7 +81,7 @@ try {
   let ready = false;
   while (!ready && Date.now() < deadline && !interrupted) {
     if (serverError || server.exitCode !== null || server.signalCode !== null) throw new Error('The isolated CMS server could not start.');
-    try { ready = (await fetch(`${baseURL}/admin/login`, { signal: AbortSignal.timeout(2000) })).ok; } catch { /* Startup may not have opened its listener yet. */ }
+    try { ready = (await fetch(`${baseURL}/studio/login`, { signal: AbortSignal.timeout(2000) })).ok; } catch { /* Startup may not have opened its listener yet. */ }
     if (!ready) await new Promise(resolve => setTimeout(resolve, 250));
   }
   if (!ready) throw new Error('The isolated CMS server did not become ready.');

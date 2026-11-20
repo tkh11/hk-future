@@ -31,10 +31,12 @@ export async function uploadMedia(form: FormData): Promise<UploadResult> {
   const alt = String(form.get('alt') ?? '').trim() || file.name.replace(/\.[^.]+$/, '');
   const s = await requireEditor();
   const bytes = Buffer.from(await file.arrayBuffer());
+  // Editors may not publish: their uploads stay private drafts until a publisher releases them.
+  const publish = s.can.publish;
   try {
     const doc = await s.payload.create({
-      collection: 'media', draft: false,
-      data: { alt, title: alt, _status: 'published' },
+      collection: 'media', draft: !publish,
+      data: { alt, title: alt, _status: publish ? 'published' : 'draft' },
       file: { data: bytes, mimetype: file.type, name: file.name, size: file.size },
       overrideAccess: false, user: s.user, depth: 0,
     });

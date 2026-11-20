@@ -1,5 +1,5 @@
 import type { Role } from '@/cms/access';
-import definitions from '@/cms/catalog-definitions.json';
+import definitions from '@/cms/catalog-definitions.json' with { type: 'json' };
 
 export type Profile = (typeof definitions.profiles)[number]['value'];
 export type ReviewState = 'ready' | 'review' | 'blocked';

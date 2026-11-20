@@ -1,6 +1,6 @@
 import { ValidationError, type CollectionConfig, type CollectionBeforeValidateHook, type Field, type TextField, type Where } from 'payload';
 import { canEdit } from './access';
-import definitions from './catalog-definitions.json';
+import definitions from './catalog-definitions.json' with { type: 'json' };
 
 type Factory = (slug: string, label: string, fields: Field[]) => CollectionConfig;
 const staff = ({ req }: { req: { user?: unknown } }) => canEdit(req.user as { role?: unknown });
@@ -84,7 +84,8 @@ export function extendCatalog(products: CollectionConfig, media: CollectionConfi
     // Disable reverse joins while checking parent visibility, so this read
     // never expands variants or recursively evaluates their access rule.
     const parents=await req.payload.find({collection:'products',where:{_status:{equals:'published'}},pagination:false,depth:0,select:{_status:true},joins:false,overrideAccess:false,req});
-    if(!parents.docs.length)return false;
+    // An empty result, not a denial: `false` makes Payload throw Forbidden on find/count.
+    if(!parents.docs.length)return {id:{exists:false}};
     return {and:[{_status:{equals:'published'}},{product:{in:parents.docs.map(p=>p.id)}},{reviewState:{equals:'ready'}}]};
   }};
   variants.hooks!.beforeValidate = [reviewed,async ({data,originalDoc,req})=>{

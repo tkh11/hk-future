@@ -38,9 +38,13 @@ export default function MediaLibrary({ cards, limit, filter }: { cards: MediaCar
               form.set('file', file);
               form.set('alt', file.name.replace(/\.[^.]+$/, ''));
               start(async () => {
-                const result = await uploadMedia(form);
-                setNotice('error' in result ? result.error : `Загружено: ${result.alt}`);
-                router.refresh();
+                try {
+                  const result = await uploadMedia(form);
+                  setNotice('error' in result ? result.error : `Загружено: ${result.alt}`);
+                  router.refresh();
+                } catch {
+                  setNotice(`Не удалось загрузить ${file.name}. Попробуйте ещё раз.`);
+                }
               });
             }} />
         </label>

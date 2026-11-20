@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import definitions from '@/cms/catalog-definitions.json';
+import definitions from '@/cms/catalog-definitions.json' with { type: 'json' };
 import { changedFields } from './form-utils';
 import { colors, profileValues, type Color, type Profile } from './labels';
 

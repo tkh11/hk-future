@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import definitions from '../cms/catalog-definitions.json';
+import definitions from '../cms/catalog-definitions.json' with { type: 'json' };
 
 const numberFormat = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 4 });
 const variant = z.object({

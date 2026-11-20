@@ -14,11 +14,9 @@
 /coverage
 /test-results/
 /playwright-report/
-/.next-production/
-/.next-export/
 
 # next.js
-/.next/
+/.next*/
 /out/
 
 # production
@@ -27,6 +25,7 @@
 # misc
 .DS_Store
 *.pem
+/.tmp-screens/
 
 # debug
 npm-debug.log*

@@ -2,6 +2,7 @@
 .env*
 .local
 .next*
+.tmp-screens
 out
 node_modules
 coverage

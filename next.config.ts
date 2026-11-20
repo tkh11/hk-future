@@ -1,3 +1,4 @@
+import { networkInterfaces } from "node:os";
 import type { NextConfig } from "next";
 import { withPayload } from '@payloadcms/next/withPayload';
 
@@ -6,9 +7,14 @@ import { withPayload } from '@payloadcms/next/withPayload';
 const githubPages = process.env.GITHUB_PAGES === "true";
 const basePath = "/hk-future";
 
+// Office dev server: allow its name and its LAN IPv4 addresses, so the site also works when opened by IP.
+const lanAddresses = Object.values(networkInterfaces()).flat()
+  .filter(address => address && address.family === "IPv4" && !address.internal)
+  .map(address => address!.address);
+
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  allowedDevOrigins: process.env.CMS_SERVER_URL ? [new URL(process.env.CMS_SERVER_URL).hostname] : [],
+  allowedDevOrigins: process.env.CMS_SERVER_URL ? [new URL(process.env.CMS_SERVER_URL).hostname, ...lanAddresses] : [],
   ...(process.env.NEXT_BUILD_DIR ? { distDir: process.env.NEXT_BUILD_DIR } : {}),
   ...(githubPages
     ? {

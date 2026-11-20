@@ -18,10 +18,10 @@ function prepareRoutes(directory) {
     }
     prepareRoutes(path);
   }
-  const sitemap = join(directory, 'sitemap.ts');
-  if (existsSync(sitemap)) {
-    const code = readFileSync(sitemap, 'utf8').replace(/export const dynamic\s*=\s*['"][^'"]+['"];?\s*/g, '');
-    writeFileSync(sitemap, `${code}\nexport const dynamic = 'force-static';\n`);
+  for (const file of [join(directory, 'sitemap.ts'), join(directory, 'search-index.json', 'route.ts')]) {
+    if (!existsSync(file)) continue;
+    const code = readFileSync(file, 'utf8').replace(/export const dynamic\s*=\s*['"][^'"]+['"];?\s*/g, '');
+    writeFileSync(file, `${code}\nexport const dynamic = 'force-static';\n`);
   }
   const page = join(directory, 'page.tsx');
   if (!existsSync(page) || !/\/(?:catalog\/\[\.\.\.segments\]|articles\/\[slug\])$/.test(directory)) return;

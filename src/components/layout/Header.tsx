@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SiteSearch from "@/components/layout/SiteSearch";
-import type { SiteSearchEntry } from "@/lib/site-search";
 import LeadDialog from "@/components/layout/LeadDialog";
 import { LEAD_REQUEST_EVENT, leadRequestDetails } from '@/lib/lead-request';
 
@@ -28,7 +27,7 @@ const navLinks: NavLink[] = [
 
 const rightLinks: NavLink[] = [{ href: "/contacts", label: "Контакты" }];
 
-export default function Header({ links = navLinks, searchEntries }: { links?: NavLink[]; searchEntries: SiteSearchEntry[] }) {
+export default function Header({ links = navLinks }: { links?: NavLink[] }) {
   const pathname = usePathname();
   const contactsCurrent = pathname === "/contacts" || pathname.startsWith("/contacts/");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -132,7 +131,7 @@ export default function Header({ links = navLinks, searchEntries }: { links?: Na
           </nav>
 
           <div className="site-header__tools">
-            <SiteSearch entries={searchEntries} open={searchOpen} onOpenChange={onSearchOpenChange} />
+            <SiteSearch open={searchOpen} onOpenChange={onSearchOpenChange} />
             <button
               type="button"
               className="site-header__burger"
@@ -161,7 +160,7 @@ export default function Header({ links = navLinks, searchEntries }: { links?: Na
           aria-hidden={!menuOpen}
           inert={!menuOpen}
         >
-          <SiteSearch entries={searchEntries} mobile open={menuOpen} onOpenChange={setMenuOpen} />
+          <SiteSearch mobile open={menuOpen} onOpenChange={setMenuOpen} />
           {links.map((item, index) => (
             <Link
               key={item.label}

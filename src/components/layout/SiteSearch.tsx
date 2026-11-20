@@ -40,14 +40,28 @@ function ResultPreview({ result }: { result: SiteSearchEntry }) {
   </>;
 }
 
+// Loaded once per browser session, on first use, instead of with every page.
+let searchIndex: Promise<SiteSearchEntry[]> | null = null;
+function loadSearchIndex() {
+  searchIndex ??= fetch(publicPath("/search-index.json"))
+    .then(response => {
+      if (!response.ok) throw new Error(`Search index: ${response.status}`);
+      return response.json() as Promise<SiteSearchEntry[]>;
+    })
+    .catch(error => {
+      searchIndex = null;
+      throw error;
+    });
+  return searchIndex;
+}
+
 type Props = {
-  entries: SiteSearchEntry[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
   mobile?: boolean;
 };
 
-export default function SiteSearch({ entries, open, onOpenChange, mobile = false }: Props) {
+export default function SiteSearch({ open, onOpenChange, mobile = false }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const previousPath = useRef(pathname);
@@ -56,9 +70,22 @@ export default function SiteSearch({ entries, open, onOpenChange, mobile = false
   const toggleRef = useRef<HTMLButtonElement>(null);
   const [query, setQuery] = useState("");
   const [engaged, setEngaged] = useState(false);
+  const [entries, setEntries] = useState<SiteSearchEntry[] | null>(null);
+  const [failed, setFailed] = useState(false);
   const id = useId();
-  const results = searchSite(entries, query);
+  const results = entries ? searchSite(entries, query) : [];
   const showResults = open && engaged && Boolean(query.trim());
+  const ready = entries !== null;
+
+  useEffect(() => {
+    if (!open || entries || failed) return;
+    let active = true;
+    loadSearchIndex().then(
+      loaded => { if (active) setEntries(loaded); },
+      () => { if (active) setFailed(true); },
+    );
+    return () => { active = false; };
+  }, [open, entries, failed]);
 
   // Keep the selected link mounted until navigation commits, including when
   // CMS data is slow. Modified clicks retain normal new-tab browser behavior.
@@ -130,10 +157,11 @@ export default function SiteSearch({ entries, open, onOpenChange, mobile = false
       <SearchIcon open={open} />
     </button>}
     <span id={`${id}-status`} className={styles.srOnly} role="status" aria-atomic="true">
-      {showResults ? (results.length ? `Подходящих результатов: ${results.length}. Стрелки вверх и вниз — выбор результата.` : "Ничего не найдено. Попробуйте другое название.") : ""}
+      {showResults && ready ? (results.length ? `Подходящих результатов: ${results.length}. Стрелки вверх и вниз — выбор результата.` : "Ничего не найдено. Попробуйте другое название.") : ""}
     </span>
     {showResults && <div className={styles.results} data-mobile={mobile}>
-      {results.length ? <ul id={`${id}-results`} aria-label="Быстрые результаты поиска">
+      {!ready ? <p id={`${id}-results`} className={styles.empty}>{failed ? "Поиск недоступен. Обновите страницу." : "Загрузка…"}</p>
+      : results.length ? <ul id={`${id}-results`} aria-label="Быстрые результаты поиска">
         {results.map(result => <li key={result.href}>
           <Link href={result.href} prefetch={false} data-search-result
             onMouseDown={event => {

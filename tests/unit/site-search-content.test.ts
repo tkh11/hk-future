@@ -7,6 +7,8 @@ vi.mock('@/cms/env', () => ({ cmsEnabled: () => true }));
 vi.mock('@/cms/client', () => ({ getCMS: async () => ({ find }) }));
 vi.mock('@/cms/preview', () => ({ getPreviewUser: preview }));
 vi.mock('next/server', () => ({ connection: async () => {} }));
+// Next's cross-request cache needs a running server; these tests check what is loaded.
+vi.mock('@/cms/public-cache', () => ({ publicCache: (_name: string, load: unknown) => load }));
 
 import { getSiteSearchContent } from '@/content/cms-adapter';
 

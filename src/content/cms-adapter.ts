@@ -7,6 +7,7 @@ import { z } from "zod";
 import { cmsEnabled } from "@/cms/env";
 import { getCMS } from "@/cms/client";
 import { getPreviewUser } from "@/cms/preview";
+import { publicCache } from "@/cms/public-cache";
 import { catalog } from "./catalog";
 import { articles } from "./articles";
 import { contacts } from "./contacts";
@@ -170,9 +171,11 @@ async function findAll(collection: "categories" | "articles" | "products" | "pag
   return rows;
 }
 
+const publishedCatalog = publicCache("catalog", async (): Promise<CatalogNode[]> => mapCategoryTree(await findAll("categories", { publicOnly: true })));
 export const getCatalogContent = cache(async (): Promise<CatalogNode[]> => {
   if (!cmsEnabled()) return catalog;
-  return mapCategoryTree(await findAll("categories"));
+  const { user } = await requestContext();
+  return user ? mapCategoryTree(await findAll("categories")) : publishedCatalog();
 });
 
 export const getArticlesContent = cache(async () => {
@@ -181,7 +184,7 @@ export const getArticlesContent = cache(async () => {
 });
 
 /** The global search always uses published content, including in preview mode. */
-export const getSiteSearchContent = cache(async (): Promise<SiteSearchEntry[]> => {
+async function loadSiteSearch(): Promise<SiteSearchEntry[]> {
   const enabled = cmsEnabled();
   const [categoryRows, productRows, articleRows, pageRows, allowedPages] = enabled
     ? await Promise.all([
@@ -214,7 +217,9 @@ export const getSiteSearchContent = cache(async (): Promise<SiteSearchEntry[]> =
     })),
     ...pages.values(),
   ];
-});
+}
+const publishedSiteSearch = publicCache("site-search", loadSiteSearch);
+export const getSiteSearchContent = cache(async (): Promise<SiteSearchEntry[]> => cmsEnabled() ? publishedSiteSearch() : loadSiteSearch());
 export async function getArticleContent(articleSlug: string) {
   return (await getArticlesContent()).find((article) => article.slug === articleSlug);
 }
@@ -261,8 +266,15 @@ async function visibleCategoryPaths() {
   const { getCatalogEntries } = await import("@/lib/catalog");
   return new Set(getCatalogEntries(await getCatalogContent()).map((entry) => entry.path.join("/")));
 }
+const publishedProductSummaries = publicCache("product-summaries", async (): Promise<PublicProductSummary[]> => {
+  const visible = new Set(getCatalogEntries(await publishedCatalog()).map((entry) => entry.path.join("/")));
+  const rows = await findAll("products", { publicOnly: true, summary: true });
+  return (await enrichVariantSummaries(rows, productSummaries(rows), true)).filter((product) => product.category && visible.has(product.category.path));
+});
 export const getProductSummariesContent = cache(async (): Promise<PublicProductSummary[]> => {
   if (!cmsEnabled()) return [];
+  const { user } = await requestContext();
+  if (!user) return publishedProductSummaries();
   const visible = await visibleCategoryPaths();
   const rows=await findAll("products", { summary: true });
   return (await enrichVariantSummaries(rows,productSummaries(rows))).filter((product) => product.category && visible.has(product.category.path));
@@ -278,12 +290,10 @@ async function enrichVariantSummaries(rows:unknown[], summaries:PublicProductSum
   const {articleSummary}=await import('./catalog-presenter');
   return summaries.map(p=>{const family=families.find(f=>f.slug===p.slug);if(!family)return p;const skus=groups.get(String(family.id))||[];return {...p,articleSummary:articleSummary(skus),variantCount:skus.length,searchKeywords:skus.join(' ')};});
 }
-// Metadata and the page request the same product during one render. Share the
-// result within that request without caching published/preview data across users.
-export const getProductContent = cache(async (productSlug: string) => {
-  const parent = await visibleProduct(productSlug);
-  if (!parent) return undefined;
-  const { payload, user } = await requestContext();
+async function loadProduct(productSlug: string, publicOnly: boolean) {
+  const parent = await visibleProduct(productSlug, false, publicOnly);
+  if (!parent) return null;
+  const { payload, user } = publicOnly ? { payload: await getCMS(), user: null } : await requestContext();
   // Only size choices and numeric ranges are needed for the product overview.
   // Full rows, including their media, are fetched when the visitor opens the table.
   const overview = await payload.find({
@@ -296,13 +306,21 @@ export const getProductContent = cache(async (productSlug: string) => {
     specifications: variantRanges(overview.docs.map(row => ({ specs: catalogSpecs(row.specs) }))),
     variantCount: overview.docs.length,
   };
+}
+const publishedProduct = publicCache("product", (productSlug: string) => loadProduct(productSlug, true));
+// Metadata and the page request the same product during one render.
+export const getProductContent = cache(async (productSlug: string) => {
+  if (!cmsEnabled() || !slug.safeParse(productSlug).success) return undefined;
+  const { user } = await requestContext();
+  return (user ? await loadProduct(productSlug, false) : await publishedProduct(productSlug)) ?? undefined;
 });
 
-async function visibleProduct(productSlug: string, summary = false) {
+async function visibleProduct(productSlug: string, summary = false, publicOnly = false) {
   if (!cmsEnabled() || !slug.safeParse(productSlug).success) return undefined;
-  const [row] = await findAll('products', { where: { slug: { equals: productSlug } }, summary });
+  const [row] = await findAll('products', { where: { slug: { equals: productSlug } }, summary, publicOnly });
   const parsed = z.object({ id: relationID, category: z.object({ path: text }) }).safeParse(row);
-  if (!parsed.success || !(await visibleCategoryPaths()).has(parsed.data.category.path)) return undefined;
+  const visible = publicOnly ? new Set(getCatalogEntries(await publishedCatalog()).map((entry) => entry.path.join("/"))) : await visibleCategoryPaths();
+  if (!parsed.success || !visible.has(parsed.data.category.path)) return undefined;
   return { id: parsed.data.id, row };
 }
 

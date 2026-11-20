@@ -6,6 +6,8 @@ vi.mock("next/server", () => ({ connection: vi.fn().mockResolvedValue(undefined)
 vi.mock("@/cms/env", () => ({ cmsEnabled: () => mocks.enabled }));
 vi.mock("@/cms/client", () => ({ getCMS: mocks.getCMS }));
 vi.mock("@/cms/preview", () => ({ getPreviewUser: mocks.preview }));
+// Next's cross-request cache needs a running server; these tests check what is loaded.
+vi.mock("@/cms/public-cache", () => ({ publicCache: (_name: string, load: unknown) => load }));
 
 import { contactsSchema, getCatalogContent, getContactsContent, getProductSummariesContent, getPublishedCMSPaths, mapArticle, mapCategoryTree, mapProduct, solutionSchema } from "@/content/cms-adapter";
 import { catalog } from "@/content/catalog";
